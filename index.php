@@ -1,4 +1,5 @@
 <?php
-if(isset($_GET['url'])){
-  echo $_GET['url'];
-}
+
+require_once 'app/init.php';
+
+$app = new App;
