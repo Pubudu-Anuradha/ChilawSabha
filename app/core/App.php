@@ -11,8 +11,6 @@ class App
     {
         session_start();
         $url = $this->parseUrl();
-        var_dump($url);
-        var_dump($_SESSION);
         if (isset($url[0])) {
             if ($url[0] != 'index.php') {
                 if (file_exists('app/controllers/' . $url[0] . '.php')) {
