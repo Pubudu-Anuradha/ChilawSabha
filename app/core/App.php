@@ -37,10 +37,10 @@ class App
 
         // If there are more values left in $url,
         // set them as the parameters for the method
-        $this->params = $url ? array_values($url) : [];
+        $this->parameters = $url ? array_values($url) : [];
 
         // Call the method of the controller and pass the parameters to it
-        call_user_func_array([$this->controller, $this->method], $this->params);
+        call_user_func_array([$this->controller, $this->method], $this->parameters);
     }
 
     private function parseUrl()
