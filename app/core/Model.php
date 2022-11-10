@@ -36,6 +36,28 @@ class Model
         return $this->conn->query($sql) === true;
     }
 
+    protected function select($table, $columns = '*', $conditions = '')
+    {   
+        // Make sql statement with table name , columns
+        $sql = "SELECT $columns FROM $table";
+        // If there are conditions add to the sql with WHERE
+        if ($conditions != '') {
+            $sql = "$sql WHERE $conditions";
+        }
+        // Statement executes and the result is returned
+        return $this->conn->query($sql);
+    }
+
+    protected function update($table, $data, $conditions)
+    {
+        // TODO Implement update function
+    }
+
+    protected function delete($table, $data, $conditions)
+    {
+        // TODO Implement delete function
+    }
+
     public function __destruct()
     {
         // Closing the database connection
