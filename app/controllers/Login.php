@@ -35,14 +35,20 @@ class Login extends Controller
         $this->view('Login/Admin', $data);
     }
 
-    public function Logout()
+    public function Logout($redir = 'Home/index')
     {
-        if (isset($_SESSION['login']))
+        if (isset($_SESSION['login'])) {
             unset($_SESSION['login']);
-        if (isset($_SESSION['role']))
+        }
+
+        if (isset($_SESSION['role'])) {
             unset($_SESSION['role']);
-        if (isset($_SESSION['name']))
+        }
+
+        if (isset($_SESSION['name'])) {
             unset($_SESSION['name']);
-        header('location:Home/index');
+        }
+
+        header("location:$redir");
     }
 }
