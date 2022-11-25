@@ -1,0 +1,302 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif ;
+}
+
+ul {
+  list-style-type: none;
+  overflow: hidden;
+}
+.upper-header{
+  width: 100%;
+  float: left;
+}
+
+li {
+  float: left;
+}
+
+li .logo-img {
+  display: block;
+  text-align: center;
+  margin: 4px;
+  margin-left: 150px;
+  padding: 14px 16px;
+  width: 75px;
+  height: 80px;
+}
+
+
+
+.title{
+  float: right;
+  margin: 20px;
+  margin-right: 250px;
+}
+
+.chilaw{
+  font-size: 50px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.sabha{
+  white-space: initial;
+  font-size: 15px;
+  letter-spacing: 3px;
+}
+
+.lower-header{
+  width: 100%;
+  float: left;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-width: 100%;
+}
+
+.items{
+  font-size: 15px;
+  /* display: block; */
+  margin-left: 25px;
+  padding: 8px 100px;
+  float: left;
+  text-decoration: none;
+  color: black;
+}
+
+body{
+  height: 100vh;
+}
+
+.footer-content{
+  position: absolute;
+  width: 98%;
+  color: white;
+  background-color: black;
+  text-align: center;
+  padding: 15px;
+  bottom: -200px;
+  font-weight: 100;
+}
+
+.sidebar {
+  float: left;
+  width: 20%;
+  height: 80%;
+  margin-top: 20px;
+}
+
+.option {
+  text-decoration: none;
+  display: block;
+  background-color: #C3D6FC;
+  color: black;
+  padding: 15px 20px;
+  width: 80%;
+  border: 2px solid #C3D6FC;
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  margin: 10px;
+  white-space: nowrap;
+
+}
+.add-book-topic{
+    margin-top: 30px;
+    margin-left: 20px;
+    float: left;
+    display: block;
+    font-weight: 300;
+    padding: 15px 20px;
+    font-size: 25px;
+}
+
+.dashboard{
+    margin-top: 30px;
+    margin-left: 20px;
+    float: left;
+    display: block;
+    font-weight: 300;
+    padding: 15px 20px;
+    font-size: 25px;
+}
+
+.catalog{
+    margin-top: 30px;
+    margin-left: 20px;
+    float: left;
+    display: block;
+    font-weight: 300;
+    padding: 15px 20px;
+    font-size: 25px;
+}
+
+.addbook-btn{
+    text-decoration: none;
+    font-weight: 600;
+    color: black;
+    margin-top: 20px;
+    margin-right: 150px;
+    margin-bottom: 20px;
+    float: right;
+    display: block;
+    padding: 8px 15px;
+    background-color: #C3D6FC;
+    border: none;
+    border-radius: 10px;
+    font-size: 10px;    
+}
+
+.damagelist-btn{
+    text-decoration: none;
+    font-weight: 600;
+    color: black;
+    margin-top: 20px;
+    margin-left: 850px;
+    margin-bottom: 20px;
+    float: left;
+    display: block;
+    padding: 8px 15px;
+    background-color: #C3D6FC;
+    border: none;
+    border-radius: 10px;
+    font-size: 10px;    
+}
+
+.h-ruler{
+    display: block;
+    float: left;
+    width: 1100px;
+    margin-left: 40px;
+}
+
+.btn-logout{
+    float: right;
+    padding: 6px;
+    display: block;
+    width: 10%;
+    background-color: #C3D6FC;
+    border: 2px solid #C3D6FC;
+    border-radius: 10px;
+    margin-top: 40px;
+    margin-right: 16px;
+    font-size: 17px;
+    cursor: pointer;
+
+}
+
+.bookcatalogue{
+    float: left;
+    display: block;
+    width: 1100px;
+    margin-left: 40px;
+    border-collapse: collapse;
+}
+
+.bookcatalogue th{
+    text-align: left;
+    background-color: #d2e2fc;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 200;
+    white-space: nowrap;
+}
+
+.action{
+  text-align: center !important;
+}
+
+.bookcatalogue td{
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid rgb(155, 155, 155);
+}
+
+.edit-btn{
+  background-color: #E2631B;
+  color: white;
+  text-align: center;
+  width: 50px;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+  border: none;
+}
+
+.lost-btn{
+  background-color: #FF4040;
+  color: white;
+  text-align: center;
+  width: 50px;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+  border: none;
+}
+
+.delist-btn{
+  background-color: #25A704;
+  color: white;
+  text-align: center;
+  width: 80px;
+  margin-left: 2px;
+  margin-right: 2px;
+  cursor: pointer;
+  border: none;
+}
+
+.insert-bookform{
+    margin-top: 20px;
+    display: block;
+    float: left;
+    width: 50%;
+    margin-left: 200px;
+    font-size: 15px;
+}
+
+
+input{
+  width: 60%;
+  background-color: white;
+  padding: 5px 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #7995cd;
+  box-sizing: border-box;
+}
+
+option{
+    background-color: white;
+}
+
+label{
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+}
+
+.date, select{
+    width: 30%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+#add{
+  margin-top: 20px;
+  margin-bottom: 100px;
+  border-radius: 10px;
+  border: #C3D6FC;
+  padding: 8px 10px;
+  display: block;
+  float: right;
+  margin-right: 150px;
+  background-color: #C3D6FC;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+}

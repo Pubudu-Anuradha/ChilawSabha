@@ -1,0 +1,139 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif ;
+  overflow: hidden;
+}
+
+ul {
+  list-style-type: none;
+  overflow: hidden;
+}
+.upper-header{
+  width: 100%;
+  float: left;
+}
+
+li {
+  float: left;
+}
+
+li .logo-img {
+  display: block;
+  text-align: center;
+  margin: 4px;
+  margin-left: 150px;
+  padding: 14px 16px;
+  width: 75px;
+  height: 80px;
+} 
+
+
+
+.title{
+  float: right;
+  margin: 20px;
+  margin-right: 250px;
+}
+
+.chilaw{
+  font-size: 50px;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.sabha{
+  white-space: initial;
+  font-size: 15px;
+  letter-spacing: 3px;
+}
+
+.lower-header{
+  width: 100%;
+  float: left;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-width: 100%;
+}
+
+.items{
+  font-size: 15px;
+  /* display: block; */
+  margin-left: 25px;
+  padding: 8px 100px;
+  float: left;
+  text-decoration: none;
+  color: black;
+}
+
+body{
+  height: 100vh;
+}
+.login-img{
+  margin: 10px;
+  width: 60px;
+  height: 60px
+}
+
+.login {
+  margin-left: 30%;
+  width: 40%;
+  border: 2px solid #C3D6FC;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 40px;
+  padding: 40px;
+}
+
+.login-title{
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.form{
+  font-size: 15px;
+}
+
+input{
+  width: 60%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: 1px solid #7995cd;
+  box-sizing: border-box;
+}
+
+.forgotpw{
+  font-size: 13px;
+  text-decoration: none;
+  color: #426AD1;
+}
+
+label{
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}
+
+#login{
+  margin-top: 20px;
+  border-radius: 10px;
+  border: #C3D6FC;
+  padding: 8px 10px;
+  margin-left: 250px;
+  background-color: #C3D6FC;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+}
+
+.footer-content{
+  position: absolute;
+  width: 98%;
+  color: white;
+  background-color: black;
+  text-align: center;
+  padding: 15px;
+  bottom: -200px;
+  font-weight: 100;
+}

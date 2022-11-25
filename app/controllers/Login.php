@@ -35,6 +35,63 @@ class Login extends Controller
         $this->view('Login/Admin', $data);
     }
 
+    public function LibraryMember(){
+        $data = [];
+        if (isset($_POST['login'])) {
+            // var_dump($_POST);
+            // Login submitted
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $model = $this->model('LibraryLoginModel');
+                $rows = $model->getLibraryUserCredentials($_POST['email']);
+                if ($rows->num_rows > 0) {
+                    $row = $rows->fetch_assoc();
+                    $role = $row['role'];
+                    if (password_verify($_POST['password'], $row['password_hash'])) {
+                        $_SESSION['login'] = true;
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
+                        header("location:" . URLROOT . "/$role");
+                        die();
+                    } else {
+                        $data['message'] = 'wrongpass';
+                    }
+                } else {
+                    $data['message'] = 'nouser';
+                }
+            }
+        }
+        $this->view('Login/LibraryMember', $data);
+    }
+
+    public function LibraryStaff(){
+        $data = [];
+        if (isset($_POST['login'])) {
+            // var_dump($_POST);
+            // Login submitted
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $model = $this->model('LibraryLoginModel');
+                $rows = $model->getStaffUserCredentials($_POST['email']);
+                if ($rows->num_rows > 0) {
+                    $row = $rows->fetch_assoc();
+                    $role = $row['role'];
+                    if (password_verify($_POST['password'], $row['password_hash'])) {
+                        $_SESSION['login'] = true;
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
+                        header("location:" . URLROOT . "/$role");
+                        die();
+                    } else {
+                        $data['message'] = 'wrongpass';
+                    }
+                } else {
+                    $data['message'] = 'nouser';
+                }
+            }
+        }
+
+        $this->view('Login/LibraryStaff', $data);
+    }
+
     public function Logout($redir = 'Home/index')
     {
         if (isset($_SESSION['login'])) {
