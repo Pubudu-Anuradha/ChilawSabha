@@ -12,7 +12,7 @@ class LibraryStaff extends Controller
         $this->view('LibraryStaff/index');
     }
 
-    public function insertbooks()
+    public function Insertbooks()
     {
         $data = [];
         if (isset($_POST['submit'])) {
@@ -43,11 +43,11 @@ class LibraryStaff extends Controller
             }
         }
 
-        $this->view('LibraryStaff/insertbooks', $data);
+        $this->view('LibraryStaff/Insertbooks', $data);
     }
-    public function viewbooks()
+    public function Viewbooks()
     {
         $data = ['books' => $this->model('BookModel')->GetBookList()];
-        $this->view('LibraryStaff/viewbooks', $data);
+        $this->view('LibraryStaff/Viewbooks', $data);
     }
 }

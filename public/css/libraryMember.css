@@ -76,7 +76,7 @@ body{
   background-color: black;
   text-align: center;
   padding: 15px;
-  bottom: -200px;
+  bottom: -100px;
   font-weight: 100;
 }
 
@@ -118,17 +118,26 @@ body{
     margin-left: 40px;
 }
 
-.btn-logout{
-    float: right;
-    padding: 6px;
-    display: block;
-    width: 10%;
-    background-color: #C3D6FC;
-    border: 2px solid #C3D6FC;
-    border-radius: 10px;
+.user-select{
+    width: auto;
     margin-top: 40px;
-    margin-right: 16px;
-    font-size: 17px;
-    cursor: pointer;
+    margin-right: 60px;
+    display: block;
+    float: right;
+    background-color: #d2e2fc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
 
+.user-name{
+    display: none;
+}
+
+.logout-img{
+    float: right;
+    margin-top: 40px;
+    margin-right: 20px;
+    height: 30px;
 }

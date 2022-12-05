@@ -70,14 +70,14 @@ body{
 }
 
 .footer-content{
-  position: absolute;
-  width: 98%;
+  position: relative;
   color: white;
   background-color: black;
   text-align: center;
   padding: 15px;
-  bottom: -200px;
+  bottom: -100px;
   font-weight: 100;
+  clear: both;
 }
 
 .sidebar {
@@ -171,19 +171,28 @@ body{
     margin-left: 40px;
 }
 
-.btn-logout{
-    float: right;
-    padding: 6px;
-    display: block;
-    width: 10%;
-    background-color: #C3D6FC;
-    border: 2px solid #C3D6FC;
-    border-radius: 10px;
+.user-select{
+    width: auto;
     margin-top: 40px;
-    margin-right: 16px;
-    font-size: 17px;
-    cursor: pointer;
+    margin-right: 60px;
+    display: block;
+    float: right;
+    background-color: #d2e2fc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
 
+.user-name{
+    display: none;
+}
+
+.logout-img{
+    float: right;
+    margin-top: 40px;
+    margin-right: 20px;
+    height: 30px;
 }
 
 .bookcatalogue{
@@ -213,11 +222,15 @@ body{
     border-bottom: 1px solid rgb(155, 155, 155);
 }
 
+td.table-data{
+    word-break: break-word;
+}
+
 .edit-btn{
   background-color: #E2631B;
   color: white;
   text-align: center;
-  width: 50px;
+  width: 45px;
   margin-left: 2px;
   margin-right: 2px;
   cursor: pointer;
@@ -228,7 +241,7 @@ body{
   background-color: #FF4040;
   color: white;
   text-align: center;
-  width: 50px;
+  width: 45px;
   margin-left: 2px;
   margin-right: 2px;
   cursor: pointer;
@@ -239,7 +252,7 @@ body{
   background-color: #25A704;
   color: white;
   text-align: center;
-  width: 80px;
+  width: 70px;
   margin-left: 2px;
   margin-right: 2px;
   cursor: pointer;
@@ -260,7 +273,7 @@ input{
   width: 60%;
   background-color: white;
   padding: 5px 10px;
-  margin: 8px 0;
+  margin: 6px 0;
   border-radius: 5px;
   border: 1px solid #7995cd;
   box-sizing: border-box;
@@ -276,7 +289,57 @@ label{
     text-align: left;
 }
 
-.date, select{
+.bookCategory-label{
+  margin-left: 30px;
+  width: 120px;
+}
+
+.recdate-label{
+  margin-left: 30px;
+  width: 120px;
+}
+
+.recdate-input{
+    width: 20%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+.page{
+    width: 20%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+.dateofpub-input{
+    width: 20%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+.bookCategory-input{
+    width: 20%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+.accno{
     width: 30%;
     background-color: white;
     padding: 5px 10px;
@@ -284,6 +347,21 @@ label{
     border-radius: 5px;
     border: 1px solid #7995cd;
     box-sizing: border-box;
+}
+
+.price{
+    width: 20%;
+    background-color: white;
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    border: 1px solid #7995cd;
+    box-sizing: border-box;
+}
+
+.price-label{
+  margin-left: 20px;
+  width: 55px; 
 }
 
 #add{

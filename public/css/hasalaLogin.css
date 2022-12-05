@@ -128,12 +128,12 @@ label{
 }
 
 .footer-content{
-  position: absolute;
+  position: fixed;
+  bottom: 0;
   width: 98%;
   color: white;
   background-color: black;
   text-align: center;
   padding: 15px;
-  bottom: -200px;
   font-weight: 100;
 }
