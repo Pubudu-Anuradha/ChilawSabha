@@ -1,0 +1,402 @@
+/* header */
+
+ *{
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+body{
+  background-color:white;
+  overflow-x: hidden;
+}
+
+
+.logo{
+  margin-top: 2rem;
+}
+
+img {
+  display: block;
+  margin-left: 10%;
+  margin-right: 90%;
+  width: 6rem;
+}
+
+.text-head{
+  display: block;
+  margin-left: 70%;
+  margin-top: -6%;
+  padding-bottom: 2rem;
+} 
+
+
+.text-head h1{
+  font-size:3.5rem;
+  text-transform: uppercase;
+} 
+
+.text-head h3{
+  font-size:1rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+} 
+
+.navbar{
+  background: rgb(255, 255, 255);
+  text-align: center;
+  
+}
+
+.navbar ul{
+  display: inline-flex;
+  list-style: none;
+  color: #fff;
+  
+}
+
+.navbar ul li{
+  width: 280px;
+  margin: 4px;
+  padding: 4px;
+  z-index:1;
+}
+
+.navbar ul li a{
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+.dropdown-content{
+  display: none;
+}
+
+/* user info*/
+.user{
+  width: 13.5rem;
+  margin: 5px auto 0;
+  left: 85%; 
+  height: 8rem;
+  position: absolute;
+  color: black;
+}
+
+.user p{
+  margin-left: 30%;
+  margin-top: 16%;
+  padding-left: 3px;
+  border: 3px solid #C3D6FC;
+  border-radius: 5px ;
+  background: #C3D6FC;
+}
+
+.user-logo{
+  display: block;
+  margin-top: -20%;
+  margin-left: 2%;
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Login form */
+
+.login-form{
+  width: 800px;
+  margin: 250px auto 0;
+  left: 50%; 
+  height: 350px;
+  transform:translate(-50%,-50%);
+  position: absolute;
+  color: black;
+  border: 3px solid #C3D6FC;
+  border-radius: 5px 0px ;
+}
+
+.login-form h1{
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 40px 14%;
+}
+
+.login-form p{
+  font-size: 15px;
+  margin: 20px 100px 10px 100px;
+}
+
+.login-form a{
+  margin-left: 50px;
+  padding: 50px;
+}
+
+input[type=email], input[type=password]{
+  margin: 5px 100px;
+  margin-top: -6%;
+  margin-left: 190px;
+  font-size: 16px;
+  width: 50%;
+  padding: 10px 10px;
+  border: 0;
+  outline: none;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+input[type=submit]{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 415px;
+  padding: 6px 6px;
+  width: 12%;
+  border: none;
+  border-radius: 10px;
+  background: #C3D6FC;
+  color: rgb(0, 0, 0);
+  box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+/* logout */
+
+/* .logouth{
+  display: none;
+} */
+
+.user p:hover .logout{
+  display: block;
+  position: absolute;
+  background: rgb(187, 232, 244);
+}
+
+.logout {
+  width: 50%;
+  margin-right: -5rem;
+  margin-left: 62.5rem;
+  margin-top: 4rem;
+  text-align: center;
+  margin-bottom: -7rem;
+  position: absolute;
+  z-index: 2;
+}
+
+
+.login-form h4{
+  font-size: 14px;
+  color: rgb(82, 173, 173);
+}
+
+/* addComplaint */
+.staffmenu{
+  width: 300px;
+  margin: 25px auto 0;
+  left: 2%; 
+  height: 420px;
+  position: absolute;
+  color: black;
+}
+
+.staffmenu ul{
+  display: inline-block;
+  list-style: none;
+  color: rgb(255, 255, 255);
+}
+
+.staffmenu ul li{
+  width: 16rem;
+  margin: 12px;
+  padding: 18px;
+  background: #C3D6FC;
+  border-radius: 10px;
+  box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+.staffmenu ul li a{
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  margin-left: 40px;
+}
+
+
+.complaint-form{
+  width: 61rem;
+  margin: 25px auto 0;
+  left: 25%; 
+  height: 65rem;
+  position: absolute;
+  color: black;
+}
+
+input[type=text]{
+  margin: 5px 200px;
+  margin-top: -27px;
+  font-size: 16px;
+  width: 60%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+input[type=file]{
+  margin: 5px 200px;
+  margin-top: -27px;
+  font-size: 16px;
+  width: 50%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+input[type=date]{
+  margin: 5px 200px;
+  margin-top: -27px;
+  font-size: 16px;
+  width: 50%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+.complaint-form p{
+  margin: 4px;
+  margin-top: 20px;
+}
+
+.complaint-form h1{
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  font-weight: 200;
+}
+
+.complaint-form select{
+  margin: 5px 200px;
+  margin-top: -27px;
+  font-size: 16px;
+  width: 40%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+.complaint-form textarea{
+  margin: 5px 200px;
+  margin-top: -27px;
+  font-size: 16px;
+  width: 78%;
+  height: 50%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: #C3D6FC;
+}
+
+.complaint-form input[type=submit]{
+  font-size: 14px;
+  font-weight: bold;
+  margin: 15px 850px;
+  padding: 6px 6px;
+  width: 12%;
+  border: none;
+  border-radius: 10px;
+  background: #C3D6FC;
+  color: rgb(0, 0, 0);
+  box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+
+.hr1 {
+  border: 0.5px solid rgb(0, 0, 0);
+}
+
+
+/* view */
+.view-new-complaint{
+  width: 61rem;
+  margin: 25px auto 0;
+  left: 25%; 
+  height: 90rem;
+  position: absolute;
+  color: black;
+}
+
+.view-new-complaint h1{
+  text-transform: uppercase;
+  padding-bottom: 20px;
+  font-weight: 200;
+}
+
+.view-new-complaint input[type=submit]{
+  background: #09d055;
+  width: 8%;
+  margin-top: 1px;
+}
+
+/* table */
+
+.content-table {
+  border-collapse: collapse;
+  width: 65%;
+  height: 35%;
+  margin: 6.5rem 23.7rem;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+  background-color: #C3D6FC;;
+  color: #000000;
+  text-align: left;
+  font-weight: bold;
+}
+
+.content-table th, td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr td a{
+  font-size: 12px;
+  padding: 7px;
+  border: none;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+  box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+.accept{
+  background-color: #09d055;
+}
+
+.view{
+  background-color: #ff0000;
+}
+
+/* footer */
+.copyright{
+  margin-top: 31.5rem;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  background: black;
+  padding: 12px;
+}
+
+.copyright-complaint-form {
+  position: fixed;
+  bottom:0;
+  text-align: center;
+  width: 100%; 
+  color: #fff;
+  font-size: 1rem;
+  background: black;
+  padding: 12px;
+}
