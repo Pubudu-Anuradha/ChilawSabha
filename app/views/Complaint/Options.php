@@ -1,16 +1,16 @@
 <div class=staffmenu>
     <ul>
         <li>
-            <a href="<?php echo URLROOT . "/ComplaintHandler" ?>">Dashboard</a>
+            <a href="<?php echo URLROOT . "/Complaint" ?>">Dashboard</a>
         </li>
         <li>
-            <a href="<?php echo URLROOT . "/complaint/newComplaints" ?>">New Complaints</a>
+            <a href="<?php echo URLROOT . "/Complaint/newComplaints" ?>">New Complaints</a>
         </li>
         <li>
             <a href="">View All Complaints</a>
         </li>
         <li class="active">
-            <a href="<?php echo URLROOT . "/complaint/addComplaint" ?>">Add Complaint</a>
+            <a href="<?php echo URLROOT . "/Complaint/addComplaint" ?>">Add Complaint</a>
         </li>
         <li>
             <a href="#">Resolved Complaints</a>

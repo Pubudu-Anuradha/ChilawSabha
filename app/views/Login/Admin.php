@@ -38,10 +38,17 @@
                     Admin Login
                 </div>
                 <form action="<?= URLROOT . "/Login/Admin" ?>" method="post">
+                    <?php if (isset($data['message']) && $data['message'] == 'nouser') {
+                        echo '<div class="log-err"> No User with that email exists </div>';
+                    } ?>
+
                     <div class="field">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email"> <br>
                     </div>
+                    <?php if (isset($data['message']) && $data['message'] == 'wrongpass') {
+                        echo '<div class="log-err"> Wrong Password </div>';
+                    } ?>
                     <div class="field">
                         <label for="passwd">Password</label>
                         <input type="password" name="passwd" id="passwd"> <br>

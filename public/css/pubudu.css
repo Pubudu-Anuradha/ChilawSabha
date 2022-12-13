@@ -238,7 +238,13 @@ input[type="submit"] {
     --logospadlr: 1rem;
   }
 }
-
+.log-err {
+  background-color: #ff4040;
+  color: white;
+  text-align: center;
+  width: fit-content;
+  padding: 1rem 0.5rem;
+}
 .shadow {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

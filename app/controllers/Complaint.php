@@ -4,7 +4,7 @@ class Complaint extends Controller
 {
     public function index()
     {
-        $this->view('Complaints/addComplaint');
+        $this->view('Complaint/dashboard');
     }
     public function addComplaint()
     {
@@ -30,11 +30,11 @@ class Complaint extends Controller
             }
         }
 
-        $this->view('Complaints/addComplaint', $data);
+        $this->view('Complaint/addComplaint', $data);
     }
     public function newComplaints()
     {
         $data = ['Complaints' => $this->model('ComplaintModel')->GetComplaint()];
-        $this->view('Complaints/newComplaints', $data);
+        $this->view('Complaint/newComplaints', $data);
     }
 }

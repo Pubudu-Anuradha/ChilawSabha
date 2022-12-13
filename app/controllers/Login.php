@@ -35,7 +35,8 @@ class Login extends Controller
         $this->view('Login/Admin', $data);
     }
 
-    public function LibraryMember(){
+    public function LibraryMember()
+    {
         $data = [];
         if (isset($_POST['login'])) {
             // var_dump($_POST);
@@ -63,7 +64,8 @@ class Login extends Controller
         $this->view('Login/LibraryMember', $data);
     }
 
-    public function LibraryStaff(){
+    public function LibraryStaff()
+    {
         $data = [];
         if (isset($_POST['login'])) {
             // var_dump($_POST);
@@ -90,6 +92,36 @@ class Login extends Controller
         }
 
         $this->view('Login/LibraryStaff', $data);
+    }
+
+    public function Complaint()
+    {
+        $data = [];
+
+        if (isset($_POST['login'])) {
+
+            // Login submitted
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $model = $this->model('ComplaintLoginModel');
+                $rows = $model->getComplainHandlerCredentials($_POST['email']);
+                if ($rows->num_rows > 0) {
+                    $row = $rows->fetch_assoc();
+                    var_dump($row);
+                    $role = $row['role'];
+                    if (password_verify($_POST['password'], $row['password_hash'])) {
+                        $_SESSION['login'] = true;
+                        $_SESSION['role'] = $row['role'];
+                        header("location:" . URLROOT . "/$role");
+                        die();
+                    } else {
+                        $data['message'] = 'wrongpass';
+                    }
+                } else {
+                    $data['message'] = 'nouser';
+                }
+            }
+        }
+        $this->view('Login/Complaint', $data);
     }
 
     public function Logout($redir = 'Home/index')

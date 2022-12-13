@@ -82,11 +82,11 @@
 <body>
     <div class="login-form">
         <h1>Complaint Handler Login</h1>
-        <form action="<?=URLROOT . "/ComplaintLogin/ComplaintHandler"?>" method="post">
+        <form action="<?= URLROOT . "/Login/Complaint" ?>" method="post">
 
             <?php if (isset($data['message'])) {
-    echo $data['message'];
-}?>
+                echo $data['message'];
+            } ?>
 
             <p>Email</p>
             <input type="email" id="email" class="form-control" name="email" />
@@ -107,7 +107,7 @@
 
 
 
-<!-- <?php require_once 'Logout.php';?> -->
+<!-- <?php require_once 'Logout.php'; ?> -->
 
 
 <Footer>

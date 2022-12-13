@@ -7,5 +7,7 @@
 <a href="<?= URLROOT . "/Login/Admin" ?>">Admin Login</a><br>
 <a href="<?= URLROOT . "/Login/LibraryMember" ?>">Library Member Login</a><br>
 <a href="<?= URLROOT . "/Login/LibraryStaff" ?>">Library Staff Login</a><br>
+<a href="<?= URLROOT . "/Login/Complaint" ?>">Complaint Handler Login</a><br>
+<a href="<?= URLROOT . "/Login/Storage" ?>">Storage Manager Login</a><br>
 
 <?php require_once 'Footer.php'; ?>
