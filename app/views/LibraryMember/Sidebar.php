@@ -4,5 +4,4 @@
     <a href="#" class="option">FAVOURITE LIST</a>
     <a href="#" class="option">PLAN TO READ LIST</a>
     <a href="#" class="option">COMPLETED LIST</a>
-    <a href="#" class="option">BOOK REQUESTS</a>
 </div>

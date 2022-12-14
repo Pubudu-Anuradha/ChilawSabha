@@ -227,7 +227,7 @@ td.table-data{
 }
 
 .edit-btn{
-  background-color: #E2631B;
+  background-color: #F3BC2F;
   color: white;
   text-align: center;
   width: 45px;
@@ -238,7 +238,7 @@ td.table-data{
 }
 
 .lost-btn{
-  background-color: #FF4040;
+  background-color: #93B4F2;
   color: white;
   text-align: center;
   width: 45px;
@@ -249,7 +249,7 @@ td.table-data{
 }
 
 .delist-btn{
-  background-color: #25A704;
+  background-color: #FF4040;
   color: white;
   text-align: center;
   width: 70px;
