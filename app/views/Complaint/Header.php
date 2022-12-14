@@ -66,7 +66,7 @@
     </div>
     <hr class="hr1">
     <div class="user">
-                <p> <a href="#">Mr M.K. Cooray</a> </p>
+                <p> <a href="#"><?= $_SESSION['name'] ?></a> </p>
                 <img src="<?php echo URLROOT . "/public/assets/user.png" ?>" alt="" srcset="" class="user-logo">
     </div>
     <?php

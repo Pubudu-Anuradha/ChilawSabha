@@ -111,6 +111,7 @@ class Login extends Controller
                     if (password_verify($_POST['password'], $row['password_hash'])) {
                         $_SESSION['login'] = true;
                         $_SESSION['role'] = $row['role'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' .$row['last_name'];
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
@@ -122,6 +123,34 @@ class Login extends Controller
             }
         }
         $this->view('Login/Complaint', $data);
+    }
+
+    public function Storage()
+    {
+        $data = [];
+        if (isset($_POST['login'])) {
+            //var_dump($_POST);
+            if (isset($_POST['email']) && isset($_POST['password'])) {
+                $model = $this->model('StorageLoginModel');
+                $rows = $model->getStaffUserCredentials($_POST['email']);
+                if ($rows->num_rows > 0) {
+                    $row = $rows->fetch_assoc();
+                    $role = $row['role'];
+                    if (password_verify($_POST['password'], $row['password_hash'])) {
+                        $_SESSION['login'] = true;
+                        $_SESSION['role'] = $row['role'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' .$row['last_name'];
+                        header("location:" . URLROOT . "/$role");
+                        die();
+                    } else {
+                        $data['message'] = 'Wrong Password';
+                    }
+                } else {
+                    $data['message'] = 'User not Found';
+                }
+            }
+        }
+        $this->view('Login/Storage', $data);
     }
 
     public function Logout($redir = 'Home/index')
