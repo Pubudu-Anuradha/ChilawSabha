@@ -1,5 +1,5 @@
 <Footer>
-    <div class="copyright-complaint-form">
+    <div class="copyright">
         Copyright @2022
     </div>
 </Footer>

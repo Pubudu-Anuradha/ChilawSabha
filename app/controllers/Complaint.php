@@ -37,4 +37,9 @@ class Complaint extends Controller
         $data = ['Complaints' => $this->model('ComplaintModel')->GetComplaint()];
         $this->view('Complaint/newComplaints', $data);
     }
+    public function newComplaint($id)
+    {
+        $data = ['complaint' => $this->model('ComplaintModel')->GetComplaintById($id)];
+        $this->view('Complaint/newComplaint', $data);
+    }
 }

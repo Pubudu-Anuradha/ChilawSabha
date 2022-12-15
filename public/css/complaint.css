@@ -309,7 +309,6 @@ input[type="date"] {
   width: 61rem;
   margin: 25px auto 0;
   left: 25%;
-  height: 90rem;
   position: absolute;
   color: black;
 }
@@ -344,45 +343,63 @@ input[type="date"] {
   color: #000000;
   text-align: left;
   font-weight: bold;
+  text-align: center;
 }
 
 .content-table th,
 td {
-  padding: 12px 15px;
+  padding: 12px 0;
 }
 
 .content-table tbody tr {
   border-bottom: 1px solid #dddddd;
+  
+}
+.tab-id{
+  padding-left: 10px;
 }
 
 .content-table tbody tr td a {
   font-size: 12px;
-  padding: 7px;
   border: none;
   border-radius: 10px;
   color: rgb(255, 255, 255);
   box-shadow: 2px 2px 3px #aaaaaa;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .accept {
-  background-color: #09d055;
+  text-align: center;
+  background-color: #25A704;
+  height: 30px;
+  width: 60px;
+  border: 0;
+  border-radius: 10px;
 }
 
 .view {
-  background-color: #ff0000;
-}
-
-/* footer */
-.copyright {
-  margin-top: 31.5rem;
+  background-color: #93B4F2;
   text-align: center;
-  color: #fff;
-  font-size: 1rem;
-  background: black;
-  padding: 12px;
+  height: 30px;
+  width: 60px;
+  border: 0;
+  border-radius: 10px;
 }
+.action-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.forgot {
+  text-decoration: none;
+}
+/* footer */
 
-.copyright-complaint-form {
+.copyright{
   position: fixed;
   bottom: 0;
   text-align: center;
@@ -391,12 +408,4 @@ td {
   font-size: 1rem;
   background: black;
   padding: 12px;
-}
-.warn {
-  color: red;
-  padding-left: 2rem;
-}
-.success {
-  color: #09d055;
-  padding-left: 2rem;
 }

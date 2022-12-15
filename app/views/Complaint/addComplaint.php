@@ -33,10 +33,13 @@ require_once 'Options.php';
         <input class="form-control" id="date" name="date" placeholder="Date" type="date" required>
         <p>Category</p>
         <select class="form-control" id="category" name="category" id="category">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
+            <option value="Garbage disposal">Garbage disposal</option>
+            <option value="Land issues">Land issues</option>
+            <option value="Unauthorized construction">Unauthorized construction</option>
+            <option value="Street lamp">Street lamp</option>
+            <option value="Roads require repair">Roads require repair</option>
+            <option value="Damaged public infrastructure">Damaged public infrastructure</option>
+            <option value="Other">Other</option>
         </select>
 
         <p>Message</p>

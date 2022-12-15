@@ -12,27 +12,17 @@ require_once 'Options.php';
     <hr class="hr1">
     <br>
 
-    <!-- <div class="accept">
-        <input type="submit" value="Accept">
-    </div>
-
-    <div class="view">
-        <input type="submit" value="View" >
-    </div> -->
-
-
 </div>
 
 
 <table class="content-table">
     <thead>
         <tr>
-            <th>Complaint ID</th>
+            <th>ID</th>
             <th>Complainer Name</th>
             <th>Category</th>
             <th>Date</th>
-            <th>Accept</th>
-            <th>View</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -41,15 +31,14 @@ if (isset($data['Complaints'])) {
 
     while ($complaint = $data['Complaints']->fetch_assoc()) {
         echo "<tr>";
-        echo "<td class ='data'>" . $complaint['complaint_id'] . "</td>";
+        echo "<td class ='data tab-id'>" . $complaint['complaint_id'] . "</td>";
         echo "<td class ='data'>" . $complaint['name'] . "</td>";
         echo "<td class ='data'>" . $complaint['category'] . "</td>";
         echo "<td class='category'>" . $complaint['date'] . "</td>";
-        echo "<td>
-                <a class = 'accept' href = '#' >Accept</a>
-             </td>";
-        echo "<td>
-                <a class = 'view' href = '#' >View</a>
+        $link = URLROOT . '/Complaint/newComplaint/' . $complaint['complaint_id'];
+        echo "<td class = 'action-btn'>
+                <button class = 'accept' >Accept</button>
+                <button class = 'view' onclick=\"location.href='$link'\">View</button>
              </td>";
         echo "</tr>";
     }

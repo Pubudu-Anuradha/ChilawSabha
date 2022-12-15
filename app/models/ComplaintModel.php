@@ -9,4 +9,8 @@ class ComplaintModel extends Model
     {
         return $this->select('complaints');
     }
+    public function GetComplaintById($id)
+    {
+        return $this->select('complaints', '*', "complaint_id=$id");
+    }
 }
