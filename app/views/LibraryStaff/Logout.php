@@ -7,5 +7,5 @@
             Logout
         </Option>
         </select>
-        <img src="<?=URLROOT . '/public/assets/Login.png'?>" alt="login-avatar" class="logout-img">
+        <img src="<?=URLROOT . '/public/assets/user.png'?>" alt="login-avatar" class="logout-img">
     </div>

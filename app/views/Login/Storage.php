@@ -46,15 +46,17 @@
         <h1 class="loginTitle">Storage Manager Login</h1>
         <div class="loginForm">
             <form action="<?= URLROOT . "/Login/Storage" ?>" method="post" class="form">
+                <?php warn($data, 'nouser') ?>
                 <label for="email">Email</label>
-                <input type="email" name="email" required class="email" /><br />
+                <input type="email" name="email" required class="email" style="margin-top: 2px; margin-bottom:30px"/><br />
                 
+                <?php warn($data, 'wrongpassword') ?>
                 <label for="password">Password</label>
-                <input type="password" name="password" required class="password" /><br />
+                <input type="password" name="password" required class="password" style="margin-top: 2px; margin-bottom:30px" /><br />
                 
                 <a href="#" class="forgot">Forgot your password?</a>
 
-                <input type="submit" value="login" name="login" id="loginButton" />
+                <input type="submit" value="login" name="Submit" id="loginButton" />
 
             </form>
         </div>

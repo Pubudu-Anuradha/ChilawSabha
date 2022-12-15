@@ -76,16 +76,16 @@
             <?php if (isset($data['message'])) {
                 echo $data['message'];
             } ?>
-
+            <?php warn($data, 'noUser') ?>
             <p>Email</p>
             <input type="email" id="email" class="form-control" name="email" />
 
 
-
+            <?php warn($data, 'passwordWrong') ?>
             <p>Password</p>
             <input type="password" id="password" class="form-control" name="password" />
 
-            <input type="submit" class="btn-primary" value="Login" name="login">
+            <input type="submit" class="btn-primary" value="Login" name="Submit">
             <a href="#" class="forgot">Forgot your password?</a>
         </form>
 

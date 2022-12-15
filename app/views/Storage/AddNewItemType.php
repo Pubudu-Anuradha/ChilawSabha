@@ -1,29 +1,15 @@
 <?php require_once 'Header.php';?>
 
     <div style="display:flex">
-        <div class="dashboard">
-            <a href="<?= URLROOT . "/Storage/index" ?>" class="option">Dashboard</a>
-            <a href="<?= URLROOT . "/Storage/ViewItems" ?>" class="option">View Items</a>
-            <a href="<?= URLROOT . "/Storage/AddNewItemType" ?>" class="option">Add New Type of Item</a>
-            <a href="#" class="option">Issue Items</a>
-            <a href="#" class="option">Recieve Items</a>
-            <a href="#" class="option">Damaged Items</a>
-            <a href="#" class="option">Nearly Out of Stock Items</a>
-            <a href="#" class="option">Issue And Recieve History</a>
-        </div>
-
+        
+        <?php require_once 'Dashboard.php'; ?>
 
         <div class="addNewItemType">
             <div style="display:flex">
                 <div class="sub">
                     <h1 class="viewTitle" style="margin-right: 400px;">Add New Item Type</h1>
 
-                    <img src="<?= URLROOT . '/public/assets/Login.png' ?>" alt="Profile Avatar" class="profileAvatar" />
-                        
-                    <select class="logoutForm" name="logoutForm" id="logoutForm" onchange="if(this.value=='Logout')location.href='<?= URLROOT . '/Login/Logout' ?>'">
-                        <option value="name" style="display:none"><?= $_SESSION['name'] ?></option>
-                        <option value="Logout">Logout</option>
-                    </select>
+                    <?php require_once 'Logout.php'; ?>
                 </div>
             </div>
 
@@ -46,7 +32,11 @@
                     <label for="max_stock">Max Stock</label><input type="number" name="max_stock" required /><br />
                         
                     <input type="submit" value="Submit" name="Submit" id="addNewItemType" />
-                    <?php if(isset($data['message'])) echo $data['message'];?>
+                    <?php 
+                    success($data,'typeadded');
+                    warn($data, 'typenotadded');
+                    warn($data, 'invalidinput');
+                    ?>
                 </form>
             </div>
         </div>

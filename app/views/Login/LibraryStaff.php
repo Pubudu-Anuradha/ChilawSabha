@@ -37,13 +37,15 @@
         <h1 class="login-title">LIBRARY STAFF LOGIN</h1>
         <div class="form">
           <form action="<?=URLROOT . '/Login/LibraryStaff'?>" method="post" class="form">
+            <?php warn($data, 'noUser') ?>
             <label for="email">Email</label>
             <input type="text" name="email" required class="email" /><br />
+            <?php warn($data, 'wrongPassword') ?>
             <label for="password">Password</label>
             <input type="password" name="password" required class="password"/><br />
             <a href="#" class="forgotpw">Forgot your password?</a>
 
-            <input type="submit" value="Login" name="login" id="login" />
+            <input type="submit" value="Login" name="Submit" id="login" />
 
           </form>
         </div>

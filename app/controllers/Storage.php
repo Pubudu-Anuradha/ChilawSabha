@@ -12,17 +12,16 @@ class Storage extends Controller{
     public function AddNewItemType(){
         $data = [];
         if(isset($_POST['Submit'])){
-            unset($_POST['Submit']);
             if(isset($_POST['item_name']) && !empty($_POST['item_name']) && isset($_POST['item_category']) && !empty($_POST['item_category']) && isset($_POST['min_stock']) && !empty($_POST['min_stock']) && isset($_POST['max_stock']) && !empty($_POST['max_stock'])){
                 $model = $this->model('ItemModel');
                 $result = $model->AddNewItemType($_POST['item_id'], $_POST['item_name'], $_POST['item_category'], $_POST['min_stock'], $_POST['max_stock']);
                 if($result){
-                    $data['message'] = 'New item type added successfully!';
+                    $data['typeadded'] = 'New item type added successfully!';
                 }else{
-                    $data['message'] = 'Failed to add New item type!';
+                    $data['typenotadded'] = 'Failed to add New item type!';
                 }
             }else{
-                $data['message'] = 'Invalid Parameters';
+                $data['invalidinput'] = 'Invalid Parameters';
             }
         }
         $this->view('Storage/AddNewItemType', $data);

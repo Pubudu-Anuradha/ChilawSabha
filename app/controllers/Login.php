@@ -28,7 +28,7 @@ class Login extends Controller
                         $data['wrongpass'] = 'Wrong Password';
                     }
                 } else {
-                    $data['message'] = 'nouser';
+                    $data['nouser'] = 'No User with that password';
                 }
             }
         }
@@ -38,7 +38,7 @@ class Login extends Controller
     public function LibraryMember()
     {
         $data = [];
-        if (isset($_POST['login'])) {
+        if (isset($_POST['Submit'])) {
             // var_dump($_POST);
             // Login submitted
             if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -54,10 +54,10 @@ class Login extends Controller
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
-                        $data['message'] = 'wrongpass';
+                        $data['wrongPassword'] = 'Password incorrect';
                     }
                 } else {
-                    $data['message'] = 'nouser';
+                    $data['noUser'] = 'User not found';
                 }
             }
         }
@@ -67,7 +67,7 @@ class Login extends Controller
     public function LibraryStaff()
     {
         $data = [];
-        if (isset($_POST['login'])) {
+        if (isset($_POST['Submit'])) {
             // var_dump($_POST);
             // Login submitted
             if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -83,10 +83,10 @@ class Login extends Controller
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
-                        $data['message'] = 'wrongpass';
+                        $data['wrongPassword'] = 'Password incorrect';
                     }
                 } else {
-                    $data['message'] = 'nouser';
+                    $data['noUser'] = 'User not found';
                 }
             }
         }
@@ -98,7 +98,7 @@ class Login extends Controller
     {
         $data = [];
 
-        if (isset($_POST['login'])) {
+        if (isset($_POST['Submit'])) {
 
             // Login submitted
             if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -115,10 +115,10 @@ class Login extends Controller
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
-                        $data['message'] = 'wrongpass';
+                        $data['passwordWrong'] = 'Password is incorrect';
                     }
                 } else {
-                    $data['message'] = 'nouser';
+                    $data['noUser'] = 'User not exsists';
                 }
             }
         }
@@ -128,7 +128,7 @@ class Login extends Controller
     public function Storage()
     {
         $data = [];
-        if (isset($_POST['login'])) {
+        if (isset($_POST['Submit'])) {
             //var_dump($_POST);
             if (isset($_POST['email']) && isset($_POST['password'])) {
                 $model = $this->model('StorageLoginModel');
@@ -143,10 +143,10 @@ class Login extends Controller
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
-                        $data['message'] = 'Wrong Password';
+                        $data['wrongpassword'] = 'Wrong Password';
                     }
                 } else {
-                    $data['message'] = 'User not Found';
+                    $data['nouser'] = 'User not Found';
                 }
             }
         }
