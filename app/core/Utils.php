@@ -6,3 +6,11 @@ function warn($data, $check = 'message')
         unset($data[$check]);
     }
 }
+
+function success($data, $check = 'message')
+{
+    if (isset($_POST['Submit']) && isset($data[$check])) {
+        echo "<div class=\"success\"> " . $data[$check] . "</div>";
+        unset($data[$check]);
+    }
+}

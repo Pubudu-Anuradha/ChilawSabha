@@ -8,12 +8,18 @@
         Back to User Managment
     </button>
 </div>
+<?php
+if (isset($data['invalid'])) {
+    echo "<div class=\"warn\">" . $data['invalid'] . "</div>";
+}
+if (isset($data['failed'])) {
+    echo "<div class=\"warn\">" . $data['failed'] . "</div>";
+}
+if (isset($data['added'])) {
+    echo "<div class=\"success\">" . $data['added'] . "</div>";
+}
+?>
 <form action="<?= URLROOT . "/Admin/AddUser" ?>" method="post">
-    <?php
-    if (isset($data['message'])) {
-        echo $data['message'] . '<br>';
-    }
-    ?>
     <div class="field">
         <label for="role">
             Employee Type
@@ -40,7 +46,7 @@
         <label for="last_name">
             Last Name
         </label>
-        <input type="text" name="last_name" id="last_name" required>
+        <input type="text" name="last_name" id="last_name">
     </div>
     <div class="field">
         <label for="email">
@@ -67,7 +73,7 @@
         <input type="text" name="address" id="address" required>
     </div>
     <div class="field">
-        <input class="submit shadow" type="submit" value="Add User" name="submit">
+        <input class="submit shadow" type="submit" value="Add User" name="Submit">
     </div>
 </form>
 <?php require_once 'Footer.php'; ?>

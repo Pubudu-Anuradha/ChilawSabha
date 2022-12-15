@@ -38,10 +38,7 @@
                     Admin Login
                 </div>
                 <form action="<?= URLROOT . "/Login/Admin" ?>" method="post">
-                    <?php if (isset($data['message']) && $data['message'] == 'nouser') {
-                        echo '<div class="log-err"> No User with that email exists </div>';
-                    } ?>
-
+                    <?php warn($data, 'nouser') ?>
                     <div class="field">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email"> <br>
