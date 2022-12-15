@@ -7,9 +7,6 @@
     <title>Login</title>
     <link rel="stylesheet" href="<?php echo URLROOT . "/public/css/complaint.css" ?>">
 
-
-
-
     <div class="logo">
         <img src="<?php echo URLROOT . "/public/assets/Logo.jpg" ?>" alt="" srcset="">
     </div>
@@ -71,14 +68,6 @@
 
 </head>
 
-
-
-
-
-
-
-
-
 <body>
     <div class="login-form">
         <h1>Complaint Handler Login</h1>
@@ -103,12 +92,6 @@
     </div>
 
 </body>
-
-
-
-
-<!-- <?php require_once 'Logout.php'; ?> -->
-
 
 <Footer>
     <div class="copyright">

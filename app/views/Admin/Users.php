@@ -1,7 +1,16 @@
 <?php require_once 'Header.php'; ?>
-<div class="title-row">
+<div class="title-row underline">
     <div class="page-title">
         USER MANAGEMENT
+    </div>
+    <div class="title-category">
+        <select name="catfil" id="catfil">
+            <option value="null">Filter by category</option>
+            <option value="Administrator">Administrator</option>
+            <option value="Complaint Handler">Complaint Handler</option>
+            <option value="Storage Manager">Storage Manager</option>
+            <option value="Library Staff">Library Staff</option>
+        </select>
     </div>
     <div class="title-search shadow">
         <input type="text" name="search" id="search" class="field">
@@ -27,7 +36,7 @@
         <th class="table-heading"> Address </th>
         <th class="table-heading"> Email</th>
         <th class="table-heading"> Employee Type </th>
-        <th class="table-heading"> Actions </th>
+        <th class="table-heading act-row-title"> Actions </th>
     </tr>
     <?php if (isset($data['users'])) {
         while ($user = $data['users']->fetch_assoc()) {
@@ -58,4 +67,10 @@
         }
     } ?>
 </table>
+<div class="title-row">
+    <div class="title-row-btns">
+        <button class="title-row-btn shadow" onclick="window.print();">Print this table</button>
+    </div>
+</div>
+<script src="<?= URLROOT . '/public/js/adminSearch.js' ?>"></script>
 <?php require_once 'Footer.php'; ?>
