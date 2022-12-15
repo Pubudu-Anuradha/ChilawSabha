@@ -46,7 +46,7 @@ if (isset($data['added'])) {
         <label for="last_name">
             Last Name
         </label>
-        <input type="text" name="last_name" id="last_name">
+        <input type="text" name="last_name" id="last_name" required>
     </div>
     <div class="field">
         <label for="email">
