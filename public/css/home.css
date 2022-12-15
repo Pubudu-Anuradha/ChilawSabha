@@ -1,5 +1,5 @@
 h1 {
-  color: red;
+  color: black;
 }
 
 .warn {
@@ -9,4 +9,37 @@ h1 {
 .success {
   color: #09d055;
   padding-left: 2rem;
+}
+
+.home {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+a {
+  border-radius: 1rem;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  text-emphasis: bold;
+  height: 3rem;
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+  width: 60%;
+}
+.admin {
+  background-color: blueviolet;
+}
+.storage {
+  background-color: #09d055;
+}
+.complaint {
+  background-color: orange;
+}
+.libstaff {
+  background-color: aquamarine;
+}
+.libread {
+  background-color: cadetblue;
 }
