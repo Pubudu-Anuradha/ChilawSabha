@@ -57,9 +57,9 @@ li .logo-img {
 }
 
 .items{
-  font-size: 15px;
+  font-size: 20px;
   /* display: block; */
-  margin-left: 25px;
+  margin-left: 50px;
   padding: 8px 100px;
   float: left;
   text-decoration: none;
@@ -81,54 +81,57 @@ body{
   border: 2px solid #C3D6FC;
   border-radius: 10px;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 60px;
   padding: 40px;
 }
 
 .login-title{
-  margin-bottom: 10px;
-  font-size: 20px;
+  margin-bottom: 15px;
+  font-size: 25px;
 }
 
 .form{
-  font-size: 15px;
+  font-size: 20px;
 }
 
 input{
   width: 60%;
   padding: 8px 10px;
-  margin: 8px 0;
+  margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #7995cd;
   box-sizing: border-box;
 }
 
 .forgotpw{
-  font-size: 13px;
+  font-size: 16px;
   text-decoration: none;
   color: #426AD1;
 }
 
 label{
     display: inline-block;
-    width: 100px;
+    width: 120px;
     text-align: left;
 }
 
 #login{
   margin-top: 20px;
+  font-size: 18px;
   border-radius: 10px;
   border: #C3D6FC;
   padding: 8px 10px;
-  margin-left: 250px;
+  margin-left: 300px;
   background-color: #C3D6FC;
   border: none;
   cursor: pointer;
   width: 15%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
 }
 
 .footer-content{
   position: fixed;
+  font-size: 20px;
   bottom: 0;
   width: 98%;
   color: white;

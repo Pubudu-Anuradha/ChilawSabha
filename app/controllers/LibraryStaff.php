@@ -15,7 +15,7 @@ class LibraryStaff extends Controller
     public function Insertbooks()
     {
         $data = [];
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['Submit'])) {
             if (
                 isset($_POST['title']) && !empty($_POST['title'])
                 && isset($_POST['author']) && !empty($_POST['author'])

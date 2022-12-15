@@ -1,5 +1,5 @@
 <?php require_once 'Header.php';?>
-<?php require_once 'Sidebar.php';?>  
+<?php require_once 'Sidebar.php';?>
 
 <div class="add-books">
     <h1 class="add-book-topic">ADD BOOKS</h1>
@@ -7,7 +7,7 @@
     <hr class="h-ruler" />
 
     <div class="insert-bookform">
-        <form action="<?= URLROOT . "/LibraryStaff/Insertbooks" ?>" method="post">
+        <form action="<?=URLROOT . "/LibraryStaff/Insertbooks"?>" method="post">
             <label for="title">Title</label><input type="text" name="title" required /><br />
             <label for="author">Author</label><input type="text" name="author" required /><br />
             <label for="publisher">Publisher</label><input type="text" name="publisher" required /><br />
@@ -24,10 +24,9 @@
             <label for="recdate" class="recdate-label">Recieved Date</label><input type="date" class="recdate-input" name="recdate" required /><br />
             <label for="recmethod">Recieved Method</label><input type="text" name="recmethod" required /><br />
 
-            <input type="submit" value="Add" name="submit" id="add" />
-            <?php if(isset($data['message'])) echo $data['message'];?>
+            <input type="submit" value="Add" name="Submit" id="add" />
+            <?php warn($data); ?>
         </form>
-        
     </div>
 </div>
 

@@ -6,8 +6,8 @@
     <?php require_once 'Logout.php';?>
     <hr class="h-ruler" />
     <div>
-        <a href="#" class="damagelist-btn">DAMAGED LIST</a>
         <a href="<?=URLROOT . "/LibraryStaff/Insertbooks"?>" class="addbook-btn">ADD BOOK</a>
+        <a href="#" class="damagelist-btn">DAMAGED LIST</a>
     </div>
 
     <div class="book-list">
