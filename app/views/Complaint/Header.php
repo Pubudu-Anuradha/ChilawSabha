@@ -67,7 +67,7 @@
 </div>
 <hr class="hr1">
 <div class="user">
-    <p> <a href="#"> <?= $_SESSION['name'] ?> </a> </p>
+    <p> <?=$_SESSION['name']?></p>
     <img src="<?php echo URLROOT . "/public/assets/user.png" ?>" alt="" srcset="" class="user-logo">
 </div>
 <?php
