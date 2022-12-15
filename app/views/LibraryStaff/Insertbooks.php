@@ -14,9 +14,16 @@
             <label for="placeofpub">Place of Publication</label><input type="text" name="placeofpub" required /><br />
             <label for="dateofpub">Date of Publication</label><input type="date"  name="dateofpub" class="dateofpub-input" required />
             <label for="bookCategory" class="bookCategory-label">Book Category</label><select name="bookCategory" id="bookCategory" class="bookCategory-input">
-                <option value="Fantacy">Fantacy</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Horror">Horror</option>
+                <option value="class000">Computer Science, Information and General Works</option>
+                <option value="class100">Philosophy and Psychology</option>
+                <option value="class200">Religion</option>
+                <option value="class300">Social Sciences</option>
+                <option value="class400">Language</option>
+                <option value="class500">Science</option>
+                <option value="class600">Technology</option>
+                <option value="class700">Arts and Recreation</option>
+                <option value="class800">Literature</option>
+                <option value="class900">History and Geography</option>
             </select><br />
             <label for="accno">Accession No</label><input type="text" name="accno" class="accno" required />
             <label for="price" class="price-label">Price</label><input type="number" name="price" min="1" class="price" step="any" required/><br />
