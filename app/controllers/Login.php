@@ -10,7 +10,7 @@ class Login extends Controller
     public function Admin()
     {
         $data = [];
-        if (isset($_POST['login'])) {
+        if (isset($_POST['Submit'])) {
             // Login submitted
             if (isset($_POST['email']) && isset($_POST['passwd'])) {
                 $model = $this->model('AdminLoginModel');
@@ -25,7 +25,7 @@ class Login extends Controller
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
-                        $data['message'] = 'wrongpass';
+                        $data['wrongpass'] = 'Wrong Password';
                     }
                 } else {
                     $data['message'] = 'nouser';
@@ -111,7 +111,7 @@ class Login extends Controller
                     if (password_verify($_POST['password'], $row['password_hash'])) {
                         $_SESSION['login'] = true;
                         $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' .$row['last_name'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {
@@ -139,7 +139,7 @@ class Login extends Controller
                     if (password_verify($_POST['password'], $row['password_hash'])) {
                         $_SESSION['login'] = true;
                         $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' .$row['last_name'];
+                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
                         header("location:" . URLROOT . "/$role");
                         die();
                     } else {

@@ -4,7 +4,7 @@
         USER MANAGEMENT
     </div>
     <div class="title-category">
-        <select name="catfil" id="catfil">
+        <select name="catfil" id="catfil" class="shadow">
             <option value="null">Filter by category</option>
             <option value="Administrator">Administrator</option>
             <option value="Complaint Handler">Complaint Handler</option>

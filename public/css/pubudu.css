@@ -294,6 +294,12 @@ input[type="submit"] {
 }
 
 @media print {
+  @page {
+    size: A4;
+  }
+  .main {
+    padding: 0;
+  }
   .header,
   .sidebar,
   .logout,
@@ -305,4 +311,13 @@ input[type="submit"] {
   .act-row-title {
     display: none;
   }
+}
+
+.warn {
+  color: red;
+  padding-left: 2rem;
+}
+.success {
+  color: #09d055;
+  padding-left: 2rem;
 }

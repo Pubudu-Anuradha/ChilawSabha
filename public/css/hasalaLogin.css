@@ -1,7 +1,7 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif ;
+  font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
 }
 
@@ -9,7 +9,7 @@ ul {
   list-style-type: none;
   overflow: hidden;
 }
-.upper-header{
+.upper-header {
   width: 100%;
   float: left;
 }
@@ -26,29 +26,27 @@ li .logo-img {
   padding: 14px 16px;
   width: 75px;
   height: 80px;
-} 
+}
 
-
-
-.title{
+.title {
   float: right;
   margin: 20px;
   margin-right: 250px;
 }
 
-.chilaw{
+.chilaw {
   font-size: 50px;
   font-weight: 300;
   letter-spacing: 2px;
 }
 
-.sabha{
+.sabha {
   white-space: initial;
   font-size: 15px;
   letter-spacing: 3px;
 }
 
-.lower-header{
+.lower-header {
   width: 100%;
   float: left;
   border-top: 2px solid;
@@ -56,7 +54,7 @@ li .logo-img {
   border-width: 100%;
 }
 
-.items{
+.items {
   font-size: 20px;
   /* display: block; */
   margin-left: 50px;
@@ -66,35 +64,35 @@ li .logo-img {
   color: black;
 }
 
-body{
+body {
   height: 100vh;
 }
-.login-img{
+.login-img {
   margin: 10px;
   width: 60px;
-  height: 60px
+  height: 60px;
 }
 
 .login {
   margin-left: 30%;
   width: 40%;
-  border: 2px solid #C3D6FC;
+  border: 2px solid #c3d6fc;
   border-radius: 10px;
   text-align: center;
   margin-top: 60px;
   padding: 40px;
 }
 
-.login-title{
+.login-title {
   margin-bottom: 15px;
   font-size: 25px;
 }
 
-.form{
+.form {
   font-size: 20px;
 }
 
-input{
+input {
   width: 60%;
   padding: 8px 10px;
   margin: 10px 0;
@@ -103,33 +101,33 @@ input{
   box-sizing: border-box;
 }
 
-.forgotpw{
+.forgotpw {
   font-size: 16px;
   text-decoration: none;
-  color: #426AD1;
+  color: #426ad1;
 }
 
-label{
-    display: inline-block;
-    width: 120px;
-    text-align: left;
+label {
+  display: inline-block;
+  width: 120px;
+  text-align: left;
 }
 
-#login{
+#login {
   margin-top: 20px;
   font-size: 18px;
   border-radius: 10px;
-  border: #C3D6FC;
+  border: #c3d6fc;
   padding: 8px 10px;
   margin-left: 300px;
-  background-color: #C3D6FC;
+  background-color: #c3d6fc;
   border: none;
   cursor: pointer;
   width: 15%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 4px 4px 0 rgba(0, 0, 0, 0.19);
 }
 
-.footer-content{
+.footer-content {
   position: fixed;
   font-size: 20px;
   bottom: 0;
@@ -139,4 +137,13 @@ label{
   text-align: center;
   padding: 15px;
   font-weight: 100;
+}
+
+.warn {
+  color: red;
+  padding-left: 2rem;
+}
+.success {
+  color: #09d055;
+  padding-left: 2rem;
 }

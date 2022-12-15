@@ -392,3 +392,11 @@ td {
   background: black;
   padding: 12px;
 }
+.warn {
+  color: red;
+  padding-left: 2rem;
+}
+.success {
+  color: #09d055;
+  padding-left: 2rem;
+}
