@@ -398,6 +398,20 @@ td {
 .forgot {
   text-decoration: none;
 }
+
+.one-complaint{
+  margin: 5rem 25rem;
+}
+
+.status-set{
+  display: flex;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+
+
+
 /* footer */
 
 .copyright{
