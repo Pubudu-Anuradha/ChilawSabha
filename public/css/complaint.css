@@ -99,12 +99,9 @@ img {
 
 .login-form {
   width: 800px;
-  margin: 250px auto 0;
+  margin: 6rem 23rem;
   left: 50%;
-  /* height: 350px; */
   height: fit-content;
-  /* transform: translate(-50%, -50%); */
-  /* position: absolute; */
   color: black;
   border: 3px solid #c3d6fc;
   border-radius: 5px 0px;
