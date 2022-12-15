@@ -101,9 +101,10 @@ img {
   width: 800px;
   margin: 250px auto 0;
   left: 50%;
-  height: 350px;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  /* height: 350px; */
+  height: fit-content;
+  /* transform: translate(-50%, -50%); */
+  /* position: absolute; */
   color: black;
   border: 3px solid #c3d6fc;
   border-radius: 5px 0px;
@@ -182,7 +183,7 @@ input[type="submit"] {
 
 /* addComplaint */
 .staffmenu {
-  width: 300px;
+  width: 320px;
   margin: 25px auto 0;
   left: 2%;
   height: 420px;
@@ -197,7 +198,7 @@ input[type="submit"] {
 }
 
 .staffmenu ul li {
-  width: 16rem;
+  width: 18rem;
   margin: 12px;
   padding: 18px;
   background: #c3d6fc;
@@ -290,7 +291,7 @@ input[type="date"] {
 .complaint-form input[type="submit"] {
   font-size: 14px;
   font-weight: bold;
-  margin: 15px 850px;
+  margin: 45px 850px;
   padding: 6px 6px;
   width: 12%;
   border: none;
@@ -408,4 +409,13 @@ td {
   font-size: 1rem;
   background: black;
   padding: 12px;
+}
+
+.warn {
+  color: red;
+  padding-left: 2rem;
+}
+.success {
+  color: #09d055;
+  padding-left: 2rem;
 }
