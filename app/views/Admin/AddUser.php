@@ -1,6 +1,6 @@
 <?php require_once 'Header.php'; ?>
 
-<div class="title-row">
+<div class="title-row underline">
     <div class="page-title">
         ADD NEW USER
     </div>
@@ -34,19 +34,19 @@ if (isset($data['added'])) {
         <label for="NIC">
             NIC
         </label>
-        <input type="text" name="NIC" id="NIC" required>
+        <input type="text" name="NIC" id="NIC" pattern="((19|[2-9]\d)\d{10})|(\d{10}(v|V))" maxlength=12 required>
     </div>
     <div class="field">
         <label for="first_name">
             First Name
         </label>
-        <input type="text" name="first_name" id="first_name" required>
+        <input type="text" name="first_name" id="first_name" maxlength="255" required>
     </div>
     <div class="field">
         <label for="last_name">
             Last Name
         </label>
-        <input type="text" name="last_name" id="last_name" required>
+        <input type="text" name="last_name" id="last_name" maxlength="255" required>
     </div>
     <div class="field">
         <label for="email">
@@ -64,13 +64,13 @@ if (isset($data['added'])) {
         <label for="tel_no">
             Contact No
         </label>
-        <input type="tel" name="tel_no" id="tel_no" maxlength="12" required>
+        <input type="tel" name="tel_no" id="tel_no" maxlength="12" pattern="(\+94\d{9})|\d{10}" required>
     </div>
     <div class="field">
         <label for="address">
             Address
         </label>
-        <input type="text" name="address" id="address" required>
+        <input type="text" name="address" id="address" maxlength="255" required>
     </div>
     <div class="field">
         <input class="submit shadow" type="submit" value="Add User" name="Submit">
