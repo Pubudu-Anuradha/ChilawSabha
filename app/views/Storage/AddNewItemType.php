@@ -28,8 +28,8 @@
                         <option value="Electrical">Electrical</option>
                         <option value="Vehical Parts">Vehical Parts</option>
                     </select><br/>
-                    <label for="min_stock">Min Stock</label><input type="number" name="min_stock" required /><br />
-                    <label for="max_stock">Max Stock</label><input type="number" name="max_stock" required /><br />
+                    <label for="min_stock">Min Stock</label><input type="number" name="min_stock" min="0" required /><br />
+                    <label for="max_stock">Max Stock</label><input type="number" name="max_stock" min="1" required /><br />
                         
                     <input type="submit" value="Submit" name="Submit" id="addNewItemType" />
                     <?php 
