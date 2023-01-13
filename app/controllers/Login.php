@@ -4,17 +4,12 @@ class Login extends Controller
 {
     public function index()
     {
-        $this->view('Home/index');
-    }
-
-    public function Admin()
-    {
         $data = [];
         if (isset($_POST['Submit'])) {
             // Login submitted
             if (isset($_POST['email']) && isset($_POST['passwd'])) {
-                $model = $this->model('AdminLoginModel');
-                $rows = $model->getStaffUserCredentials($_POST['email']);
+                $model = $this->model('LoginModel');
+                $rows = $model->getUserCredentials($_POST['email']);
                 if ($rows && ($rows->num_rows > 0)) {
                     $row = $rows->fetch_assoc();
                     $role = $row['role'];
@@ -32,125 +27,7 @@ class Login extends Controller
                 }
             }
         }
-        $this->view('Login/Admin', $data);
-    }
-
-    public function LibraryMember()
-    {
-        $data = [];
-        if (isset($_POST['Submit'])) {
-            // var_dump($_POST);
-            // Login submitted
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $model = $this->model('LibraryLoginModel');
-                $rows = $model->getLibraryUserCredentials($_POST['email']);
-                if ($rows->num_rows > 0) {
-                    $row = $rows->fetch_assoc();
-                    $role = $row['role'];
-                    if (password_verify($_POST['password'], $row['password_hash'])) {
-                        $_SESSION['login'] = true;
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
-                        header("location:" . URLROOT . "/$role");
-                        die();
-                    } else {
-                        $data['wrongPassword'] = 'Password incorrect';
-                    }
-                } else {
-                    $data['noUser'] = 'User not found';
-                }
-            }
-        }
-        $this->view('Login/LibraryMember', $data);
-    }
-
-    public function LibraryStaff()
-    {
-        $data = [];
-        if (isset($_POST['Submit'])) {
-            // var_dump($_POST);
-            // Login submitted
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $model = $this->model('LibraryLoginModel');
-                $rows = $model->getStaffUserCredentials($_POST['email']);
-                if ($rows->num_rows > 0) {
-                    $row = $rows->fetch_assoc();
-                    $role = $row['role'];
-                    if (password_verify($_POST['password'], $row['password_hash'])) {
-                        $_SESSION['login'] = true;
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
-                        header("location:" . URLROOT . "/$role");
-                        die();
-                    } else {
-                        $data['wrongPassword'] = 'Password incorrect';
-                    }
-                } else {
-                    $data['noUser'] = 'User not found';
-                }
-            }
-        }
-
-        $this->view('Login/LibraryStaff', $data);
-    }
-
-    public function Complaint()
-    {
-        $data = [];
-
-        if (isset($_POST['Submit'])) {
-
-            // Login submitted
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $model = $this->model('ComplaintLoginModel');
-                $rows = $model->getComplainHandlerCredentials($_POST['email']);
-                if ($rows->num_rows > 0) {
-                    $row = $rows->fetch_assoc();
-                    var_dump($row);
-                    $role = $row['role'];
-                    if (password_verify($_POST['password'], $row['password_hash'])) {
-                        $_SESSION['login'] = true;
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
-                        header("location:" . URLROOT . "/$role");
-                        die();
-                    } else {
-                        $data['passwordWrong'] = 'Password is incorrect';
-                    }
-                } else {
-                    $data['noUser'] = 'User not exsists';
-                }
-            }
-        }
-        $this->view('Login/Complaint', $data);
-    }
-
-    public function Storage()
-    {
-        $data = [];
-        if (isset($_POST['Submit'])) {
-            //var_dump($_POST);
-            if (isset($_POST['email']) && isset($_POST['password'])) {
-                $model = $this->model('StorageLoginModel');
-                $rows = $model->getStaffUserCredentials($_POST['email']);
-                if ($rows->num_rows > 0) {
-                    $row = $rows->fetch_assoc();
-                    $role = $row['role'];
-                    if (password_verify($_POST['password'], $row['password_hash'])) {
-                        $_SESSION['login'] = true;
-                        $_SESSION['role'] = $row['role'];
-                        $_SESSION['name'] = $row['first_name'] . ' ' . $row['last_name'];
-                        header("location:" . URLROOT . "/$role");
-                        die();
-                    } else {
-                        $data['wrongpassword'] = 'Wrong Password';
-                    }
-                } else {
-                    $data['nouser'] = 'User not Found';
-                }
-            }
-        }
-        $this->view('Login/Storage', $data);
+        $this->view('Login/index', $data);
     }
 
     public function Logout($redir = 'Home/index')
