@@ -27,17 +27,21 @@ class Model
                 array_push($vals, $value);
             }
         }
-        
+
         // Concatenate values with commas
         $vals = join(',', $vals);
-        // Make sql statement 
+        // Make sql statement
         $sql = "INSERT INTO $table ($cols) VALUES ($vals)";
-        // Execute the statement and return 
-        return $this->conn->query($sql) === true;
+        // Execute the statement and return
+        try {
+            return $this->conn->query($sql) === true;
+        } catch (Exception) {
+            return false;
+        }
     }
 
     protected function select($table, $columns = '*', $conditions = '')
-    {   
+    {
         // Make sql statement with table name , columns
         $sql = "SELECT $columns FROM $table";
         // If there are conditions add to the sql with WHERE
