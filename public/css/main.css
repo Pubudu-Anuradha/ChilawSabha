@@ -1,0 +1,46 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+}
+.logo-area {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+.logo-items {
+  padding: 1rem;
+  display: flex;
+  gap: 20px;
+}
+.sabha-title {
+  height: 100px;
+  align-items: center;
+}
+.main {
+  min-height: 90vh;
+}
+
+/* #TODO Sidebar Styles*/
+
+/* #TODO Content Styles*/
+
+/* Footer Styles*/
+.footer {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+}

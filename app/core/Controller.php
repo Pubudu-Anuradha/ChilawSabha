@@ -11,9 +11,11 @@ class Controller
     }
 
     //Render a defined view and pass the data provided by the caller
-    public function view($view, $data = [])
+    public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = ['main'])
     {
+        require_once 'app/views/Header.php';
         require_once 'app/views/' . $view . '.php';
+        require_once 'app/views/Footer.php';
     }
 
     //Check authenitation for a role by seeing if session variables are set properly.
