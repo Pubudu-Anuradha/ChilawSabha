@@ -22,6 +22,8 @@ class Model
         // Check data types and add '' quotes to strings
         foreach ($data as $key => $value) {
             if (gettype($value) == 'string') {
+                // To escape special characters
+                $value = mysqli_real_escape_string($this->conn,$value);
                 array_push($vals, "'$value'");
             } else {
                 array_push($vals, $value);
@@ -36,7 +38,7 @@ class Model
         try {
             return $this->conn->query($sql) === true;
         } catch (Exception) {
-            return false;
+            return false;   
         }
     }
 
@@ -54,12 +56,139 @@ class Model
 
     protected function update($table, $data, $conditions)
     {
-        // TODO Implement update function
+        // Start building the sql statement
+        $sql = "UPDATE $table SET ";
+        
+        // Loop through array to get column,value pairs
+        foreach ($data as $column => $value) {
+            // Check type of value
+            if(gettype($value) == 'string') {
+                // To escape special characters
+                $value = mysqli_real_escape_string($this->conn, $value);
+                $sql .= "$column = '" . $value . "',";
+            }
+            else {
+                $sql .= "$column = $value,";
+            }           
+        }
+
+        // Remove last comma from sql statement
+        $sql = rtrim($sql, ",");
+        // Add conditions to sql statement
+        $sql .= " WHERE $conditions";
+        // Execute sql statement and return result
+        return $this->conn->query($sql);
     }
 
-    protected function delete($table, $data, $conditions)
+    protected function delete($table, $conditions)
     {
-        // TODO Implement delete function
+        // Sql statement for deleting
+        $sql = "DELETE FROM $table WHERE $conditions";
+        // Execute sql statement and return result
+        return $this->conn->query($sql);
+    }
+
+
+    // SQL prepared statements
+    
+    protected function insertprep($table, $data){
+
+        // Concatenate column name with commas
+        $keys = array_keys($data);
+        $cols = join(',', $keys);
+        $vals = [];
+        // Data type variable used to track placeholder data type
+        $dataType = "";
+
+        // Check data types and add '' quotes to strings
+        foreach ($data as $key => $value) {
+            if (gettype($value) == 'string') {
+                // To escape special characters
+                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
+                $vals[] = &$data[$key];
+                $dataType .= "s";
+            } else if (gettype($value) == 'double') {
+                $vals[] = &$data[$key];
+                $dataType .= "d";
+            } else{
+                $vals[] = &$data[$key]; 
+                $dataType .= "i";                
+            }
+        }
+
+        // Prepare statement
+        $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
+        // Bind data into prepared statement
+        call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+        // Execute the statement
+        $stmt->execute();
+        // Return result
+        return $stmt->get_result();
+
+    }
+
+    protected function selectprep($table, $columns = '*', $conditions = '')
+    {
+        // Prepare statement
+        if($conditions != ''){
+            $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
+        }
+        else{
+            $stmt = $this->conn->prepare("SELECT $columns FROM $table");
+        }
+
+        // Execute the statement
+        $stmt->execute();
+        // Return result
+        return $stmt->get_result();
+    }
+
+
+    protected function updateprep($table, $data, $conditions)
+    {
+        $column = [];
+        $vals = [];
+        // Data type variable used to track placeholder data type
+        $dataType = "";
+
+        // Check the data type
+        foreach ($data as $key => $value) {
+            // Add placeholders to each column
+            $column[] = "$key=?";
+
+            if (gettype($value) == 'string') {
+                // To escape special characters
+                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
+                $vals[] = &$data[$key];
+                $dataType .= "s";
+            } else if (gettype($value) == 'double') {
+                $vals[] = &$data[$key];
+                $dataType .= "d";
+            } else{
+                $vals[] = &$data[$key]; 
+                $dataType .= "i";                
+            }
+        }
+
+        // Prepare statement
+        $stmt = $this->conn->prepare("UPDATE $table SET " . join(',', $column) . " WHERE $conditions");
+        // Bind data into prepared statement
+        call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+        // Execute the statement
+        $stmt->execute();
+        // Return result
+        return $stmt->get_result();
+    }
+
+    protected function deleteprep($table, $conditions)
+    {
+        // Prepare statement
+        $stmt = $this->conn->prepare("DELETE FROM $table WHERE $conditions");
+        // Execute the statement
+        $stmt->execute();
+        // Return result
+        return $stmt->get_result();
+
     }
 
     public function __destruct()
