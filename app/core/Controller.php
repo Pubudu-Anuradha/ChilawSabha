@@ -2,6 +2,8 @@
 
 class Controller
 {
+    //Flag used to render the relevant sidebar when a user logged in
+    protected $sidebar_flag = false;
 
     //A function for child classes to get an instance of a defined model
     public function model($model)
@@ -14,6 +16,9 @@ class Controller
     public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = ['main'])
     {
         require_once 'app/views/Header.php';
+        if($this->sidebar_flag){
+            require_once 'app/views/' . $_SESSION['role'] . '/Sidebar.php';
+        }
         require_once 'app/views/' . $view . '.php';
         require_once 'app/views/Footer.php';
     }
@@ -28,6 +33,8 @@ class Controller
         } else if ($_SESSION['role'] != $role) {
             header('location:' . URLROOT . '/Other/Forbidden');
             die();
+        } else{
+            $this->sidebar_flag = true;
         }
     }
 
