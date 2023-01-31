@@ -113,16 +113,25 @@ class Model
             }
         }
 
-        // Prepare statement
-        $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
-        // Bind data into prepared statement
-        call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
-
-        // Execute the statement
         try {
-            return $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            return false;
+            // Prepare statement
+            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
+            // Bind data into prepared statement
+            call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true,
+                'error' => $res == false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'errmsg' => $e->getMessage(),
+            ];
         }
     }
 
@@ -183,27 +192,49 @@ class Model
             }
         }
 
-        // Prepare statement
-        $stmt = $this->conn->prepare("UPDATE $table SET " . join(',', $column) . " WHERE $conditions");
-        // Bind data into prepared statement
-        call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
-        // Execute the statement
         try {
-            return $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            return false;
+            // Prepare statement
+            $stmt = $this->conn->prepare("UPDATE $table SET " . join(',', $column) . " WHERE $conditions");
+            // Bind data into prepared statement
+            call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true && $stmt->affected_rows != 0,
+                'error' => $res == false,
+                'rows' => $res ? $stmt->affected_rows : false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'rows' => false,
+                'errmsg' => $e->getMessage(),
+            ];
         }
     }
 
     protected function deleteprep($table, $conditions)
     {
-        // Prepare statement
-        $stmt = $this->conn->prepare("DELETE FROM $table WHERE $conditions");
-        // Execute the statement
         try {
-            return $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            return false;
+            // Prepare statement
+            $stmt = $this->conn->prepare("DELETE FROM $table WHERE $conditions");
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true && $stmt->affected_rows != 0,
+                'error' => $res == false,
+                'rows' => $res ? $stmt->affected_rows : false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'rows' => false,
+                'errmsg' => $e->getMessage(),
+            ];
         }
     }
 

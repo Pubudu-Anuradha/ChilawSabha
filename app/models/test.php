@@ -1,14 +1,20 @@
 <?php
 class test extends Model
 {
-    public function updatebooks($id, $address)
+    public function updatebooks($data)
     {
-        return $this->updateprep('test', ["address" => $address], "id = $id");
+        $id = mysqli_real_escape_string($this->conn, $data['id']);
+        $conditions = "id = $id"; // use real escaped strings if string
+        unset($data['id']);
+        return $this->updateprep('test', $data, $conditions);
     }
 
-    public function deletebooks($id)
+    public function deletebooks($data)
     {
-        return $this->deleteprep('test', "id = $id");
+        $id = mysqli_real_escape_string($this->conn, $data['id']);
+        $conditions = "id = $id"; // use real escaped strings if string
+        unset($data['id']);
+        return $this->deleteprep('test', $conditions);
     }
 
     public function insertbooks($data)
@@ -19,6 +25,5 @@ class test extends Model
     public function searchbooks()
     {
         return $this->selectprep('test', "*");
-
     }
 }

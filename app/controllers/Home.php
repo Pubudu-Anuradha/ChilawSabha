@@ -9,40 +9,45 @@ class Home extends Controller
 
     public function test()
     {
+        $data = [];
         // To insert
         if (isset($_POST['Add'])) {
             $validated = $this->validateInputs($_POST, [
                 'id', 'name', 'address', 'age',
             ], 'Add');
             if ($validated) {
-                $model = $this->model('test');
-                $res = $model->insertbooks($validated);
-                if ($res) {
-                    echo "Added record";
-                } else {
-                    echo "Failed to add record";
-                }
+                $data['Add'] = $this->model('test')->insertbooks($validated);
+            } else {
+                $data['Add'] = ['error' => true, 'errmsg' => 'Invalid Input detected']; // Should handle better
             }
         }
 
         // To update
         if (isset($_POST['Update'])) {
-            if (isset($_POST['id']) && isset($_POST['address'])) {
-                $model = $this->model('test');
-                $model->updatebooks($_POST['id'], $_POST['address']);
+            $validated = $this->validateInputs($_POST, [
+                'id', 'address',
+            ], 'Update');
+            if ($validated) {
+                $data['Update'] = $this->model('test')->updatebooks($validated);
+            } else {
+                $data['Add'] = ['error' => true, 'errmsg' => 'Invalid Input detected']; // Should handle better
             }
         }
 
         // To delete
         if (isset($_POST['Delete'])) {
-            if (isset($_POST['id'])) {
-                $model = $this->model('test');
-                $model->deletebooks($_POST['id']);
+            $validated = $this->validateInputs($_POST, [
+                'id',
+            ], 'Delete');
+            if ($validated) {
+                $data['Delete'] = $this->model('test')->deletebooks($validated);
+            } else {
+                $data['Delete'] = ['error' => true, 'errmsg' => 'Invalid Input detected']; // Should handle better
             }
         }
 
         // To search
-        $data = ['test' => $this->model('test')->searchbooks()];
+        $data['test'] = $this->model('test')->searchbooks();
 
         $this->view('Home/testmodelsview', $data);
     }
