@@ -135,14 +135,26 @@ class Model
         }
     }
 
-    protected function selectprep($table, $columns = '*', $conditions = '')
+    protected function selectprep($table, $columns = '*', $conditions = '', $offsetlimt = false)
     {
         try {
-            // Prepare statement
-            if ($conditions != '') {
-                $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
+            if ($offsetlimt) {
+                /* $offsetlimit [0] = OFFSET
+                $offsetlimit [1] = ROW_COUNT per page */
+                $limit = $offsetlimt[0] . ',' . $offsetlimt[1];
+                // Prepare statement
+                if ($conditions != '') {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions LIMIT $limit");
+                } else {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table LIMIT $limit");
+                }
             } else {
-                $stmt = $this->conn->prepare("SELECT $columns FROM $table");
+                // Prepare statement
+                if ($conditions != '') {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
+                } else {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table");
+                }
             }
 
             // Execute the statement
@@ -164,6 +176,35 @@ class Model
                 'result' => false,
             ];
         }
+    }
+
+    protected function selectPaginated($table, $columns = '*', $conditions = '')
+    {
+        $row_count = $this->selectprep($table, 'COUNT(*) as recordCount', $conditions);
+        $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
+
+        // $page is set from pagenumber and size set on $_GET
+        $page = [0, 10];
+        if (isset($_GET['page']) && $_GET['page'] > 0) {
+            $page[0] = (int) $_GET['page'];
+        }
+        if (isset($_GET['size']) && $_GET['size'] > 10) {
+            $page[1] = (int) $_GET['size'];
+        }
+        // Convert page number to offset
+        $page[0] *= $page[1];
+
+        // reset offset to zero if limit is exceeded
+        if ($page[0] > $row_count) {
+            $page[0] = 0;
+        }
+
+        return array_merge(
+            $this->selectprep($table, $columns, $conditions, $page), [
+                'count' => $row_count,
+                'page' => $page,
+            ]
+        );
     }
 
     protected function updateprep($table, $data, $conditions)

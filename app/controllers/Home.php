@@ -54,6 +54,7 @@ class Home extends Controller
 
     public function PaginationTest()
     {
-
+        $model = $this->model('paginationModel');
+        $this->view('Home/pagination', ['test' => $model->getTestTable()]);
     }
 }
