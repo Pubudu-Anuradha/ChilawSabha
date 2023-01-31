@@ -25,9 +25,6 @@ class Home extends Controller
             }
         }
 
-        // To search
-        $data = ['test' => $this->model('test')->searchbooks()];
-
         // To update
         if (isset($_POST['Update'])) {
             if (isset($_POST['id']) && isset($_POST['address'])) {
@@ -43,6 +40,9 @@ class Home extends Controller
                 $model->deletebooks($_POST['id']);
             }
         }
+
+        // To search
+        $data = ['test' => $this->model('test')->searchbooks()];
 
         $this->view('Home/testmodelsview', $data);
     }

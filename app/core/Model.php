@@ -128,17 +128,33 @@ class Model
 
     protected function selectprep($table, $columns = '*', $conditions = '')
     {
-        // Prepare statement
-        if ($conditions != '') {
-            $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
-        } else {
-            $stmt = $this->conn->prepare("SELECT $columns FROM $table");
-        }
+        try {
+            // Prepare statement
+            if ($conditions != '') {
+                $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
+            } else {
+                $stmt = $this->conn->prepare("SELECT $columns FROM $table");
+            }
 
-        // Execute the statement
-        $stmt->execute();
-        // Return result
-        return $stmt->get_result();
+            // Execute the statement
+            $res = $stmt->execute();
+            $result = $res ? $stmt->get_result() : false;
+            $nodata = $result->num_rows == 0;
+            $result = $result ? $result->fetch_all(MYSQLI_ASSOC) : false;
+            return [
+                'error' => $res == false,
+                'errmsg' => $res == false ? $stmt->error : false,
+                'nodata' => $nodata,
+                'result' => $result,
+            ];
+        } catch (Exception $e) {
+            return [
+                'error' => true,
+                'errmsg' => $e->getMessage(),
+                'nodata' => true,
+                'result' => false,
+            ];
+        }
     }
 
     protected function updateprep($table, $data, $conditions)
@@ -172,9 +188,11 @@ class Model
         // Bind data into prepared statement
         call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
         // Execute the statement
-        $stmt->execute();
-        // Return result
-        return $stmt->get_result();
+        try {
+            return $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            return false;
+        }
     }
 
     protected function deleteprep($table, $conditions)
@@ -182,10 +200,11 @@ class Model
         // Prepare statement
         $stmt = $this->conn->prepare("DELETE FROM $table WHERE $conditions");
         // Execute the statement
-        $stmt->execute();
-        // Return result
-        return $stmt->get_result();
-
+        try {
+            return $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            return false;
+        }
     }
 
     public function __destruct()
