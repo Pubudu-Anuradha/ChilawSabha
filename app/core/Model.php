@@ -23,7 +23,7 @@ class Model
         foreach ($data as $key => $value) {
             if (gettype($value) == 'string') {
                 // To escape special characters
-                $value = mysqli_real_escape_string($this->conn,$value);
+                $value = mysqli_real_escape_string($this->conn, $value);
                 array_push($vals, "'$value'");
             } else {
                 array_push($vals, $value);
@@ -38,7 +38,7 @@ class Model
         try {
             return $this->conn->query($sql) === true;
         } catch (Exception) {
-            return false;   
+            return false;
         }
     }
 
@@ -58,18 +58,17 @@ class Model
     {
         // Start building the sql statement
         $sql = "UPDATE $table SET ";
-        
+
         // Loop through array to get column,value pairs
         foreach ($data as $column => $value) {
             // Check type of value
-            if(gettype($value) == 'string') {
+            if (gettype($value) == 'string') {
                 // To escape special characters
                 $value = mysqli_real_escape_string($this->conn, $value);
                 $sql .= "$column = '" . $value . "',";
-            }
-            else {
+            } else {
                 $sql .= "$column = $value,";
-            }           
+            }
         }
 
         // Remove last comma from sql statement
@@ -88,11 +87,9 @@ class Model
         return $this->conn->query($sql);
     }
 
-
     // SQL prepared statements
-    
-    protected function insertprep($table, $data){
-
+    protected function insertprep($table, $data)
+    {
         // Concatenate column name with commas
         $keys = array_keys($data);
         $cols = join(',', $keys);
@@ -110,9 +107,9 @@ class Model
             } else if (gettype($value) == 'double') {
                 $vals[] = &$data[$key];
                 $dataType .= "d";
-            } else{
-                $vals[] = &$data[$key]; 
-                $dataType .= "i";                
+            } else {
+                $vals[] = &$data[$key];
+                $dataType .= "i";
             }
         }
 
@@ -120,20 +117,21 @@ class Model
         $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
         // Bind data into prepared statement
         call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
-        // Execute the statement
-        $stmt->execute();
-        // Return result
-        return $stmt->get_result();
 
+        // Execute the statement
+        try {
+            return $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            return false;
+        }
     }
 
     protected function selectprep($table, $columns = '*', $conditions = '')
     {
         // Prepare statement
-        if($conditions != ''){
+        if ($conditions != '') {
             $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
-        }
-        else{
+        } else {
             $stmt = $this->conn->prepare("SELECT $columns FROM $table");
         }
 
@@ -142,7 +140,6 @@ class Model
         // Return result
         return $stmt->get_result();
     }
-
 
     protected function updateprep($table, $data, $conditions)
     {
@@ -164,9 +161,9 @@ class Model
             } else if (gettype($value) == 'double') {
                 $vals[] = &$data[$key];
                 $dataType .= "d";
-            } else{
-                $vals[] = &$data[$key]; 
-                $dataType .= "i";                
+            } else {
+                $vals[] = &$data[$key];
+                $dataType .= "i";
             }
         }
 

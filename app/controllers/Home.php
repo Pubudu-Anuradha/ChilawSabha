@@ -10,36 +10,45 @@ class Home extends Controller
     public function test()
     {
         // To insert
-        if (isset($_POST['Submit'])) {
-            if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['address']) && isset($_POST['age'])) {
+        if (isset($_POST['Add'])) {
+            $validated = $this->validateInputs($_POST, [
+                'id', 'name', 'address', 'age',
+            ], 'Add');
+            if ($validated) {
                 $model = $this->model('test');
-                $model->insertbooks($_POST['id'], $_POST['name'], $_POST['address'], $_POST['age']);
-
+                $res = $model->insertbooks($validated);
+                if ($res) {
+                    echo "Added record";
+                } else {
+                    echo "Failed to add record";
+                }
             }
-
         }
 
         // To search
-        // $data = ['test' => $this->model('test')->searchbooks()];
+        $data = ['test' => $this->model('test')->searchbooks()];
 
         // To update
-        // if (isset($_POST['Submit'])) {
-        //     if (isset($_POST['id']) && isset($_POST['address'])) {
-        //         $model = $this->model('test');
-        //         $model->updatebooks($_POST['id'], $_POST['address']);
-        //     }
-        // }
+        if (isset($_POST['Update'])) {
+            if (isset($_POST['id']) && isset($_POST['address'])) {
+                $model = $this->model('test');
+                $model->updatebooks($_POST['id'], $_POST['address']);
+            }
+        }
 
         // To delete
-        // if (isset($_POST['Submit'])) {
-        //     if (isset($_POST['id'])) {
-        //         $model = $this->model('test');
-        //         $model->deletebooks($_POST['id']);
-        //     }
-        // }
+        if (isset($_POST['Delete'])) {
+            if (isset($_POST['id'])) {
+                $model = $this->model('test');
+                $model->deletebooks($_POST['id']);
+            }
+        }
 
-
-        $this->view('Home/testmodelsview');
+        $this->view('Home/testmodelsview', $data);
     }
 
+    public function PaginationTest()
+    {
+
+    }
 }
