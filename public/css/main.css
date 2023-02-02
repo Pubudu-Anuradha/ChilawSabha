@@ -91,7 +91,8 @@ body {
   display: grid;
   grid-gap: 2rem;
   grid-template-areas: "sidebar content";
-  grid-template-columns: minmax(1fr,20rem) minmax(0,5fr);
+  grid-template-columns: fit-content(20%) auto;
+  overflow:scroll;
 }
 
 /* #Navbar Styles*/
@@ -189,7 +190,7 @@ body {
 }
 .sub-items a{
   color: var(--black);
-  padding: 10px 50px;
+  padding: 10px 10px;
 }
 .sub-items a:hover{
   background: var(--lightblue);
@@ -233,25 +234,31 @@ body {
 @media  screen and (max-width:767px) {
   /* WHEN SCREEN IS NARROWER THAN 768px */
   /* TODO:make navbar responsive */
-  .navbar-items{
+  .navbar-items { /* Should show hamburger menu */
     display: none;
   }
 
   /* TODO:make sidebar responsive */
+  .items a{
+    padding: 10px;
+  }
   .items a span{
     display: none;
   }
   .items a .see-more{
     display: block;
+    margin-left: 0;
   }
-
+  .sub-items a{
+    padding: 10px 1rem;
+  }
   /* Other Misc */
   body{
     font-size: 10px;
   }
   .main{
     grid-gap: 1rem;
-    grid-template-columns: minmax(0,auto),minmax(0,auto);
+    grid-template-columns: minmax(0,1fr),minmax(0,9fr);
   }
 }
 
@@ -261,7 +268,7 @@ body {
     display: none;
   }
   body{
-    font-size: 5px;
+    font-size: 8px;
   }
   .main{
     grid-gap: 5px;
