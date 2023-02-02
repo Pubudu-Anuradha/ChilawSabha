@@ -88,8 +88,10 @@ body {
 }
 .main {
   min-height: 90vh;
-  display: flex;
-  gap: 2rem;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-areas: "sidebar content";
+  grid-template-columns: minmax(1fr,20rem) minmax(0,5fr);
 }
 
 /* #Navbar Styles*/
@@ -99,26 +101,26 @@ body {
   border-bottom: 2px solid var(--grey);
   display: flex;
   justify-content: center;
+  padding: 0 1rem;
 }
 .navbar-items{
   display: flex;
-  max-width: 1440px;
   justify-content: space-between;
   align-items: center;
-  /* padding: 0px 5%; */
 }
 .navbar-items ul{
   margin: 0;
   display: flex;
   align-items: center;
   list-style: none;
+  padding-inline-start: 0;
 }
 .navbar-items ul.login-list{
   gap: 1rem;
 }
 .navbar-items ul li a{
   text-decoration: none;
-  padding: 16px 20px;
+  padding: 16px 1rem;
   color: var(--black);
 }
 .user-login-image{
@@ -219,4 +221,59 @@ body {
   align-items: center;
   width: 100%;
   height: 3rem;
+}
+
+@media screen and (min-width:1440px) {
+  /* WHEN SCREEN IS WIDER THAN 1440px */
+  .navbar-items,.main{
+    width: 1440px;
+  }
+}
+
+@media  screen and (max-width:767px) {
+  /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* TODO:make navbar responsive */
+  .navbar-items{
+    display: none;
+  }
+
+  /* TODO:make sidebar responsive */
+  .items a span{
+    display: none;
+  }
+  .items a .see-more{
+    display: block;
+  }
+
+  /* Other Misc */
+  body{
+    font-size: 10px;
+  }
+  .main{
+    grid-gap: 1rem;
+    grid-template-columns: minmax(0,auto),minmax(0,auto);
+  }
+}
+
+@media  screen and (max-width:259px) {
+  /* WHEN SCREEN IS NARROWER THAN LOGO */
+  .logo-items{
+    display: none;
+  }
+  body{
+    font-size: 5px;
+  }
+  .main{
+    grid-gap: 5px;
+  }
+  .sidebar-img{
+    height: 10px;
+  }
+  .items a .see-more{
+    font-size: 10px;
+  }
+  .items a{
+    padding: 5px;
+    gap: 3px;
+  }
 }
