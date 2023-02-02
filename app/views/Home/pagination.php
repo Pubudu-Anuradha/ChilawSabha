@@ -69,7 +69,6 @@
             <?php foreach ([10, 25, 50, 100] as $page_size) : ?>
                 <option value="<?= $page_size ?>" <?php if ($page_size == $size) echo "selected" ?>><?= $page_size ?></option>
             <?php endforeach; ?>
-            <option value="<?= $page_size ?>" <?php if ($page_size == $size) echo "selected" ?>><?= $page_size ?></option>
         </select>
     </form>
 </div>
