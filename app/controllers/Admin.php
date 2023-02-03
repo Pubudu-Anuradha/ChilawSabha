@@ -16,4 +16,8 @@ class Admin extends Controller
     {
         $this->view('Admin/tableTest', 'Tables', [], ['main', 'table']);
     }
+    public function chart()
+    {
+        $this->view('Admin/chart', 'chart', [], ['main', 'chart']);
+    }
 }

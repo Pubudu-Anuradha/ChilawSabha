@@ -98,6 +98,33 @@ body{
   padding: 1rem;
 }
 
+/* Slideshow Styles */
+.slideshow{
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+.slideshow img{
+  width: 100%;
+  max-height: 700px;
+}
+.slideshow-btn-left{
+  position: absolute;
+  top: 45%;
+  left: 0;
+  padding: 15px;
+  font-size: 25px;
+  opacity: 0.4;
+}
+.slideshow-btn-right{
+  position: absolute;
+  top: 45%;
+  right: 0;
+  padding: 15px;
+  font-size: 25px;
+  opacity: 0.4;
+}
+
 /* #Navbar Styles*/
 .navbar{
   height: 50px;

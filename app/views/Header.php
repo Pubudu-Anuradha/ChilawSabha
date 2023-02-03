@@ -9,6 +9,7 @@
     <?php foreach ($styles as $style) { ?>
         <link rel="stylesheet" href="<?= URLROOT . '/public/css/' . $style ?>.css">
     <?php } ?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
