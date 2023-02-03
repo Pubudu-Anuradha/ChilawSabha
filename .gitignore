@@ -1,4 +1,6 @@
 public/upload/*
 !public/upload/placeholder.txt
-public/downloads/*
-!public/downloads/placeholder.txt
+downloads/*
+!downloads/placeholder.txt
+confidential/Admin/*
+!confidential/Admin/placeholder.txt

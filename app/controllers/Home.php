@@ -16,7 +16,7 @@ class Home extends Controller
     }
     public function files(){
         if(isset($_POST['Upload'])){
-            $upload_data = Upload::storeUploadedFiles('public/downloads/','testfiles');
+            $upload_data = Upload::storeUploadedFiles('downloads/','testfiles',true);
             $this->view('Home/files',['uploads'=>$upload_data]);
         }else{
             $this->view('Home/files',[]);

@@ -2,4 +2,9 @@
     <input type="file" name="testfiles[]" id="file-up" multiple>
     <input type="submit" name="Upload" value="Upload">
 </form>
-<?php var_dump($data);?>
+<?php
+if(isset($data['uploads']) && $data['uploads']): 
+      foreach ($data['uploads'] as $file):?>
+        <a href="<?=URLROOT . '/Files/download/'.basename($file['path'])?>"><?=basename($file['path'])?></a>
+<?php endforeach;
+endif;?>

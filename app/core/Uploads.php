@@ -58,7 +58,7 @@ class Upload
             return false;
         }
     }
-    public static function storeUploadedFiles($destination, $input_name = 'fileupload')
+    public static function storeUploadedFiles($destination, $input_name = 'fileupload',$omit_ext=false)
     {
         // It is always assumed that the files are being uploaded as "multiple"
         if (isset($_FILES[$input_name])) {
@@ -75,9 +75,12 @@ class Upload
                         ]);
                     }else{
                         $original_name = $files['name'][$i];
-                        $file_id = uniqid("file_$original_name");
+                        $file_id = uniqid("file_");
                         $file_ext = strtolower(pathinfo($original_name,PATHINFO_EXTENSION));
                         $target_file = rtrim($destination,'/\\')."/$file_id.$file_ext";
+                        if($omit_ext){
+                            $target_file = rtrim($destination,'/\\')."/$file_id";
+                        }
                         if(move_uploaded_file($files['tmp_name'][$i],$target_file)){
                             array_push($to_return,[
                                 'error' =>false,
