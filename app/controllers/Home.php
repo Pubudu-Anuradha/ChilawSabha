@@ -6,12 +6,20 @@ class Home extends Controller
     {
         $this->view('Home/index');
     }
-    public function file(){
+    public function image(){
         if(isset($_POST['Upload'])){
             $upload_data = Upload::storeUploadedImages('public/upload/','img');
-            $this->view('Home/file',['uploads'=>$upload_data]);
+            $this->view('Home/image',['uploads'=>$upload_data]);
         }else{
-            $this->view('Home/file',[]);
+            $this->view('Home/image',[]);
+        }
+    }
+    public function files(){
+        if(isset($_POST['Upload'])){
+            $upload_data = Upload::storeUploadedFiles('public/downloads/','testfiles');
+            $this->view('Home/files',['uploads'=>$upload_data]);
+        }else{
+            $this->view('Home/files',[]);
         }
     }
 }
