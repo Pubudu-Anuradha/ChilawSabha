@@ -1,4 +1,21 @@
 <div class="content">
+    <div class="content-title">
+        <div class="content-title-category">
+            <select name="categoryFill">
+                <option value="Null">Choose Category</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Complaint Handler">Complaint Handler</option>
+                <option value="Library Staff">Library Staff</option>
+            </select>
+        </div>
+        <div class="content-title-search">
+            <input type="text" name="search" placeholder=" Search" id="search">
+            <button>
+                <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
+            </button>
+        </div>
+    </div>
+
     <div class="content-table">
         <table>
             <thead>

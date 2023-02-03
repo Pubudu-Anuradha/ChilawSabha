@@ -96,6 +96,47 @@ body {
 .content{
 
 }
+.content-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 20px;
+}
+.content-title-category select{
+  padding: 6px 16px;
+  border: 1px solid var(--grey);
+  color: var(--grey);
+  cursor: pointer;
+  border-radius: 5px;
+}
+.content-title-category select > option{
+  color: var(--black);
+}
+.content-title-search{
+  display: flex;
+}
+.content-title-search input{
+  padding: 6px 4px;
+  border: 1px solid var(--grey);
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+}
+.content-title-search button{
+  padding: 6px;
+  background-color: var(--lightblue);
+  border: none;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+}
+.content-title-search button:hover{
+  background-color: var(--blue);
+}
+.content-title-search img{
+  display: block;
+  width: 10px;
+}
+
 /* Table Styles */
 
 .btn-column{

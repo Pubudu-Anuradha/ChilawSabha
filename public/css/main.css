@@ -106,7 +106,7 @@ body{
 }
 .slideshow img{
   width: 100%;
-  max-height: 700px;
+  max-height: 500px;
 }
 .slideshow-btn-left{
   position: absolute;
