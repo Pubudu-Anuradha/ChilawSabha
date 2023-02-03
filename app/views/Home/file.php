@@ -2,6 +2,19 @@
     <input type="file" name="img[]" id="img-up" accept="image/*" multiple>
     <input type="submit" name="Upload" value="Upload">
 </form>
+<?php 
+if(isset($data['uploads'])){
+    echo '<div class="previews">';
+    foreach ($data['uploads'] as $image) {
+        if(!$image['error']):?>
+            <div class="container upload">
+                    <img class="preview upload" width="150px" src="<?=URLROOT . '/' . $image['path']?>" alt="img-preview" >
+            </div>
+        <?php endif;
+    }
+    echo '</div>';
+    echo "<hr />";
+} ?>
 <div class="previews" >
 <?php for($i=0;$i<20;++$i):?>
     <div class="container"><img class="preview" width="150px" alt="img-preview" > <span class="close">&times;</span></div>
@@ -10,8 +23,8 @@
 
 <script>
     const file_input = document.getElementById("img-up");
-    const preview_containers = document.querySelectorAll(".container");
-    const preview_images = document.querySelectorAll(".preview");
+    const preview_containers = document.querySelectorAll(".container:not(.upload)");
+    const preview_images = document.querySelectorAll(".container > .preview:not(.upload)");
 
     const clear_previews = () => preview_containers.forEach(element => {
         element.style.display = "none";
@@ -21,7 +34,6 @@
     const refresh_previews = (e) => preview_containers.forEach(element => {
         clear_previews();
         for(let i=0;i<e.target.files.length;++i){
-            // console.log(URL.createObjectURL(e.target.files[0]));
             preview_containers[i].style.display = "block"
             preview_images[i].src = URL.createObjectURL(e.target.files[i]);
         }
