@@ -86,13 +86,16 @@ body {
   height: 100px;
   align-items: center;
 }
+body{
+  display: flex;
+  flex-direction: column;
+}
 .main {
+  box-sizing: border-box;
   min-height: 90vh;
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-areas: "sidebar content";
-  grid-template-columns: fit-content(20%) auto;
-  overflow:scroll;
+  width: 100%;
+  align-self: center;
+  padding: 1rem;
 }
 
 /* #Navbar Styles*/
@@ -106,6 +109,7 @@ body {
 }
 .navbar-items{
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 }
@@ -237,35 +241,19 @@ body {
   .navbar-items { /* Should show hamburger menu */
     display: none;
   }
-
-  /* TODO:make sidebar responsive */
-  .items a{
-    padding: 10px;
-  }
-  .items a span{
-    display: none;
-  }
-  .items a .see-more{
-    display: block;
-    margin-left: 0;
-  }
-  .sub-items a{
-    padding: 10px 1rem;
-  }
   /* Other Misc */
   body{
     font-size: 10px;
   }
   .main{
-    grid-gap: 1rem;
-    grid-template-columns: minmax(0,1fr),minmax(0,9fr);
+    width: 100%;
   }
 }
 
 @media  screen and (max-width:259px) {
   /* WHEN SCREEN IS NARROWER THAN LOGO */
-  .logo-items{
-    display: none;
+  .logo-items{ /* TODO: make a text "Chilaw Pradeshiya sabha" visible*/
+    display: none; 
   }
   body{
     font-size: 8px;
