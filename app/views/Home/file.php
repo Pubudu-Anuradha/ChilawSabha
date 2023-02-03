@@ -2,28 +2,12 @@
     <input type="file" name="img[]" id="img-up" accept="image/*" multiple>
     <input type="submit" name="Upload" value="Upload">
 </form>
-<div class="previews" style="display: flex;gap:1rem;align-items:flex-start;">
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-1"> <span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-2"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-3"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-4"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-5"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-6"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-7"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-8"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-9"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-10"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-11"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-12"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-13"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-14"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-15"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-16"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-17"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-18"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-19"><span>&times;</span></div>
-    <div class="container"><img class="preview" src="" width="150px" alt="" id="pre-20"><span>&times;</span></div>
+<div class="previews" >
+<?php for($i=0;$i<20;++$i):?>
+    <div class="container"><img class="preview" width="150px" alt="img-preview" > <span class="close">&times;</span></div>
+<?php endfor?>
 </div>
+
 <script>
     const file_input = document.getElementById("img-up");
     const preview_containers = document.querySelectorAll(".container");
@@ -34,7 +18,7 @@
         element.src = "";
     });
 
-    file_input.addEventListener('change', (e)=>{
+    const refresh_previews = (e) => preview_containers.forEach(element => {
         clear_previews();
         for(let i=0;i<e.target.files.length;++i){
             // console.log(URL.createObjectURL(e.target.files[0]));
@@ -42,13 +26,47 @@
             preview_images[i].src = URL.createObjectURL(e.target.files[i]);
         }
     });
+
+    const files_changed =  (e) =>{
+        if(e.target.files.length > 20){
+            clear_previews();
+            alert("You cannot upload more than 20 images");
+            file_input.files = new DataTransfer().files
+        }else{
+            refresh_previews(e);
+            for(let i=0;i<e.target.files.length;++i){
+                preview_containers[i].childNodes.forEach((child)=>{
+                    if(child.className=="close") child.onclick = ()=>{
+                        const dt = new DataTransfer();
+                        for(let j=0;j<e.target.files.length;++j)
+                            if(j!=i) dt.items.add(e.target.files[j]);
+                        file_input.files = dt.files;
+                        refresh_previews(e);
+            }})}
+        }
+    }
+
+    file_input.addEventListener('change',files_changed)
     clear_previews();
-    // TODO: remove file when X clicked
 </script>
 <style>
+    .previews{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap:1rem;
+        align-items:flex-start;
+    }
     .container{
         position: relative;
         width: 150px;
+    }
+    .container .preview{
+        align-self: flex-start;
+        max-height: 150px;
+        overflow-y: scroll;
+        border-radius: 10px;
+        border: 1px solid black;
     }
     .container span{
         display: flex;
@@ -57,7 +75,7 @@
         position: absolute;
         text-align: center;
         font-size: 2rem;
-        font-weight: bolder;
+        font-weight: 1000;
         top: -.75rem;
         right:-.75rem;
         background-color: red;

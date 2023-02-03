@@ -1,2 +1,2 @@
-upload/*
-!upload/placeholder.txt
+public/upload/*
+!public/upload/placeholder.txt

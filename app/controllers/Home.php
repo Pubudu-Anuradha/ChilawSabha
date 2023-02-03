@@ -8,12 +8,10 @@ class Home extends Controller
     }
     public function file(){
         if(isset($_POST['Upload'])){
-            echo "<pre>";
-            // var_dump($_POST);
-            // var_dump($_FILES);
-            var_dump(Upload::storeUploadedImages('upload','img'));
-            echo "</pre>";
+            $upload_data = Upload::storeUploadedImages('public/upload/','img');
+            $this->view('Home/file',['uploads'=>$upload_data]);
+        }else{
+            $this->view('Home/file',[]);
         }
-        $this->view('Home/file',[]);
     }
 }
