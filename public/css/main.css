@@ -99,30 +99,32 @@ body{
 }
 
 /* Slideshow Styles */
+/* To resize slideshow, wrap it in a div and adjust that one's size */
 .slideshow{
-  position: absolute;
-  left: 0;
-  right: 0;
+  position: relative;
 }
 .slideshow img{
   width: 100%;
   max-height: 500px;
 }
-.slideshow-btn-left{
+.slideshow-btn{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
   position: absolute;
-  top: 45%;
-  left: 0;
-  padding: 15px;
-  font-size: 25px;
+  top: calc(50% - 2.5rem);
+  font-size: 2rem;
+  padding: 0 1rem;
   opacity: 0.4;
 }
-.slideshow-btn-right{
-  position: absolute;
-  top: 45%;
+
+.left-btn{
+  left: 0;
+}
+.right-btn{
   right: 0;
-  padding: 15px;
-  font-size: 25px;
-  opacity: 0.4;
 }
 
 /* #Navbar Styles*/
