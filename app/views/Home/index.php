@@ -1,11 +1,13 @@
+<h1>Test</h1>
 <div class="slideshow">
 
     <img src="" alt="slideshow" id="slideshow">
 
-    <button  class="slideshow-btn-left" onclick='prev(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10094;</button>
-    <button  class="slideshow-btn-right" onclick='next(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10095;</button>
+    <button  class="slideshow-btn left-btn" onclick='prev(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10094;</button>
+    <button  class="slideshow-btn right-btn" onclick='next(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10095;</button>
 
 </div>
+<h2>Testing</h2>
     <!-- Function to load slideshow -->
     <script>
 
