@@ -5,6 +5,6 @@
 <?php
 if(isset($data['uploads']) && $data['uploads']): 
       foreach ($data['uploads'] as $file):?>
-        <a href="<?=URLROOT . '/Files/download/'.basename($file['path'])?>"><?=basename($file['path'])?></a>
+        <a href="<?=URLROOT . '/Files/download/'.basename($file['path'])?>"><?=$file['orig']?></a>
 <?php endforeach;
 endif;?>

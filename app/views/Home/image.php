@@ -1,4 +1,5 @@
-<form action="<?=URLROOT . '/Home/file'?>" method="post" enctype="multipart/form-data">
+<?php define('PREVIEW_WIDTH','300px');?>
+<form action="<?=URLROOT . '/Home/image'?>" method="post" enctype="multipart/form-data">
     <input type="file" name="img[]" id="img-up" accept="image/*" multiple>
     <input type="submit" name="Upload" value="Upload">
 </form>
@@ -8,7 +9,7 @@ if(isset($data['uploads'])){
     foreach ($data['uploads'] as $image) {
         if(!$image['error']):?>
             <div class="container upload">
-                    <img class="preview upload" width="150px" src="<?=URLROOT . '/' . $image['path']?>" alt="img-preview" >
+                    <img class="preview upload" width="<?= PREVIEW_WIDTH ?>" src="<?=URLROOT . '/' . $image['path']?>" alt="img-preview" >
             </div>
         <?php endif;
     }
@@ -17,7 +18,7 @@ if(isset($data['uploads'])){
 } ?>
 <div class="previews" >
 <?php for($i=0;$i<20;++$i):?>
-    <div class="container"><img class="preview" width="150px" alt="img-preview" > <span class="close">&times;</span></div>
+    <div class="container"><img class="preview" width="<?= PREVIEW_WIDTH ?>" alt="img-preview" > <span class="close"></span></div>
 <?php endfor?>
 </div>
 
@@ -62,23 +63,30 @@ if(isset($data['uploads'])){
     clear_previews();
 </script>
 <style>
+    :root{
+        --preview-size:<?= PREVIEW_WIDTH ?>;
+    }
     .previews{
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap:1rem;
+        gap:3rem;
         align-items:flex-start;
     }
     .container{
         position: relative;
-        width: 150px;
+        width: var(--preview-size);
+        transition: 200ms ease-in-out;
     }
     .container .preview{
         align-self: flex-start;
-        max-height: 150px;
+        max-height: var(--preview-size);
         overflow-y: scroll;
         border-radius: 10px;
         border: 1px solid black;
+    }
+    .container:hover{
+        transform: scale(1.1);
     }
     .container span{
         display: flex;
@@ -98,5 +106,22 @@ if(isset($data['uploads'])){
         border-radius: 50%;
         border: 2px solid black;
         cursor: pointer;
+        transition: 200ms ease-in-out;
+        z-index: 10;
+    }
+    .container span::before,.container span::after{
+        position: absolute;
+        height: 1.5rem;
+        content:" ";
+        border-left: 3px solid black;
+    }
+    .container span::before{
+        transform: rotate(45deg);
+    }
+    .container span::after{
+        transform: rotate(-45deg);
+    }
+    .container span:hover{
+        transform: scale(1.2);
     }
 </style>
