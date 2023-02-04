@@ -73,7 +73,14 @@
   font-size: 1rem;
 }
 
-.inputfield label{
+select, textarea {
+  -ms-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.inputfield label {
   margin: auto 0;
   text-align: left;
 }
@@ -85,6 +92,37 @@
   padding: 0.5rem;
 }
 
+.inputDiv {
+  box-sizing: border-box;
+}
+
+.inputDiv
+  input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not(
+    [type="file"]
+  ):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not(
+    [type="tel"]
+  ):not([type="search"]):not([type="time"]),
+.inputDiv select,
+.inputDiv textarea {
+  width: calc(100% - 2rem);
+}
+
+/* #textInput,
+#passwordInput,
+#selectOption,
+#noteInput,
+#checkboxInput,
+#radiobuttonInput,
+#dateInput,
+#dateTimeLocalInput,
+#emailInput,
+#numberInput,
+#phoneInput,
+#searchInput
+{
+
+} */
+
 #textInput,
 #passwordInput,
 #selectOption,
@@ -95,22 +133,23 @@
 #dateTimeLocalInput,
 #emailInput,
 #numberInput,
-#telInput,
+#phoneInput,
 #searchInput,
-#timeInput{
-    padding: 0.5rem;
-    background-color: var(--lightblue);
-    border-radius: 0.5rem;
+#timeInput {
+  padding: 0.5rem;
+  background-color: var(--lightblue);
+  border-radius: 0.5rem;
 }
 
-#fileInput{
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+#fileInput {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
 }
 
-.checkboxInputs, .radiobuttonInputs{
-    display: grid;
-    grid-template-columns: 1fr 7fr;
+.checkboxInputs,
+.radiobuttonInputs {
+  display: grid;
+  grid-template-columns: 1fr 7fr;
 }
 
 .submitButtonContainer {
@@ -119,14 +158,14 @@
   text-align: right;
 }
 
-.submitButton{
+.submitButton {
   display: inline-block;
 }
 
-.submitButton input{
+.submitButton input {
   background-color: var(--lightblue);
   border-radius: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   border-radius: 1rem;
   margin: 1rem;
   padding: 1rem 1.5rem;
