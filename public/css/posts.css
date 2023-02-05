@@ -129,13 +129,13 @@ markasresolved: green
 .filters form {
     font-size: 1.1rem;
 }
-.filters form input,.filters form select{
+.filters form input,.filters form select,.page-size select,.page-nos  select{
     height: 30px;
     border: 1px solid var(--black);
     padding: 0 10px;
     font-size: 1.1rem;
 }
-.filters form select{
+.filters form select,.page-size select,.page-nos select{
     border-radius: 10px;
     background-color: #fff;
 }
@@ -157,4 +157,60 @@ markasresolved: green
     border-left: 0;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+.page-nav{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.page-btn{
+    display: inline-flex;
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--black);
+    height: 30px;
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: relative;
+}
+.first::after{
+    position: absolute;
+    font-size: 30px;
+    top: -10px;
+    bottom: -10px;
+    right: 7.5px;
+    content:"«";
+}
+.prev::after{
+    position: absolute;
+    font-size: 15px;
+    right: 7.5px;
+    top:2.5px;
+    content:"❮";
+}
+.next::after{
+    position: absolute;
+    font-size: 15px;
+    right: 7.5px;
+    top:2.5px;
+    content:"❯";
+}
+.last::after{
+    position: absolute;
+    font-size: 30px;
+    top: -10px;
+    bottom: -10px;
+    right: 7.5px;
+    content:"»";
+}
+.page-nos,.page-size{
+    display: inline-flex;
+    align-items: center;
+    gap:.5rem;
+    font-size: 1.1rem;
+}
+.page-nav{
+    margin: 2rem 0;
 }
