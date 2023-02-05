@@ -29,6 +29,42 @@ $posts = [
     Announcements
 </div>
 <hr />
+<div class="filters">
+    <form action="<?=URLROOT . '/Posts'?>" method="get">
+        <div class="filter">
+            <label for="search">
+                Search
+            </label>
+            <input type="search" name="search" id="search">
+        </div>
+        <div class="filter">
+            <label for="category">
+                Filter by Category
+            </label>
+            <select name="category" id="category">
+                <option value="All">
+                    All
+                </option>
+                <option value="test">
+                    test
+                </option>
+            </select>
+        </div>
+        <div class="filter">
+            <label for="sort">
+                Sort by date
+            </label>
+            <select name="sort" id="sort">
+                <option value="DESC">
+                    Newest to Oldest
+                </option>
+                <option value="ASC">
+                    Oldest to Newest
+                </option>
+            </select>
+        </div>
+    </form>
+</div>
 <div class="posts">
     <?php foreach($posts as $post): ?>
         <div class="post shadow">
