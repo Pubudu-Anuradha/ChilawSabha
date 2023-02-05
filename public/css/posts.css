@@ -118,3 +118,35 @@ markasresolved: green
 .cat-title{
     font-size: xx-large;
 }
+.filters{
+    margin: 1.5rem 0;
+}
+.filters form{
+    display: flex;
+    gap: 30px;
+    justify-content: space-evenly;
+}
+.search{
+    height: 30px;
+    border: 1px solid var(--black);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.search:valid ~ span:after,.search:invalid ~ span:after{
+    box-sizing: border-box;
+    content: '🔍';
+    position: absolute;
+    height: 30px;
+    aspect-ratio: 1/1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--fadedblue);
+    border: 1px solid var(--black);
+    border-left: 0;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.filter select{
+    height: 30px;
+}

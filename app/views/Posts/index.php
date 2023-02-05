@@ -23,44 +23,43 @@ $posts = [
     $post,$post,
     $post,$post,
     $post,$post,
-]
+];
 ?>
 <div class="cat-title">
     Announcements
 </div>
 <hr />
 <div class="filters">
-    <form action="<?=URLROOT . '/Posts'?>" method="get">
+    <form action="<?=URLROOT . '/Posts'?>" method="get" id="filterform">
         <div class="filter">
             <label for="search">
                 Search
             </label>
-            <input type="search" name="search" id="search">
+            <input class="search" type="search" name="search" id="search" value="<?= isset($_GET['search'])?$_GET['search']:''?>">
+            <span onclick="send()"></span>
         </div>
         <div class="filter">
             <label for="category">
                 Filter by Category
             </label>
-            <select name="category" id="category">
-                <option value="All">
-                    All
-                </option>
-                <option value="test">
-                    test
-                </option>
+            <select onchange="send()" name="category" id="category">
+                <?php foreach (['All'=>'All','test1'=>'Test Category 1','test2'=> 'Test Cat 2'] as $cat_v=>$cat_d):?>
+                    <option value="<?=$cat_v?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat_v) echo 'selected' ?>>
+                        <?=$cat_d?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="filter">
             <label for="sort">
                 Sort by date
             </label>
-            <select name="sort" id="sort">
-                <option value="DESC">
-                    Newest to Oldest
-                </option>
-                <option value="ASC">
-                    Oldest to Newest
-                </option>
+            <select onchange="send()" name="sort" id="sort">
+                <?php foreach(['DESC'=>'Newest to Oldest','ASC'=>'Oldest to Newest'] as $val=>$desc):?>
+                    <option value="<?= $val ?>" <?php if(isset($_GET['sort']) && $_GET['sort']==$val) echo 'selected' ?>>
+                        <?=$desc?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
     </form>
@@ -91,3 +90,9 @@ $posts = [
         </div>
     <?php endforeach; ?>
 </div>
+
+<script>
+    const send = ()=>{
+        document.getElementById('filterform').submit();
+    }
+</script>
