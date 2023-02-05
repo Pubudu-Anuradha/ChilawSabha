@@ -126,9 +126,20 @@ markasresolved: green
     gap: 30px;
     justify-content: space-evenly;
 }
-.search{
+.filters form {
+    font-size: 1.1rem;
+}
+.filters form input,.filters form select{
     height: 30px;
     border: 1px solid var(--black);
+    padding: 0 10px;
+    font-size: 1.1rem;
+}
+.filters form select{
+    border-radius: 10px;
+    background-color: #fff;
+}
+.search{
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
@@ -146,7 +157,4 @@ markasresolved: green
     border-left: 0;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-}
-.filter select{
-    height: 30px;
 }
