@@ -2,6 +2,10 @@
 class Posts extends Controller{
     public function index()
     {
-        $this->view('Posts/index','Posts Test',[],['main','posts']);
+        $this->view('Posts/announcements','Posts Test',[],['main','posts']);
+    }
+    public function single()
+    {
+        $this->view('Posts/announcement','Posts Test',[],['main','posts']);
     }
 }
