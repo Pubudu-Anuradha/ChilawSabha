@@ -326,18 +326,38 @@ body{
 
 .portal-buttonsContainer{
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   justify-content: center;
 }
 
-.portal-button{
+.portal-otherButtons{
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.portal-otherButtons h2{
+  font-size: 1.5rem;
+}
+
+.portal-button, .portal-otherButton{
   width: 15rem;
-  margin: 2rem 2rem;
   padding: 1rem 2rem;
   background-color: var(--lightblue);
-  border-radius: 0 1rem 1rem 0;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.portal-button{
+  border-radius: 0 1rem 1rem 0;
+  margin: 2rem 2rem;
+}
+
+.portal-otherButton{
+  border-radius: 1rem;
+  width: 25rem;
+  text-align: left;
+  margin: 0.5rem 2rem;
 }
 
 .portal-button:hover{
