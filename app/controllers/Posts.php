@@ -2,7 +2,8 @@
 class Posts extends Controller{
     public function index()
     {
-        $this->view('Posts/announcements','Posts Test',[],['main','posts']);
+        $model = $this->model('postModel');
+        $this->view('Posts/announcements','Posts Test',['Posts'=>$model->getPosts()],['main','posts']);
     }
     public function single()
     {
