@@ -301,3 +301,49 @@ body{
     gap: 3px;
   }
 }
+
+
+/* Library Portal related styles*/
+
+.head-area h1{
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.head-area hr{
+  margin-bottom: 2rem;
+}
+
+.portal-intro, .portal-buttonsContainer{
+  width: 70%;
+  margin: 2rem auto;
+}
+
+.portal-intro p{
+  text-align: justify;
+  font-size: 1.2rem;
+}
+
+.portal-buttonsContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.portal-button{
+  width: 15rem;
+  margin: 2rem 2rem;
+  padding: 1rem 2rem;
+  background-color: var(--lightblue);
+  border-radius: 0 1rem 1rem 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.portal-button:hover{
+  background-color: var(--blue);
+}
+
+.portal-button-icons{
+  height:35px;
+}
