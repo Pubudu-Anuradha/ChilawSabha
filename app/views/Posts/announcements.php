@@ -109,8 +109,8 @@ $posts = [
     ?>
     <div class="page-nos">
         <?php if($current!=0):?>
-            <a href="<?= URLROOT . "/Posts/?page=0&size=$size" ?>" class="page-btn first"></a>
-            <a href="<?= URLROOT . "/Posts/?page=".($current - 1)."&size=$size" ?>" class="page-btn prev"></a>
+            <a href="<?= URLROOT . "/Posts/?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
+            <a href="<?= URLROOT . "/Posts/?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
         <?php endif; ?>
         <select name="page" onchange="send()" id="page">
             <?php
@@ -120,8 +120,8 @@ $posts = [
             <?php endfor ?>
         </select>
         <?php if($current<$page_count-1):?>
-            <a href="<?= URLROOT . "/Posts/?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn next"></a>
-            <a href="<?= URLROOT . "/Posts/?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn last"></a>
+            <a href="<?= URLROOT . "/Posts/?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
+            <a href="<?= URLROOT . "/Posts/?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
         <?php endif; ?>
     </div>
     <div class="page-size">
