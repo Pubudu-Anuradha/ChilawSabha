@@ -6,4 +6,9 @@ class Home extends Controller
     {
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha');
     }
+
+    public function emergency()
+    {
+        $this->view('Home/emergency', 'Emergency');
+    }
 }
