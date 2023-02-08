@@ -14,82 +14,6 @@ class Model
 
     protected function insert($table, $data)
     {
-        // Expecting an associative array for the data with its keys being table columns
-        // Concatenate column names with commas
-        $cols = join(',', array_keys($data));
-        $vals = [];
-
-        // Check data types and add '' quotes to strings
-        foreach ($data as $key => $value) {
-            if (gettype($value) == 'string') {
-                // To escape special characters
-                $value = mysqli_real_escape_string($this->conn, $value);
-                array_push($vals, "'$value'");
-            } else {
-                array_push($vals, $value);
-            }
-        }
-
-        // Concatenate values with commas
-        $vals = join(',', $vals);
-        // Make sql statement
-        $sql = "INSERT INTO $table ($cols) VALUES ($vals)";
-        // Execute the statement and return
-        try {
-            return $this->conn->query($sql) === true;
-        } catch (Exception) {
-            return false;
-        }
-    }
-
-    protected function select($table, $columns = '*', $conditions = '')
-    {
-        // Make sql statement with table name , columns
-        $sql = "SELECT $columns FROM $table";
-        // If there are conditions add to the sql with WHERE
-        if ($conditions != '') {
-            $sql = "$sql WHERE $conditions";
-        }
-        // Statement executes and the result is returned
-        return $this->conn->query($sql);
-    }
-
-    protected function update($table, $data, $conditions)
-    {
-        // Start building the sql statement
-        $sql = "UPDATE $table SET ";
-
-        // Loop through array to get column,value pairs
-        foreach ($data as $column => $value) {
-            // Check type of value
-            if (gettype($value) == 'string') {
-                // To escape special characters
-                $value = mysqli_real_escape_string($this->conn, $value);
-                $sql .= "$column = '" . $value . "',";
-            } else {
-                $sql .= "$column = $value,";
-            }
-        }
-
-        // Remove last comma from sql statement
-        $sql = rtrim($sql, ",");
-        // Add conditions to sql statement
-        $sql .= " WHERE $conditions";
-        // Execute sql statement and return result
-        return $this->conn->query($sql);
-    }
-
-    protected function delete($table, $conditions)
-    {
-        // Sql statement for deleting
-        $sql = "DELETE FROM $table WHERE $conditions";
-        // Execute sql statement and return result
-        return $this->conn->query($sql);
-    }
-
-    // SQL prepared statements
-    protected function insertprep($table, $data)
-    {
         // Concatenate column name with commas
         $keys = array_keys($data);
         $cols = join(',', $keys);
@@ -135,7 +59,7 @@ class Model
         }
     }
 
-    protected function selectprep($table, $columns = '*', $conditions = '', $offsetlimt = false)
+    protected function select($table, $columns = '*', $conditions = '', $offsetlimt = false)
     {
         try {
             if ($offsetlimt) {
@@ -180,7 +104,7 @@ class Model
 
     protected function selectPaginated($table, $columns = '*', $conditions = '')
     {
-        $row_count = $this->selectprep($table, 'COUNT(*) as recordCount', $conditions);
+        $row_count = $this->select($table, 'COUNT(*) as recordCount', $conditions);
         $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
 
         // $page is set from pagenumber and size set on $_GET
@@ -200,14 +124,14 @@ class Model
         }
 
         return array_merge(
-            $this->selectprep($table, $columns, $conditions, $page), [
+            $this->select($table, $columns, $conditions, $page), [
                 'count' => $row_count,
                 'page' => $page,
             ]
         );
     }
 
-    protected function updateprep($table, $data, $conditions)
+    protected function update($table, $data, $conditions)
     {
         $column = [];
         $vals = [];
@@ -256,7 +180,7 @@ class Model
         }
     }
 
-    protected function deleteprep($table, $conditions)
+    protected function delete($table, $conditions)
     {
         try {
             // Prepare statement
