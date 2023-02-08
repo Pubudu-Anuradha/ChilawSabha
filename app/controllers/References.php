@@ -5,7 +5,8 @@ class References extends Controller{
             'CRUD',
             'Pagination',
             'Styled/table',
-            'Styled/form'
+            'Styled/form',
+            'Styled/chart',
         ]];
         $this->view('References/index','Reference Pages',$data);
     }
