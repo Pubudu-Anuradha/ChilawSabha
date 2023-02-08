@@ -42,7 +42,7 @@ endif;
  <h2>
      INSERT
  </h2>
- <form action="<?=URLROOT . "/Home/test"?>" method="post">
+ <form action="<?=URLROOT . "/References/CRUD"?>" method="post">
      <?php
 if (isset($data['Add'])):
     if ($data['Add']['success']): ?>
@@ -79,7 +79,7 @@ endif;?>
      UPDATE
  </h2>
 
- <form action="<?=URLROOT . "/Home/test"?>" method="post">
+ <form action="<?=URLROOT . "/References/CRUD"?>" method="post">
 <?php
 if (isset($data['Update'])):
     if ($data['Update']['success']): ?>
@@ -102,7 +102,7 @@ endif;?>
      DELETE
  </h2>
 
- <form action="<?=URLROOT . "/Home/test"?>" method="post">
+ <form action="<?=URLROOT . "/References/CRUD"?>" method="post">
 <?php
 if (isset($data['Delete'])):
     if ($data['Delete']['success']): ?>
