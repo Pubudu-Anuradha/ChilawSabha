@@ -2,6 +2,8 @@
 
 class Controller
 {
+    //Flag used to render the relevant sidebar when a user logged in
+    protected $logged_in_user = false;
 
     //A function for child classes to get an instance of a defined model
     public function model($model)
@@ -11,9 +13,17 @@ class Controller
     }
 
     //Render a defined view and pass the data provided by the caller
-    public function view($view, $data = [])
+    public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = ['main'])
     {
+        if($this->logged_in_user){
+            array_push($styles,'loggedin_layout');
+        }
+        require_once 'app/views/Header.php';
+        if($this->logged_in_user){
+            require_once 'app/views/' . $_SESSION['role'] . '/Sidebar.php';
+        }
         require_once 'app/views/' . $view . '.php';
+        require_once 'app/views/Footer.php';
     }
 
     //Check authenitation for a role by seeing if session variables are set properly.
@@ -26,6 +36,8 @@ class Controller
         } else if ($_SESSION['role'] != $role) {
             header('location:' . URLROOT . '/Other/Forbidden');
             die();
+        } else{
+            $this->logged_in_user = true;
         }
     }
 

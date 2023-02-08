@@ -1,0 +1,303 @@
+/* Colors */
+:root{
+  --blue: #7387EF;
+  --lightblue: #93B4F2;
+  --fadedblue: #F0F5FE;
+  --red: #FF4040;
+  --green: #25A704;
+  --yellow: #F3BC2F;
+  --orange: #E2631B;
+  --grey: #9A9A9A;
+  --bgcolor: #f0f0f0;
+  --black: #000000;
+}
+
+/*
+background for all pages: bgcolor
+view: blue
+edit: yellow
+remove: red
+enable: green
+extenduedate: green
+completed: green
+favourite: lightblue
+plantoreadd: blue
+addbook: lightblue
+reject: red
+lost: red
+delist: red
+disable: red
+found: red
+accept: green
+addnote: blue
+markasresolved: green
+*/
+
+.blue{
+  color: var(--blue);
+}
+.lightblue{
+  color: var(--lightblue);
+}
+.green{
+  color: var(--green);
+}
+.red{
+  color: var(--red);
+}
+.orange{
+  color: var(--orange);
+}
+.yellow{
+  color: var(--yellow);
+}
+.grey{
+  color: var(--grey);
+}
+
+/* Page */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  background-color: var(--bgcolor);
+}
+
+/* Header Styles */
+.header {
+  width: 100%;
+}
+.logo-area {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+.logo-items {
+  padding: 1rem;
+  display: flex;
+  gap: 20px;
+}
+.sabha-title {
+  height: 100px;
+  align-items: center;
+}
+body{
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  box-sizing: border-box;
+  min-height: 90vh;
+  width: 100%;
+  align-self: center;
+  padding: 1rem;
+}
+
+/* Slideshow Styles */
+/* To resize slideshow, wrap it in a div and adjust that one's size */
+.slideshow{
+  position: relative;
+}
+.slideshow img{
+  width: 100%;
+  max-height: 500px;
+}
+.slideshow-btn{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  position: absolute;
+  top: calc(50% - 2.5rem);
+  font-size: 2rem;
+  padding: 0 1rem;
+  opacity: 0.4;
+}
+
+.left-btn{
+  left: 0;
+}
+.right-btn{
+  right: 0;
+}
+
+/* #Navbar Styles*/
+.navbar{
+  height: 50px;
+  border-top: 2px solid var(--grey);
+  border-bottom: 2px solid var(--grey);
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+}
+.navbar-items{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar-items ul{
+  margin: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding-inline-start: 0;
+}
+.navbar-items ul.login-list{
+  gap: 1rem;
+}
+.navbar-items ul li a{
+  text-decoration: none;
+  padding: 16px 1rem;
+  color: var(--black);
+}
+.user-login-image{
+  cursor: pointer;
+  margin-left: auto;
+  height: 30px;
+}
+.navbar-items ul.dropdown-content {
+  display: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  background-color: #FFFFFF;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  list-style: none;
+}
+.dropdown a.dropbtn{
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content li {
+  color: black;
+  padding: 12px 16px;
+  display: block;
+}
+.dropdown-content li:hover {
+  background-color: var(--blue);
+  color: white;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown:hover .dropbtn {
+  background-color: var(--blue);
+  color: white;
+}
+
+/* #Sidebar Styles*/
+.sidebar{
+  min-width: auto;
+  /* min-height: 90vh; */
+  background: var(--blue);
+  /* padding: 30px 0; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.items{
+  width: 100%;
+  cursor: pointer;
+}.items a{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: #FFFFFF;
+  padding: 25px;
+  border-bottom: 1px solid var(--lightblue);
+}
+.sidebar-img{
+  height: 25px;
+}
+.sub-items{
+  background-color: #FFFFFF;
+  display: none;
+}
+.sub-items a{
+  color: var(--black);
+  padding: 10px 10px;
+}
+.sub-items a:hover{
+  background: var(--lightblue);
+  color: #FFFFFF;
+}
+.show-drop{
+  display: block;
+}
+.items:hover .sidebar-drop{
+  background: var(--lightblue);
+}
+.see-more{
+  font-size: 25px;
+  text-align: right;
+  margin-left: auto;
+}
+
+/* Content Styles*/
+.content{
+  width: 100%;
+}
+
+/* Footer Styles*/
+.footer {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+}
+
+@media screen and (min-width:1440px) {
+  /* WHEN SCREEN IS WIDER THAN 1440px */
+  .navbar-items,.main{
+    width: 1440px;
+  }
+}
+
+@media  screen and (max-width:767px) {
+  /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* TODO:make navbar responsive */
+  .navbar-items { /* Should show hamburger menu */
+    display: none;
+  }
+  /* Other Misc */
+  body{
+    font-size: 10px;
+  }
+  .main{
+    width: 100%;
+  }
+}
+
+@media  screen and (max-width:259px) {
+  /* WHEN SCREEN IS NARROWER THAN LOGO */
+  .logo-items{ /* TODO: make a text "Chilaw Pradeshiya sabha" visible*/
+    display: none; 
+  }
+  body{
+    font-size: 8px;
+  }
+  .main{
+    grid-gap: 5px;
+  }
+  .sidebar-img{
+    height: 10px;
+  }
+  .items a .see-more{
+    font-size: 10px;
+  }
+  .items a{
+    padding: 5px;
+    gap: 3px;
+  }
+}
