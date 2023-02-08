@@ -9,15 +9,7 @@ class Admin extends Controller
 
     public function index()
     {
-        $this->view('Admin/index');
-    }
-    public function Announcements($page='index')
-    {
-        $model = $this->model('AnnouncementModel');
-        switch($page){
-            default:
-                $this->view('Admin/Announcements/index','Manage Announcements',['announcements' => $model->getAnnouncements()],['main','table','posts']);
-        }
+        $this->view('Admin/index','Admin DashBoard',[],['main','chart']);
     }
     public function Users($page='index')
     {
@@ -35,6 +27,38 @@ class Admin extends Controller
                 break;
             default:
                 $this->view('Admin/User/index','Manage Users',['Users' => $model->getUsers()],['main','table','posts']);
+        }
+    }
+    public function Announcements($page='index')
+    {
+        $model = $this->model('AnnouncementModel');
+        switch($page){
+            default:
+                $this->view('Admin/Announcements/index','Manage Announcements',['announcements' => $model->getAnnouncements()],['main','table','posts']);
+        }
+    }
+    public function Services($page='index')
+    {
+        $model = $this->model('ServiceModel');
+        switch($page){
+            default:
+                $this->view('Admin/Services/index','Manage Announcements',['services' => []],['main','table','posts']);
+        }
+    }
+    public function Projects($page='index')
+    {
+        $model = $this->model('ProjectModel');
+        switch($page){
+            default:
+                $this->view('Admin/Projects/index','Manage Projects',['projects' => []],['main','table','posts']);
+        }
+    }
+    public function Events($page='index')
+    {
+        $model = $this->model('EventModel');
+        switch($page){
+            default:
+                $this->view('Admin/Events/index','Manage Events',['events' => []],['main','table','posts']);
         }
     }
 }
