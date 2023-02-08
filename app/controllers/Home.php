@@ -10,5 +10,10 @@ class Home extends Controller
     public function homeTest()
     {
         $this->view('Home/homeTest', 'Home Test', [], ['main', 'home']);
-    }  
+    }
+    
+    public function downloads()
+    {
+        $this->view('Home/downloads');
+    }
 }

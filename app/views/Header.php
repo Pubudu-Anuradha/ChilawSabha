@@ -9,6 +9,7 @@
     <?php foreach ($styles as $style) { ?>
         <link rel="stylesheet" href="<?= URLROOT . '/public/css/' . $style ?>.css">
     <?php } ?>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
