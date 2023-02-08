@@ -130,6 +130,7 @@ body{
 /* Slideshow Styles */
 /* To resize slideshow, wrap it in a div and adjust that one's size */
 .slideshow{
+  display: flex;
   position: relative;
 }
 .slideshow img{
