@@ -8,7 +8,7 @@
 
 </div>
 <h2>Links</h2>
-    <a href="<?=URLROOT . "/References/"?>> References </a> <br>
+    <a href="<?=URLROOT . "/References/"?>"> References </a> <br>
     <!-- Function to load slideshow -->
     <script>
 

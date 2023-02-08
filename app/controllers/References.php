@@ -5,7 +5,7 @@ class References extends Controller{
             'CRUD',
             'Pagination',
         ]];
-        $this->view('References/index',$data);
+        $this->view('References/index','Reference Pages',$data);
     }
     public function CRUD(){
         $data = [];
@@ -48,12 +48,12 @@ class References extends Controller{
         // To search
         $data['test'] = $this->model('ReferenceModel')->searchBooks();
 
-        $this->view('References/CRUD', $data);
+        $this->view('References/CRUD','CRUD Reference', $data);
     }
 
     public function Pagination()
     {
         $model = $this->model('ReferenceModel');
-        $this->view('References/Pagination', ['test' => $model->getPaginatedTable()]);
+        $this->view('References/Pagination','Pagination Reference', ['test' => $model->getPaginatedTable()]);
     }
 }
