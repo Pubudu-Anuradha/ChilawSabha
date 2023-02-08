@@ -8,7 +8,7 @@
   --yellow: #F3BC2F;
   --orange: #E2631B;
   --grey: #9A9A9A;
-  --bgcolor: #fafaff;
+  --bgcolor: #ffffff;
   --black: #000000;
 }
 
@@ -291,10 +291,10 @@ body{
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
 }
 
-@media screen and (min-width:1440px) {
-  /* WHEN SCREEN IS WIDER THAN 1440px */
+@media screen and (min-width:1200px) {
+  /* WHEN SCREEN IS WIDER THAN 1200 */
   .navbar-items,.main{
-    width: 1440px;
+    width: 1200px;
   }
 }
 

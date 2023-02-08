@@ -20,26 +20,33 @@ class Model
         $vals = [];
         // Data type variable used to track placeholder data type
         $dataType = "";
+        $binds = [];
 
         // Check data types and add '' quotes to strings
         foreach ($data as $key => $value) {
-            if (gettype($value) == 'string') {
+            if(is_null($value)){
+                array_push($binds,'NULL');
+            }
+            else if (gettype($value) == 'string') {
                 // To escape special characters
                 $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
                 $vals[] = &$data[$key];
                 $dataType .= "s";
+                array_push($binds,'?');
             } else if (gettype($value) == 'double') {
                 $vals[] = &$data[$key];
                 $dataType .= "d";
+                array_push($binds,'?');
             } else {
                 $vals[] = &$data[$key];
                 $dataType .= "i";
+                array_push($binds,'?');
             }
         }
 
         try {
             // Prepare statement
-            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
+            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (".implode(',',$binds).")");
             // Bind data into prepared statement
             call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
 

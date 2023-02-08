@@ -31,7 +31,6 @@ CREATE TABLE `staff` (
   `email` varchar(255) NOT NULL,
   `state` varchar(10) NOT NULL,
   `NIC` varchar(12) NOT NULL,
-  `stadff_id` int(11) NOT NULL,
   `Role` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39,8 +38,11 @@ CREATE TABLE `staff` (
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`email`, `state`, `NIC`, `stadff_id`, `Role`) VALUES
-('pubudu@gmail.com', 'Working', '200027000650', 0, 'Admin');
+INSERT INTO `staff` (`email`, `state`, `NIC`, `Role`) VALUES
+('pubudu@gmail.com', 'Working', '200027000650', 'Admin'),
+('hasala@gmail.com', 'Working', '200027000651', 'LibraryStaff'),
+('tharindu@gmail.com', 'Working', '200027000620', 'ComplaintHandler'),
+('sandaru@gmail.com', 'Working', '200027000630', 'LibraryStaff');
 
 -- --------------------------------------------------------
 
@@ -64,7 +66,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`name`, `email`, `password_hash`, `reset_code`, `reset_code_time`, `address`, `contact_no`, `type`) VALUES
-('S.D.P.A. Satharasinghe', 'pubudu@gmail.com', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL, 'Karukkuwa,Madampe', '0711321395', 'Staff');
+('S.D.P.A. Satharasinghe', 'pubudu@gmail.com', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL, 'Karukkuwa,Madampe', '0711321395', 'Staff'),
+('Hasala', 'hasala@gmail.com', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL, 'Karukkuwa,Madampe', '0721321395', 'Staff'),
+('Tharindu', 'tharindu@gmail.com', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL, 'Karukkuwa,Madampe', '0741321395', 'Staff'),
+('Sandaru', 'sandaru@gmail.com', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL, 'Karukkuwa,Madampe', '0761321395', 'Staff');
 
 --
 -- Indexes for dumped tables
@@ -74,8 +79,7 @@ INSERT INTO `user` (`name`, `email`, `password_hash`, `reset_code`, `reset_code_
 -- Indexes for table `staff`
 --
 ALTER TABLE `staff`
-  ADD PRIMARY KEY (`staff_id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`email`),
 
 --
 -- Indexes for table `user`
@@ -86,13 +90,6 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
---
--- AUTO_INCREMENT for table `staff`
---
-ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
