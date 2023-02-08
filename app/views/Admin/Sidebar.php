@@ -1,6 +1,6 @@
 <div class="sidebar">
 
-    <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/dashboard.png'?>" alt="sidebar-image" class="sidebar-img"><span> Dashboard </span></a></div>
+    <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/dashboard.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin'?>'"> Dashboard </span></a></div>
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/service.png'?>" alt="sidebar-image" class="sidebar-img"><span> Services </span><span class="see-more" onclick='expandSideBar("sub-items-serv")'>	&#43;</span></a>
         <div class="sub-items" id="sub-items-serv">
             <a href="#">Add Service</a>
@@ -11,7 +11,7 @@
             <a href="#">Add Project</a>
         </div>
     </div>
-    <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/announcement.png'?>" alt="sidebar-image" class="sidebar-img"><span> Announcements </span><span class="see-more" onclick='expandSideBar("sub-items-anno")'>	&#43;</span></a>
+    <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/announcement.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin/Announcements'?>'"> Announcements </span><span class="see-more" onclick='expandSideBar("sub-items-anno")'>	&#43;</span></a>
         <div class="sub-items" id="sub-items-anno">
             <a href="#">Add Announcement</a>
         </div>

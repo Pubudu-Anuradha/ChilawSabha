@@ -85,6 +85,10 @@ tbody > tr:last-child{
 .btn .lost::before{
   content: "?";
 }
+
+.btn .view::before{
+  content: "👁";
+}
 @media screen and (max-width:767px){
   .content-table{
     display: block;

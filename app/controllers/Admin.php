@@ -11,13 +11,12 @@ class Admin extends Controller
     {
         $this->view('Admin/index');
     }
-
-    public function tableTest()
+    public function Announcements($page='index')
     {
-        $this->view('Admin/tableTest', 'Tables', [], ['main', 'table']);
-    }
-    public function chart()
-    {
-        $this->view('Admin/chart', 'chart', [], ['main', 'chart']);
+        $model = $this->model('AnnouncementModel');
+        switch($page){
+            default:
+                $this->view('Admin/Announcements/index','Manage Announcements',['announcements' => $model->getAnnouncements()],['main','table','posts']);
+        }
     }
 }
