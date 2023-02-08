@@ -47,34 +47,35 @@ select, textarea {
   width: calc(100% - 2rem);
 }
 
-#textInput,
-#passwordInput,
-#selectOption,
-#noteInput,
-#checkboxInput,
-#radiobuttonInput,
-#dateInput,
-#dateTimeLocalInput,
-#emailInput,
-#numberInput,
-#phoneInput,
-#searchInput,
-#timeInput {
+input[type=file]{
+  width: calc(100% - 2rem);
+}
+
+input[type=text],
+input[type=password],
+input[type=checkbox],
+input[type=radio],
+input[type=date],
+input[type=datetime-local],
+input[type=email],
+input[type=number],
+input[type=tel],
+input[type=search],
+input[type=time],
+input[type=file],
+select,
+textarea{
   padding: 0.5rem;
   background-color: var(--lightblue);
   border-radius: 0.5rem;
   border: none;
 }
 
-#fileInput {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
 .checkboxInputs,
 .radiobuttonInputs {
   display: grid;
-  grid-template-columns: 1fr 7fr;
+  gap:.2rem 1rem;
+  grid-template-columns: fit-content(20%) auto;
 }
 
 .submitButtonContainer {
@@ -87,11 +88,15 @@ select, textarea {
   display: inline-block;
 }
 
-.submitButton input {
+input[type=submit] {
   background-color: var(--lightblue);
   border-radius: 0.5rem;
   font-size: 1.2rem;
   border-radius: 1rem;
   margin: 1rem;
   padding: 1rem 1.5rem;
+}
+
+label{
+  font-size: medium;
 }
