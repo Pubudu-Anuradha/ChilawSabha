@@ -2,7 +2,7 @@
     <div class="navbar-items">
         <ul>
             <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
-            <li class="dropdown"><a href="#" class="dropbtn">Announcements</a>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Announcements'?>" class="dropbtn">Announcements</a>
                 <ul class="dropdown-content">
                     <li>Announcement 1</li>
                     <li>Announcement 2</li>

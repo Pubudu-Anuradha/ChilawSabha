@@ -1,40 +1,12 @@
 <?php
-// $post = [
-//         'title' => 'A special Announcement',
-//         'category' => 'test',
-//         'shortdesc' => 'This is a very special announcement about something.',
-//         'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque optio
-//  consequuntur consequatur voluptates repellendus eos aliquam? Eaque dolor esse
-//  debitis velit voluptatibus voluptates saepe reiciendis numquam sunt distinctio
-//  natus dicta est fuga quisquam eveniet, nostrum quos neque dolorum, non
-//  aliquam. Expedita possimus nam sapiente fuga? Illum voluptates eligendi
-//  quisquam et assumenda! Esse dicta earum corporis quam illo rem ipsam soluta
-//  alias omnis tenetur, cum, sequi sunt incidunt, in corrupti nam facere
-//  accusantium deleniti laboriosam officia eius modi officiis suscipit. Magnam
-//  laborum debitis molestias dolorum facere. Nostrum, provident! Possimus fuga
-//  praesentium velit numquam in odit corrupti! Odio rerum voluptate doloribus!
-//  Cum!',
-//         'author' => 'Sarindu Thampath',
-//         'date' => '2023-01-23',
-//     ];
-// $posts = [
-//     $post,$post,
-//     $post,$post,
-//     $post,$post,
-//     $post,$post,
-//     $post,$post,
-// ];
-// echo "<pre>";
-// var_dump($data);
-// echo "</pre>";
-$posts = $data['Posts'];
+$posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts']['result']:false;
 ?>
 <div class="cat-title">
     Announcements
 </div>
 <hr />
 <div class="filters">
-    <form action="<?=URLROOT . '/Posts'?>" method="get" id="filterform">
+    <form action="<?=URLROOT . '/Posts/Announcements'?>" method="get" id="filterform">
         <div class="filter">
             <label for="search">
                 Search
@@ -47,7 +19,7 @@ $posts = $data['Posts'];
                 Filter by Category
             </label>
             <select onchange="send()" name="category" id="category">
-                <?php foreach (['All'=>'All','test1'=>'Test Category 1','test2'=> 'Test Cat 2'] as $cat_v=>$cat_d):?>
+                <?php foreach (['All'=>'All','testing'=>'Test Category 1','special'=> 'Test Cat 2'] as $cat_v=>$cat_d):?>
                     <option value="<?=$cat_v?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat_v) {echo 'selected';} ?>>
                         <?=$cat_d?>
                     </option>
@@ -67,31 +39,32 @@ $posts = $data['Posts'];
             </select>
         </div>
 </div>
+<?php if($posts):?>
 <div class="posts">
-    <?php foreach($posts as $post): ?>
-        <div class="post shadow">
-            <div class="title">
-                <a href="#"><?=$post['title']?></a>
-            </div>
-            <hr>
-            <div class="shortdesc">
-                <?=$post['shortdesc']?>
-            </div>
-            <div class="details">
-                <div class="author">
-                    <?=$post['author']?>
+        <?php foreach($posts as $post): ?>
+            <div class="post shadow">
+                <div class="title">
+                    <a href="<?=URLROOT . '/Posts/Announcement/'.$post['id']?>"><?=$post['title']?></a>
                 </div>
-                <div class='date'>
-                    <?=implode('/',explode('-',$post['date']))?>
+                <hr>
+                <div class="shortdesc">
+                    <?=$post['shortdesc']?>
                 </div>
-                <div class='category'>
-                    <a href="#">
-                        <?=$post['category']?>
-                    </a>
+                <div class="details">
+                    <div class="author">
+                        <?=$post['author']?>
+                    </div>
+                    <div class='date'>
+                        <?=implode('/',explode('-',$post['date']))?>
+                    </div>
+                    <div class='category'>
+                        <a href="#">
+                            <?=$post['category']?>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
 </div>
 
 <script>
@@ -101,20 +74,16 @@ $posts = $data['Posts'];
 </script>
 <div class="page-nav">
     <?php
-    // $size = $table['page'][1];
-    // $max = $table['count'];
-    // $page = $table['page];
-    //placeholders
-    $page = [20,10];
+    $page = $data['Posts']['page'];
     $size = $page[1];
-    $max = 101;
+    $max = $data['Posts']['count'];
     $page_count = ceil($max / $size);
     $current = $page[0] / $size;
     ?>
     <div class="page-nos">
         <?php if($current!=0):?>
-            <a href="<?= URLROOT . "/Posts/?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
-            <a href="<?= URLROOT . "/Posts/?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
+            <a href="<?= URLROOT . "/Posts/Announcements?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
+            <a href="<?= URLROOT . "/Posts/Announcements?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
         <?php endif; ?>
         <select name="page" onchange="send()" id="page">
             <?php
@@ -124,8 +93,8 @@ $posts = $data['Posts'];
             <?php endfor ?>
         </select>
         <?php if($current<$page_count-1):?>
-            <a href="<?= URLROOT . "/Posts/?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
-            <a href="<?= URLROOT . "/Posts/?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
+            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
+            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
         <?php endif; ?>
     </div>
     <div class="page-size">
@@ -137,3 +106,8 @@ $posts = $data['Posts'];
     </div>
 </div>
 </form>
+<?php else: ?>
+<div class="NoPosts">
+    No Posts available right now. Please check later
+</div>
+<?php endif; ?>
