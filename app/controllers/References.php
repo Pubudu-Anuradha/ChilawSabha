@@ -4,7 +4,8 @@ class References extends Controller{
         $data = ['links'=>[
             'CRUD',
             'Pagination',
-            'Styled/table'
+            'Styled/table',
+            'Styled/form'
         ]];
         $this->view('References/index','Reference Pages',$data);
     }

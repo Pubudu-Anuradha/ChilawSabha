@@ -1,70 +1,10 @@
-/* Colors */
-:root {
-  --blue: #7387ef;
-  --lightblue: #93b4f2;
-  --fadedblue: #f0f5fe;
-  --red: #ff4040;
-  --green: #25a704;
-  --yellow: #f3bc2f;
-  --orange: #e2631b;
-  --grey: #9a9a9a;
-  --bgcolor: #f0f0f0;
-  --black: #000000;
-}
-
-/*
-  background for all pages: bgcolor
-  view: blue
-  edit: yellow
-  remove: red
-  enable: green
-  extenduedate: green
-  completed: green
-  favourite: lightblue
-  plantoreadd: blue
-  addbook: lightblue
-  reject: red
-  lost: red
-  delist: red
-  disable: red
-  found: red
-  accept: green
-  addnote: blue
-  markasresolved: green
-  */
-
-.blue {
-  color: var(--blue);
-}
-.lightblue {
-  color: var(--lightblue);
-}
-.green {
-  color: var(--green);
-}
-.red {
-  color: var(--red);
-}
-.orange {
-  color: var(--orange);
-}
-.yellow {
-  color: var(--yellow);
-}
-.grey {
-  color: var(--grey);
-}
-
-.shadow {
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
-}
-
 .formContainer {
   box-sizing: border-box;
   width: 100%;
   margin: 3rem auto;
   padding: 1rem;
   border-radius: 1rem;
+  overflow-x: scroll;
 }
 
 .fullForm {
@@ -107,22 +47,6 @@ select, textarea {
   width: calc(100% - 2rem);
 }
 
-/* #textInput,
-#passwordInput,
-#selectOption,
-#noteInput,
-#checkboxInput,
-#radiobuttonInput,
-#dateInput,
-#dateTimeLocalInput,
-#emailInput,
-#numberInput,
-#phoneInput,
-#searchInput
-{
-
-} */
-
 #textInput,
 #passwordInput,
 #selectOption,
@@ -139,6 +63,7 @@ select, textarea {
   padding: 0.5rem;
   background-color: var(--lightblue);
   border-radius: 0.5rem;
+  border: none;
 }
 
 #fileInput {
