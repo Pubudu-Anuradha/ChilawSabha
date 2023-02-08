@@ -15,7 +15,7 @@
 <body>
     <div class="header">
         <div class="logo-area">
-            <div class="logo-items">
+            <div class="logo-items" onclick="window.location.href= '<?=URLROOT . '/Home'?>'">
                 <div class="logo">
                     <img src="<?= URLROOT . '/public/assets/logo.jpg' ?>" height="100" width="90" alt="Sabha Logo">
                 </div>
