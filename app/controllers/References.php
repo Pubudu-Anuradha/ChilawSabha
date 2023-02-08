@@ -4,6 +4,8 @@ class References extends Controller{
         $data = ['links'=>[
             'CRUD',
             'Pagination',
+            'fileUpload',
+            'imageUpload',
             'Styled/table',
             'Styled/form',
             'Styled/chart',
@@ -62,5 +64,23 @@ class References extends Controller{
 
     public function Styled($name){
         $this->view('References/Styled/'.$name,$name,[],['main',$name]);
+    }
+
+    public function imageUpload(){
+        if(isset($_POST['Upload'])){
+            $upload_data = Upload::storeUploadedImages('public/upload/','img');
+            $this->view('References/imageUpload','Upload Images',['uploads'=>$upload_data]);
+        }else{
+            $this->view('References/imageUpload','Upload Images',[]);
+        }
+    }
+    
+    public function fileUpload(){
+        if(isset($_POST['Upload'])){
+            $upload_data = Upload::storeUploadedFiles('downloads/','testfiles',true);
+            $this->view('References/fileUpload','File Upload',['uploads'=>$upload_data]);
+        }else{
+            $this->view('References/fileUpload','File Upload',[]);
+        }
     }
 }

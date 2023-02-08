@@ -1,5 +1,5 @@
 <?php define('PREVIEW_WIDTH','300px');?>
-<form action="<?=URLROOT . '/Home/image'?>" method="post" enctype="multipart/form-data">
+<form action="<?=URLROOT . '/References/imageUpload'?>" method="post" enctype="multipart/form-data">
     <input type="file" name="img[]" id="img-up" accept="image/*" multiple>
     <input type="submit" name="Upload" value="Upload">
 </form>
