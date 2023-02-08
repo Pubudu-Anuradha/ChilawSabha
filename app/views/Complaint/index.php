@@ -1,5 +1,5 @@
-<div class="view-new-complaint">
+<div class="content">
     <h1>
-        Dashboard
+        Welcome to the Complaint demo Home page
     </h1>
 </div>

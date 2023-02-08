@@ -1,0 +1,70 @@
+body {
+  display: block;
+}
+.main {
+  padding: 0;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-areas: "sidebar content";
+  grid-template-columns: fit-content(20%) auto;
+  overflow-x: scroll;
+}
+
+.content{
+    padding: 1rem 0;
+}
+
+@media screen and (min-width:1440px) {
+  /* WHEN SCREEN IS WIDER THAN 1440px */
+  .main{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* TODO:make sidebar responsive */
+  .items a {
+    padding: 10px;
+  }
+  .items a span {
+    display: none;
+  }
+  .items a .see-more {
+    display: block;
+    margin-left: 0;
+  }
+  .sub-items a {
+    padding: 10px 1rem;
+  }
+  .sidebar-img {
+    height: 15px;
+  }
+  .see-more{
+    font-size: 15px;
+  }
+  .main {
+    grid-gap: .4rem;
+    grid-template-columns: minmax(0, 1fr), minmax(0, 9fr);
+  }
+}
+
+@media screen and (max-width: 259px) {
+  /* WHEN SCREEN IS NARROWER THAN LOGO */
+  .logo-items {
+    display: none;
+  }
+  body {
+    font-size: 8px;
+  }
+  .main {
+    grid-gap: 5px;
+  }
+  .items a .see-more {
+    font-size: 10px;
+  }
+  .items a {
+    padding: 5px;
+    gap: 3px;
+  }
+}
