@@ -41,9 +41,9 @@
         <ul class="login-list">
             <li>
             <?php if(isset($_SESSION['login'])):?>
-                <li class="dropdown login-btn"><a href="#" class="dropbtn">Login</a>
+                <li class="dropdown login-btn"><a href="#" class="dropbtn"><?= $_SESSION['name']?></a>
                     <ul class="dropdown-content">
-                            <li> <a href="<?= URLROOT.'/'.$_SESSION['role']?>">Dash Board</a></li>
+                            <li> <a href="<?= URLROOT.'/'.$_SESSION['role']?>">Dashboard</a></li>
                             <li> <a href="<?= URLROOT.'/Login/Logout'?>">Logout</a></li>
                     </ul>
                 </li>

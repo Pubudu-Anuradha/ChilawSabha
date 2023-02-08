@@ -4,6 +4,7 @@ class References extends Controller{
         $data = ['links'=>[
             'CRUD',
             'Pagination',
+            'Styled/table'
         ]];
         $this->view('References/index','Reference Pages',$data);
     }
@@ -55,5 +56,9 @@ class References extends Controller{
     {
         $model = $this->model('ReferenceModel');
         $this->view('References/Pagination','Pagination Reference', ['test' => $model->getPaginatedTable()]);
+    }
+
+    public function Styled($name){
+        $this->view('References/Styled/'.$name,$name,[],['main',$name]);
     }
 }
