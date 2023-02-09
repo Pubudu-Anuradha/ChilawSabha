@@ -1,7 +1,9 @@
 <div class="sidebar">
 
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/dashboard.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin'?>'"> Dashboard </span></a></div>
+
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/service.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin/Services'?>'"> Services </span><span class="see-more" onclick='expandSideBar("sub-items-serv")'>	&#43;</span></a>
+
         <div class="sub-items" id="sub-items-serv">
             <a href="<?=URLROOT . '/Admin/Services/Add'?>">Add Service</a>
         </div>
@@ -29,7 +31,6 @@
     </div>
 
 </div>
-
 
 <script>
     function expandSideBar(id){

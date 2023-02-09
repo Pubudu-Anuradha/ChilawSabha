@@ -31,6 +31,7 @@ CREATE TABLE `staff` (
   `user_id` int(11) NOT NULL,
   `state` varchar(10) NOT NULL,
   `NIC` varchar(12) NOT NULL,
+
   `Role` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -38,10 +39,6 @@ CREATE TABLE `staff` (
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`user_id`, `state`, `NIC`, `Role`) VALUES
-(1, 'Working', '200026700149', 'LibraryStaff'),
-(2, 'Working', '200027000650', 'Admin'),
-(3, 'Working', '200045678129', 'Complaint');
 
 -- --------------------------------------------------------
 
