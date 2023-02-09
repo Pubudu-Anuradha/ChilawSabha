@@ -210,6 +210,58 @@ class Model
         }
     }
 
+    public function callProcedure($procedure,$fields){
+        // $fields is a numeric array.[Order Matters]
+        // Use this method only if necessary.
+        $prep_fields = [];
+        // Data type variable used to track placeholder data type
+        $dataType = "";
+        $prep_fields = [];
+        $binds = [];
+
+        // Check the data type
+        for ($i=0;$i<count($fields);++$i) {
+            if(is_null($fields[$i])){
+                array_push($binds,'NULL');
+            } else if (gettype($fields[$i]) == 'string') {
+                // To escape special characters
+                $fields[$i] = mysqli_real_escape_string($this->conn, $fields[$i]);
+                $prep_fields[] = &$fields[$i];
+                $dataType .= "s";
+                array_push($binds,'?');
+            } else if (gettype($fields[$i]) == 'double') {
+                $prep_fields[] =&$fields[$i];
+                $dataType .= "d";
+                array_push($binds,'?');
+            } else {
+                $prep_fields[] =&$fields[$i];
+                $dataType .= "i";
+                array_push($binds,'?');
+            }
+        }
+        try {
+            // Prepare statement
+            $sql = "CALL $procedure(".implode(',',$binds).")";
+            $stmt = $this->conn->prepare($sql);
+            // Bind data into prepared statement
+            call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $prep_fields));
+
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true,
+                'error' => $res == false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'errmsg' => $e->getMessage(),
+            ];
+        }
+    }
+
     public function __destruct()
     {
         // Closing the database connection

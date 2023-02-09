@@ -13,7 +13,7 @@
     </div>
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/announcement.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin/Announcements'?>'"> Announcements </span><span class="see-more" onclick='expandSideBar("sub-items-anno")'>	&#43;</span></a>
         <div class="sub-items" id="sub-items-anno">
-            <a href="<?=URLROOT . '/Admin/Announcememnts/Add'?>">Add Announcement</a>
+            <a href="<?=URLROOT . '/Admin/Announcements/Add'?>">Add Announcement</a>
         </div>
     </div>
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/event.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/Admin/Events'?>'"> Events </span><span class="see-more" onclick='expandSideBar("sub-items-eve")'>	&#43;</span></a>

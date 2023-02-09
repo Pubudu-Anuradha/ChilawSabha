@@ -37,5 +37,14 @@ class AnnouncementModel extends Model{
             'p.id as id,p.title as title,a.shortdesc as shortdesc,p.content as description,p.date as date,a.category as category,a.author as author',
             "$condidions ORDER BY p.date $sort"
         );
-    }    
+    }
+    public function addAnnouncement($data){
+        return $this->callProcedure('putAnnouncement',[
+            $data['title'],
+            $data['content'],
+            $data['category'],
+            $data['shortdesc'],
+            $data['author'],
+        ]);
+    }
 }
