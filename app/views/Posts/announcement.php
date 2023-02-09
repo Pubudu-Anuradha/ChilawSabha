@@ -1,25 +1,10 @@
 <?php 
-$post = [
-        'title' => 'A special Announcement',
-        'category' => 'test',
-        'shortdesc' => 'This is a very special announcement about something.',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque optio
- consequuntur consequatur voluptates repellendus eos aliquam? Eaque dolor esse
- debitis velit voluptatibus voluptates saepe reiciendis numquam sunt distinctio
- natus dicta est fuga quisquam eveniet, nostrum quos neque dolorum, non
- aliquam. Expedita possimus nam sapiente fuga? Illum voluptates eligendi
- quisquam et assumenda! Esse dicta earum corporis quam illo rem ipsam soluta
- alias omnis tenetur, cum, sequi sunt incidunt, in corrupti nam facere
- accusantium deleniti laboriosam officia eius modi officiis suscipit. Magnam
- laborum debitis molestias dolorum facere. Nostrum, provident! Possimus fuga
- praesentium velit numquam in odit corrupti! Odio rerum voluptate doloribus!
- Cum!',
-        'author' => 'Sarindu Thampath',
-        'date' => '2023-01-23',
-    ];
-    // var_dump($post);
-?>
-
+$post = isset($data['Announcement']['result'][0])?$data['Announcement']['result'][0]:false;
+if(!$post): ?>
+<h1>
+    Invalid Post
+</h1>
+<?php else: ?>
 <h1>
     <?=$post['title']?>
 </h1>
@@ -60,6 +45,7 @@ $post = [
         <a href="#">file1.pdf</a>
     </div>
 </div>
+<?php endif; ?>
 
 <script>
 

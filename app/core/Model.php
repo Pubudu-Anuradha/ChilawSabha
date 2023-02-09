@@ -14,52 +14,193 @@ class Model
 
     protected function insert($table, $data)
     {
-        // Expecting an associative array for the data with its keys being table columns
-        // Concatenate column names with commas
-        $cols = join(',', array_keys($data));
+        // Concatenate column name with commas
+        $keys = array_keys($data);
+        $cols = join(',', $keys);
         $vals = [];
+        // Data type variable used to track placeholder data type
+        $dataType = "";
 
         // Check data types and add '' quotes to strings
         foreach ($data as $key => $value) {
             if (gettype($value) == 'string') {
-                array_push($vals, "'$value'");
+                // To escape special characters
+                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
+                $vals[] = &$data[$key];
+                $dataType .= "s";
+            } else if (gettype($value) == 'double') {
+                $vals[] = &$data[$key];
+                $dataType .= "d";
             } else {
-                array_push($vals, $value);
+                $vals[] = &$data[$key];
+                $dataType .= "i";
             }
         }
 
-        // Concatenate values with commas
-        $vals = join(',', $vals);
-        // Make sql statement
-        $sql = "INSERT INTO $table ($cols) VALUES ($vals)";
-        // Execute the statement and return
         try {
-            return $this->conn->query($sql) === true;
-        } catch (Exception) {
-            return false;
+            // Prepare statement
+            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . str_repeat('?,', count($keys) - 1) . "?)");
+            // Bind data into prepared statement
+            call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true,
+                'error' => $res == false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'errmsg' => $e->getMessage(),
+            ];
         }
     }
 
-    protected function select($table, $columns = '*', $conditions = '')
+    protected function select($table, $columns = '*', $conditions = '', $offsetlimt = false)
     {
-        // Make sql statement with table name , columns
-        $sql = "SELECT $columns FROM $table";
-        // If there are conditions add to the sql with WHERE
-        if ($conditions != '') {
-            $sql = "$sql WHERE $conditions";
+        try {
+            if ($offsetlimt) {
+                /* $offsetlimit [0] = OFFSET
+                $offsetlimit [1] = ROW_COUNT per page */
+                $limit = $offsetlimt[0] . ',' . $offsetlimt[1];
+                // Prepare statement
+                if ($conditions != '') {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions LIMIT $limit");
+                } else {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table LIMIT $limit");
+                }
+            } else {
+                // Prepare statement
+                if ($conditions != '') {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table WHERE $conditions");
+                } else {
+                    $stmt = $this->conn->prepare("SELECT $columns FROM $table");
+                }
+            }
+
+            // Execute the statement
+            $res = $stmt->execute();
+            $result = $res ? $stmt->get_result() : false;
+            $nodata = $result->num_rows == 0;
+            $result = $result ? $result->fetch_all(MYSQLI_ASSOC) : false;
+            return [
+                'error' => $res == false,
+                'errmsg' => $res == false ? $stmt->error : false,
+                'nodata' => $nodata,
+                'result' => $result,
+            ];
+        } catch (Exception $e) {
+            return [
+                'error' => true,
+                'errmsg' => $e->getMessage(),
+                'nodata' => true,
+                'result' => false,
+            ];
         }
-        // Statement executes and the result is returned
-        return $this->conn->query($sql);
+    }
+
+    protected function selectPaginated($table, $columns = '*', $conditions = '')
+    {
+        $row_count = $this->select($table, 'COUNT(*) as recordCount', $conditions);
+        $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
+
+        // $page is set from pagenumber and size set on $_GET
+        $page = [0, 10];
+        if (isset($_GET['page']) && $_GET['page'] > 0) {
+            $page[0] = (int) $_GET['page'];
+        }
+        if (isset($_GET['size']) && $_GET['size'] > 10) {
+            $page[1] = (int) $_GET['size'];
+        }
+        // Convert page number to offset
+        $page[0] *= $page[1];
+
+        // reset offset to zero if limit is exceeded
+        if ($page[0] > $row_count) {
+            $page[0] = 0;
+        }
+
+        return array_merge(
+            $this->select($table, $columns, $conditions, $page), [
+                'count' => $row_count,
+                'page' => $page,
+            ]
+        );
     }
 
     protected function update($table, $data, $conditions)
     {
-        // TODO Implement update function
+        $column = [];
+        $vals = [];
+        // Data type variable used to track placeholder data type
+        $dataType = "";
+
+        // Check the data type
+        foreach ($data as $key => $value) {
+            // Add placeholders to each column
+            $column[] = "$key=?";
+
+            if (gettype($value) == 'string') {
+                // To escape special characters
+                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
+                $vals[] = &$data[$key];
+                $dataType .= "s";
+            } else if (gettype($value) == 'double') {
+                $vals[] = &$data[$key];
+                $dataType .= "d";
+            } else {
+                $vals[] = &$data[$key];
+                $dataType .= "i";
+            }
+        }
+
+        try {
+            // Prepare statement
+            $stmt = $this->conn->prepare("UPDATE $table SET " . join(',', $column) . " WHERE $conditions");
+            // Bind data into prepared statement
+            call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true && $stmt->affected_rows != 0,
+                'error' => $res == false,
+                'rows' => $res ? $stmt->affected_rows : false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'rows' => false,
+                'errmsg' => $e->getMessage(),
+            ];
+        }
     }
 
-    protected function delete($table, $data, $conditions)
+    protected function delete($table, $conditions)
     {
-        // TODO Implement delete function
+        try {
+            // Prepare statement
+            $stmt = $this->conn->prepare("DELETE FROM $table WHERE $conditions");
+            // Execute the statement
+            $res = $stmt->execute();
+            return [
+                'success' => $res == true && $stmt->affected_rows != 0,
+                'error' => $res == false,
+                'rows' => $res ? $stmt->affected_rows : false,
+                'errmsg' => $res == false ? $stmt->error : false,
+            ];
+        } catch (Exception $e) {
+            return [
+                'success' => false,
+                'error' => true,
+                'rows' => false,
+                'errmsg' => $e->getMessage(),
+            ];
+        }
     }
 
     public function __destruct()
