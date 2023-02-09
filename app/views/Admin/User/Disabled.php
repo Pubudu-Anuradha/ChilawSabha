@@ -5,7 +5,7 @@
     <hr>
     <?php
     $table = $data['Users'];
-    $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','ComplaintHandler'=>'Complaint Handler'];
+    $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','Complaint'=>'Complaint Handler'];
     ?>
 
     <script>
@@ -14,7 +14,7 @@
         }
     </script>
     <div class="filters">
-        <form action="<?=URLROOT . '/Admin/Users/Disabled'?>" method="get" id="filterform">
+        <form action="<?=URLROOT . '/Admin/Users'?>" method="get" id="filterform">
             <div class="filter">
                 <label for="search">
                     Search
@@ -61,18 +61,14 @@
                     <td><?= $roles[$user['role']]?></td>
                     <td>
                         <div  class="btn-column">
-                            <button class="btn bg-green">
-                                <span class="enable">
-                                    Re-Enable
-                                </span>
-                            </button>
+                            <a href="<?=URLROOT . '/Admin/Users/Enable/' . $user['user_id']?>" class="btn bg-green enable"> Re-Enable </a>
                         </div>
                     </td>
                 </tr>
                 <?php endforeach; else:?>
                     <tr>
                         <td colspan="8">
-                            No matching Users
+                            No Disabled Users 
                         </td>
                     </tr>
                 <?php endif; ?>
@@ -90,8 +86,8 @@
         ?>
         <div class="page-nos">
             <?php if($current!=0):?>
-                <a href="<?= URLROOT . "/Admin/Users/Disabled?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
-                <a href="<?= URLROOT . "/Admin/Users/Disabled?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
+                <a href="<?= URLROOT . "/Admin/Users?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
+                <a href="<?= URLROOT . "/Admin/Users?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
             <?php endif; ?>
             <select name="page" onchange="send()" id="page">
                 <?php
@@ -101,8 +97,8 @@
                 <?php endfor ?>
             </select>
             <?php if($current<$page_count-1):?>
-                <a href="<?= URLROOT . "/Admin/Users/Disabled?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
-                <a href="<?= URLROOT . "/Admin/Users/Disabled?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
+                <a href="<?= URLROOT . "/Admin/Users?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
+                <a href="<?= URLROOT . "/Admin/Users?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
             <?php endif; ?>
         </div>
         <div class="page-size">

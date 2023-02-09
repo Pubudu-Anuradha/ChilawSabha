@@ -11,22 +11,35 @@ class Admin extends Controller
     {
         $this->view('Admin/index','Admin DashBoard',[],['main','chart']);
     }
-    public function Users($page='index')
+    public function Users($page='index',$id=NULL)
     {
-        $model = $this->model('UserModel');
+        $model = $this->model('StaffModel');
         switch($page){
             case 'Add':
-                $this->view('Admin/User/Add','Add a new User',['Add' => isset($_POST['Add'])? $model->addUser(
+                $this->view('Admin/User/Add','Add a new User',['Add' => isset($_POST['Add'])? $model->addStaff(
                     $this->validateInputs($_POST,[
                         'email','name','password','address','contact_no','nic','role'
                     ],'Add')
                 ) : false],['main','form']);
                 break;
+            case 'Edit':
+                $this->view('Admin/User/Edit','Edit User',['edit'=>isset($_POST['Edit'])?$model->editStaff($id,$this->validateInputs($_POST,[
+                   'email','name','address','contact_no' 
+                ],'Edit')):NULL,'staff' => $id!=NULL ? $model->getStaffbyID($id):false],['main','form']);
+                break;
+            case 'Enable':
+                $id!=NULL ? $model->changestate($id,'working'):false;
+                $this->view('Admin/User/Disabled','Manage Disabled Users',['Users' => $model->getStaff('disabled')],['main','table','posts']);
+                break;
             case 'Disabled':
-                $this->view('Admin/User/Disabled','Manage Disabled Users',['Users' => $model->getUsers('disabled')],['main','table','posts']);
+                $this->view('Admin/User/Disabled','Manage Disabled Users',['Users' => $model->getStaff('disabled')],['main','table','posts']);
+                break;
+            case 'Disable':
+                $id!=NULL ? $model->changestate($id,'disabled'):false;
+                $this->view('Admin/User/index','Manage Users',['Users' => $model->getStaff()],['main','table','posts']);
                 break;
             default:
-                $this->view('Admin/User/index','Manage Users',['Users' => $model->getUsers()],['main','table','posts']);
+                $this->view('Admin/User/index','Manage Users',['Users' => $model->getStaff()],['main','table','posts']);
         }
     }
     public function Announcements($page='index',$id=NULL)

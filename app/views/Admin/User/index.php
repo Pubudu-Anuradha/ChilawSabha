@@ -5,7 +5,7 @@
     <hr>
     <?php
     $table = $data['Users'];
-    $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','ComplaintHandler'=>'Complaint Handler'];
+    $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','Complaint'=>'Complaint Handler'];
     ?>
 
     <script>
@@ -61,15 +61,18 @@
                     <td><?= $roles[$user['role']]?></td>
                     <td>
                         <div  class="btn-column">
-                            <a href="<?=URLROOT . '/Admin/Users/Edit/' . $user['id']?>" class="btn bg-yellow edit"> Edit </a>
-                            <a href="<?=URLROOT . '/Admin/Users/Disable/' . $user['id']?>" class="btn bg-red delist"> Disable </a>
+                            <a href="<?=URLROOT . '/Admin/Users/Edit/' . $user['user_id']?>" class="btn bg-yellow edit"> Edit </a>
+                            <?php if($user['role']!='Admin'):?>
+                            <a href="<?=URLROOT . '/Admin/Users/Disable/' . $user['user_id']?>" class="btn bg-red delist"> Disable </a>
+                            <?php endif; ?>
                         </div>
                     </td>
                 </tr>
                 <?php endforeach; else:?>
                     <tr>
                         <td colspan="8">
-                            No matching Users
+                            No matching Users 
+                            <?php var_dump($data); ?>
                         </td>
                     </tr>
                 <?php endif; ?>
