@@ -1,3 +1,5 @@
 <div class="content">
-    <h1 class="dashboard">WELCOME TO CHILAW PUBLIC LIBRARY</h1>
+    <h1>
+        Welcome to the Library Member demo Home page
+    </h1>
 </div>
