@@ -1,0 +1,5 @@
+/* Test Styles for chart */
+.charts{
+    display: flex;
+    flex-wrap: wrap;
+}
