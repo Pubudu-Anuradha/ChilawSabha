@@ -1,17 +1,20 @@
-<?php
-$posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts']['result']:false;
-?>
+<div class="content">
+<!-- <?php
+var_dump($data);
+?> -->
+
+<h1>
+    Manage Announcements
+</h1>
+<hr>
+
 <script>
     const send = ()=>{
         document.getElementById('filterform').submit();
     }
 </script>
-<div class="cat-title">
-    Announcements
-</div>
-<hr />
 <div class="filters">
-    <form action="<?=URLROOT . '/Posts/Announcements'?>" method="get" id="filterform">
+    <form action="<?=URLROOT . '/Admin/Announcements'?>" method="get" id="filterform">
         <div class="filter">
             <label for="search">
                 Search
@@ -44,46 +47,57 @@ $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts'][
             </select>
         </div>
 </div>
-<?php if($posts):?>
-<div class="posts">
-        <?php foreach($posts as $post): ?>
-            <div class="post shadow">
-                <div class="title">
-                    <a href="<?=URLROOT . '/Posts/Announcement/'.$post['id']?>"><?=$post['title']?></a>
-                </div>
-                <hr>
-                <div class="shortdesc">
-                    <?=$post['shortdesc']?>
-                </div>
-                <div class="details">
-                    <div class="author">
-                        <?=$post['author']?>
+
+<?php 
+$table = $data['announcements'];
+?>
+<div class="content-table">
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Title</th>
+                <th>Short Desctiption</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(!$table['nodata'] && !$table['error']):
+            foreach($table['result'] as $ann): ?>
+            <tr>
+                <td><?= $ann['id']?></td>
+                <td><?= $ann['title']?></td>
+                <td><?= $ann['shortdesc']?></td>
+                <td><?= $ann['author']?></td>
+                <td><?= $ann['date']?></td>
+                <td><?= $ann['category']?></td>
+                <td>
+                    <div  class="btn-column">
+                        <a class="btn bg-green  view"href="<?=URLROOT . '/Admin/Announcements/View/'.$ann['id']?>">View</a>
+                        <a class="btn bg-yellow edit"href="<?=URLROOT . '/Admin/Announcements/Edit/'.$ann['id']?>">Edit</a>
                     </div>
-                    <div class='date'>
-                        <?=implode('/',explode('-',$post['date']))?>
-                    </div>
-                    <div class='category'>
-                        <a href="#">
-                            <?=$post['category']?>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+                </td>
+            </tr>
+            <?php endforeach; endif;?>
+        </tbody>
+    </table>
 </div>
 
 <div class="page-nav">
     <?php
-    $page = $data['Posts']['page'];
+    $page = $data['announcements']['page'];
     $size = $page[1];
-    $max = $data['Posts']['count'];
+    $max = $data['announcements']['count'];
     $page_count = ceil($max / $size);
     $current = $page[0] / $size;
     ?>
     <div class="page-nos">
         <?php if($current!=0):?>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
+            <a href="<?= URLROOT . "/Admin/Announcements?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
+            <a href="<?= URLROOT . "/Admin/Announcements?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
         <?php endif; ?>
         <select name="page" onchange="send()" id="page">
             <?php
@@ -93,8 +107,8 @@ $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts'][
             <?php endfor ?>
         </select>
         <?php if($current<$page_count-1):?>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
+            <a href="<?= URLROOT . "/Admin/Announcements?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
+            <a href="<?= URLROOT . "/Admin/Announcements?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
         <?php endif; ?>
     </div>
     <div class="page-size">
@@ -106,8 +120,5 @@ $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts'][
     </div>
 </div>
 </form>
-<?php else: ?>
-<div class="NoPosts">
-    No Posts available right now. Please check later
+
 </div>
-<?php endif; ?>

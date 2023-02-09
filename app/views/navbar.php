@@ -4,9 +4,9 @@
             <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/Posts/Announcements'?>" class="dropbtn">Announcements</a>
                 <ul class="dropdown-content">
-                    <li>Announcement 1</li>
-                    <li>Announcement 2</li>
-                    <li>Announcement 3</li>
+                    <?php foreach(['Financial','Government','Tender'] as $category):?>
+                        <li onclick='window.location.href="<?=URLROOT . "/Posts/Announcements?category=$category"?>"'><?= $category ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Downloads</a>
