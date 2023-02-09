@@ -609,3 +609,69 @@ body{
     gap: 3px;
   }
 }
+
+
+/* Library Portal related styles*/
+
+.head-area h1{
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.head-area hr{
+  margin-bottom: 2rem;
+}
+
+.portal-intro, .portal-buttonsContainer{
+  width: 70%;
+  margin: 2rem auto;
+}
+
+.portal-intro p{
+  text-align: justify;
+  font-size: 1.2rem;
+}
+
+.portal-buttonsContainer{
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+}
+
+.portal-otherButtons{
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.portal-otherButtons h2{
+  font-size: 1.5rem;
+}
+
+.portal-button, .portal-otherButton{
+  width: 15rem;
+  padding: 1rem 2rem;
+  background-color: var(--lightblue);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.portal-button{
+  border-radius: 0 1rem 1rem 0;
+  margin: 2rem 2rem;
+}
+
+.portal-otherButton{
+  border-radius: 1rem;
+  width: 25rem;
+  text-align: left;
+  margin: 0.5rem 2rem;
+}
+
+.portal-button:hover{
+  background-color: var(--blue);
+}
+
+.portal-button-icons{
+  height:35px;
+}
