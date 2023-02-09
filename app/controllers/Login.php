@@ -27,7 +27,7 @@ class Login extends Controller
                 }
             }
         }
-        $this->view('Login/index', 'Login' ,$data);
+        $this->view('Login/index', $data);
     }
 
     public function Logout($redir = 'Home/index')
