@@ -1,8 +1,8 @@
 <div class="navbar">
     <div class="navbar-items">
         <ul>
-            <li class="dropdown"><a href="#" class="dropbtn">Home</a></li>
-            <li class="dropdown"><a href="#" class="dropbtn">Announcements</a>
+            <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Announcements'?>" class="dropbtn">Announcements</a>
                 <ul class="dropdown-content">
                     <li>Announcement 1</li>
                     <li>Announcement 2</li>
@@ -40,14 +40,33 @@
         </ul>
         <ul class="login-list">
             <li>
-                <a href="#"><img src="<?=URLROOT . '/public/assets/user.png'?>" alt="User Login" class="user-login-image"></a>
+            <?php if(isset($_SESSION['login'])):?>
+                <li class="dropdown login-btn"><a href="#" class="dropbtn"><?= $_SESSION['name']?></a>
+                    <ul class="dropdown-content">
+                            <li> <a href="<?= URLROOT.'/'.$_SESSION['role']?>">Dashboard</a></li>
+                            <li> <a href="<?= URLROOT.'/Login/Logout'?>">Logout</a></li>
+                    </ul>
+                </li>
+            <?php else: ?>
+                <li class="dropdown login-btn"><a href="<?= URLROOT.'/Login'?>" class="dropbtn">Login</a>
+            <?php endif; ?>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Login</a>
-                <ul class="dropdown-content">
-                    <li>link 1</li>
-                    <li>link 2</li>
-                </ul>
-            </li>
+            <style>
+                .login-btn{
+                    position: relative;
+                }
+                .login-btn::before{
+                    position: absolute;
+                    content: " ";
+                    width: 40px;
+                    height: 40px;
+                    background: url("<?=URLROOT . '/public/assets/user.png'?>");
+                    background-repeat: none;
+                    background-size: contain;
+                    bottom: 7.5px;
+                    left: -45px;
+                }
+            </style>
         </ul>
     </div>
 </div>

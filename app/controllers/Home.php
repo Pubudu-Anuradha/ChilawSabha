@@ -6,11 +6,6 @@ class Home extends Controller
     {
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha');
     }
-
-    public function homeTest()
-    {
-        $this->view('Home/homeTest', 'Home Test', [], ['main', 'home']);
-    }
     
     public function downloads()
     {

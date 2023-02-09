@@ -43,8 +43,11 @@ class Controller
 
     // A function for ensuring that all fields in $fields and only those fields are in the $data array as keys,
     // And ensuring that their values aren't empty. If valid the valid array will be returned, false otherwise.
-    protected function validateInputs($data, $fields)
+    protected function validateInputs($data, $fields, $submitMethod = 'Submit')
     {
+        if (isset($data[$submitMethod])) {
+            unset($data[$submitMethod]);
+        }
         $validated = [];
         foreach ($fields as $field) {
             if (isset($data[$field]) && !empty($data[$field])) {

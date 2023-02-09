@@ -1,10 +1,10 @@
 <div class="formContainer">
-    <form class="fullForm" action="<?=URLROOT . "/Home/homeTest"?>" method="post">
+    <form class="fullForm" method="post">
         <div class="inputfield">
             <label for="textInput">Text Input: </label>
             <div class="inputDiv">
                 <input type="text" name="textInputField" id="textInput" placeholder="Enter Text">
-            </div> 
+            </div>
         </div>
 
         <div class="inputfield">
@@ -24,7 +24,7 @@
                     <option value="Tharindu">Tharindu</option>
                 </select>
             </div>
-        </div> 
+        </div>
 
         <div class="inputfield">
             <p>Checkbox Select: </p>
@@ -120,7 +120,7 @@
             <label for="noteInput">Enter a note:</label>
             <div class="inputDiv">
                 <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
-            </div> 
+            </div>
         </div>
 
         <div class="submitButtonContainer">

@@ -8,7 +8,7 @@
   --yellow: #F3BC2F;
   --orange: #E2631B;
   --grey: #9A9A9A;
-  --bgcolor: #f0f0f0;
+  --bgcolor: #fafaff;
   --black: #000000;
 }
 
@@ -33,6 +33,9 @@ addnote: blue
 markasresolved: green
 */
 
+.black{
+  color: var(--black);
+}
 .blue{
   color: var(--blue);
 }
@@ -53,6 +56,32 @@ markasresolved: green
 }
 .grey{
   color: var(--grey);
+}
+
+
+.bg-black{
+  background-color: var(--black);
+}
+.bg-blue{
+  background-color: var(--blue);
+}
+.bg-lightblue{
+  background-color: var(--lightblue);
+}
+.bg-green{
+  background-color: var(--green);
+}
+.bg-red{
+  background-color: var(--red);
+}
+.bg-orange{
+  background-color: var(--orange);
+}
+.bg-yellow{
+  background-color: var(--yellow);
+}
+.bg-grey{
+  background-color: var(--grey);
 }
 
 /* Page */
@@ -101,6 +130,7 @@ body{
 /* Slideshow Styles */
 /* To resize slideshow, wrap it in a div and adjust that one's size */
 .slideshow{
+  display: flex;
   position: relative;
 }
 .slideshow img{
@@ -256,6 +286,9 @@ body{
   width: 100%;
   height: 3rem;
 }
+
+.shadow {
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
 
 /* Home page styles */
 .page-content{
