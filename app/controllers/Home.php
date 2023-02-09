@@ -16,5 +16,10 @@ class Home extends Controller
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];
         $this->view('Home/emergency', 'Emergency Details', $data, ['main','emergency']);
+
+
+    public function portal()
+    {
+        $this->view('Home/portal', 'Library Portal');
     }
 }
