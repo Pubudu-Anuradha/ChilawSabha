@@ -28,8 +28,6 @@ class Model
                 array_push($binds,'NULL');
             }
             else if (gettype($value) == 'string') {
-                // To escape special characters
-                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
                 $vals[] = &$data[$key];
                 $dataType .= "s";
                 array_push($binds,'?');
@@ -151,8 +149,6 @@ class Model
             $column[] = "$key=?";
 
             if (gettype($value) == 'string') {
-                // To escape special characters
-                $data[$key] = mysqli_real_escape_string($this->conn, $data[$key]);
                 $vals[] = &$data[$key];
                 $dataType .= "s";
             } else if (gettype($value) == 'double') {
@@ -224,8 +220,6 @@ class Model
             if(is_null($fields[$i])){
                 array_push($binds,'NULL');
             } else if (gettype($fields[$i]) == 'string') {
-                // To escape special characters
-                $fields[$i] = mysqli_real_escape_string($this->conn, $fields[$i]);
                 $prep_fields[] = &$fields[$i];
                 $dataType .= "s";
                 array_push($binds,'?');
