@@ -751,16 +751,16 @@ tr{
 }
 
 /* Book catalog page style library staff  */
-.bookcatalog,.bookrequest,.lostbooks,.delistbooks,.damagedbooks{
+.bookcatalog,.bookrequest,.lostbooks,.delistbooks,.damagedbooks,.libraryusers{
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 80%;
 }
-.bookcatalog h2,.bookrequest h2,.lostbooks h2,.delistbooks h2,.damagedbooks h2{
+.bookcatalog h2,.bookrequest h2,.lostbooks h2,.delistbooks h2,.damagedbooks h2,.libraryusers h2{
   margin: 0;
 }
-.bookcatalog-title,.bookrequest-title,.lost-book-title,.delist-book-title,.damaged-book-title{
+.bookcatalog-title,.bookrequest-title,.lost-book-title,.delist-book-title,.damaged-book-title,.library-user-title,.library-disabled-user-title{
   border-bottom: 1px solid var(--black);
   line-height: 2;
   display: flex;
@@ -782,7 +782,7 @@ tr{
 .content-title-category select > option{
   color: var(--black);
 }
-.book-catalog-table,.book-request-table,.lostbook-table,.delist-table,.damaged-table{
+.book-catalog-table,.book-request-table,.lostbook-table,.delist-table,.damaged-table,.library-user-table,.library-disabled-user-table{
   display: flex;
   justify-content: center;
 }
@@ -839,6 +839,31 @@ tr{
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
 }
 .found:hover{
+  transform: scale(1.1);
+}
+
+/* library user management styles */
+.disable{
+  background-color: var(--red);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+.disable:hover{
+  transform: scale(1.1);
+}
+
+/* library diabled list styles */
+.enable{
+  background-color: var(--green);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+.enable:hover{
+  transform: scale(1.1);
+}
+.remove{
+  background-color: var(--red);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+.remove:hover{
   transform: scale(1.1);
 }
 

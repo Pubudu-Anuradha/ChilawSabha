@@ -35,4 +35,12 @@ class LibraryStaff extends Controller
     {
         $this->view('LibraryStaff/Damagedbooks');
     }
+    public function users()
+    {
+        $this->view('LibraryStaff/Users');
+    }
+    public function disabledusers()
+    {
+        $this->view('LibraryStaff/Disabledusers');
+    }
 }

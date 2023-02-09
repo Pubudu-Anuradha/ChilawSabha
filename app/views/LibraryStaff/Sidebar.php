@@ -14,7 +14,7 @@
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/usermanagement.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Users'?>'"> User Management </span><span class="see-more" onclick='expandSideBar("sub-items-user")'>	&#43;</span></a>
         <div class="sub-items" id="sub-items-user">
             <a href="#">Create User</a>
-            <a href="#">Disabled User List</a>
+            <a href="<?=URLROOT . '/LibraryStaff/disabledusers' ?>">Disabled User List</a>
         </div>
     </div>
     <div class="items"><a href="<?=URLROOT . '/LibraryStaff/analytics' ?>" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/project.png'?>" alt="sidebar-image" class="sidebar-img"><span> Analytics </span></a></div>
