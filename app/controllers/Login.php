@@ -39,7 +39,12 @@ class Login extends Controller
                 }
             }
         }
-        $this->view('Login/index', 'Login' ,$data);
+        $this->view('Login/index', 'Login', $data);
+    }
+
+    public function passwordReset()
+    {
+        $this->view('Login/passwordReset', 'Reset Password');
     }
 
     public function Logout($redir = 'Home/index')
