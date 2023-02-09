@@ -102,7 +102,7 @@
     margin: 0rem 20rem;
     float: right;
   }  
-  .complaint-form h1{
+  .complaint-form h2{
     text-transform: uppercase;
   }
     .hr1 {
@@ -211,6 +211,69 @@
     margin: 1rem;
     padding: 1rem 1.5rem;
   }
+
+
+/* new Complaints Table Styles */
+
+.btn-column{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 10px;
+}
+table, td, th {
+  border: 1px solid;
+  padding: 10px;
+}
+
+th{
+  background-color: var(--lightblue);
+}
+
+td{
+  background-color: var(--fadedblue);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, tr, td, th{
+  border: none;
+}
+
+.content-table{
+  overflow-x: scroll;
+}
+
+tr{
+  border-bottom:1px solid var(--grey);
+}
+
+.content-table{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn{
+  border: none;
+  color: white;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.accept{
+  background-color: var(--yellow);
+}
+
+.view{
+  background-color: var(--red);
+}
 
   /* Footer Styles*/
   .footer {

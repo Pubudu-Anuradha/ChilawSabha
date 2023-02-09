@@ -30,9 +30,30 @@ class Complaint extends Controller
 
         $this->view('Complaint/addComplaint', 'Complaint', [], ['main', 'complaint'], $data);
     }
+
     // public function viewComplaint()
     // {
     //     $data = ['Complaints' => $this->model('ComplaintModel')->GetComplaint()];
     //     $this->view('ComplaintHandler/viewComplaint', $data);
     // }
+
+    public function newComplaints()
+    {
+        $this->view('Complaint/newComplaints', 'New Complaints', [], ['main', 'complaint']);
+    }
+
+    public function allAcceptedComplaints()
+    {
+        $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints', [], ['main', 'complaint']);
+    }
+
+    public function resolvedComplaints()
+    {
+        $this->view('Complaint/resolvedComplaints', 'Resolved Complaints', [], ['main', 'complaint']);
+    }
+
+    public function myWorkingComplaints()
+    {
+        $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [], ['main', 'complaint']);
+    }
 }
