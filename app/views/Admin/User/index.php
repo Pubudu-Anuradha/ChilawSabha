@@ -61,16 +61,8 @@
                     <td><?= $roles[$user['role']]?></td>
                     <td>
                         <div  class="btn-column">
-                            <button class="btn bg-yellow">
-                                <span class="edit">
-                                    Edit
-                                </span>
-                            </button>
-                            <button class="btn bg-red">
-                                <span class="delist">
-                                    Disable
-                                </span>
-                            </button>
+                            <a href="<?=URLROOT . '/Admin/Users/Edit/' . $user['id']?>" class="btn bg-yellow edit"> Edit </a>
+                            <a href="<?=URLROOT . '/Admin/Users/Disable/' . $user['id']?>" class="btn bg-red delist"> Disable </a>
                         </div>
                     </td>
                 </tr>
