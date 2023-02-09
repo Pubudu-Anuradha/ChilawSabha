@@ -15,6 +15,6 @@ class Home extends Controller
     public function emergency()
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];
-        $this->view('Home/emergency', 'Emergency', $data, ['main','emergency']);
+        $this->view('Home/emergency', 'Emergency Details', $data, ['main','emergency']);
     }
 }
