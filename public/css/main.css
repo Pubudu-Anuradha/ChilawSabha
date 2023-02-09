@@ -481,6 +481,16 @@ body{
   border: 1px solid var(--blue);
   border-radius: 10px;
 }
+.field select{
+  padding: 0.5rem 3rem;
+  background-color: var(--fadedblue);
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.field select > option{
+  color: var(--black);
+}
 .submit-btn{
   padding: 0.5rem 3rem;
   background-color: var(--lightblue);
@@ -571,7 +581,7 @@ body{
   flex-direction: column;
   gap: 1rem;
 }
-.analytics-topic{
+.analytics-topic,.addbooks-topic,.addusers-topic{
   border-bottom: 1px solid var(--black);
   line-height: 2;
 }
@@ -751,13 +761,13 @@ tr{
 }
 
 /* Book catalog page style library staff  */
-.bookcatalog,.bookrequest,.lostbooks,.delistbooks,.damagedbooks,.libraryusers{
+.bookcatalog,.bookrequest,.lostbooks,.delistbooks,.damagedbooks,.libraryusers,.bookform,.adduserform{
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 80%;
 }
-.bookcatalog h2,.bookrequest h2,.lostbooks h2,.delistbooks h2,.damagedbooks h2,.libraryusers h2{
+.bookcatalog h2,.bookrequest h2,.lostbooks h2,.delistbooks h2,.damagedbooks h2,.libraryusers h2,.bookform h2,.adduserform h2{
   margin: 0;
 }
 .bookcatalog-title,.bookrequest-title,.lost-book-title,.delist-book-title,.damaged-book-title,.library-user-title,.library-disabled-user-title{
@@ -865,6 +875,30 @@ tr{
 }
 .remove:hover{
   transform: scale(1.1);
+}
+
+/* Add book form style */
+.add-book-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+  align-self: center;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 2.5rem;
+}
+
+/* add user form style */
+.add-user-form{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+  align-self: center;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 2.5rem;
 }
 
 
