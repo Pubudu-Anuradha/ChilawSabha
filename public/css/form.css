@@ -1,0 +1,102 @@
+.formContainer {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 3rem auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-x: scroll;
+}
+
+.fullForm {
+  display: grid;
+  padding: 1rem 4rem;
+  font-size: 1rem;
+}
+
+select, textarea {
+  -ms-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.inputfield label {
+  margin: auto 0;
+  text-align: left;
+}
+
+.inputfield {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+.inputDiv {
+  box-sizing: border-box;
+}
+
+.inputDiv
+  input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not(
+    [type="file"]
+  ):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not(
+    [type="tel"]
+  ):not([type="search"]):not([type="time"]),
+.inputDiv select,
+.inputDiv textarea {
+  width: calc(100% - 2rem);
+}
+
+input[type=file]{
+  width: calc(100% - 2rem);
+}
+
+input[type=text],
+input[type=password],
+input[type=checkbox],
+input[type=radio],
+input[type=date],
+input[type=datetime-local],
+input[type=email],
+input[type=number],
+input[type=tel],
+input[type=search],
+input[type=time],
+input[type=file],
+select,
+textarea{
+  padding: 0.5rem;
+  background-color: var(--lightblue);
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.checkboxInputs,
+.radiobuttonInputs {
+  display: grid;
+  gap:.2rem 1rem;
+  grid-template-columns: fit-content(20%) auto;
+}
+
+.submitButtonContainer {
+  margin: 1rem;
+  padding: 1rem;
+  text-align: right;
+}
+
+.submitButton {
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: var(--lightblue);
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+label{
+  font-size: medium;
+}

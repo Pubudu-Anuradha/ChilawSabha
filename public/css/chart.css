@@ -1,6 +1,5 @@
 /* Test Styles for chart */
-.chart{
+.charts{
     display: flex;
-    height: 30%;
-    width: 30%;
+    flex-wrap: wrap;
 }
