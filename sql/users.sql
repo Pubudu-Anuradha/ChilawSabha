@@ -31,7 +31,7 @@ CREATE TABLE `staff` (
   `email` varchar(255) NOT NULL,
   `state` varchar(10) NOT NULL,
   `NIC` varchar(12) NOT NULL,
-  `stadff_id` int(11) NOT NULL,
+  `staff_id` int(11) NOT NULL,
   `Role` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39,7 +39,7 @@ CREATE TABLE `staff` (
 -- Dumping data for table `staff`
 --
 
-INSERT INTO `staff` (`email`, `state`, `NIC`, `stadff_id`, `Role`) VALUES
+INSERT INTO `staff` (`email`, `state`, `NIC`, `staff_id`, `Role`) VALUES
 ('pubudu@gmail.com', 'Working', '200027000650', 0, 'Admin');
 
 -- --------------------------------------------------------

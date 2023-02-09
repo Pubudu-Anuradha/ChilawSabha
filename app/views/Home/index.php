@@ -6,8 +6,8 @@
     <button  class="slideshow-btn right-btn" onclick='next(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10095;</button>
 
 </div>
-<h2>Links</h2>
-    <a href="<?=URLROOT . "/References/"?>"> References </a> <br>
+<!-- <h2>Links</h2>
+    <a href="<?=URLROOT . "/References/"?>"> References </a> <br> -->
 
 <div class="page-content">
     <div class="left-content">
