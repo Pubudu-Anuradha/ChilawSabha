@@ -522,6 +522,7 @@ body{
 }
 .submit-field{
   justify-content: end;
+  align-items: center;
 }
 
 /* styles for download page */
@@ -894,7 +895,7 @@ tr{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 50%;
+  width: 40%;
   align-self: center;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
   border-radius: 10px;

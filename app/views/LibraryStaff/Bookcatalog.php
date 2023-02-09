@@ -38,7 +38,7 @@
                     <td>Animus Kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -51,7 +51,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -64,7 +64,7 @@
                     <td>Animus Kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -77,7 +77,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -90,7 +90,7 @@
                     <td>Animus Kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -103,7 +103,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>
@@ -116,7 +116,7 @@
                     <td>Animus Kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost">Lost</button>
                             <button class="btn delist">Delist</button>
                         </div>

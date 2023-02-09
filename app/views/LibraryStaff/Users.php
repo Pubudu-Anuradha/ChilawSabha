@@ -25,7 +25,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -37,7 +37,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -49,7 +49,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -61,7 +61,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -73,7 +73,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -85,7 +85,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -97,7 +97,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -109,7 +109,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -121,7 +121,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -133,7 +133,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -145,7 +145,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -157,7 +157,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -169,7 +169,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>
@@ -181,7 +181,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
+                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn disable">Disable</button>
                         </div>
                     </td>

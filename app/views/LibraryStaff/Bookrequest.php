@@ -29,7 +29,7 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>
@@ -42,7 +42,7 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>
@@ -55,7 +55,7 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>
@@ -68,7 +68,7 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>
@@ -81,7 +81,7 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>
@@ -94,7 +94,7 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book">Add Book</button>
+                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject">Reject</button>
                         </div>
                     </td>

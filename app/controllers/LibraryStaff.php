@@ -61,4 +61,14 @@ class LibraryStaff extends Controller
     {
         $this->view('LibraryStaff/Addbooks');
     }
+
+    public function editbooks()
+    {
+        $this->view('LibraryStaff/Editbooks');
+    }
+
+    public function editusers()
+    {
+        $this->view('LibraryStaff/Editusers');
+    }
 }
