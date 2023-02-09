@@ -41,10 +41,9 @@ class Admin extends Controller
                 ],'Add')):NULL],['main','form']);
                 break;
             case 'Edit':
-                $this->view('Admin/Announcements/Edit','Edit Announcement',['announcement' => $id!=NULL ? $model->getAnnouncement($id):false,
-                'edit'=>isset($_POST['Edit'])?$model->editAnnouncement($id,$this->validateInputs($_POST,[
-                   'id','title','content','category','shortdesc','author' 
-                ],'Edit')):NULL],['main','form']);
+                $this->view('Admin/Announcements/Edit','Edit Announcement',['edit'=>isset($_POST['Edit'])?$model->editAnnouncement($id,$this->validateInputs($_POST,[
+                   'title','content','category','shortdesc','author' 
+                ],'Edit')):NULL,'announcement' => $id!=NULL ? $model->getAnnouncement($id):false],['main','form']);
                 break;
             case 'View':
                 $this->view('Admin/Announcements/View','View Announcement',['announcement' => $id!=NULL ? $model->getAnnouncement($id):false],['main','table','posts']);

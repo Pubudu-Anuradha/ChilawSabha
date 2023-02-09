@@ -63,6 +63,8 @@ tbody > tr:last-child{
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
+  color: #000;
+  color: var(--black);
   display: inline-block;
   border-radius: 5px;
   font-weight: 600;
@@ -74,23 +76,23 @@ tbody > tr:last-child{
   transform: scale(1.1);
 }
 
-.btn .delist::before{
+.delist::before{
   content: "␡";
 }
 
-.btn .edit::before{
+.edit::before{
   content: "✍";
 }
 
-.btn .lost::before{
+.lost::before{
   content: "?";
 }
 
-.btn .view::before{
+.view::before{
   content: "👁";
 }
 
-.btn .enable::before{
+.enable::before{
   content: "✓";
 }
 @media screen and (max-width:767px){

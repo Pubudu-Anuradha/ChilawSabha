@@ -55,4 +55,19 @@ class AnnouncementModel extends Model{
             $data['author'],
         ]);
     }
+    public function editAnnouncement($id,$data){
+        $posts = $this->update('post',[
+            'title'=>$data['title'],
+            'content'=>$data['content'],
+        ],"id=$id");
+        $announce = $this->update('announcement',[
+            'category'=>$data['category'],
+            'shortdesc'=>$data['shortdesc'],
+            'author'=>$data['author']
+        ],"id=$id");
+        return[
+            'posts' =>$posts,
+            'announce' =>$announce
+        ];
+    }
 }

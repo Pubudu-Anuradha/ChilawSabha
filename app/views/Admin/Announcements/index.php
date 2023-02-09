@@ -76,16 +76,8 @@ $table = $data['announcements'];
                 <td><?= $ann['category']?></td>
                 <td>
                     <div  class="btn-column">
-                        <button class="btn bg-green">
-                            <span class="view">
-                                View
-                            </span>
-                        </button>
-                        <button class="btn bg-yellow">
-                            <span class="edit">
-                                Edit
-                            </span>
-                        </button>
+                        <a class="btn bg-green  view"href="<?=URLROOT . '/Admin/Announcements/View/'.$ann['id']?>">View</a>
+                        <a class="btn bg-yellow edit"href="<?=URLROOT . '/Admin/Announcements/Edit/'.$ann['id']?>">Edit</a>
                     </div>
                 </td>
             </tr>

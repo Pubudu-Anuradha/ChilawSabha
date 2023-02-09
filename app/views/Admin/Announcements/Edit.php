@@ -6,6 +6,7 @@
                     $data['announcement']['errmsg']?>
                 </h1>
             <?php else: 
+            // var_dump($data);
             $ann = $data['announcement']['result'][0];?>
 
     <h1>
@@ -13,11 +14,11 @@
     </h1>
     <hr>
     <div class="formContainer">
-        <?php if(isset($data['Edit'])):
-                if(!$data['Edit']['success']):
-                    echo "Failed to Edit Announcement ".$data['Edit']['errmsg'];
+        <?php if(isset($data['edit'])):
+                if(!$data['edit']['posts']['success'] && !$data['edit']['announce']['success']):
+                    echo "Failed to Edit Announcement ".$data['edit']['posts']['errmsg'].'  '.$data['edit']['announce']['errmsg'];
                 else:
-                    echo "Edited Successfully";
+                    echo "Changes Saved";
                 endif;
             endif;
         ?>
