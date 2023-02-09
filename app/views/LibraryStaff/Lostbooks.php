@@ -1,8 +1,8 @@
 <div class="content">
-    <div class="bookcatalog">
-        <div class="bookcatalog-title">
-            <h2>BOOK CATALOGUE</h2>
-            <div class="catalog-sub-title">
+    <div class="lostbooks">
+        <div class="lost-book-title">
+            <h2>Lost Books</h2>
+            <div class="lostbook-sub-title">
                 <div class="content-title-category">
                 <select name="categoryFill">
                     <option value="Null">Choose Category</option>
@@ -19,9 +19,9 @@
                     </button>
                 </div>
             </div>
-
         </div>
-        <div class="book-catalog-table">
+
+        <div class="lostbook-table">
             <table>
                 <tr>
                     <th>Accession No</th>
@@ -35,12 +35,10 @@
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
+                    <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -51,9 +49,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -61,12 +57,10 @@
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
+                    <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -77,9 +71,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -87,12 +79,10 @@
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
+                    <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -103,25 +93,11 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
+                            <button class="btn found">Found</button>
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit">Edit</button>
-                            <button class="btn lost">Lost</button>
-                            <button class="btn delist">Delist</button>
-                        </div>
-                    </td>
-                </tr>
+               
             </table>
         </div>
         <div class="pagination-bar">

@@ -751,23 +751,23 @@ tr{
 }
 
 /* Book catalog page style library staff  */
-.bookcatalog,.bookrequest{
+.bookcatalog,.bookrequest,.lostbooks,.delistbooks,.damagedbooks{
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 80%;
 }
-.bookcatalog h2,.bookrequest h2{
+.bookcatalog h2,.bookrequest h2,.lostbooks h2,.delistbooks h2,.damagedbooks h2{
   margin: 0;
 }
-.bookcatalog-title,.bookrequest-title{
+.bookcatalog-title,.bookrequest-title,.lost-book-title,.delist-book-title,.damaged-book-title{
   border-bottom: 1px solid var(--black);
   line-height: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.catalog-sub-title{
+.catalog-sub-title,.lostbook-sub-title,.delist-sub-title,.damaged-sub-title{
   display: flex;
   gap: 2rem;
   align-items: center;
@@ -782,7 +782,7 @@ tr{
 .content-title-category select > option{
   color: var(--black);
 }
-.book-catalog-table{
+.book-catalog-table,.book-request-table,.lostbook-table,.delist-table,.damaged-table{
   display: flex;
   justify-content: center;
 }
@@ -832,6 +832,16 @@ tr{
 .reject:hover, .add-book:hover{
   transform: scale(1.1);
 }
+
+/* lost books page style */
+.found{
+  background-color: var(--green);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+.found:hover{
+  transform: scale(1.1);
+}
+
 
 @media screen and (min-width:1440px) {
   /* WHEN SCREEN IS WIDER THAN 1440px */

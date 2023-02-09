@@ -4,9 +4,9 @@
     <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/service.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Bookcatalog'?>'"> Book Catalogue </span><span class="see-more" onclick='expandSideBar("sub-items-serv")'>	&#43;</span></a>
         <div class="sub-items" id="sub-items-serv">
             <a href="#">Add Book</a>
-            <a href="#">Lost Book List</a>
-            <a href="#">Damaged Book List</a>
-            <a href="#">De-Listed Book List</a>
+            <a href="<?=URLROOT . '/LibraryStaff/lostbooks' ?>">Lost Book List</a>
+            <a href="<?=URLROOT . '/LibraryStaff/damagedbooks' ?>">Damaged Book List</a>
+            <a href="<?=URLROOT . '/LibraryStaff/delistedbooks' ?>">De-Listed Book List</a>
 
         </div>
     </div>

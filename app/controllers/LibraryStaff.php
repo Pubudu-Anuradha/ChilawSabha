@@ -23,4 +23,16 @@ class LibraryStaff extends Controller
     {
         $this->view('LibraryStaff/Bookrequest');
     }
+    public function lostbooks()
+    {
+        $this->view('LibraryStaff/Lostbooks');
+    }
+    public function delistedbooks()
+    {
+        $this->view('LibraryStaff/Delistedbooks');
+    }
+    public function damagedbooks()
+    {
+        $this->view('LibraryStaff/Damagedbooks');
+    }
 }
