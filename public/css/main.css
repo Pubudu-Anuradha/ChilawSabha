@@ -8,7 +8,7 @@
   --yellow: #F3BC2F;
   --orange: #E2631B;
   --grey: #9A9A9A;
-  --bgcolor: #fafaff;
+  --bgcolor: #ffffff;
   --black: #000000;
 }
 
@@ -271,7 +271,7 @@ body{
 
 /* Content Styles*/
 .content{
-  width: 100%;
+  width: 95%;
 }
 
 /* Footer Styles*/
@@ -476,13 +476,13 @@ body{
 }
 .field input:not([type="submit"]){
   padding: 0.5rem 3rem;
-  background-color: var(--fadedblue);
+  background-color: var(--lightblue);
   border: 1px solid var(--blue);
   border-radius: 10px;
 }
 .field select{
   padding: 0.5rem 3rem;
-  background-color: var(--fadedblue);
+  background-color: var(--lightblue);
   border: 1px solid var(--blue);
   border-radius: 10px;
   cursor: pointer;
@@ -522,6 +522,9 @@ body{
 .submit-field{
   justify-content: end;
   align-items: center;
+}
+.home-bookcatalog{
+  width: 100%;
 }
 
 /* styles for download page */
@@ -902,7 +905,7 @@ tr{
 }
 
 /* admin dashboard styles */
-.admin-dashboard{
+.admin-dashboard,.complaint-dashboard{
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -967,11 +970,54 @@ tr{
   text-align: center;
 }
 
+/* complaint dashboard styles */
+.complaint-count{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.complaint-count > div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 2rem 12rem;
+}
+.pie-outer-content{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 0.5rem 8rem;
+  align-items: center;
+}
+.complaint-count > div > h1{
+  font-size: 1rem;
+  font-weight: 400;
+}
+.complaint-count > div > span{
+  font-size: 2.5rem;
+}
+.most-complaint-category{
+  height: 280px;
+  width: 280px;
+}
+.complaint-lower{
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  border-radius: 10px;
+  padding: 1rem 1rem 8rem 1rem;
+  height: 250px;
+}
 
-@media screen and (min-width:1440px) {
-  /* WHEN SCREEN IS WIDER THAN 1440px */
+
+@media screen and (min-width:1200px) {
+  /* WHEN SCREEN IS WIDER THAN 1200 */
   .navbar-items,.main{
-    width: 1440px;
+    width: 1200px;
   }
 }
 

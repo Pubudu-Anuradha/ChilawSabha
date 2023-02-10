@@ -6,11 +6,11 @@ class Posts extends Controller{
     public function Announcements()
     {
         $model = $this->model('postModel');
-        $this->view('Posts/announcements','Posts Test',['Posts'=>$model->getPosts()],['main','posts']);
+        $this->view('Posts/announcements','Announcemets',['Posts'=>$model->getPosts()],['main','posts']);
     }
     public function Announcement($id)
     {
         $model = $this->model('postModel');
-        $this->view('Posts/announcement','Posts Test',['Announcement'=>$model->getPost($id)],['main','posts']);
+        $this->view('Posts/announcement','Announcemets',['Announcement'=>$model->getPost($id)],['main','posts']);
     }
 }

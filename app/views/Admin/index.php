@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content admin-analytics">
 <div class="admin-dashboard">
     <h2 class="analytics-topic">Dashboard</h2>
     <div class="upper-content">
