@@ -16,7 +16,7 @@ class Home extends Controller
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];
         $this->view('Home/emergency', 'Emergency Details', $data, ['main','emergency']);
-
+    }
 
     public function portal()
     {
@@ -31,5 +31,19 @@ class Home extends Controller
     public function bookCatalogue()
     {
         $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['main', 'libraryUsers']);
+    }
+    public function addcomplaint()
+    {
+        $this->view('Home/Addcomplaint', 'Complaint Form',$data=[],['main','form']);
+    }
+
+    public function requestbook()
+    {
+        $this->view('Home/Requestbook');
+    }
+
+    public function bookcatalog()
+    {
+        $this->view('Home/Bookcatalog');
     }
 }

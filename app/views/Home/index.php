@@ -6,16 +6,16 @@
     <button  class="slideshow-btn right-btn" onclick='next(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10095;</button>
 
 </div>
-<h2>Links</h2>
-    <a href="<?=URLROOT . "/References/"?>"> References </a> <br>
+<!-- <h2>Links</h2>
+    <a href="<?=URLROOT . "/References/"?>"> References </a> <br> -->
 
 <div class="page-content">
     <div class="left-content">
         <div>
-            <button class="add-complaint btn"> ADD A COMPLAINT </button>    
+            <button class="add-complaint btn"  onclick='window.location.href="<?=URLROOT . "/Home/Addcomplaint"?>"'> ADD A COMPLAINT </button>    
         </div>
         <div class="library-portal">        
-            <button class="library-portal-btn">
+            <button class="library-portal-btn" onclick='window.location.href="<?=URLROOT . "/Home/Portal"?>"'>
                 <img src="<?=URLROOT . "/public/assets/Library.jpeg"?>" alt="Chilaw Library" class="library-img">
                 <a href="#" class="library-txt">Chilaw Public Library</a>
             </button>
@@ -33,7 +33,7 @@
                 <hr>
                 <a href="#"><p>NEW-YEAR CELEBRATIONS</p></a>
             </div>
-            <button class="more btn">More</button>
+            <button class="more btn" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
         </div>
     </div>
 
@@ -41,7 +41,7 @@
         <div class="announcements">
             <div class="announcement-header">
                 <a href="#"><h2 class="announcement-txt">New Announcements</h2></a>
-                <button class="more btn">More</button>
+                <button class="more btn" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
             <div class="announcement-items">
@@ -78,13 +78,13 @@
                 excursion through the Muthurajawela Wetlands. Chilaw offers many things to do and places 
                 to visit if you’re spending your holiday here. 
             </p>
-            <button class="more btn">See More</button>
+            <button class="more btn" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
         </div>
 
         <div class="projects">
             <div class="project-header">
                 <a href="#"><h2 class="project-txt">Ongoing Projects</h2></a>
-                <button class="more btn">More</button>    
+                <button class="more btn" onclick='window.location.href="<?=URLROOT . "/Posts/Projects"?>"'>More</button>    
             </div>
             
             <hr>
@@ -119,7 +119,7 @@
             <img src="<?=URLROOT . "/public/assets/wardmap.png"?>" alt="" class="ward-map-img">
         </div>
         <div class="emergency-numbers">
-            <a href="#"><h3>Emergency Numbers</h3></a>
+            <a href="<?=URLROOT . "/Home/emergency"?>"><h3>Emergency Numbers</h3></a>
             <hr>
             <a href="#"><p class="emergency-item">Fire & Rescue / Ambulance</p></a>
             <a href="#"><p class="emergency-item">Other Emergency Numbers</p></a>

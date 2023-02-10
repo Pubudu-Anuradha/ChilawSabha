@@ -1,60 +1,3 @@
-/* Colors */
-:root {
-  --blue: #7387ef;
-  --lightblue: #93b4f2;
-  --fadedblue: #f0f5fe;
-  --red: #ff4040;
-  --green: #25a704;
-  --yellow: #f3bc2f;
-  --orange: #e2631b;
-  --grey: #9a9a9a;
-  --bgcolor: #f0f0f0;
-  --black: #000000;
-}
-
-/*
-background for all pages: bgcolor
-view: blue
-edit: yellow
-remove: red
-enable: green
-extenduedate: green
-completed: green
-favourite: lightblue
-plantoreadd: blue
-addbook: lightblue
-reject: red
-lost: red
-delist: red
-disable: red
-found: red
-accept: green
-addnote: blue
-markasresolved: green
-*/
-
-.blue {
-  color: var(--blue);
-}
-.lightblue {
-  color: var(--lightblue);
-}
-.green {
-  color: var(--green);
-}
-.red {
-  color: var(--red);
-}
-.orange {
-  color: var(--orange);
-}
-.yellow {
-  color: var(--yellow);
-}
-.grey {
-  color: var(--grey);
-}
-
 *:not(.footer) {
   transition: 200ms ease-in-out;
 }
@@ -120,6 +63,7 @@ markasresolved: green
 }
 .filters {
   margin: 1.5rem 0;
+  width: 80%;
 }
 .filters form {
   display: flex;
@@ -256,13 +200,6 @@ markasresolved: green
   text-decoration: none;
 }
 
-@media screen and (min-width: 1200px) {
-  /* WHEN SCREEN IS WIDER THAN 1440px */
-  .navbar-items,
-  .main {
-    width: 1200px;
-  }
-}
 @media screen and (max-width: 767px) {
   /* WHEN SCREEN IS NARROWER THAN 768px */
   .attachments .links {

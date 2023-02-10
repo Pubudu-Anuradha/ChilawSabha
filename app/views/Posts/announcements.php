@@ -1,6 +1,11 @@
 <?php
 $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts']['result']:false;
 ?>
+<script>
+    const send = ()=>{
+        document.getElementById('filterform').submit();
+    }
+</script>
 <div class="cat-title">
     Announcements
 </div>
@@ -19,9 +24,9 @@ $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts'][
                 Filter by Category
             </label>
             <select onchange="send()" name="category" id="category">
-                <?php foreach (['All'=>'All','testing'=>'Test Category 1','special'=> 'Test Cat 2'] as $cat_v=>$cat_d):?>
-                    <option value="<?=$cat_v?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat_v) {echo 'selected';} ?>>
-                        <?=$cat_d?>
+                <?php foreach (['All','Financial','Government','Tender'] as $cat):?>
+                    <option value="<?=$cat?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat) {echo 'selected';} ?>>
+                        <?=$cat?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -67,11 +72,6 @@ $posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts'][
         <?php endforeach; ?>
 </div>
 
-<script>
-    const send = ()=>{
-        document.getElementById('filterform').submit();
-    }
-</script>
 <div class="page-nav">
     <?php
     $page = $data['Posts']['page'];

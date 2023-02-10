@@ -20,18 +20,18 @@
 </div>
 
 <div class="portal-buttonsContainer">
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">View Book Catalogue</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Request a book</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Contact Librarian</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Login</button></a>
+  <a href="<?=URLROOT . "/Home/bookcatalog"?>"><button class="portal-button">View Book Catalogue</button></a>
+  <a href="<?=URLROOT . "/Home/requestbook"?>"><button class="portal-button">Request a book</button></a>
+  <a href="<?=URLROOT . "/ContactUs/"?>"><button class="portal-button">Contact Librarian</button></a>
+  <a href="<?=URLROOT . "/Login/"?>"><button class="portal-button">Login</button></a>
 </div>
 
 <div class="portal-otherButtons">
   <h2>More details:</h2>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Membership Application form</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Membership Renewal Form</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Rules & Regulations</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Location</button></a>
+  <a href="#"><button class="portal-otherButton">Membership Application form</button></a>
+  <a href="#"><button class="portal-otherButton">Membership Renewal Form</button></a>
+  <a href="#"><button class="portal-otherButton">Rules & Regulations</button></a>
+  <a href="#"><button class="portal-otherButton">Location</button></a>
 </div>
 
     <script>
