@@ -20,7 +20,7 @@ class Home extends Controller
 
     public function portal()
     {
-        $this->view('Home/portal', 'Library Portal');
+        $this->view('Home/portal', 'Library Portal', [], ['main', 'portal']);
     }
 
     public function bookRequest()

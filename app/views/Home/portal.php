@@ -75,6 +75,6 @@
         image.src = images[index];
       }
 
-      slideshow(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"]);
+      slideshow(["<?=URLROOT . "/public/assets/sabha1.jpg"?>", "<?=URLROOT . "/public/assets/sabha2.jpg"?>", "<?=URLROOT . "/public/assets/Library.jpeg"?>"]);
 
     </script>
