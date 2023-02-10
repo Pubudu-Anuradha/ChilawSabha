@@ -476,13 +476,13 @@ body{
 }
 .field input:not([type="submit"]){
   padding: 0.5rem 3rem;
-  background-color: var(--fadedblue);
+  background-color: var(--lightblue);
   border: 1px solid var(--blue);
   border-radius: 10px;
 }
 .field select{
   padding: 0.5rem 3rem;
-  background-color: var(--fadedblue);
+  background-color: var(--lightblue);
   border: 1px solid var(--blue);
   border-radius: 10px;
   cursor: pointer;
@@ -522,6 +522,9 @@ body{
 .submit-field{
   justify-content: end;
   align-items: center;
+}
+.home-bookcatalog{
+  width: 100%;
 }
 
 /* styles for download page */

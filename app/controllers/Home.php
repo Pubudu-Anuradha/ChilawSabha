@@ -22,4 +22,20 @@ class Home extends Controller
     {
         $this->view('Home/portal', 'Library Portal');
     }
+
+    public function addcomplaint()
+    {
+        $this->view('Home/Addcomplaint', 'Complaint Form',$data=[],['main','form']);
+    }
+
+    public function requestbook()
+    {
+        $this->view('Home/Requestbook');
+    }
+
+    public function bookcatalog()
+    {
+        $this->view('Home/Bookcatalog');
+    }
+
 }

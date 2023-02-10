@@ -99,8 +99,8 @@
     float: left;
   }
   .complaint-form{
-    margin: 0rem 20rem;
-    float: right;
+    margin: 2rem 0;
+    /* float: right; */
   }  
   .complaint-form h2{
     text-transform: uppercase;
@@ -211,7 +211,10 @@
     margin: 1rem;
     padding: 1rem 1.5rem;
   }
-
+  .submitButton >  input:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+  }
 
 /* new Complaints Table Styles */
 
@@ -251,7 +254,7 @@ tr{
 }
 
 .content-table{
-  width: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -268,11 +271,17 @@ tr{
 }
 
 .accept{
-  background-color: var(--yellow);
+  background-color: var(--green);
+}
+.accept:hover{
+  transform: scale(1.1);
 }
 
 .view{
-  background-color: var(--red);
+  background-color: var(--blue);
+}
+.view:hover{
+  transform: scale(1.1);
 }
 
   /* Footer Styles*/

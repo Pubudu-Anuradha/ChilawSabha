@@ -1,12 +1,18 @@
+<div class="slideshow">
+
+    <img src="" alt="slideshow" id="slideshow">
+
+    <button  class="slideshow-btn left-btn" onclick='prev(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10094;</button>
+    <button  class="slideshow-btn right-btn" onclick='next(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"])'>&#10095;</button>
+
+</div>
+
 <div class="container-body">
     <div class="side-menu">
         <h1></h1>
     </div>
     <div class="city">
         <h2>About City</h2>
-        <div class="img">
-            <p><-image-></p>
-        </div>
         <div class="details">
             <p>
             Chilaw (හලාවත) is a large town in Puttalam District, North Western Province, Sri Lanka. It is governed by an urban council. The town is located 80 kilometres away from Colombo via Negombo.
@@ -25,10 +31,38 @@
                 The visit of Mahatma Gandhi <br>
                 Mahathma Gandhi, the 'Father of India,' visited Chilaw in November 1927 on his first and only journey to Sri Lanka when it was called Ceylon. This was a historic visit - Gandhi was invited to Chilaw by the freedom fighters Charles Edgar Corea and his brother Victor Corea[4] who lived in the town. The brothers founded the Chilaw Association and the Ceylon National Congress and campaigned hard for the independence of Ceylon. The Corea family have had a strong link with Chilaw. There is a saying in Sri Lanka that Chilaw is well known for the three 'C's' - crabs, coconuts and Coreas.
             </p>
-            <p>
-                <a href="#">See more...</a>
-            </p>
         </div>
     </div>
 
 </div>
+
+    <!-- Function to load slideshow -->
+    <script>
+
+      let index = 0;
+
+      function slideshow(images) {
+          const image = document.getElementById("slideshow");
+          image.src = images[index];
+          setInterval( function() {
+            index = (index + 1) % images.length;
+            image.src = images[index];
+          }, 4000);
+      }
+
+      function next(images){
+        const image = document.getElementById("slideshow");
+        index = (index + 1) % images.length;
+        image.src = images[index];
+
+      }
+
+      function prev(images){
+        const image = document.getElementById("slideshow");
+        index =(images.length + (index - 1)) % images.length;
+        image.src = images[index];
+      }
+
+      slideshow(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"]);
+
+    </script>

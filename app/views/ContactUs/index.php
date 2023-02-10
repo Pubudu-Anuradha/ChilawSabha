@@ -3,27 +3,7 @@
         <h1></h1>
     </div>
     <div class="form">
-        <h2>Contact Us</h2>
-        <div class="row">
-            <div class="location">
-
-                <p> Capital Hall,<br>
-
-                Chilaw</p>
-
-            </div>
-
-            <div class="email">
-
-                <p>munici@chilaw.lk<br></p>
-
-            </div>
-
-            <div class="number">
-
-                <p> (034) 2684290 </p>
-
-            </div>
+        <h2>Contact Us <hr class="hr1"></h2>
             <div class="info-table">
                 <table>
                     <thead>

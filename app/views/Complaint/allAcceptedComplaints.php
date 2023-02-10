@@ -1,4 +1,7 @@
 <div class="content">
+    <h2>
+        All Accepted Complaints <hr class="hr1">
+    </h2>
     <div class="content-table">
         <table>
             <thead>

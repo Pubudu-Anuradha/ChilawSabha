@@ -63,6 +63,7 @@
 }
 .filters {
   margin: 1.5rem 0;
+  width: 80%;
 }
 .filters form {
   display: flex;
