@@ -32,7 +32,7 @@
 
   <div class="button-container">
     <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
-    <a href="#"><button class="portal-button">Contact Librarian</button></a>
+    <a href="<?= URLROOT . '/ContactUs/' ?>"><button class="portal-button">Contact Librarian</button></a>
   </div>
 
   <div class="button-container">

@@ -39,7 +39,7 @@ class Home extends Controller
 
     public function requestbook()
     {
-        $this->view('Home/Requestbook');
+        $this->view('Home/Requestbook','Book Request', [], ['main', 'libraryUsers']);
     }
 
     public function bookcatalog()
