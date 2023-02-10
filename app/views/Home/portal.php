@@ -20,10 +20,25 @@
 </div>
 
 <div class="portal-buttonsContainer">
-  <a href="<?=URLROOT . "/Home/bookcatalog"?>"><button class="portal-button">View Book Catalogue</button></a>
-  <a href="<?=URLROOT . "/Home/requestbook"?>"><button class="portal-button">Request a book</button></a>
-  <a href="<?=URLROOT . "/ContactUs/"?>"><button class="portal-button">Contact Librarian</button></a>
-  <a href="<?=URLROOT . "/Login/"?>"><button class="portal-button">Login</button></a>
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Home/bookCatalogue' ?>"><button class="portal-button">View Book Catalogue</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Home/bookRequest' ?>"><button class="portal-button">Request a book</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="#"><button class="portal-button">Contact Librarian</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Login' ?>"><button class="portal-button">Login</button></a>
+  </div>
 </div>
 
 <div class="portal-otherButtons">

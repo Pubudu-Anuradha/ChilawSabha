@@ -1107,7 +1107,6 @@ tr{
 
 .portal-button{
   border-radius: 0 1rem 1rem 0;
-  margin: 2rem 2rem;
 }
 
 .portal-otherButton{
@@ -1122,5 +1121,16 @@ tr{
 }
 
 .portal-button-icons{
-  height:35px;
+  padding: 0.6rem 1rem;
+  height:2rem;
+  position: relative;
+  border: 1px solid var(--grey);
+  border-radius: 1rem 0 0 1rem;
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  padding-right: 0;
+  margin: 2rem 0.5rem;
 }
