@@ -20,18 +20,33 @@
 </div>
 
 <div class="portal-buttonsContainer">
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">View Book Catalogue</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Request a book</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Contact Librarian</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-button">Login</button></a>
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Home/bookCatalogue' ?>"><button class="portal-button">View Book Catalogue</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Home/bookRequest' ?>"><button class="portal-button">Request a book</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/ContactUs/' ?>"><button class="portal-button">Contact Librarian</button></a>
+  </div>
+
+  <div class="button-container">
+    <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="portal-button-icons" alt="book">
+    <a href="<?= URLROOT . '/Login' ?>"><button class="portal-button">Login</button></a>
+  </div>
 </div>
 
 <div class="portal-otherButtons">
   <h2>More details:</h2>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Membership Application form</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Membership Renewal Form</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Rules & Regulations</button></a>
-  <a href="<?=URLROOT?>/Home/login"><button class="portal-otherButton">Location</button></a>
+  <a href="#"><button class="portal-otherButton">Membership Application form</button></a>
+  <a href="#"><button class="portal-otherButton">Membership Renewal Form</button></a>
+  <a href="#"><button class="portal-otherButton">Rules & Regulations</button></a>
+  <a href="#"><button class="portal-otherButton">Location</button></a>
 </div>
 
     <script>

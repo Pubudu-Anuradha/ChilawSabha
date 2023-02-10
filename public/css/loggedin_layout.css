@@ -14,8 +14,8 @@ body {
     padding: 1rem 0;
 }
 
-@media screen and (min-width:1440px) {
-  /* WHEN SCREEN IS WIDER THAN 1440px */
+@media screen and (min-width:1200px) {
+  /* WHEN SCREEN IS WIDER THAN 1200 */
   .main{
     width: 100%;
   }

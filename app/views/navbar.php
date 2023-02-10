@@ -1,53 +1,73 @@
 <div class="navbar">
     <div class="navbar-items">
         <ul>
-            <li class="dropdown"><a href="#" class="dropbtn">Home</a></li>
-            <li class="dropdown"><a href="#" class="dropbtn">Announcements</a>
+            <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Announcements'?>" class="dropbtn">Announcements</a>
                 <ul class="dropdown-content">
-                    <li>Announcement 1</li>
-                    <li>Announcement 2</li>
-                    <li>Announcement 3</li>
+                    <?php foreach(['Financial','Government','Tender'] as $category):?>
+                        <li onclick='window.location.href="<?=URLROOT . "/Posts/Announcements?category=$category"?>"'><?= $category ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Downloads</a>
+            <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a>
                 <ul class="dropdown-content">
-                    <li>Download 1</li>
-                    <li>Download 2</li>
-                    <li>Download 3</li>
+                    <li>Forms</li>
+                    <li>Tender Notices</li>
+                    <li>Gazettes</li>
                 </ul>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Events</a>
                 <ul class="dropdown-content">
-                    <li>Event 1</li>
-                    <li>Event 2</li>
-                    <li>Event 3</li>
+                    <li>Christmas Celebration</li>
+                    <li>New Year Celebration</li>
+                    <li>Deepavali Celebration</li>
                 </ul>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Projects</a>
                 <ul class="dropdown-content">
-                    <li>Project 1</li>
-                    <li>Project 2</li>
-                    <li>Project 3</li>
+                    <li>UNICEF Project</li>
+                    <li>Worldbank Project</li>
+                    <li>Water Waste Management Project</li>
                 </ul>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Services</a>
                 <ul class="dropdown-content">
-                    <li>Service 1</li>
-                    <li>Service 2</li>
-                    <li>Service 3</li>
+                    <li>Health</li>
+                    <li>Playgrounds</li>
+                    <li>Kindergardens</li>
                 </ul>
             </li>
+            <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
         </ul>
         <ul class="login-list">
             <li>
-                <a href="#"><img src="<?=URLROOT . '/public/assets/user.png'?>" alt="User Login" class="user-login-image"></a>
+            <?php if(isset($_SESSION['login'])):?>
+                <li class="dropdown login-btn"><a href="#" class="dropbtn"><?= $_SESSION['name']?></a>
+                    <ul class="dropdown-content">
+                            <li> <a href="<?= URLROOT.'/'.$_SESSION['role']?>">Dashboard</a></li>
+                            <li> <a href="<?= URLROOT.'/Login/Logout'?>">Logout</a></li>
+                    </ul>
+                </li>
+            <?php else: ?>
+                <li class="dropdown login-btn"><a href="<?= URLROOT.'/Login'?>" class="dropbtn">Login</a>
+            <?php endif; ?>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Login</a>
-                <ul class="dropdown-content">
-                    <li>link 1</li>
-                    <li>link 2</li>
-                </ul>
-            </li>
+            <style>
+                .login-btn{
+                    position: relative;
+                }
+                .login-btn::before{
+                    position: absolute;
+                    content: " ";
+                    width: 40px;
+                    height: 40px;
+                    background: url("<?=URLROOT . '/public/assets/user.png'?>");
+                    background-repeat: none;
+                    background-size: contain;
+                    bottom: 7.5px;
+                    left: -45px;
+                }
+            </style>
         </ul>
     </div>
 </div>

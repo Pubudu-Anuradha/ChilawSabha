@@ -1,9 +1,15 @@
 <div class="content">
+  <div class="charts">
     <div class="chart">
         <canvas id="myChart1"></canvas>
+    </div>  
+    <div class="chart">
         <canvas id="myChart2"></canvas>
+    </div>  
+    <div class="chart">
         <canvas id="myChart3"></canvas>
     </div>  
+  </div>
 </div>
 
 <script>
