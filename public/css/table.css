@@ -55,7 +55,7 @@ tbody > tr:last-child{
 .content-table{
   display: flex;
   justify-content: center;
-  overflow-x: scroll;
+  overflow: auto;
   width: 80%;
 }
 

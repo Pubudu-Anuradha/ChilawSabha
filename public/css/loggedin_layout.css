@@ -7,7 +7,7 @@ body {
   grid-gap: 2rem;
   grid-template-areas: "sidebar content";
   grid-template-columns: fit-content(20%) auto;
-  overflow-x: scroll;
+  overflow: auto;
 }
 
 .content{
