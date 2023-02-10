@@ -9,6 +9,7 @@ class Admin extends Controller
 
     public function index()
     {
+        // TODO: overhaul the statistics
         $this->view('Admin/index','Admin DashBoard',[],['main','chart']);
     }
     public function Users($page='index',$id=NULL)
