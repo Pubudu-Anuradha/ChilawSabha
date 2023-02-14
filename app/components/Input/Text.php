@@ -1,7 +1,5 @@
 <?php
 
-use Text as GlobalText;
-
 class Text
 {
     public static function text(

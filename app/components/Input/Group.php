@@ -4,7 +4,6 @@ class Group {
     $title,$name,$options,$id=NULL,$class=NULL,$selected=NULL,$required=true
     // Options must be an associative array
   ){?>
-        <!-- $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$type=NULL -->
   <div class="inputfield">
     <label for="<?= $name ?>"><?= $title ?></label>
     <select name="<?= $name ?>"
