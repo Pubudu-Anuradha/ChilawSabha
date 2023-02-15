@@ -27,3 +27,6 @@ Group::checkboxes("Radio Options","rad",[
     'd'=>'Dog',
     'e'=>'Elephant',
 ],"rad_c",checked:['a','e'],required:true);
+
+Files::any('Upload any file','files');
+Files::images('Upload Photos','files');
