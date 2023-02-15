@@ -8,13 +8,16 @@ class Files{
     <label for="<?= $id ?>">
       <?= $title ?>
     </label>
-    <input type="file" 
-           name="<?= $name . $multiple?'[]':'' ?>"
-           id="<?= $id ?>"
-           <?= $accept?"accept=\"$accept\"":''?>
-           <?= $required?'required':''?>
-           <?= $multiple?'multiple':''?>
-    >
+    <div class="file_upload">
+      <input type="file" 
+            name="<?= $name . $multiple?'[]':'' ?>"
+            id="<?= $id ?>"
+            <?= $accept?"accept=\"$accept\"":''?>
+            <?= $required?'required':''?>
+            <?= $multiple?'multiple':''?>
+      >
+      <div class="previews"></div>
+    </div>
   </div>
   <?php }
 

@@ -29,4 +29,6 @@ Group::checkboxes("Radio Options","rad",[
 ],"rad_c",checked:['a','e'],required:true);
 
 Files::any('Upload any file','files');
-Files::images('Upload Photos','files');
+Files::images('Upload Photos','images');
+?>
+<script src="<?=URLROOT.'/public/js/upload_previews.js'?>"></script>
