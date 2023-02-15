@@ -31,6 +31,9 @@ document.querySelectorAll(".file-upload").forEach((upload_div) => {
       const file_name = document.createElement("div");
       // Insert file details
       file_name.textContent = e.target.files[i].name + " : " + bytes_to_readable(e.target.files[i].size);
+      const remove_button = document.createElement("button");
+      remove_button.textContent ="X"
+      file_name.prepend(remove_button);
       new_previews[i].appendChild(file_name);
 
       // Add preview image for image types
@@ -40,6 +43,7 @@ document.querySelectorAll(".file-upload").forEach((upload_div) => {
         preview_image.src = URL.createObjectURL(e.target.files[i]);
         new_previews[i].appendChild(preview_image);
       }
+
     }
     previews.replaceChildren(...new_previews);
   });
