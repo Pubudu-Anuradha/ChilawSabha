@@ -11,3 +11,11 @@ Group::select('Select your word','selection',[
     'd'=>'Dog',
     'e'=>'Elephant',
 ],selected:'e');
+
+Group::radio("Radio Options","rad",[
+    'a'=>'Apple',
+    'b'=>'Ball',
+    'c'=>'Cat',
+    'd'=>'Dog',
+    'e'=>'Elephant',
+],"rad",checked:'e',required:true);
