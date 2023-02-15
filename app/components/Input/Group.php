@@ -23,22 +23,27 @@ class Group {
   <?php
   }
 
-  public static function radio(
-    $title,$name,$values,$id_prefix,$checked=NULL,$required=true
+  private static function render_group(
+    $title,$name,$values,$id_prefix,$checked=NULL,$required=true,$type=NULL
     // values is a associative array
     // ['value'=>'displayName']
-  ){ ?>
+    // Radio expects one checked element as string
+  ){
+    if(is_null($type)) throw new Exception("Invalid Group rendering call", 1);
+  ?>
   <div class="inputfield">
     <label for="<?=$name?>"><?=$title?></label>
     <div class="option-set">
       <?php $i = 1;
       foreach($values as $value=>$label): ?>
-        <input type="radio"
+        <input type="<?= $type ?>"
               value="<?= $value ?>"
               name="<?= $name ?>"
               id="<?= "$id_prefix\_$i" ?>"
               <?= $required? 'required' : ''?>
-              <?= $checked && $checked == $value ? 'checked' : ''?>
+              <?= $checked && ( 
+                (is_array($checked) && in_array($value,$checked) ) || (is_string($checked) &&  $checked == $value)
+                ) ? 'checked' : ''?>
         >
         <label for="<?= "$id_prefix\_$i" ?>">
           <?= $label ?>
@@ -47,6 +52,20 @@ class Group {
       endforeach; ?>
     </div>    
   </div>
-  <?php
+  <?php 
+  }
+  
+  public static function radios(
+    $title,$name,$values,$id_prefix,$checked=NULL,$required=true
+  ){
+    if(is_array($checked)) throw new Exception("Radio cannot select more than one option", 1);
+    
+    Group::render_group($title,$name,$values,$id_prefix,$checked,$required,'radio');
+  }
+  
+  public static function checkboxes(
+    $title,$name,$values,$id_prefix,$checked=NULL,$required=true
+  ){
+    Group::render_group($title,$name,$values,$id_prefix,$checked,$required,'checkbox');
   }
 }

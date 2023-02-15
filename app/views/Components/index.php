@@ -12,10 +12,18 @@ Group::select('Select your word','selection',[
     'e'=>'Elephant',
 ],selected:'e');
 
-Group::radio("Radio Options","rad",[
+Group::radios("Radio Options","rad",[
     'a'=>'Apple',
     'b'=>'Ball',
     'c'=>'Cat',
     'd'=>'Dog',
     'e'=>'Elephant',
 ],"rad",checked:'e',required:true);
+
+Group::checkboxes("Radio Options","rad",[
+    'a'=>'Apple',
+    'b'=>'Ball',
+    'c'=>'Cat',
+    'd'=>'Dog',
+    'e'=>'Elephant',
+],"rad_c",checked:['a','e'],required:true);
