@@ -20,14 +20,14 @@ select, textarea {
   box-sizing: content-box;
 }
 
-.inputfield label {
+.input-field label {
   margin: auto 0;
   text-align: left;
 }
 
-.inputfield {
+.input-field {
   display: grid;
-  grid-template-columns: 2fr 5fr;
+  grid-template-columns: 20fr 50fr 2fr;
   margin: 0.5rem;
   padding: 0.5rem;
 }
@@ -66,9 +66,9 @@ input[type=file],
 select,
 textarea{
   padding: 0.5rem;
-  background-color: var(--lightblue);
+  background-color: var(--fadedblue);
   border-radius: 0.5rem;
-  border: none;
+  border: 1px solid var(--black);
 }
 
 .checkboxInputs,
@@ -100,6 +100,24 @@ input[type=submit] {
   transform: scale(1.1);
   cursor: pointer;
 }
-label{
-  font-size: medium;
+
+input + span {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding: 0.2rem;
+}
+
+input:invalid {
+  border: 2px solid var(--orange);
+}
+
+input:invalid + span::after {
+  content: "✖";
+  color: var(--red);
+}
+
+input:valid + span::after {
+  content: "✓";
+  color: var(--green);
 }
