@@ -58,15 +58,18 @@
                 </div>
                 <div class="recieve-book-table">
                     <table>
-                        <tr>
-                            <th>Accession No</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
-                            <th>Due Date</th>
-                            <th>Damaged</th>
-                            <th>Recieved</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Accession No</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>Due Date</th>
+                                <th>Damaged</th>
+                                <th>Recieved</th>
+                            </tr>
+                        </thead>
+
                         <tr>
                             <td>P305</td>
                             <td>Harry Poter</td>

@@ -12,15 +12,17 @@
 
         <div class="book-request-table">
             <table>
-                <tr>
-                    <th>ISBN</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Reason</th>
-                    <th>Date</th>
-                    <th>Action</th>
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Reason</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-                </tr>
                 <tr>
                     <td>456712345673</td>
                     <td>Harry Poter</td>
