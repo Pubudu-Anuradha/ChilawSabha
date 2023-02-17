@@ -90,6 +90,7 @@
           <button id="<?=$page_no_name?>-last">Last</button>
           <?php endif; ?>
           <script>
+            <?php if($current!=0): ?>
             document.getElementById('<?=$page_no_name?>-first').addEventListener('click',(e)=>{
               const page_select = document.getElementById('<?= $page_no_name ?>-select');
               const page_select_len = page_select.childElementCount;
@@ -115,6 +116,7 @@
               }
               <?= $sender ?>();
             })
+            <?php endif; ?>
             document.getElementById('<?=$page_no_name?>-next').addEventListener('click',(e)=>{
               const page_select = document.getElementById('<?= $page_no_name ?>-select');
               const page_select_len = page_select.childElementCount;

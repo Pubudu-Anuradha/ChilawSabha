@@ -5,7 +5,7 @@ $components = [
   'Input/Group',
   'Input/File',
   'Input/Other',
-  'Pagination/test'
+  'Pagination/Top and Bottom'
 ];
 foreach($components as $component){
   require_once "app/components/$component.php";
