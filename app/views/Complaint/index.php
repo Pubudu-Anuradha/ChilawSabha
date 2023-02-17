@@ -33,27 +33,35 @@
 
 <script>
 
+
     var catValues = ["Land Issues", "Vehicle Issues", "Service Issues","Online System Issues", "Staff Issues"];
     var monValues = ["Jan", "Feb", "Mar","Apr","May", "Jun", "Jul","Aug","Sep", "Oct", "Nov"];
-    var complaintcount = [23,44,76,12,45,45,17,85,36,77,18]
+    var complaintcount = [23,44,76,12,45,45,17,85,36,77,18];
     var yValues = [80, 49, 44,60, 65];
-    var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue","#6D79E7", "#C7B6EC", "#E5DAFB","lightblue","#6D79E7", "#C7B6EC", "#E5DAFB"];
 
-    new Chart("most-complaint-categories", {
-            type: "pie",
-            data: {
-            labels: catValues,
-            datasets: [
-                {
-                label: "Dataset",
-                backgroundColor: barColors,
-                data: yValues,
-                borderWidth: 2
-                }
-            ]
-            },
+    window.onload = pieChart(yValues,catValues,'most-complaint-categories');
+    window.onload = vBarChart(complaintcount,monValues,'complaint-in-month');
+
+    function pieChart(yval,xval,id){
+      var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+      // Setup Block
+      const data = {
+        labels: xval,
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: barColors,
+            data: yval,
+            borderWidth: 2
+          }
+        ]
+      };
+
+      // Config Block
+      const config = {
+           type: "pie",
+            data,
             options: {
-              // responsive: true,
               maintainAspectRatio: false,
             plugins:{
                 legend: {
@@ -70,57 +78,81 @@
                 }
             }
         }
-    });
+      };
 
-    new Chart("complaint-in-month", {
-        type: "bar",
-        data: {
-          labels: monValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: complaintcount,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          // For bar charts
-          scales: {
-            x: {
-              border: {
-                display: false,
+      // Render Block
+      const chart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
+
+
+    function vBarChart(yval,xval,id){
+      var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+      // Setup Block
+      const data = {
+        labels: xval,
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: barColors,
+            data: yval,
+            borderWidth: 2,
+            borderRadius:25,
+            borderSkipped: false,
+          }
+        ]
+      };
+
+      // Config Block
+      const config = {
+          type: "bar",
+          data,
+          options: {
+            // For bar charts
+            scales: {
+              x: {
+                border: {
+                  display: false,
+                },
+                grid: {
+                  display: false
+                }
               },
-              grid: {
+              y: {
                 display: false
               }
             },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
+            // for horizontol or vertical bar
+            indexAxis: 'x',
+            plugins:{
+              legend: {
+                display: false,
+                position: 'right',
+                labels: {
+                  boxWidth: 15
+                }
+              },
+              title: {
+                display: false,
+                text: "Vertical Bar Chart Test",
+                position: "bottom"
               }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
             }
           }
-        }
-    });
+      };
+
+      if (id === 'complaint-in-month') {
+        config.options.responsive = true;
+        config.options.maintainAspectRatio = false;
+      }
+
+      // Render Block
+      const chart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
 
 </script>

@@ -26,19 +26,30 @@
     var yValues = [80, 49, 44, 60, 29];
     var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","#16169c"];
 
-    new Chart("most-borrowed-pie", {
-        type: "doughnut",
-        data: {
-          labels: xValues,
+
+    window.onload = doughnutChart(yValues,xValues,'most-borrowed-pie');
+    window.onload = hBarChart(yValues,xValues,'most-favourite-bar');
+    window.onload = hBarChart(yValues,xValues,'most-plan-to-read-bar');
+
+    function doughnutChart(yval,xval,id){
+      var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+      // Setup Block
+      const data = {
+          labels: xval,
           datasets: [
             {
               label: "Dataset",
               backgroundColor: barColors,
-              data: yValues,
+              data: yval,
               borderWidth: 2
             }
           ]
-        },
+      };
+
+      // Config Block
+      const config = {
+        type: "doughnut",
+        data,
         options: {
           plugins:{
             legend: {
@@ -56,23 +67,36 @@
             }
           }
         }
-    });
+      };
 
-    new Chart("most-favourite-bar", {
+      // Render Block
+      const chart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
+
+    function hBarChart(yval,xval,id){
+      var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+      // Setup Block
+      const data = {
+        labels: xval,
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: barColors,
+            data: yval,
+            borderWidth: 2,
+            borderRadius:25,
+            borderSkipped: false,
+          }
+        ]
+      };
+
+      // Config Block
+      const config = {
         type: "bar",
-        data: {
-          labels: xValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
+        data,
         options: {
           scales: {
             x: {
@@ -104,54 +128,13 @@
             }
           }
         }
-    });
+      };
 
-    new Chart("most-plan-to-read-bar", {
-        type: "bar",
-        data: {
-          labels: xValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          scales: {
-            x: {
-              display: false,
-            },
-            y: {
-              border: {
-                display: false,
-              },
-              grid: {
-                display: false
-              }
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'y',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Horizontal Bar Chart Test",
-              position: "bottom"
-            }
-          }
-        }
-    });
+      // Render Block
+      const chart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
 
 </script>
