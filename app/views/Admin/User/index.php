@@ -116,13 +116,13 @@
     </div>
     </form>
 
-    <input type="button" onclick="generate('<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
+    <input type="button" onclick="generate('#pdf','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
 
     
 </div>
 
 <script>
-    function generate(title,num_of_cloumns) {
+    function generate(id,title,num_of_cloumns) {
         var doc = new jsPDF('p', 'pt', 'a4');
 
         var text = title;
@@ -139,7 +139,7 @@
 
 
         doc.autoTable({
-            html: '#pdf',
+            html: id,
             startY: 70,
             theme: 'striped',
             columns: columns,
