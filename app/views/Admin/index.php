@@ -1,3 +1,12 @@
+<?php
+$eventstat = $data['EventStat'];
+foreach ($eventstat['result'] as $evestat):
+    $views[] = $evestat['views'];
+    $names[] = $evestat['name'];
+endforeach;
+// var_dump($names);
+?>
+
 <div class="content admin-analytics">
 <div class="admin-dashboard">
     <h2 class="analytics-topic">Dashboard</h2>
@@ -52,28 +61,37 @@
 
 <script>
 
-    var eventValues = ["E01", "E02", "E03","E04"];
+    // var eventValues = ["E01", "E02", "E03","E04"];
     var servValues = ["S01", "S02", "S03","S04"];
     var projValues = ["P01", "P02", "P03","P04"];
     var annValues = ["A01", "A02", "A03","A04"];
     var yValues = [80, 49, 44,60];
     var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
 
-        new Chart("most-viewed-events", {
+    // Setup Block
+
+    const views = <?php echo json_encode($views); ?>;
+    const names = <?php echo json_encode($names); ?>;
+
+    console.log(<?php json_encode($views)?>);
+    const data = {
+      labels: names,
+      datasets: [
+        {
+          label: "Dataset",
+          backgroundColor: barColors,
+          data: views,
+          borderWidth: 2,
+          borderRadius:25,
+          borderSkipped: false,
+        }
+      ]
+    };
+
+    // Config Block
+    const config = {
         type: "bar",
-        data: {
-          labels: eventValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
+        data,
         options: {
           // For bar charts
           scales: {
@@ -106,7 +124,13 @@
             }
           }
         }
-    });
+    };
+
+    // Render Block
+    const most_viewed_events = new Chart(
+      document.getElementById('most-viewed-events'),
+      config
+    );
 
     new Chart("most-viewed-services", {
         type: "bar",
