@@ -4,7 +4,8 @@ $components = [
   'Input/Time',
   'Input/Group',
   'Input/File',
-  'Input/Other'
+  'Input/Other',
+  'Pagination/test'
 ];
 foreach($components as $component){
   require_once "app/components/$component.php";
