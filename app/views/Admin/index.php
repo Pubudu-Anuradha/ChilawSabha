@@ -73,7 +73,6 @@ endforeach;
     const views = <?php echo json_encode($views); ?>;
     const names = <?php echo json_encode($names); ?>;
 
-    console.log(<?php json_encode($views)?>);
     const data = {
       labels: names,
       datasets: [
@@ -132,70 +131,25 @@ endforeach;
       config
     );
 
-    new Chart("most-viewed-services", {
-        type: "bar",
-        data: {
-          labels: servValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          // For bar charts
-          scales: {
-            x: {
-              border: {
-                display: false,
-              },
-              grid: {
-                display: false
-              }
-            },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
-            }
-          }
+    // Setup Block
+    const data2 = {
+      labels: servValues,
+      datasets: [
+        {
+          label: "Dataset",
+          backgroundColor: barColors,
+          data: yValues,
+          borderWidth: 2,
+          borderRadius:25,
+          borderSkipped: false,
         }
-    });
+      ]
+    };
 
-    new Chart("most-viewed-projects", {
+    // Config Block
+    const config2 = {
         type: "bar",
-        data: {
-          labels: projValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
+        data: data2,
         options: {
           // For bar charts
           scales: {
@@ -228,23 +182,33 @@ endforeach;
             }
           }
         }
-    });
+    };
 
-    new Chart("most-viewed-announcements", {
+    // Render Block
+    const most_viewed_services = new Chart(
+      document.getElementById('most-viewed-services'),
+      config2
+    );
+
+    // Setup Block
+    const data3 = {
+      labels: projValues,
+      datasets: [
+        {
+          label: "Dataset",
+          backgroundColor: barColors,
+          data: yValues,
+          borderWidth: 2,
+          borderRadius:25,
+          borderSkipped: false,
+        }
+      ]
+    };
+
+    // Config Block
+    const config3 = {
         type: "bar",
-        data: {
-          labels: annValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
+        data: data3,
         options: {
           // For bar charts
           scales: {
@@ -277,6 +241,71 @@ endforeach;
             }
           }
         }
-    });
+    };
+
+    // Render Block
+    const most_viewed_projects = new Chart(
+      document.getElementById('most-viewed-projects'),
+      config3
+    );
+
+    // Setup Block
+    const data4 = {
+      labels: annValues,
+      datasets: [
+        {
+          label: "Dataset",
+          backgroundColor: barColors,
+          data: yValues,
+          borderWidth: 2,
+          borderRadius:25,
+          borderSkipped: false,
+        }
+      ]
+    };
+
+    // Config Block
+    const config4 = {
+       type: "bar",
+        data: data4,
+        options: {
+          // For bar charts
+          scales: {
+            x: {
+              border: {
+                display: false,
+              },
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              display: false
+            }
+          },
+          // for horizontol or vertical bar
+          indexAxis: 'x',
+          plugins:{
+            legend: {
+              display: false,
+              position: 'right',
+              labels: {
+                boxWidth: 15
+              }
+            },
+            title: {
+              display: false,
+              text: "Vertical Bar Chart Test",
+              position: "bottom"
+            }
+          }
+        }
+    };
+
+    // Render Block
+    const most_viewed_announcements = new Chart(
+      document.getElementById('most-viewed-announcements'),
+      config4
+    );
 
 </script>

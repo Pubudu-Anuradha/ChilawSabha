@@ -530,14 +530,9 @@ body{
 /* styles for download page */
 .download-page{
   margin-top: 1.5rem;
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-areas: "left-column main-content";
-  grid-template-columns: fit-content(15%) auto;
   overflow: auto;
 }
 .download-page-content{
-  grid-area: main-content;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

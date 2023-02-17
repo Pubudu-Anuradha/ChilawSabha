@@ -1,13 +1,4 @@
 <div class="download-page">
-    <div class="left-download-page-content">
-        <div class="emergency-numbers">
-            <a href="<?=URLROOT . "/Home/emergency"?>"><h3>Emergency Numbers</h3></a>
-            <hr>
-            <a href="#"><p class="emergency-item">Fire & Rescue / Ambulance</p></a>
-            <a href="#"><p class="emergency-item">Other Emergency Numbers</p></a>
-        </div>
-    </div>
-
     <div class="download-page-content">
         <h2 class="download-topic">Downloads</h2>
         <div>
