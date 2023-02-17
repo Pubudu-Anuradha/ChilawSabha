@@ -1,7 +1,4 @@
 <div class="content">
-    <!-- <h1>
-        User Management
-    </h1> -->
     <?php
           $page_title = "User Management";
           echo '<h2 class="analytics-topic">'. $page_title . '</h2>';
@@ -119,62 +116,48 @@
     </div>
     </form>
 
-    <input type="button" onclick="generate()" value="Export To PDF" class="btn bg-green"/>
+    <input type="button" onclick="generate('<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
 
     
 </div>
 
 <script>
-    function generate() {
-    var doc = new jsPDF('p', 'pt', 'a4');
+    function generate(title,num_of_cloumns) {
+        var doc = new jsPDF('p', 'pt', 'a4');
 
-    var text = "User Management";
-    var txtwidth = doc.getTextWidth(text);
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
 
-    var x = (doc . internal . pageSize . width - txtwidth) / 2;
+        var x = (doc . internal . pageSize . width - txtwidth) / 2;
 
-    doc.text(x, 50, text);
-
-    var columns = [0,1,2,3,4,5];
-
-    doc.autoTable({
-        html: '#pdf',
-        startY: 70,
-        theme: 'striped',
-        columns: columns,
-        columnStyles: {
-            halign: 'left',
-            0: {
-                cellWidth: 'auto',
-            },
-            1: {
-                cellWidth: 'auto',
-            },
-            2: {
-                cellWidth: 'auto',
-            },
-            3: {
-                cellWidth: 'auto',
-            },
-            4: {
-                cellWidth: 'auto',
-            },
-            5: {
-                cellWidth: 'auto',
-            }
-        },
-        styles: {
-            minCellHeight: 30,
-            halign: 'center',
-            valign: 'middle'
-        },
-        margin: {
-            top: 150,
-            bottom: 60,
-            left: 10,
-            right: 10
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for(let i=0; i<num_of_cloumns; i++){
+            columns.push(i);
         }
-    })
-    doc.save('User Management.pdf');
-}
+
+
+        doc.autoTable({
+            html: '#pdf',
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
 </script>
