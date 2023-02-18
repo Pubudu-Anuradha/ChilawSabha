@@ -1008,6 +1008,62 @@ tr{
   height: 250px;
 }
 
+/* pop up model styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  padding-top: 20rem;
+  background-color: rgba(0,0,0,.5);
+  height: 100%;
+  width: 100%;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 1rem;
+  border: 1px solid var(--grey);
+  border-radius: 10px;
+  max-width: fit-content;
+  min-width: 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+.model-text{
+  align-self: center;
+  overflow-wrap: break-word;
+}
+
+.model-text > p{
+  font-size: 1.5rem;
+}
+
+.close-section{
+  align-self: flex-end;
+}
+
+.close {
+  color: #aaaaaa;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.close:hover,.close:focus {
+  color: var(--black);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup-btn{
+  align-self: flex-end;
+  display: flex;
+  gap: 0.5rem;
+}
+
 
 @media screen and (min-width:1200px) {
   /* WHEN SCREEN IS WIDER THAN 1200 */
