@@ -30,11 +30,13 @@
             <label for="search">
                 Search
             </label>
-            <input class="search" type="search"
-                    name="<?= $search_name ?>" id="<? $search_name ?>"
-                    value="<?= isset($_GET[$search_name]) ? $_GET[$search_name]:''?>"
-                    placeholder="Type here to search...">
-            <span onclick="<?= $sender ?>()"></span>
+            <div class="search-box">
+              <input class="search" type="search"
+                      name="<?= $search_name ?>" id="<? $search_name ?>"
+                      value="<?= isset($_GET[$search_name]) ? $_GET[$search_name]:''?>"
+                      placeholder="Type here to search...">
+              <span onclick="<?= $sender ?>()"></span>
+            </div>
         </div>
         <?php foreach($select_filters as $name => $details):?>
         <div class="filter">
