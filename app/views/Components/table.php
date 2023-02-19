@@ -12,3 +12,6 @@ Table::Table(['id'=>'id','name'=>'Name','age'=>'Age'],[
   ['id' => 10 , 'name' => 'John', 'age' => 32],
   ['id' => 11 , 'name' => 'John', 'age' => 32],
 ],'Test Table');
+
+Table::Table(['id'=>'id','name'=>'Name','age'=>'Age'],[
+],'Test Table',empty:true);

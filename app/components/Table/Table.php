@@ -10,7 +10,7 @@ class Table{
     ['view/%s', 'id'],
     'view bg-green'
     ],
-  ]){
+  ],$empty = false,$empty_msg = 'No content found'){
     $action_count = count($actions);
   ?>
   <div class="content-table">
@@ -35,7 +35,8 @@ class Table{
         </tr>
       </thead>
       <tbody>
-        <?php foreach($row_data as $row):?>
+        <?php if(!$empty):
+        foreach($row_data as $row):?>
           <tr>
             <?php foreach($columns as $col_name => $title): ?>
               <td>
@@ -60,7 +61,15 @@ class Table{
               
             <?php endif; ?>
           </tr>
-        <?php endforeach; ?>
+        <?php endforeach;
+        else: ?>
+        <tr>
+          <td colspan="<?= count($columns) + (($action_count > 0) ? 1 : 0)?>" 
+              style="text-align:center">
+            <?= $empty_msg ?>
+          </td>
+        </tr>
+        <?php endif; ?>
       </tbody>
     </table>
   </div>
