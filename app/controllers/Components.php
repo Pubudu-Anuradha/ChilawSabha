@@ -8,4 +8,8 @@
   {
     $this->view('Components/pagination','Pagination test',[],['main','table','posts']);
   }
+  public function table()
+  {
+    $this->view('Components/table','Table test',[],['main','table','posts']);
+  }
 }
