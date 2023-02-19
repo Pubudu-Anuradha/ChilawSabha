@@ -1,5 +1,12 @@
 <?php
 class Table{
+  // $columns takes an associative array as ['col_name' => 'Column Title(Displayed title),...]
+  // $row_data is a numeric array of associative arrays like
+  // [
+  //  ['col_1'=>'r1_c1','col_2'=>'r1_c2'],
+  //  ['col_1'=>'r2_c1','col_2'=>'r2_c2'],
+  //  ['col_1'=>'r3_c1','col_2'=>'r3_c2'],
+  // ]
   public static function Table($columns,$row_data,$caption = NULL,$actions = [
     'Action 1' => [
     ['F string %s %s', 'id','name'],// sprintf arguments "%s string" followed by column names
