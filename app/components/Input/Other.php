@@ -1,3 +1,27 @@
 <?php
 
 // TODO: Number
+class Other{
+
+    public static function number(
+        $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL,$type=NULL
+    ) { ?>
+    <div class="inputfield">
+        <label for="<?= $name ?>">
+            <?= $title ?>    
+        </label>
+        <input type="<?= $type ? $type : 'number'?>" 
+            name="<?=$name?>"
+            <?=$id ? 'id="' . $id . '"' : ''?>
+            <?=$class ?'class="' . $class . '"' : ''?>
+            <?=$placeholder ?'placeholder="' . $placeholder . '"' : ''?>
+            <?=$value ?'value="' . $value . '"' : ''?>
+            <?=$step ?'step="' . $step . '"' : ''?>
+            <?=$min ?'min="' . $min . '"' : ''?>
+            <?=$max ?'max="' . $max . '"' : ''?>
+            <?=$required ?'required' : ''?>
+        />
+    </div>
+    <?php
+    }
+}
