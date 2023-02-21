@@ -11,14 +11,14 @@ class Other{
         </label>
         <input type="number" 
             name="<?=$name?>"
-            <?=$id ? 'id="' . $id . '"' : ''?>
-            <?=$class ?'class="' . $class . '"' : ''?>
-            <?=$placeholder ?'placeholder="' . $placeholder . '"' : ''?>
-            <?=$value ?'value="' . $value . '"' : ''?>
-            <?=$step ?'step="' . $step . '"' : ''?>
-            <?=$min ?'min="' . $min . '"' : ''?>
-            <?=$max ?'max="' . $max . '"' : ''?>
-            <?=$required ?'required' : ''?>
+            <?=$id ? "id=\"$id\"" : ''?>
+            <?=$class ? "class=\"$class\"" : ''?>
+            <?=$placeholder ? "placeholder=\"$placeholder\"" : ''?>
+            <?=$value ? "value=\"$value\"" : ''?>
+            <?=$step ? "step=\"$step\"" : ''?>
+            <?=$min ? "min=\"$min\"" : ''?>
+            <?=$max ? "max=\"$max\"" : ''?>
+            <?=$required ? 'required' : ''?>
         />
     </div>
     <?php
@@ -30,10 +30,10 @@ class Other{
     <div class="inputfield">
         <input type="submit" 
             name="<?=$name?>"
-            <?=$id ? 'id="' . $id . '"' : ''?>
-            <?=$class ?'class="' . $class . '"' : ''?>
-            <?=$value ?'value="' . $value . '"' : ''?>
-            <?=$disabled ?'disabled' : ''?>
+            <?=$id ? "id=\"$id\"" : ''?>
+            <?=$class ? "class=\"$class\"" : ''?>
+            <?=$value ? "value=\"$value\"" : ''?>
+            <?=$disabled ? 'disabled' : ''?>
         />
     </div>
     <?php
