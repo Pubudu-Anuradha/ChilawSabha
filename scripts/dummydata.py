@@ -22,3 +22,15 @@ for i in range(1, 101):
     mycursor.execute(sql, val)
     mydb.commit()
     print(mycursor.rowcount, "records inserted.")
+
+"""
+## First install 
+## pip install mysql-connector-python
+## SQL
+CREATE TABLE IF NOT EXISTS `test`(
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `age` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+1"""
