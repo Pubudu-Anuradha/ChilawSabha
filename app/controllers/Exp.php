@@ -4,7 +4,7 @@
     $model = $this->model('ExpModel');
     $this->view('Exp/index',data:['tt' => $model->getTest()],styles:['main','table']);
   }
-  public function Api($method){
+  public function Api($method,$id=null){
     $model = $this->model('ExpModel');
     $reqJSON = file_get_contents('php://input');
     if($reqJSON){
@@ -22,6 +22,11 @@
             if($validated)
             $this->returnJSON($model->addRecord($validated));
             else $this->returnJSON($reqJSON);
+            break;
+          case 'update':
+            if(!is_null($id)){
+              $this->returnJSON($model->updateRecord($id,$reqJSON));
+            }else $this->returnJSON(['error'=>'please specify id']);
             break;
         }
         die();
