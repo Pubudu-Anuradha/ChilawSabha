@@ -65,10 +65,29 @@ input[type=time],
 input[type=file],
 select,
 textarea{
-  padding: 0.5rem;
+  padding: 0.75rem;
   background-color: var(--fadedblue);
   border-radius: 0.5rem;
-  border: 1px solid var(--black);
+  border: none;
+  box-shadow: 4px 4px 5px 0px var(--grey);
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=checkbox]:focus,
+input[type=radio]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=tel]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=file]:focus,
+select:focus,
+textarea:focus{
+  transform: scale(1.01);
+  outline: none;
 }
 
 .checkboxInputs,
@@ -109,7 +128,8 @@ input + span {
 }
 
 input:invalid {
-  border: 2px solid var(--orange);
+  border-bottom: 2px solid var(--red);
+  box-shadow: 4px 2px 5px 0px var(--grey);
 }
 
 input:invalid + span::after {

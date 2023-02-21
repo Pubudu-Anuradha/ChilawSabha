@@ -3,7 +3,8 @@
 class Text
 {
     public static function text(
-        $title,$name, $id , $class = null,$required=NULL,$value=NULL,$placeholder,$type=NULL, $maxlength=NULL, $minlength=NULL, $pattern=NULL, $readonly=NULL, $spellcheck=NULL, $autocomplete=NULL
+        $title,$name, $id , $class = null,$required=true,$value=NULL,$placeholder,$type=NULL, 
+        $maxlength=NULL, $minlength=NULL, $pattern=NULL, $readonly=NULL, $spellcheck=NULL, $autocomplete=NULL
     ) { ?>
     <div class="input-field">
         <label for="<?= $id ?>">
@@ -11,7 +12,7 @@ class Text
         </label>
         <input type="<?= $type ? $type : 'text'?>" 
             name="<?=$name?>"
-            <?="id=\"$id\" "?>
+            id="<?=$id?>"
             <?=$class ? "class=\"$class\" " : ''?>
             <?=$value ? "value=\"$value\" " : ''?>
             <?="placeholder=\"$placeholder\" "?>
@@ -41,7 +42,7 @@ class Text
     }
     
     public static function textarea(
-        $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$rows=10,$cols=30,$required=true
+        $title,$name, $id, $class = null,$placeholder,$value=NULL,$rows=10,$cols=30,$required=NULL
     ) { ?>
     <div class="input-field">
         <label for="<?= $name ?>">
@@ -55,7 +56,8 @@ class Text
             <?="rows=\"$rows\""?>
             <?="cols=\"$cols\""?>
             <?=$required ?'required' : ''?>
-        ><?=$value ?$value: ''?></textarea>
+        ><?=$value ?$value: ''?>
+    </textarea>
     </div>
     <?php
     }
