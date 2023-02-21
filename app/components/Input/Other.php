@@ -6,7 +6,7 @@ class Other{
         $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL
     ) { ?>
     <div class="inputfield">
-        <label for="<?= $name ?>">
+        <label for="<?= $id ?>">
             <?= $title ?>    
         </label>
         <input type="number" 
