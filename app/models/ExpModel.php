@@ -3,4 +3,8 @@
   {
     return $this->select('test');
   }
+  public function addRecord($data)
+  {
+    return $this->insert('test',$data);
+  }
 }

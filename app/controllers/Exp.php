@@ -5,18 +5,27 @@
     $this->view('Exp/index',data:['tt' => $model->getTest()],styles:['main','table']);
   }
   public function Api($method){
+    $model = $this->model('ExpModel');
     $reqJSON = file_get_contents('php://input');
     if($reqJSON){
-      $reqJSON = json_decode($reqJSON);
-      if($reqJSON)
+      $reqJSON = json_decode($reqJSON,associative:true);
+      if($reqJSON){
         switch($method){
-          case "test":
+          case 'test':
             $this->returnJSON([
                 'Its'=>'Working',
                 'inp'=>$reqJSON
               ]);
             break;
+          case 'add':
+            $validated = $this->validateInputs($reqJSON,['name','address','age'],'add');
+            if($validated)
+            $this->returnJSON($model->addRecord($validated));
+            else $this->returnJSON($reqJSON);
+            break;
         }
+        die();
+      }
       else $this->returnJSON([
         'error'=>'Error Parsing JSON'
       ]);
