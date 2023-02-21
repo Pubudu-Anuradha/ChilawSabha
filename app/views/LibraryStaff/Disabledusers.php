@@ -11,13 +11,16 @@
         </div>
         <div class="library-disabled-user-table">
             <table>
-                <tr>
-                    <th>Member ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Contact No</th>
-                    <th>Action</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact No</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
                 <tr>
                     <td>120</td>
                     <td>Nimal Pererar</td>

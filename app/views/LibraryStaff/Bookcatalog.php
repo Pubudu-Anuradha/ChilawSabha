@@ -1,16 +1,20 @@
 <div class="content">
     <div class="bookcatalog">
         <div class="bookcatalog-title">
-            <h2>BOOK CATALOGUE</h2>
-            <div class="catalog-sub-title">
+            <?php
+            $page_title = "BOOK CATALOGUE";
+            echo '<h2>' . $page_title . '</h2>';
+            ?>  
+            <div class="catalog-sub-title">  
+                <input type="button" onclick="generate('#catalog','<?php echo $page_title ?>',4)" value="Export To PDF" class="btn bg-green"/>
                 <div class="content-title-category">
-                <select name="categoryFill">
-                    <option value="Null">Choose Category</option>
-                    <option value="Philosophy">Philosophy</option>
-                    <option value="Languages">Languages</option>
-                    <option value="Natural Sciences">Natural Sciences</option>
-                    <option value="Literature">Literature</option>
-                </select>
+                    <select name="categoryFill">
+                        <option value="Null">Choose Category</option>
+                        <option value="Philosophy">Philosophy</option>
+                        <option value="Languages">Languages</option>
+                        <option value="Natural Sciences">Natural Sciences</option>
+                        <option value="Literature">Literature</option>
+                    </select>
                 </div>
                 <div class="content-title-search">
                     <input type="text" name="search" placeholder=" Search" id="search">
@@ -22,15 +26,17 @@
 
         </div>
         <div class="book-catalog-table">
-            <table>
-                <tr>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                    <th>Action</th>
+            <table id="catalog">
+                <thead>
+                    <tr>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-                </tr>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>
@@ -133,3 +139,44 @@
         </div>
     </div>
 </div>
+
+<script>
+    function generate(id,title,num_of_cloumns) {
+        var doc = new jsPDF('p', 'pt', 'a4');
+
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
+
+        var x = (doc . internal . pageSize . width - txtwidth) / 2;
+
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for(let i=0; i<num_of_cloumns; i++){
+            columns.push(i);
+        }
+
+
+        doc.autoTable({
+            html: id,
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
+</script>

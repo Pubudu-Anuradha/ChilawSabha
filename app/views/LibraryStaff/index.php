@@ -27,7 +27,17 @@
                         <input type="text" name="acc2" id="acc2">
                     </div>
                     <div class="field lend-confirm">
-                        <input type="submit" name="Submit" value="Lend" class="submit-btn lend-confirm-btn">
+                        <button type="button" class="lend-confirm-btn submit-btn" onclick="openModal()">Lend</button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <div class="close-section"><span class="close" onclick="closeModal()">&times;</span></div>
+                                <div class="model-text"><p>Are You Sure?</p></div>
+                                <div class="popup-btn">
+                                    <button class="btn bg-green" onclick="closeModal()">Confirm</button>
+                                    <button class="btn bg-red" onclick="closeModal()">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,15 +68,18 @@
                 </div>
                 <div class="recieve-book-table">
                     <table>
-                        <tr>
-                            <th>Accession No</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
-                            <th>Due Date</th>
-                            <th>Damaged</th>
-                            <th>Recieved</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Accession No</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>Due Date</th>
+                                <th>Damaged</th>
+                                <th>Recieved</th>
+                            </tr>
+                        </thead>
+
                         <tr>
                             <td>P305</td>
                             <td>Harry Poter</td>
@@ -94,3 +107,22 @@
         </div>
     </div>
 </div>
+
+<script>
+
+var modal = document.getElementById("myModal");
+
+function closeModal(){
+    modal.style.display = "none";
+}
+function openModal(){
+    modal.style.display = "block";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>

@@ -23,14 +23,16 @@
 
         <div class="lostbook-table">
             <table>
-                <tr>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                    <th>Action</th>
+                <thead>
+                    <tr>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-                </tr>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>

@@ -9,13 +9,6 @@
                     <?php endforeach; ?>
                 </ul>
             </li>
-            <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a>
-                <ul class="dropdown-content">
-                    <li>Forms</li>
-                    <li>Tender Notices</li>
-                    <li>Gazettes</li>
-                </ul>
-            </li>
             <li class="dropdown"><a href="#" class="dropbtn">Events</a>
                 <ul class="dropdown-content">
                     <li>Christmas Celebration</li>
@@ -37,6 +30,7 @@
                     <li>Kindergardens</li>
                 </ul>
             </li>
+            <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
         </ul>
         <ul class="login-list">
