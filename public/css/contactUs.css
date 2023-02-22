@@ -1,8 +1,4 @@
-.form h2{
-  text-transform:uppercase;
-}
-  
-  /* Table Styles */
+    /* Table Styles */
 
   table, td, th {
     border: 1px solid;
@@ -24,63 +20,62 @@
   table, tr, td, th{
     border: none;
   }
-  
-  .content-table{
-    overflow-x: scroll;
-  }
-  
+
   tr{
     border-bottom:1px solid var(--grey);
   }
 
-  .info-table{
-    float: left;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-
   /* Contact Us Styles */
- 
-.side-menu{
-  float: left;
-  background-color: #9A9A9A;
-}
-
 .hr1 { 
   border: 0.5px solid rgb(0, 0, 0);
 }
 
-.form{
-  margin: 2rem 0
+.contact-page{
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.location{
-  margin: 1rem 5rem;
-  padding: 5px;
-  float: left;
+.sabha-contact, .lib-contact{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.email{
-  margin: 1rem 5rem;
-  padding: 5px;
-  float: left;
+.sabha-contact-details,.lib-contact-details{
+  display: flex;
+  gap: 2rem;
+  justify-content: space-evenly;
 }
 
-.number{
-  margin: 1rem 5rem;
-  padding: 5px;
-  float: right;
+.lib-data,.sabha-data{
+  padding: 2rem;
+  width: 20rem;
+  background-color: var(--fadedblue);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
 }
-  
-  /* Footer Styles*/
-  .footer {
-    background-color: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 3rem;
-  }
-  
+
+.lib-data span,.sabha-data span{
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.lib-data div,.sabha-data div{
+  text-align: center;
+}
+
+.sabha-map iframe, .lib-map iframe{
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  height: 20rem;
+}
+
+.contact-table{
+  margin-top: 2rem;
+}
