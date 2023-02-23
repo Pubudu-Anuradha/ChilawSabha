@@ -27,177 +27,175 @@
         
         <div class="book-catalog-table">
             <table>
-                <tr>
-                    <th style="text-align:center">Order</th>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                    <th style="text-align:center">Status</th>
-                    <th style="text-align:center">Action</th>
+                <thead>
+                    <tr>
+                        <th style="text-align:center">Order</th>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th style="text-align:center">Status</th>
+                        <th style="text-align:center">Action</th>
+                    </tr>
+                </thead>
 
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-available" disabled>Available</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-borrowed" disabled>Borrowed</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-available" disabled>Available</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-available" disabled>Available</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-borrowed" disabled>Borrowed</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-available" disabled>Available</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="changeOrder-bar">
-                            <button class="order-up"> &#8743; </button>
-                            <button class="order-down"> &#8744; </button>
-                        </div>
-                    </td>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn status-borrowed" disabled>Borrowed</button>
-                        </div>    
-                    </td>
-                    <td>
-                        <div class="action-btn-set">
-                            <button class="btn remove">Remove</button>
-                            <button class="btn completed">Completed</button>
-                        </div>
-                    </td>
-                </tr>
+                <tbody  class="dragdrop">
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">P305</td>
+                        <td>Harry Poter</td>
+                        <td>J.K. Rowling</td>
+                        <td>Animus Kiado</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-available" disabled>Available</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">A45</td>
+                        <td>Atomic Habits</td>
+                        <td>James Clear</td>
+                        <td>Penguin Random</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-borrowed" disabled>Borrowed</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">P305</td>
+                        <td>Harry Poter</td>
+                        <td>J.K. Rowling</td>
+                        <td>Animus Kiado</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-available" disabled>Available</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">A45</td>
+                        <td>Atomic Habits</td>
+                        <td>James Clear</td>
+                        <td>Penguin Random</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-available" disabled>Available</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">P305</td>
+                        <td>Harry Poter</td>
+                        <td>J.K. Rowling</td>
+                        <td>Animus Kiado</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-borrowed" disabled>Borrowed</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">A45</td>
+                        <td>Atomic Habits</td>
+                        <td>James Clear</td>
+                        <td>Penguin Random</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-available" disabled>Available</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="changeOrder-bar">
+                                <button> &#9776; </button>
+                            </div>
+                        </td>
+                        <td style="padding-left:3rem">P305</td>
+                        <td>Harry Poter</td>
+                        <td>J.K. Rowling</td>
+                        <td>Animus Kiado</td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn status-borrowed" disabled>Borrowed</button>
+                            </div>    
+                        </td>
+                        <td>
+                            <div class="action-btn-set">
+                                <button class="btn remove">Remove</button>
+                                <button class="btn completed">Completed</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+
             </table>
         </div>
         <div class="pagination-bar">
@@ -209,3 +207,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    const dragGrid = document.querySelector(".dragdrop");
+    new Sortable(dragGrid, {
+        animation: 600
+    });
+</script>

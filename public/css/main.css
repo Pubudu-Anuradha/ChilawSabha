@@ -842,6 +842,16 @@ tr{
   transform: scale(1.1);
 }
 
+/* Damged list styles  */
+.recondition{
+  background-color: var(--green);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+.recondition:hover{
+  transform: scale(1.1);
+}
+
+
 /* lost books page style */
 .found{
   background-color: var(--green);
@@ -866,13 +876,6 @@ tr{
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
 }
 .enable:hover{
-  transform: scale(1.1);
-}
-.remove{
-  background-color: var(--red);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-.remove:hover{
   transform: scale(1.1);
 }
 

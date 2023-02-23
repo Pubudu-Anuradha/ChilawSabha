@@ -29,7 +29,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
@@ -41,7 +40,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
@@ -53,7 +51,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
@@ -65,7 +62,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
@@ -77,7 +73,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
@@ -89,7 +84,6 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn enable">Enable</button>
-                            <button class="btn remove">Remove</button>
                         </div>
                     </td>
                 </tr>
