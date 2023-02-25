@@ -1,6 +1,7 @@
 <div class="content">
     <h2>
-        My Working Complaints <hr class="hr1">
+        My Working Complaints
+        <hr class="hr1">
     </h2>
     <div class="content-table">
         <table>
@@ -20,9 +21,10 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.15</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
-                            <button class="btn view" id="show-note" onclick="">Add Note</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
 
 
@@ -35,9 +37,10 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.30</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
-                            <button class="btn view" id="show-note">Add Note</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
 
                     </td>
@@ -49,9 +52,10 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.31</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
-                            <button class="btn view" id="show-note">Add Note</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
 
                     </td>
@@ -60,50 +64,39 @@
             </tbody>
         </table>
     </div>
-
-
-
-
-
-    <div class="popup">
-        <div class="close-btn">&times;</div>
-        <div class="form-note">
-            <h2>ADD NOTE</h2>
-            <div class="inputfield-note">
-                <textarea id="noteInput" name="message" rows="10" cols="64"></textarea>
-            </div>
-
-
-            <div class="submitButtonContainer">
-                <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
+    
+    <div class="popup popup-confirm">
+        <div id="popupModal" class="popup-modal">
+            <div class="popup-content">
+                <div class="close-section-popup"><span class="close-popup" onclick="closeModal()">&times;</span></div>
+                <div class="popup-text">
+                    <p>ADD NOTE</p>
+                    <div class="note-textarea">
+                        <textarea id="noteInput" name="message" rows="10" cols="64"></textarea>
+                    </div>
+                </div>
+                <div class="popup-submit-btn">
+                    <button class="btn bg-blue" onclick="closeModal()">Submit</button>
                 </div>
             </div>
-
         </div>
-
-
-
-
-        <!-- <button onclick="myFunction()">Try it</button> -->
     </div>
 </div>
 
-<!-- <script>
-function myFunction() {
-  window.open("<?=URLROOT . '/Complaint/addNote'?>", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=200,width=1000,height=500");
-}
-</script> -->
-
-
 <script>
-    function myFunction() {
-  }
-    document.querySelector("#show-note").addEventListener("click", function(){
-    document.querySelector(".popup").classList.add("active");
-    });
+    var modal = document.getElementById("popupModal");
 
-    document.querySelector(".popup .close-btn").addEventListener("click", function(){
-    document.querySelector(".popup").classList.remove("active");
-});
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function openModal() {
+        modal.style.display = "block";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
