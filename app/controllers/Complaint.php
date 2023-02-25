@@ -60,4 +60,9 @@ class Complaint extends Controller
     {
         $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [], ['main', 'complaint']);
     }
+
+    // public function addNote()
+    // {
+    //     $this->view('Complaint/addNote', 'Add Notes', [], ['main', 'complaint']);
+    // }
 }

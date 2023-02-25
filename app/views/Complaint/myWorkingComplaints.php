@@ -22,7 +22,10 @@
                     <td>
                         <div  class="btn-column">
                             <button class="btn view">View</button>
+                            <button class="btn view" id="show-note" onclick="">Add Note</button>
                         </div>
+
+
                     </td>
                 </tr>
 
@@ -34,7 +37,9 @@
                     <td>
                         <div  class="btn-column">
                             <button class="btn view">View</button>
+                            <button class="btn view" id="show-note">Add Note</button>
                         </div>
+
                     </td>
                 </tr>
 
@@ -46,7 +51,9 @@
                     <td>
                         <div  class="btn-column">
                             <button class="btn view">View</button>
+                            <button class="btn view" id="show-note">Add Note</button>
                         </div>
+
                     </td>
                 </tr>
 
@@ -54,4 +61,49 @@
         </table>
     </div>
 
+
+
+
+
+    <div class="popup">
+        <div class="close-btn">&times;</div>
+        <div class="form-note">
+            <h2>ADD NOTE</h2>
+            <div class="inputfield-note">
+                <textarea id="noteInput" name="message" rows="10" cols="64"></textarea>
+            </div>
+
+
+            <div class="submitButtonContainer">
+                <div class="submitButton">
+                    <input type="submit" id="submit" value="Submit">
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- <button onclick="myFunction()">Try it</button> -->
+    </div>
 </div>
+
+<!-- <script>
+function myFunction() {
+  window.open("<?=URLROOT . '/Complaint/addNote'?>", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=200,width=1000,height=500");
+}
+</script> -->
+
+
+<script>
+    function myFunction() {
+  }
+    document.querySelector("#show-note").addEventListener("click", function(){
+    document.querySelector(".popup").classList.add("active");
+    });
+
+    document.querySelector(".popup .close-btn").addEventListener("click", function(){
+    document.querySelector(".popup").classList.remove("active");
+});
+</script>

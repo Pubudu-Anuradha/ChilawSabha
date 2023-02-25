@@ -284,6 +284,107 @@ tr{
   transform: scale(1.1);
 }
 
+
+
+
+
+/* Tabs in All complaints */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: none;
+  background-color:var(--bgcolor);
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: var(--blue);
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: var(--lightblue);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: var(--lightblue);
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  /* padding: 6px 12px; */
+  border: none;
+  border-top: none;
+}
+
+
+
+.popup{
+  background-color: #25A704;
+  position: absolute;
+  top: -150%;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%,-50%) scale(1.25); 
+  width: 500px;
+  padding: 20px 30px;
+  background :#fff;
+  box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  transition: top 0ms ease-in-out 200ms,
+              opacity 200ms ease-in-out 0ms,
+              transform 200ms ease-in-out 0ms;
+
+}
+
+.popup.active {
+  top: 50%;
+  opacity: 1;
+  transform: translate(-50%,-50%) scale(1); 
+  transition: top 0ms ease-in-out 0ms,
+              opacity 200ms ease-in-out 0ms,
+              transform 20ms ease-in-out 0ms;
+}
+
+.close-btn{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  background: #888;
+  color: #eee;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.popup .form-note h2{
+  text-align: center;
+  color: #222;
+  margin: 10px 0px 20px;
+  font-size: 25px;
+}
+
+.inputfield-note textarea{
+  outline: none;
+  resize: none;
+}
+
+
   /* Footer Styles*/
   .footer {
     background-color: black;
