@@ -1,4 +1,3 @@
-<?php require_once 'Sidebar.php' ?>
 <div class="content">
     <div class="bookcatalog">
         <div class="head-area">
@@ -40,7 +39,7 @@
                 </thead>
 
                 <tbody  class="dragdrop">
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -62,7 +61,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -84,7 +83,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -106,7 +105,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -128,7 +127,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -150,7 +149,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -172,7 +171,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
+                    <tr draggable="true" class="draggable">
                         <td>
                             <div class="changeOrder-bar">
                                 <button> &#9776; </button>
@@ -209,8 +208,44 @@
 </div>
 
 <script>
-    const dragGrid = document.querySelector(".dragdrop");
-    new Sortable(dragGrid, {
-        animation: 600
-    });
+  const rows = document.querySelectorAll('.draggable');
+  const container = document.querySelector('.dragdrop');
+
+  rows.forEach(row => {
+    row.addEventListener('dragstart', () => {
+        row.classList.add('dragging');
+    })
+
+    row.addEventListener('dragend', () => {
+        row.classList.remove('dragging');
+    })
+  })
+
+  container.addEventListener('dragover', (e) =>{
+    e.preventDefault();
+    const afterRow = findDragAfterRow(container, e.clientY)
+    const row = document.querySelector('.dragging');
+    if( afterRow == null){
+        container.appendChild(row);
+    }
+    else{
+        container.insertBefore(row, afterRow);
+    }
+  })
+
+  function findDragAfterRow(container, y){
+    const rows = [...container.querySelectorAll('.draggable:not(.dragging)')];
+
+    return rows.reduce((closestRow, child) => {
+        const rowBox = child.getBoundingClientRect();
+        const offset = y - rowBox.top - rowBox.height / 2;
+        if(offset < 0 && offset > closestRow.offset ){
+            return { offset: offset, element: child };
+        }
+        else{
+            return closestRow;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element
+  }
+
 </script>

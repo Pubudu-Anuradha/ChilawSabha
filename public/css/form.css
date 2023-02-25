@@ -4,7 +4,7 @@
   margin: 3rem auto;
   padding: 1rem;
   border-radius: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .fullForm {

@@ -861,6 +861,14 @@ tr{
   transform: scale(1.1);
 }
 
+/* Plan to read draggable order */
+.draggable{
+  cursor: move;
+}
+.draggable.dragging{
+  opacity: 0.5;
+}
+
 /* library user management styles */
 .disable{
   background-color: var(--red);
