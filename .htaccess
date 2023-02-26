@@ -1,5 +1,8 @@
+# Setting utf-8 headers for filetypes
+AddCharset UTF-8 .js
+AddCharset UTF-8 .css
 RewriteEngine On
-# Condition to not rewrite filesof the following types
+# Condition to not rewrite files of the following types
 RewriteCond %{REQUEST_URI} !\.(?:css|js|jpe?g|gif|png)$ [NC]
 # Rewriting the entire non-empty url as a query string
 RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
