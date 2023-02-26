@@ -7,7 +7,7 @@ class Table{
   //  ['col_1'=>'r2_c1','col_2'=>'r2_c2'],
   //  ['col_1'=>'r3_c1','col_2'=>'r3_c2'],
   // ]
-  public static function Table($columns,$row_data,$caption = NULL,$actions = [
+  public static function Table($columns,$row_data,$id=NULL,$caption = NULL,$actions = [
     'Action 1' => [
     ['F string %s %s', 'id','name'],// sprintf arguments "%s string" followed by column names
     // contents of column will be used as actual arguments.
@@ -21,7 +21,7 @@ class Table{
     $action_count = count($actions);
   ?>
   <div class="content-table">
-    <table>
+    <table <?=$id?"id=\"$id\"":''?>>
       <?php if($caption):?>
       <caption><?= $caption ?></caption>
       <?php endif; ?>
