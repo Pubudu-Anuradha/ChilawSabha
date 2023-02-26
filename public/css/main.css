@@ -55,27 +55,27 @@ markasresolved: green
 .bg-fd-blue  {  background-color: var(--fadedblue); }
 .bg-white    {  background-color: var(--bgcolor);   }
 
-.hover-black    :hover {  color: var(--black);     }
-.hover-blue     :hover {  color: var(--blue);      }
+.hover-black:hover     {  color: var(--black);     }
+.hover-blue:hover      {  color: var(--blue);      }
 .hover-lightblue:hover {  color: var(--lightblue); }
-.hover-green    :hover {  color: var(--green);     }
-.hover-red      :hover {  color: var(--red);       }
-.hover-orange   :hover {  color: var(--orange);    }
-.hover-yellow   :hover {  color: var(--yellow);    }
-.hover-grey     :hover {  color: var(--grey);      }
-.hover-fd-blue  :hover {  color: var(--fadedblue); }
-.hover-white    :hover {  color: var(--bgcolor);   }
-.hover-black    :hover {  color: var(--black);     }
+.hover-green:hover     {  color: var(--green);     }
+.hover-red:hover       {  color: var(--red);       }
+.hover-orange:hover    {  color: var(--orange);    }
+.hover-yellow:hover    {  color: var(--yellow);    }
+.hover-grey:hover      {  color: var(--grey);      }
+.hover-fd-blue:hover   {  color: var(--fadedblue); }
+.hover-white:hover     {  color: var(--bgcolor);   }
+.hover-black:hover     {  color: var(--black);     }
 
-.hover-bg-blue     :hover {  color: var(--blue);      }
-.hover-bg-lightblue:hover {  color: var(--lightblue); }
-.hover-bg-green    :hover {  color: var(--green);     }
-.hover-bg-red      :hover {  color: var(--red);       }
-.hover-bg-orange   :hover {  color: var(--orange);    }
-.hover-bg-yellow   :hover {  color: var(--yellow);    }
-.hover-bg-grey     :hover {  color: var(--grey);      }
-.hover-bg-fd-blue  :hover {  color: var(--fadedblue); }
-.hover-bg-white    :hover {  color: var(--bgcolor);   }
+.hover-bg-blue:hover      {  background-color: var(--blue);      }
+.hover-bg-lightblue:hover {  background-color: var(--lightblue); }
+.hover-bg-green:hover     {  background-color: var(--green);     }
+.hover-bg-red:hover       {  background-color: var(--red);       }
+.hover-bg-orange:hover    {  background-color: var(--orange);    }
+.hover-bg-yellow:hover    {  background-color: var(--yellow);    }
+.hover-bg-grey:hover      {  background-color: var(--grey);      }
+.hover-bg-fd-blue:hover   {  background-color: var(--fadedblue); }
+.hover-bg-white:hover     {  background-color: var(--bgcolor);   }
 /* Page */
 
 html,

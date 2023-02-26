@@ -4,12 +4,12 @@ class Home extends Controller
 {
     public function index()
     {
-        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['main','homepage','slideshow']);
+        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['Home/index','slideshow']);
     }
     
     public function downloads()
     {
-        $this->view('Home/downloads');
+        $this->view('Home/downloads',styles:['Home/downloads']);
     }
     
     public function emergency()

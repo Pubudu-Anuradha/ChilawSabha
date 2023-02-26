@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
+    <link rel="stylesheet" href="<?= URLROOT . '/public/css/main.css' ?>">
     <?php foreach ($styles as $style) { ?>
         <link rel="stylesheet" href="<?= URLROOT . '/public/css/' . $style ?>.css">
     <?php } ?>

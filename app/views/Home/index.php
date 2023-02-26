@@ -37,34 +37,65 @@
         </div>
     </div>
 
+    <style>
+        .sabha-img{
+            background: url("<?=URLROOT . '/public/assets/logo.jpg'?>");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
     <div class="main-content">
-        <div class="announcements">
-            <div class="announcement-header">
-                <a href="#"><h2 class="announcement-txt">New Announcements</h2></a>
-                <button class="more btn" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
+        <div class="posts bg-fd-blue">
+            <div class="posts-header">
+                <a href="#"><h2 class="announcement-txt">Announcements</h2></a>
+                <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
-            <div class="announcement-items">
-                <div class="announcement-item">
-                    <img src="<?=URLROOT . "/public/assets/logo.jpg"?>" alt="logo" class="sabha-img">
-                    <a href="#"><h3>REGISTER FOR COVID 19 VACCINATIONS</h3></a>
-                    <hr>
-                    <p>21 January 2023</p>
-                </div>
-                <div class="announcement-item">
-                    <img src="<?=URLROOT . "/public/assets/logo.jpg"?>" alt="logo" class="sabha-img">
-                    <a href="#"><h3>APPLY FOR SAMURDHI BEFORE 20TH OF FEBRUARY</h3></a>
-                    <hr>
-                    <p>14 January 2023</p>
-                </div>
-                <div class="announcement-item">
-                    <img src="<?=URLROOT . "/public/assets/logo.jpg"?>" alt="logo" class="sabha-img">
-                    <a href="#"><h3>PUBLIC AUCTION ON 3RD OF MARCH</h3></a>
-                    <hr>
-                    <p>1 February 2023</p>
+            <div class="post">
+                <div class="sabha-img"></div>
+                <div class="details">
+                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
+                    <div class="date">
+                        21 January 2023
+                    </div>
                 </div>
             </div>
+            <div class="post">
+                <div class="sabha-img"></div>
+                <div class="details">
+                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
+                    <div class="date">
+                        21 January 2023
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="sabha-img"></div>
+                <div class="details">
+                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
+                    <div class="date">
+                        21 January 2023
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="posts bg-fd-blue">
+            <div class="posts-header">
+                <a href="#"><h2 class="announcement-txt">Events</h2></a>
+                <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
+            </div>
+            <hr>
+            <div class="post">
+                <div class="sabha-img"></div>
+                <div class="details">
+                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
+                    <div class="date">
+                        21 January 2023
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="about-city">
