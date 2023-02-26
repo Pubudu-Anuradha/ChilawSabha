@@ -1,0 +1,30 @@
+/* Slideshow Styles */
+/* To resize slideshow, wrap it in a div and adjust that one's size */
+.slideshow{
+  display: flex;
+  position: relative;
+}
+.slideshow img{
+  width: 100%;
+  max-height: 500px;
+}
+.slideshow-btn{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  position: absolute;
+  top: calc(50% - 2.5rem);
+  font-size: 2rem;
+  padding: 0 1rem;
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.left-btn{
+  left: 0;
+}
+.right-btn{
+  right: 0;
+}
