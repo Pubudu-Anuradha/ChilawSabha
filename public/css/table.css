@@ -97,6 +97,14 @@ tbody > tr:last-child{
 .enable::before{
   content: "✓";
 }
+
+.waiting {
+  background-color: var(--grey);
+}
+.waiting::before{
+  content: "⌛";
+}
+
 @media screen and (max-width:767px){
   .content-table{
     display: block;

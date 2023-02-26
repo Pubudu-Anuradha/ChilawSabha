@@ -58,6 +58,8 @@ Table::Table(['id' => 'ID', 'name' => 'Name', 'address' => 'Address', 'age' => '
           })
           if(changed){
             row.querySelectorAll('td > input').forEach(input=>input.disabled = true)
+            btn.classList.remove('enable');
+            btn.classList.add('waiting');
             fetch(btn.href,{
               method:"POST",
               headers:{
@@ -71,7 +73,7 @@ Table::Table(['id' => 'ID', 'name' => 'Name', 'address' => 'Address', 'age' => '
                   cells[1].innerHTML = response.new.name;
                   cells[2].innerHTML = response.new.address;
                   cells[3].innerHTML = response.new.age;
-                  btn.classList.remove('enable')
+                  btn.classList.remove('waiting')
                   btn.classList.add('edit')
                 }else{
                   row.querySelectorAll('td > input').forEach(input=>input.disabled = false)
