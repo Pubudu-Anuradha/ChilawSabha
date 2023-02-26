@@ -63,7 +63,7 @@ class Admin extends Controller
                 $this->view('Admin/Announcements/View','View Announcement',['announcement' => $id!=NULL ? $model->getAnnouncement($id):false],['main','table','posts']);
                 break;
             default:
-                $this->view('Admin/Announcements/index','Manage Announcements',['announcements' => $model->getAnnouncements()],['main','table','posts']);
+                $this->view('Admin/Announcements/indexNew','Manage Announcements',['announcements' => $model->getAnnouncements()],['main','table','posts']);
         }
     }
     public function Services($page='index')
