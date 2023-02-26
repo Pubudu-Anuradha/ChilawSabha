@@ -8,29 +8,63 @@ require_once 'vendor/phpmailer/phpmailer/src/Exception.php';
 require_once 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require_once 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
-$mail = new PHPMailer(true);
-$mail->IsSMTP();
-$mail->Mailer = "smtp";
+class Email{
+    private static string $Host     = "smtp.gmail.com";
+    private static string $Username = "chlawpsproject@gmail.com";
+    private static string $Password = "ksbslwlvdbghcbmp";
 
-$mail->SMTPDebug  = 0;
-$mail->SMTPAuth   = TRUE;
-$mail->SMTPSecure = "tls";
-$mail->Port       = 587;
-$mail->Host       = "smtp.gmail.com";
-$mail->Username   = "chlawpsproject@gmail.com";
-$mail->Password   = "ksbslwlvdbghcbmp";
+    // Function to send an HTML email
+    // $to = one email address as a string or an array of emails
+    // $content can be formatted using html
+    public static function send(string|array $to, $subject, $content){
+        $mail = new PHPMailer(true);
+        $mail->IsSMTP();
+        $mail->Mailer = "smtp";
 
-$mail->IsHTML(true);
-$mail->AddAddress("chlawpsproject@gmail.com");
-$mail->SetFrom("chlawpsproject@gmail.com");
-$mail->Subject = "haha";
-$content = "<h1>EMAIL IS WORKING</h1>";
+        $mail->SMTPDebug  = 0;
+        $mail->SMTPAuth   = TRUE;
+        $mail->SMTPSecure = "tls";
+        $mail->Port       = 587;
+        $mail->Host       = Email::$Host;
+        $mail->Username   = Email::$Username;
+        $mail->Password   = Email::$Password;
 
-$mail->MsgHTML($content);
-if (!$mail->Send()) {
-    echo "Error while sending Email.";
-    var_dump($mail);
-} else {
-    echo "Email sent successfully";
+        $mail->IsHTML(true);
+        if (is_string($to)){
+            try {
+                $mail->AddAddress($to);
+            }catch(Exception $e){
+                return [
+                    'error'=>true,
+                    'errmsg'=>"Error adding target address: $to"
+                ];
+            }
+        }else if(is_array($to)){
+            foreach($to as $addr){
+                try {
+                    $mail->AddAddress($addr);
+                }catch(Exception $e){
+                    return [
+                        'error'=>true,
+                        'errmsg'=>"Error adding target address: $addr"
+                    ];
+                }
+            }
+        }
+        $mail->SetFrom(Email::$Username);
+        $mail->Subject = $subject;
+
+        $mail->MsgHTML($content);
+        if ($mail->Send()) {
+            return [
+                'error'=>false, 
+                'errmsg'=>''
+            ];
+        } else {
+           return [
+                'error'=>true,
+                'errmsg'=>"Error while sending Email"
+           ];
+        }
+    }
 }
-die();
