@@ -24,6 +24,7 @@ td {
 
 table {
   border-collapse: collapse;
+  width: 100%;
 }
 
 table,
@@ -62,7 +63,6 @@ tbody>tr:last-child {
   display: flex;
   justify-content: center;
   overflow: auto;
-  width: 80%;
 }
 
 .btn {

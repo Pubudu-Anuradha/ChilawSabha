@@ -4,7 +4,7 @@ class Home extends Controller
 {
     public function index()
     {
-        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['Home/index','slideshow']);
+        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['Home/index','Components/slideshow']);
     }
     
     public function downloads()
@@ -38,6 +38,6 @@ class Home extends Controller
     public function addComplaint()
     {
         // TODO: Use Form Input components
-        $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','form']);
+        $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','Components/form']);
     }
 }

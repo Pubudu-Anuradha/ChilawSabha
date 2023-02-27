@@ -4,7 +4,7 @@
   margin: 3rem auto;
   padding: 1rem;
   border-radius: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .fullForm {
@@ -100,6 +100,10 @@ input[type=submit] {
 
 label {
   font-size: medium;
+}
+
+textarea {
+  resize: vertical;
 }
 
 @media screen and (max-width: 767px) {
