@@ -198,5 +198,64 @@ body{
 }
 
 .shadow {
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5); */
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+@media screen and (min-width: 1200px) {
+
+  /* WHEN SCREEN IS WIDER THAN 1200 */
+  .navbar-items,
+  .main {
+    width: 1200px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* TODO:make navbar responsive */
+  .navbar-items {
+    /* Should show hamburger menu */
+    display: none;
+  }
+
+  /* Other Misc */
+  body {
+    font-size: 10px;
+  }
+
+  .main {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 259px) {
+
+  /* WHEN SCREEN IS NARROWER THAN LOGO */
+  .logo-items {
+    /* TODO: make a text "Chilaw Pradeshiya sabha" visible*/
+    display: none;
+  }
+
+  body {
+    font-size: 8px;
+  }
+
+  .main {
+    grid-gap: 5px;
+  }
+
+  .sidebar-img {
+    height: 10px;
+  }
+
+  .items a .see-more {
+    font-size: 10px;
+  }
+
+  .items a {
+    padding: 5px;
+    gap: 3px;
+  }
 }
