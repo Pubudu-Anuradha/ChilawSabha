@@ -287,7 +287,6 @@ body {
 .user-login-image {
   cursor: pointer;
   margin-left: auto;
-  height: 30px;
 }
 
 .navbar-items ul.dropdown-content {
@@ -322,7 +321,7 @@ body {
   display: block;
 }
 
-.dropdown:hover > a {
+.dropdown:hover>a {
   background-color: var(--blue);
   color: white;
 }
@@ -360,11 +359,13 @@ body {
 @media screen and (max-width: 767px) {
 
   /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* Responsive navbar styles */
   .navbar-items ul li a {
     padding: 10px .5rem;
     color: var(--black);
   }
-  .navbar-items ul > ul li a{
+
+  .navbar-items ul>ul li a {
     padding: 8px .5rem;
   }
 
@@ -377,7 +378,8 @@ body {
     background-color: var(--bgcolor);
     width: 80%;
   }
-  .navbar input[type="checkbox"]:checked~ .navbar-items ul:first-child {
+
+  .navbar input[type="checkbox"]:checked~.navbar-items ul:first-child {
     display: block;
   }
 
@@ -390,16 +392,19 @@ body {
     z-index: 5;
     list-style: circle;
   }
-  .navbar-items ul:first-child > li,a {
+
+  .navbar-items ul:first-child>li,
+  a {
     box-sizing: border-box;
     width: 100%;
     font-weight: 700;
   }
 
-  .navbar-items ul:first-child > li:hover {
+  .navbar-items ul:first-child>li:hover {
     background-color: var(--blue);
   }
-  .navbar-items ul:first-child > li > ul{
+
+  .navbar-items ul:first-child>li>ul {
     margin-left: 1rem;
     font-weight: 500;
   }
