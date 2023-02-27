@@ -15,12 +15,16 @@ class Complaint extends Controller
         $data = [];
         if (isset($_POST['submit'])) {
             if (
-                isset($_POST['name']) && !empty($_POST['name'])
-                && isset($_POST['email']) && !empty($_POST['email'])
-                && isset($_POST['mobi_num']) && !empty($_POST['mobi_num']) && isset($_POST['address']) && isset($_POST['category']) && isset($_POST['message'])
+                isset($_POST['nameInputField']) && !empty($_POST['nameInputField'])
+                && isset($_POST['emailInputField']) && !empty($_POST['emailInputField'])
+                && isset($_POST['phoneInputField']) && !empty($_POST['phoneInputField']) 
+                && isset($_POST['addressInputField']) 
+                && isset($_POST['selectOptionField']) 
+                && isset($_POST['messageInputField'])
+                && isset($_POST['dateInputField'])
             ) {
                 $model = $this->model('ComplaintModel');
-                $res = $model->AddComplaint($_POST['name'], $_POST['email'], $_POST['mobi_num'], $_POST['address'], $_POST['category'], $_POST['message']);
+                $res = $model->AddComplaint($_POST['nameInputField'], $_POST['emailInputField'], $_POST['phoneInputField'], $_POST['addressInputField'], $_POST['selectOptionField'], $_POST['messageInputField'], $_POST['dateInputField']);
                 echo $res;
                 if ($res) {
                     $data['message'] = 'Added Complaint successfully';

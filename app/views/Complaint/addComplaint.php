@@ -12,7 +12,7 @@
             <div class="inputfield">
                 <label for="textInput">Complainer Name: </label>
                 <div class="inputDiv">
-                    <input type="text" name="name" id="textInput" placeholder="Enter Name">
+                    <input type="text" name="nameInputField" id="textInput" placeholder="Enter Name">
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
             <div class="inputfield">
                 <label for="textInput">Address: </label>
                 <div class="inputDiv">
-                    <input type="text" name="address" id="textInput" placeholder="Enter Address">
+                    <input type="text" name="addressInputField" id="textInput" placeholder="Enter Address">
                 </div>
             </div>
 
@@ -55,7 +55,15 @@
             <div class="inputfield">
                 <label for="noteInput">Briefly Describe your incident:</label>
                 <div class="inputDiv">
-                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
+                    <textarea id="noteInput" name="messageInputField" rows="10" cols="30"></textarea>
+                </div>
+            </div>
+
+            <div class="inputfield">
+                <label for="noteInput">Date:</label>
+                <div class="inputDiv">
+                    <input id="noteInput" name="dateInputField" placeholder="Date" type="date" required>
+
                 </div>
             </div>
 
