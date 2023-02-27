@@ -40,10 +40,4 @@ class Home extends Controller
         // TODO: Use Form Input components
         $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','form']);
     }
-
-    public function requestbook()
-    {
-        // TODO: Use Form Input components
-        $this->view('Home/Requestbook','Book Request', [], ['main', 'libraryUsers']);
-    }
 }
