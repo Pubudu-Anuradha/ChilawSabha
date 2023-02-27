@@ -1,5 +1,5 @@
 /* Colors */
-:root{
+:root {
   --blue: #7387EF;
   --lightblue: #93B4F2;
   --fadedblue: #F0F5FE;
@@ -33,49 +33,166 @@ addnote: blue
 markasresolved: green
 */
 
-.black    {  color: var(--black);     }
-.blue     {  color: var(--blue);      }
-.lightblue{  color: var(--lightblue); }
-.green    {  color: var(--green);     }
-.red      {  color: var(--red);       }
-.orange   {  color: var(--orange);    }
-.yellow   {  color: var(--yellow);    }
-.grey     {  color: var(--grey);      }
-.fd-blue  {  color: var(--fadedblue); }
-.white    {  color: var(--bgcolor);   }
+.black {
+  color: var(--black);
+}
 
-.bg-black    {  background-color: var(--black);     }
-.bg-blue     {  background-color: var(--blue);      }
-.bg-lightblue{  background-color: var(--lightblue); }
-.bg-green    {  background-color: var(--green);     }
-.bg-red      {  background-color: var(--red);       }
-.bg-orange   {  background-color: var(--orange);    }
-.bg-yellow   {  background-color: var(--yellow);    }
-.bg-grey     {  background-color: var(--grey);      }
-.bg-fd-blue  {  background-color: var(--fadedblue); }
-.bg-white    {  background-color: var(--bgcolor);   }
+.blue {
+  color: var(--blue);
+}
 
-.hover-black:hover     {  color: var(--black);     }
-.hover-blue:hover      {  color: var(--blue);      }
-.hover-lightblue:hover {  color: var(--lightblue); }
-.hover-green:hover     {  color: var(--green);     }
-.hover-red:hover       {  color: var(--red);       }
-.hover-orange:hover    {  color: var(--orange);    }
-.hover-yellow:hover    {  color: var(--yellow);    }
-.hover-grey:hover      {  color: var(--grey);      }
-.hover-fd-blue:hover   {  color: var(--fadedblue); }
-.hover-white:hover     {  color: var(--bgcolor);   }
-.hover-black:hover     {  color: var(--black);     }
+.lightblue {
+  color: var(--lightblue);
+}
 
-.hover-bg-blue:hover      {  background-color: var(--blue);      }
-.hover-bg-lightblue:hover {  background-color: var(--lightblue); }
-.hover-bg-green:hover     {  background-color: var(--green);     }
-.hover-bg-red:hover       {  background-color: var(--red);       }
-.hover-bg-orange:hover    {  background-color: var(--orange);    }
-.hover-bg-yellow:hover    {  background-color: var(--yellow);    }
-.hover-bg-grey:hover      {  background-color: var(--grey);      }
-.hover-bg-fd-blue:hover   {  background-color: var(--fadedblue); }
-.hover-bg-white:hover     {  background-color: var(--bgcolor);   }
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.grey {
+  color: var(--grey);
+}
+
+.fd-blue {
+  color: var(--fadedblue);
+}
+
+.white {
+  color: var(--bgcolor);
+}
+
+.bg-black {
+  background-color: var(--black);
+}
+
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.bg-lightblue {
+  background-color: var(--lightblue);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-yellow {
+  background-color: var(--yellow);
+}
+
+.bg-grey {
+  background-color: var(--grey);
+}
+
+.bg-fd-blue {
+  background-color: var(--fadedblue);
+}
+
+.bg-white {
+  background-color: var(--bgcolor);
+}
+
+.hover-black:hover {
+  color: var(--black);
+}
+
+.hover-blue:hover {
+  color: var(--blue);
+}
+
+.hover-lightblue:hover {
+  color: var(--lightblue);
+}
+
+.hover-green:hover {
+  color: var(--green);
+}
+
+.hover-red:hover {
+  color: var(--red);
+}
+
+.hover-orange:hover {
+  color: var(--orange);
+}
+
+.hover-yellow:hover {
+  color: var(--yellow);
+}
+
+.hover-grey:hover {
+  color: var(--grey);
+}
+
+.hover-fd-blue:hover {
+  color: var(--fadedblue);
+}
+
+.hover-white:hover {
+  color: var(--bgcolor);
+}
+
+.hover-black:hover {
+  color: var(--black);
+}
+
+.hover-bg-blue:hover {
+  background-color: var(--blue);
+}
+
+.hover-bg-lightblue:hover {
+  background-color: var(--lightblue);
+}
+
+.hover-bg-green:hover {
+  background-color: var(--green);
+}
+
+.hover-bg-red:hover {
+  background-color: var(--red);
+}
+
+.hover-bg-orange:hover {
+  background-color: var(--orange);
+}
+
+.hover-bg-yellow:hover {
+  background-color: var(--yellow);
+}
+
+.hover-bg-grey:hover {
+  background-color: var(--grey);
+}
+
+.hover-bg-fd-blue:hover {
+  background-color: var(--fadedblue);
+}
+
+.hover-bg-white:hover {
+  background-color: var(--bgcolor);
+}
+
 /* Page */
 
 html,
@@ -89,9 +206,10 @@ body {
 
 /* Header Styles */
 .header {
-  background-color:var(--bgcolor);
+  background-color: var(--bgcolor);
   width: 100%;
 }
+
 .logo-area {
   text-align: center;
   display: flex;
@@ -99,32 +217,36 @@ body {
   justify-content: center;
   overflow-x: hidden;
 }
+
 .logo-items {
   padding: 1rem;
   display: flex;
   gap: 20px;
 }
+
 .sabha-title {
   height: 100px;
   align-items: center;
 }
-body{
+
+body {
   display: flex;
   flex-direction: column;
-  background-color:rgba(0 0 0 / 2%);
+  background-color: rgba(0 0 0 / 2%);
 }
+
 .main {
-  background-color:var(--bgcolor);
+  background-color: var(--bgcolor);
   box-sizing: border-box;
   min-height: 90vh;
   width: 100%;
   align-self: center;
   padding: 1rem;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* #Navbar Styles*/
-.navbar{
+.navbar {
   height: 50px;
   border-top: 2px solid var(--grey);
   border-bottom: 2px solid var(--grey);
@@ -132,35 +254,42 @@ body{
   justify-content: center;
   padding: 0 1rem;
 }
-.navbar-items{
+
+.navbar-items {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
 }
-.navbar-items ul{
+
+.navbar-items ul {
   margin: 0;
   display: flex;
   align-items: center;
   list-style: none;
   padding-inline-start: 0;
 }
-.navbar-items ut:not(.login-list){
+
+.navbar-items ut:not(.login-list) {
   overflow-x: auto;
 }
-.navbar-items ul.login-list{
+
+.navbar-items ul.login-list {
   gap: 1rem;
 }
-.navbar-items ul li a{
+
+.navbar-items ul li a {
   text-decoration: none;
   padding: 16px .5rem;
   color: var(--black);
 }
-.user-login-image{
+
+.user-login-image {
   cursor: pointer;
   margin-left: auto;
   height: 30px;
 }
+
 .navbar-items ul.dropdown-content {
   display: none;
   padding: 0;
@@ -168,27 +297,32 @@ body{
   position: absolute;
   background-color: #FFFFFF;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   list-style: none;
 }
-.dropdown a.dropbtn{
+
+.dropdown a.dropbtn {
   position: relative;
   display: inline-block;
 }
+
 .dropdown-content li {
   color: black;
   padding: 12px 16px;
   display: block;
 }
+
 .dropdown-content li:hover {
   background-color: var(--blue);
   color: white;
 }
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
-.dropdown:hover .dropbtn {
+
+.dropdown:hover > a {
   background-color: var(--blue);
   color: white;
 }
@@ -209,7 +343,8 @@ body{
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
 }
 
-#hamburger-trigger,.lines{
+#hamburger-trigger,
+.lines {
   display: none;
 }
 
@@ -225,26 +360,63 @@ body{
 @media screen and (max-width: 767px) {
 
   /* WHEN SCREEN IS NARROWER THAN 768px */
-  /* TODO:make navbar responsive */
-  .navbar-items ul:first-child {
-    /* Should show hamburger menu */
-    display: none;
+  .navbar-items ul li a {
+    padding: 10px .5rem;
+    color: var(--black);
+  }
+  .navbar-items ul > ul li a{
+    padding: 8px .5rem;
   }
 
-  .navbar{
+  .navbar-items ul:first-child {
+    display: none;
+    z-index: 99;
+    position: absolute;
+    left: 0;
+    top: calc(160px + 2rem);
+    background-color: var(--bgcolor);
+    width: 80%;
+  }
+  .navbar input[type="checkbox"]:checked~ .navbar-items ul:first-child {
+    display: block;
+  }
+
+  .navbar-items ul:first-child .dropdown-content {
+    display: block;
+    position: unset;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: none;
+    z-index: 5;
+    list-style: circle;
+  }
+  .navbar-items ul:first-child > li,a {
+    box-sizing: border-box;
+    width: 100%;
+    font-weight: 700;
+  }
+
+  .navbar-items ul:first-child > li:hover {
+    background-color: var(--blue);
+  }
+  .navbar-items ul:first-child > li > ul{
+    margin-left: 1rem;
+    font-weight: 500;
+  }
+
+  .navbar {
     justify-content: space-between;
     align-items: center;
     width: 100%;
   }
- 
-  .navbar-items ul.login-list{
+
+  .navbar-items ul.login-list {
     margin-left: auto;
     margin-right: 1rem;
   }
 
-  #hamburger-trigger{
+  #hamburger-trigger {
     display: block;
-    /* position: absolute; */
     display: block;
     height: 32px;
     width: 32px;
@@ -253,7 +425,7 @@ body{
     cursor: pointer;
   }
 
-  .lines{
+  .lines {
     display: block;
     height: 26px;
     width: 32px;
@@ -264,7 +436,7 @@ body{
     justify-content: space-between;
   }
 
-  .lines > span{
+  .lines>span {
     display: block;
     height: 4px;
     width: 100%;
@@ -273,20 +445,23 @@ body{
     transition: transform 200ms ease-in-out;
   }
 
-  .lines > span:first-child{
-      transform-origin: 0% 0%;
-  }
-  .lines > span:last-child{
-      transform-origin: 0% 100%;
+  .lines>span:first-child {
+    transform-origin: 0% 0%;
   }
 
-  .navbar input[type="checkbox"]:checked ~ .lines > span:first-child {
+  .lines>span:last-child {
+    transform-origin: 0% 100%;
+  }
+
+  .navbar input[type="checkbox"]:checked~.lines>span:first-child {
     transform: rotate(45deg);
   }
-  .navbar input[type="checkbox"]:checked ~ .lines > span:not(:first-child):not(:last-child) {
+
+  .navbar input[type="checkbox"]:checked~.lines>span:not(:first-child):not(:last-child) {
     transform: scaleY(0);
   }
-  .navbar input[type="checkbox"]:checked ~ .lines > span:last-child {
+
+  .navbar input[type="checkbox"]:checked~.lines>span:last-child {
     transform: rotate(-45deg);
   }
 
@@ -325,6 +500,7 @@ body{
     gap: 3px;
   }
 }
+
 *:not(.footer) {
   transition: all 200ms ease-in-out;
 }
