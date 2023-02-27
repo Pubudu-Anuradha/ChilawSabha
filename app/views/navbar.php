@@ -1,4 +1,10 @@
 <div class="navbar">
+    <input type="checkbox" name="anonymous" id="hamburger-trigger">
+    <div class="lines">
+        <span class="line1"></span>
+        <span class="line2"></span>
+        <span class="line3"></span>
+    </div>
     <div class="navbar-items">
         <ul>
             <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
