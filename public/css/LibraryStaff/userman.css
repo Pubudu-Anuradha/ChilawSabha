@@ -1,0 +1,9 @@
+/* library user management styles */
+.disable {
+  background-color: var(--red);
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.disable:hover {
+  transform: scale(1.1);
+}

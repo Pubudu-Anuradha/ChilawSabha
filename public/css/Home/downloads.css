@@ -49,3 +49,8 @@
 .panel ul>li {
   padding: 0.4rem;
 }
+
+.download-page a {
+  text-decoration: none;
+  color: var(--black);
+}
