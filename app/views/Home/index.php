@@ -9,33 +9,33 @@
 
 <div class="page-content">
     <div class="left-content">
-        <div class="emergency-numbers">
-            <a href="<?=URLROOT . "/Home/emergency"?>"><h3>Emergency Contacts</h3></a>
-            <div class="number">
-                <a href="#" class="name">
+        <div class="contacts">
+            <a href="<?=URLROOT . "/Home/emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
+            <div class="contact">
+                <a href="#" class="name tel">
                     Hospital/Ambulance hotline
                 </a>
-                <span class="tel">
+                <span class="contact-info">
                     0717777777
                 </span>
             </div>
-            <div class="number">
-                <a href="#" class="name">
+            <div class="contact">
+                <a href="#" class="name tel">
                     Fire Department
                 </a>
-                <span class="tel">
+                <span class="contact-info">
                     0717777777
                 </span>
             </div>
-            <div class="number">
-                <a href="#" class="name">
+            <div class="contact">
+                <a href="#" class="name tel">
                     Madampe Police station
                 </a>
-                <span class="tel">
+                <span class="contact-info">
                     0717777777
                 </span>
             </div>
-            <div class="number">
+            <div class="contact">
                 <a href="#" class="name">
                    Other Emergency Contacts
                 </a>
@@ -45,39 +45,56 @@
             <div class="library-portal">        
                 <a class="library-img" href="<?=URLROOT . "/Home/Portal"?>">
                     <span>
-                        Chilaw Public Library
+                        Chilaw Public Library Portal
                     </span>
                 </a>
             </div>
-            <div class="contact-us">
+            <div class="contacts">
+                <a href="#">
+                    <h3>Contact us</h3>
+                </a>
+                <div class="contact">
+                    <a href="#" class="name tel">
+                        Telephone
+                    </a>
+                    <span class="contact-info">
+                        032 - 5656565
+                    </span>
+                </div>
+                <div class="contact">
+                    <a href="#" class="name email">
+                        Email
+                    </a>
+                    <div class="contact-info">
+                        <a href="mailto:chlawpsproject@gmail.com">chlawpsproject@gmail.com</a>
+                    </div>
+                </div>
+                <div class="contact">
+                    <a href="#" class="name address">
+                        Address
+                    </a>
+                    <div class="contact-info">
+                        Chilaw Pradeshiya Sabha, <br> Kuliyapitya Road, <br> Madampe
+                    </div>
+                </div>
                 <button class="add-complaint btn bg-lightblue hover-bg-blue"
                         onclick='window.location.href="<?=URLROOT . "/Home/Addcomplaint"?>"'>
                         MAKE A COMPLAINT
-                </button>    
+                </button>
             </div>
         </div>
     </div>
-
     <style>
         .sabha-img{
             background: url("<?=URLROOT . '/public/assets/logo.jpg'?>");
-            background-position: center;
-            background-repeat:no-repeat;
-            background-size:contain;
         }
         .library-img{
-            display:flex;
-            align-items: center;
-            justify-content: center;
             background: url("<?=URLROOT . '/public/assets/Library.jpeg'?>");
+        }
+        .library-img,.sabha-img{
             background-position: center;
             background-repeat: space;
             background-size: contain;
-            width: 100%;
-            height: 17rem;
-            color: #fff !important;
-            font-weight: 800;
-            font-size: large;
         }
     </style>
     <div class="main-content">
