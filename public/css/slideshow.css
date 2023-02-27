@@ -1,14 +1,17 @@
 /* Slideshow Styles */
 /* To resize slideshow, wrap it in a div and adjust that one's size */
-.slideshow{
+.slideshow {
   display: flex;
   position: relative;
 }
-.slideshow img{
+
+.slideshow img {
   width: 100%;
-  max-height: 500px;
+  height: 500px; /*Should Override if necessary*/
+  border-radius: 10px;
 }
-.slideshow-btn{
+
+.slideshow-btn {
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -22,9 +25,10 @@
   cursor: pointer;
 }
 
-.left-btn{
+.left-btn {
   left: 0;
 }
-.right-btn{
+
+.right-btn {
   right: 0;
 }

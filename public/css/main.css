@@ -89,6 +89,7 @@ body {
 
 /* Header Styles */
 .header {
+  background-color:var(--bgcolor);
   width: 100%;
 }
 .logo-area {
@@ -110,13 +111,16 @@ body {
 body{
   display: flex;
   flex-direction: column;
+  background-color:rgba(0 0 0 / 2%);
 }
 .main {
+  background-color:var(--bgcolor);
   box-sizing: border-box;
   min-height: 90vh;
   width: 100%;
   align-self: center;
   padding: 1rem;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 /* #Navbar Styles*/
@@ -140,6 +144,9 @@ body{
   align-items: center;
   list-style: none;
   padding-inline-start: 0;
+}
+.navbar-items ut:not(.login-list){
+  overflow-x: auto;
 }
 .navbar-items ul.login-list{
   gap: 1rem;
@@ -221,10 +228,6 @@ body{
   }
 
   /* Other Misc */
-  body {
-    font-size: 10px;
-  }
-
   .main {
     width: 100%;
   }
@@ -258,4 +261,7 @@ body{
     padding: 5px;
     gap: 3px;
   }
+}
+*:not(.footer) {
+  transition: all 200ms ease-in-out;
 }

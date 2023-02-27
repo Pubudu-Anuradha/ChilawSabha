@@ -1,8 +1,9 @@
 <div class="container-body">
     <div class="contact-page">
-        <h2>CONTACT US <hr class="hr1"></h2>
+        <!-- TODO: use Icons like from homepage -->
+        <h1>CONTACT US <hr class="hr1"></h1>
         <div class="sabha-contact">
-            <h3>PRADESHIYA SABHA</h3>
+            <h2>PRADESHIYA SABHA</h2>
             <div class="sabha-contact-details">
                 <div class="sabha-data">
                     <div><span class="icon">&#9993;</span></div>
@@ -23,7 +24,7 @@
             </div>
         </div>
         <div class="lib-contact">
-            <h3>LIBRARY</h3>
+            <h2>LIBRARY</h2>
             <div class="lib-contact-details">
                 <div class="lib-data">
                     <div><span class="icon">&#9993;</span></div>
@@ -43,6 +44,7 @@
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
+        <!-- TODO: Make Contact Cards instead of a table -->
         <div class="contact-table">
             <table>
                 <thead>

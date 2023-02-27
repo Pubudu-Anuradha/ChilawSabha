@@ -20,30 +20,30 @@ class Home extends Controller
 
     public function portal()
     {
-        $this->view('Home/portal', 'Library Portal');
+        // TODO: Add Pictures of Library
+        $this->view('Home/portal', 'Library Portal',styles:['Home/portal','slideshow']);
     }
 
     public function bookRequest()
     {
-        $this->view('Home/bookRequest', 'Book Request', [], ['main', 'libraryUsers']);
+        // TODO: Use Form Input components
+        $this->view('Home/bookRequest', 'Book Request', [], ['form']);
     }
 
     public function bookCatalogue()
     {
-        $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['main', 'libraryUsers']);
+        // TODO: Use table component and Pagination components
+        $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['table']);
     }
-    public function addcomplaint()
+    public function addComplaint()
     {
-        $this->view('Home/Addcomplaint', 'Complaint Form',$data=[],['main','form']);
+        // TODO: Use Form Input components
+        $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','form']);
     }
 
     public function requestbook()
     {
+        // TODO: Use Form Input components
         $this->view('Home/Requestbook','Book Request', [], ['main', 'libraryUsers']);
-    }
-
-    public function bookcatalog()
-    {
-        $this->view('Home/Bookcatalog');
     }
 }

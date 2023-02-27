@@ -55,6 +55,8 @@
   display: inline-block;
   border-radius: 5px;
   cursor: pointer;
+  max-height: 2rem;
+  align-self: center;
 }
 
 /* LEFT CONTENT */

@@ -39,15 +39,15 @@ class Login extends Controller
                 }
             }
         }
-        $this->view('Login/index', 'Login', $data);
+        $this->view('Login/index', 'Login', $data,['login']);
     }
 
     public function passwordReset()
     {
-        $this->view('Login/passwordReset', 'Reset Password');
+        $this->view('Login/passwordReset', 'Reset Password',[],['login']);
     }
 
-    public function Logout($redir = 'Home/index')
+    public function Logout($redirect = 'Home/index')
     {
         if (isset($_SESSION['login'])) {
             unset($_SESSION['login']);
@@ -61,6 +61,6 @@ class Login extends Controller
             unset($_SESSION['name']);
         }
 
-        header("location:$redir");
+        header("location:$redirect");
     }
 }

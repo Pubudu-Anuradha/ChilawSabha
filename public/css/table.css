@@ -1,21 +1,24 @@
 /* Table Styles */
 
-.btn-column{
+.btn-column {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   gap: 10px;
 }
-table, td, th {
+
+table,
+td,
+th {
   border: 1px solid;
   padding: 10px;
 }
 
-th{
+th {
   background-color: var(--lightblue);
 }
 
-td{
+td {
   background-color: var(--fadedblue);
 }
 
@@ -23,43 +26,46 @@ table {
   border-collapse: collapse;
 }
 
-table, tr, td, th{
+table,
+tr,
+td,
+th {
   border: none;
 }
 
-tr{
-  border-bottom:1px solid var(--grey);
+tr {
+  border-bottom: 1px solid var(--grey);
 }
 
 
-thead > tr > th:first-child{
+thead>tr>th:first-child {
   border-top-left-radius: 10px;
 }
 
-thead > tr > th:last-child{
+thead>tr>th:last-child {
   border-top-right-radius: 10px;
 }
 
-tbody > tr:last-child > td:first-child{
+tbody>tr:last-child>td:first-child {
   border-bottom-left-radius: 10px;
 }
 
-tbody > tr:last-child > td:last-child{
-  border-bottom-right-radius: 10px!important;
+tbody>tr:last-child>td:last-child {
+  border-bottom-right-radius: 10px !important;
 }
 
-tbody > tr:last-child{
+tbody>tr:last-child {
   border: none;
 }
 
-.content-table{
+.content-table {
   display: flex;
   justify-content: center;
   overflow: auto;
   width: 80%;
 }
 
-.btn{
+.btn {
   border: none;
   padding: .5rem 1rem;
   text-align: center;
@@ -73,39 +79,42 @@ tbody > tr:last-child{
   transition: 200ms ease-in-out;
 }
 
-.btn:hover{
+.btn:hover {
   transform: scale(1.1);
 }
 
-.delist::before{
+.delist::before {
   content: "␡";
 }
 
-.edit::before{
-  content: "✍";
+.edit::before {
+  content: "📝";
 }
 
-.lost::before{
+.lost::before {
   content: "?";
 }
 
-.view::before{
+.view::before {
   content: "👁";
 }
 
-.enable::before{
+.enable::before {
   content: "✓";
 }
-@media screen and (max-width:767px){
-  .content-table{
+
+@media screen and (max-width:767px) {
+  .content-table {
     display: block;
   }
-.btn{
-  padding: .25rem .5rem;
+
+  .btn {
+    padding: .25rem .5rem;
+  }
 }
-}
-@media screen and (max-width:259px){
-  .btn{
+
+@media screen and (max-width:259px) {
+  .btn {
     padding: .125rem .25rem;
   }
 }

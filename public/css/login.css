@@ -1,0 +1,126 @@
+/* login and password reset styles */
+.login-form,
+.password-reset-form {
+  padding-top: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-img,
+.pw-reset-img {
+  height: 2.5rem;
+}
+
+.login-form-content,
+.password-reset-form-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--lightblue);
+  border-radius: 10px;
+  padding: 2.5rem;
+}
+
+.login-title,
+.pw-reset-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-field,
+.pw-reset-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  transition: all 200ms ease-in-out;
+}
+
+.field a {
+  text-decoration: none;
+  color: var(--lightblue);
+}
+
+.field input:not([type="submit"]) {
+  padding: 0.5rem;
+  background-color: var(--lightblue);
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+}
+
+.field select {
+  padding: 0.5rem 3rem;
+  background-color: var(--lightblue);
+  border: 1px solid var(--blue);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.field select>option {
+  color: var(--black);
+}
+
+.submit-btn {
+  padding: 0.5rem 3rem;
+  background-color: var(--lightblue);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  justify-self: end;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: var(--blue);
+}
+
+.reset-code-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.reset-code-btn {
+  padding: 0.2rem 1rem;
+  border-radius: 0 0 5px 5px;
+  background-color: var(--lightblue);
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.reset-code-btn:hover {
+  background-color: var(--blue);
+}
+
+.reset-code-field {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.submit-field {
+  justify-content: end;
+  align-items: center;
+}
+
+@media screen and (max-width: 767px) {
+  .field {
+    flex-direction: column;
+    gap: .2rem;
+    font-size: medium;
+  }
+
+  .login-form-content,
+  .password-reset-form-content,
+  .pw-reset-title,
+  .pw-reset-field,
+  .login-field,
+  .login-title {
+    width: 100%;
+  }
+}
