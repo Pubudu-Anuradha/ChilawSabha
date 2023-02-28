@@ -13,7 +13,6 @@ class Slideshow{
 
         </div>
 
-        <!-- Function to load slideshow -->
         <script>
 
         let index = 0;
@@ -40,7 +39,7 @@ class Slideshow{
             image.src = images[index];
         }
 
-        slideshow(["<?=URLROOT . "/public/assets/sabha1.jpg"?>","<?=URLROOT . "/public/assets/sabha2.jpg"?>"]);
+        slideshow(<?=json_encode($images)?>);
 
         </script>
 
