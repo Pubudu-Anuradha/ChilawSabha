@@ -12,12 +12,6 @@ class Controller
         return new $model();
     }
 
-    public function pdf()
-    {
-        require_once 'app/TCPDF/TCPDF-main/tcpdf.php';
-        return new TCPDF();
-    }
-
     //Render a defined view and pass the data provided by the caller
     public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = [])
     {
