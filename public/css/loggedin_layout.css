@@ -77,8 +77,10 @@ body {
 }
 .items{
   width: 100%;
-  cursor: pointer;
-}.items a{
+  cursor: pointer;  
+}
+
+.items a{
   display: flex;
   align-items: center;
   gap: 1rem;

@@ -29,6 +29,7 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Publisher</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
@@ -37,36 +38,67 @@
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
+
                 </tr>
                 <tr>
                     <td>A45</td>
                     <td>Atomic Habits</td>
                     <td>James Clear</td>
                     <td>Penguin Random</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>A45</td>
                     <td>Atomic Habits</td>
                     <td>James Clear</td>
                     <td>Penguin Random</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>A45</td>
                     <td>Atomic Habits</td>
                     <td>James Clear</td>
                     <td>Penguin Random</td>
+                    <td>
+                        <div class="action-btn-set">
+                            <button class="btn recondition">Reconditioned</button>
+                        </div>
+                    </td>
                 </tr>
                
             </table>

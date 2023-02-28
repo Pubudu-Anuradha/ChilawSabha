@@ -57,7 +57,7 @@
                     <div class="fine">
                         <h4>Fine Amount : </h4>
                         <div class="fine-val">
-                            <img src="<?= URLROOT . '/public/assets/fine.png' ?>" class="fine-img" alt="fine img">
+                            <img src="#" class="fine-img" alt="fine img">
                             <h4> Rs. 0.00 </h4>
                         </div>
 

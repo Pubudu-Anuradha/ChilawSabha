@@ -199,4 +199,23 @@
     outline: none;
   }
 
+  .changeOrder-bar button{
+    cursor: move;
+    background-color: var(--lightblue);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  }
+
+  .changeOrder-bar button:hover{
+    transform: scale(1.2);
+  }
+  
+  .draggable{
+    cursor: move;
+  }
+  .draggable.dragging{
+    opacity: 0.5;
+  }
+
   

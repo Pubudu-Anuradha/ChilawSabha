@@ -1,4 +1,3 @@
-<?php require_once 'Sidebar.php' ?>
 <div class="content">
     <div class="head-area">
     <h1>NEW BOOK REQUEST</h1>

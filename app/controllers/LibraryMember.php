@@ -23,7 +23,19 @@ class LibraryMember extends Controller
 
     public function planToRead()
     {
-        $this->view('LibraryMember/planToRead', 'Plan to Read List', [], ['main', 'libraryUsers']);
+        $model = $this->model('PlanToReadModel');
+        //adding to db
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            unset($_SERVER['HTTP_X_REQUESTED_WITH']);
+            $order = 1;
+            foreach ($_POST as $val) {
+                $model->updatePlanToReadBooks($order, $val);
+                $order++;
+            }
+        }
+        else{
+            $this->view('LibraryMember/planToRead', 'Plan to Read List', ['PlantoRead' => $model->getPlanToReadBooks()], ['main', 'LibraryMember/something','Components/table']);
+        }
     }
 
     public function favourite()
