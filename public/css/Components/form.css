@@ -4,7 +4,7 @@
   margin: 3rem auto;
   padding: 1rem;
   border-radius: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .fullForm {
@@ -13,7 +13,8 @@
   font-size: 1rem;
 }
 
-select, textarea {
+select,
+textarea {
   -ms-box-sizing: content-box;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
@@ -36,18 +37,13 @@ select, textarea {
   box-sizing: border-box;
 }
 
-.inputDiv
-  input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not(
-    [type="file"]
-  ):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not(
-    [type="tel"]
-  ):not([type="search"]):not([type="time"]),
+.inputDiv input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .inputDiv select,
 .inputDiv textarea {
   width: calc(100% - 2rem);
 }
 
-input[type=file]{
+input[type=file] {
   width: calc(100% - 2rem);
 }
 
@@ -64,7 +60,7 @@ input[type=search],
 input[type=time],
 input[type=file],
 select,
-textarea{
+textarea {
   padding: 0.5rem;
   background-color: var(--lightblue);
   border-radius: 0.5rem;
@@ -74,7 +70,7 @@ textarea{
 .checkboxInputs,
 .radiobuttonInputs {
   display: grid;
-  gap:.2rem 1rem;
+  gap: .2rem 1rem;
   grid-template-columns: fit-content(20%) auto;
 }
 
@@ -96,10 +92,29 @@ input[type=submit] {
   margin: 1rem;
   padding: 1rem 1.5rem;
 }
-.submitButton >  input:hover{
+
+.submitButton>input:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
-label{
+
+label {
   font-size: medium;
+}
+
+textarea {
+  resize: vertical;
+}
+
+@media screen and (max-width: 767px) {
+  .fullForm {
+    display: block;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+  }
+
+  .inputfield {
+    display: flex;
+    flex-direction: column;
+  }
 }

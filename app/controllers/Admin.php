@@ -24,26 +24,26 @@ class Admin extends Controller
                     $this->validateInputs($_POST, [
                         'email', 'name', 'password', 'address', 'contact_no', 'nic', 'role',
                     ], 'Add')
-                ) : false], ['main', 'form']);
+                ) : false], ['Components/form']);
                 break;
             case 'Edit':
                 $this->view('Admin/User/Edit', 'Edit User', ['edit' => isset($_POST['Edit']) ? $model->editStaff($id, $this->validateInputs($_POST, [
                     'email', 'name', 'address', 'contact_no',
-                ], 'Edit')) : null, 'staff' => $id != null ? $model->getStaffbyID($id) : false], ['main', 'form']);
+                ], 'Edit')) : null, 'staff' => $id != null ? $model->getStaffbyID($id) : false], ['Components/form']);
                 break;
             case 'Enable':
                 $id != null ? $model->changestate($id, 'working') : false;
-                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['main', 'table', 'posts']);
+                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
                 break;
             case 'Disabled':
-                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['main', 'table', 'posts']);
+                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
                 break;
             case 'Disable':
                 $id != null ? $model->changestate($id, 'disabled') : false;
-                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['main', 'table', 'posts']);
+                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['Components/table', 'posts']);
                 break;
             default:
-                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['main', 'table', 'posts']);
+                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['Components/table', 'posts']);
         }
     }
     public function Announcements($page = 'index', $id = null)
@@ -55,18 +55,18 @@ class Admin extends Controller
                 $this->view('Admin/Announcements/Add', 'Add Announcement',
                     ['Add' => isset($_POST['Add']) ? $model->addAnnouncement($this->validateInputs($_POST, [
                         'title', 'category', 'shortdesc', 'author', 'content',
-                    ], 'Add')) : null], ['main', 'form']);
+                    ], 'Add')) : null], ['Components/form']);
                 break;
             case 'Edit':
                 $this->view('Admin/Announcements/Edit', 'Edit Announcement', ['edit' => isset($_POST['Edit']) ? $model->editAnnouncement($id, $this->validateInputs($_POST, [
                     'title', 'content', 'category', 'shortdesc', 'author',
-                ], 'Edit')) : null, 'announcement' => $id != null ? $model->getAnnouncement($id) : false], ['main', 'form']);
+                ], 'Edit')) : null, 'announcement' => $id != null ? $model->getAnnouncement($id) : false], ['Components/form']);
                 break;
             case 'View':
-                $this->view('Admin/Announcements/View', 'View Announcement', ['announcement' => $id != null ? $model->getAnnouncement($id) : false], ['main', 'table', 'posts']);
+                $this->view('Admin/Announcements/View', 'View Announcement', ['announcement' => $id != null ? $model->getAnnouncement($id) : false], ['Components/table', 'posts']);
                 break;
             default:
-                $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements()], ['main', 'table', 'posts']);
+                $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements()], ['Components/table', 'posts']);
         }
     }
     public function Services($page = 'index')
@@ -74,7 +74,7 @@ class Admin extends Controller
         $model = $this->model('ServiceModel');
         switch ($page) {
             default:
-                $this->view('Admin/Services/index', 'Manage Announcements', ['services' => []], ['main', 'table', 'posts']);
+                $this->view('Admin/Services/index', 'Manage Announcements', ['services' => []], ['Components/table', 'posts']);
         }
     }
     public function Projects($page = 'index')
@@ -82,7 +82,7 @@ class Admin extends Controller
         $model = $this->model('ProjectModel');
         switch ($page) {
             default:
-                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => []], ['main', 'table', 'posts']);
+                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => []], ['Components/table', 'posts']);
         }
     }
     public function Events($page = 'index')
@@ -90,7 +90,7 @@ class Admin extends Controller
         $model = $this->model('EventModel');
         switch ($page) {
             default:
-                $this->view('Admin/Events/index', 'Manage Events', ['events' => []], ['main', 'table', 'posts']);
+                $this->view('Admin/Events/index', 'Manage Events', ['events' => []], ['Components/table', 'posts']);
         }
     }
 }
