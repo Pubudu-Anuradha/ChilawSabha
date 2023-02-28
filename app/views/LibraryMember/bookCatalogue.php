@@ -1,4 +1,3 @@
-<?php require_once 'Sidebar.php' ?>
 <div class="content">
     <div class="bookcatalog">
         <div class="head-area">

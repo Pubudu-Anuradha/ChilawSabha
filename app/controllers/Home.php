@@ -21,7 +21,7 @@ class Home extends Controller
     public function portal()
     {
         // TODO: Add Pictures of Library
-        $this->view('Home/portal', 'Library Portal',styles:['Home/portal','slideshow']);
+        $this->view('Home/portal', 'Library Portal',styles:['Home/portal','Components/slideshow']);
     }
 
     public function bookRequest()

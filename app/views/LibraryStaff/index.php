@@ -27,7 +27,7 @@
                         <input type="text" name="acc2" id="acc2">
                     </div>
                     <div class="field lend-confirm">
-                        <button type="button" class="lend-confirm-btn submit-btn" onclick="openModal()">Lend</button>
+                        <button type="button" class="btn lend-confirm-btn submit-btn" onclick="openModal()">Lend</button>
                         <div id="myModal" class="modal">
                             <div class="modal-content">
                                 <div class="close-section"><span class="close" onclick="closeModal()">&times;</span></div>
@@ -57,13 +57,13 @@
                     <div class="fine">
                         <h4>Fine Amount : </h4>
                         <div class="fine-val">
-                            <img src="<?= URLROOT . '/public/assets/fine.png' ?>" class="fine-img" alt="fine img">
+                            <img src="#" class="fine-img" alt="fine img">
                             <h4> Rs. 0.00 </h4>
                         </div>
 
                     </div>
                     <div class="extend-due-date">
-                        <input type="submit" name="Submit" value="Extend Due Date" class="submit-btn extend-btn">
+                        <input type="submit" name="Submit" value="Extend Due Date" class="btn submit-btn extend-btn">
                     </div>
                 </div>
                 <div class="recieve-book-table">
@@ -101,7 +101,7 @@
                     </table>
                 </div>
                 <div class="recieve-confirm">
-                    <input type="submit" name="Submit" value="Confirm" class="submit-btn recieve-btn">
+                    <input type="submit" name="Submit" value="Confirm" class="btn submit-btn recieve-btn">
                 </div>
             </div>
         </div>
