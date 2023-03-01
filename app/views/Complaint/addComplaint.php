@@ -6,6 +6,7 @@
         <h2>
             Complaint Form <hr class="hr1">
         </h2>
+        <!-- <?php var_dump($data); ?> -->
         <div class="formContainer">
             <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
             <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
@@ -75,7 +76,7 @@
 
             <div class="submitButtonContainer">
                 <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
+                    <input name="submit" type="submit" id="submit" value="Submit">
                 </div>
             </div>
             </form>
