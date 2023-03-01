@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="damaged-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>

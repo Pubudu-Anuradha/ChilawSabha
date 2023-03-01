@@ -37,16 +37,25 @@
                 </div>
                 <div class="status">
                     <div>
-                       <h4 class="books-return-stat">Lend Status : </h4>
-                        <h4 class="fine-stat">Fine Status : </h4>
-                        <h4 class="lost-stat">Books Lost : </h4>
-                         <h4 class="damaged-stat">Books Damaged : </h4>
+                        <h2>USER STATISTICS</h2>
                     </div>
-                    <div>
-                        <h4> Books to be returned</h4>
-                        <h4> Rs. 00 00 </h4>         
-                        <h4> 2</h4>
-                        <h4> 3</h4>
+                    <div class="status-content">
+                        <div>
+                            <h4>Lend Status : </h4>
+                            <div class="status-dot"></div>
+                        </div>
+                        <div>
+                            <h4 >Fine Status : </h4>
+                            <h4 class="green"> Rs. 00 00 </h4> 
+                        </div>
+                        <div>
+                            <h4 >Books Lost : </h4>
+                            <h4 class="red"> 2</h4>
+                        </div>
+                        <div>
+                            <h4>Books Damaged : </h4>
+                            <h4 class="red"> 3</h4>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,14 +63,12 @@
         <div class="recieve-book">
             <div class="recieve-book-title">
                 <h2>RECIEVE A BOOK</h2>
-                <div class="recieve-submition">
-                    <div class="extend-due-date">
-                        <input type="submit" name="Submit" value="Extend Due Date" class="btn submit-btn extend-btn">
-                    </div>
+                <div class="extend-due-date">
+                    <input type="submit" name="Submit" value="Extend Due Date" class="btn bg-lightblue white">
                 </div>
             </div>
             <div class="recieve-book-content">
-                <div class="recieve-book-table">
+                <div class="content-table">
                     <table>
                         <thead>
                             <tr>
@@ -81,8 +88,8 @@
                             <td>J.K. Rowling</td>
                             <td>Animus Kiado</td>
                             <td>12/04/2023</td>
-                            <td class="damagedcheck"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
-                            <td class="recievedcheck"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
+                            <td class="check"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
+                            <td class="check"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
                         </tr>
                         <tr>
                             <td>A45</td>
@@ -90,14 +97,14 @@
                             <td>James Clear</td>
                             <td>Penguin Random</td>
                             <td>21/05/2023</td>
-                            <td class="damagedcheck"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
-                            <td class="recievedcheck"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
+                            <td class="check"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
+                            <td class="check"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
                         </tr>
                     </table>
                 </div>
                 <div class="recieve-submition">
                     <div class="recieve-confirm">
-                        <input type="submit" name="Submit" value="Confirm" class="btn submit-btn recieve-btn">
+                        <input type="submit" name="Submit" value="Confirm" class="btn bg-green white">
                     </div>
                 </div>
 

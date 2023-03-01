@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="lostbook-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>

@@ -59,17 +59,6 @@
   color: var(--black);
 }
 
-.book-catalog-table,
-.book-request-table,
-.lostbook-table,
-.delist-table,
-.damaged-table,
-.library-user-table,
-.library-disabled-user-table {
-  display: flex;
-  justify-content: center;
-}
-
 .action-btn-set {
   display: flex;
   gap: 1rem;

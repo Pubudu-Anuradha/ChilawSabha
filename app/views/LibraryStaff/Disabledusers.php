@@ -9,7 +9,7 @@
                 </button>
             </div>
         </div>
-        <div class="library-disabled-user-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>

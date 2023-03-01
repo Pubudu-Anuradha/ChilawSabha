@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="book-request-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>

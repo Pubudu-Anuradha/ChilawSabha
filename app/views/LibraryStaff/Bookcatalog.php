@@ -25,7 +25,7 @@
             </div>
 
         </div>
-        <div class="book-catalog-table">
+        <div class="content-table">
             <table id="catalog">
                 <thead>
                     <tr>
