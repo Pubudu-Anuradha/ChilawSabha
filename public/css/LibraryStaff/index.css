@@ -1,15 +1,27 @@
 /* library staff dashboard styles */
-.dashboard {
+.page {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 80%;
 }
 
-.dashboard h4,
-h2 {
+.page h4,h2 {
   margin: 0;
 }
+
+.topic {
+  border-bottom: 1px solid var(--black);
+  line-height: 2;
+}
+
+.title {
+  border-bottom: 1px solid var(--black);
+  line-height: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .content-title-search {
   display: flex;
 }
@@ -124,7 +136,7 @@ h2 {
 }
 
 .lend-form {
-  flex-grow: 2;
+  flex-grow: 1;
   background-color: var(--fadedblue);
   border-radius: 10px;
   display: flex;

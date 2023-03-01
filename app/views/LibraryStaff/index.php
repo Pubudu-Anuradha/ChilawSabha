@@ -1,5 +1,5 @@
 <div class="content">
-    <div class="dashboard">
+    <div class="page">
         <div class="lend-book">
             <div class="content-title-search usr-search">
                 <input type="text" name="search" placeholder=" Search User" id="search">
@@ -22,14 +22,14 @@
                         <input type="text" name="acc2" id="acc2">
                     </div>
                     <div class="lend-confirm">
-                        <button type="button" class="btn lend-confirm-btn submit-btn" onclick="openModal()">Lend</button>
+                        <button type="button" class="btn white bg-blue" onclick="openModal()">Lend</button>
                         <div id="myModal" class="modal">
                             <div class="modal-content">
                                 <div class="close-section"><span class="close" onclick="closeModal()">&times;</span></div>
                                 <div class="model-text"><p>Are You Sure?</p></div>
                                 <div class="popup-btn">
-                                    <button class="btn bg-green" onclick="closeModal()">Confirm</button>
-                                    <button class="btn bg-red" onclick="closeModal()">Close</button>
+                                    <button class="btn bg-green white" onclick="closeModal()">Confirm</button>
+                                    <button class="btn bg-red white" onclick="closeModal()">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
             <div class="recieve-book-title">
                 <h2>RECIEVE A BOOK</h2>
                 <div class="extend-due-date">
-                    <input type="submit" name="Submit" value="Extend Due Date" class="btn bg-lightblue white">
+                    <input type="submit" name="Submit" value="Extend Due Date" class="btn bg-blue white">
                 </div>
             </div>
             <div class="recieve-book-content">

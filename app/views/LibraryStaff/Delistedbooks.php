@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="delistbooks">
-        <div class="delist-book-title">
+    <div class="page">
+        <div class="title">
             <h2>De-Listed Books</h2>
             <div class="delist-sub-title">
                 <div class="content-title-category">

@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="lostbooks">
-        <div class="lost-book-title">
+    <div class="page">
+        <div class="title">
             <h2>Lost Books</h2>
             <div class="lostbook-sub-title">
                 <div class="content-title-category">
@@ -40,7 +40,7 @@
                     <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -62,7 +62,7 @@
                     <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -73,7 +73,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -84,7 +84,7 @@
                     <td>Animus kiado</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -95,7 +95,7 @@
                     <td>Penguin Random</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>

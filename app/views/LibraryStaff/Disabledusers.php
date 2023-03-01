@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="libraryusers">
-        <div class="library-disabled-user-title">
+    <div class="page">
+        <div class="title">
             <h2>Disabled Users</h2>
             <div class="content-title-search">
                 <input type="text" name="search" placeholder=" Search" id="search">
@@ -28,7 +28,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -39,7 +39,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -50,7 +50,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -61,7 +61,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -72,7 +72,7 @@
                     <td>0756438989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -83,7 +83,7 @@
                     <td>0726568989</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>

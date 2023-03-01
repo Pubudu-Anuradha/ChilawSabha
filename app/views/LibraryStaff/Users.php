@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="libraryusers">
-        <div class="library-user-title">
+    <div class="page">
+        <div class="title">
             <h2>User Management</h2>
             <div class="content-title-search">
                 <input type="text" name="search" placeholder=" Search" id="search">
@@ -29,7 +29,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -41,7 +41,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -53,7 +53,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -77,7 +77,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -89,7 +89,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -101,7 +101,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -113,7 +113,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -125,7 +125,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -137,7 +137,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -149,7 +149,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -161,7 +161,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -173,7 +173,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>
@@ -185,7 +185,7 @@
                     <td>
                         <div class="action-btn-set">
                             <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
-                            <button class="btn disable">Disable</button>
+                            <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
                 </tr>

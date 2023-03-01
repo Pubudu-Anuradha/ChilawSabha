@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="bookrequest">
-        <div class="bookrequest-title">
+    <div class="page">
+        <div class="title">
             <h2>BOOK REQUESTS</h2>
             <div class="content-title-search">
                 <input type="text" name="search" placeholder=" Search" id="search">
@@ -31,8 +31,8 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>
@@ -44,8 +44,8 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>
@@ -57,8 +57,8 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>
@@ -70,8 +70,8 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>
@@ -83,8 +83,8 @@
                     <td>12/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>
@@ -96,8 +96,8 @@
                     <td>13/12/2022</td>
                     <td>
                         <div class="action-btn-set">
-                            <button class="btn add-book" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject">Reject</button>
+                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
+                            <button class="btn reject bg-red">Reject</button>
                         </div>
                     </td>
                 </tr>

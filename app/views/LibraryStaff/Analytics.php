@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="analytics">
-        <h2 class="analytics-topic">ANALYTICS</h2>
+    <div class="page">
+        <h2 class="topic">ANALYTICS</h2>
         <div class="chart-area">
             <div class="pie-chart">
                 <h3>Most Borrowed Categories</h3>
