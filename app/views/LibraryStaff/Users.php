@@ -27,8 +27,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -39,8 +39,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -51,8 +51,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -63,8 +63,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -75,8 +75,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -87,8 +87,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -99,8 +99,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -111,8 +111,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -123,8 +123,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -135,8 +135,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -147,8 +147,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -159,8 +159,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -171,8 +171,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>
@@ -183,8 +183,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn edit" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
+                        <div class="btn-column">
+                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editusers'?>'">Edit</button>
                             <button class="btn bg-red">Disable</button>
                         </div>
                     </td>

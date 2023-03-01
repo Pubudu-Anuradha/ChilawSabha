@@ -2,7 +2,7 @@
     <div class="page">
         <div class="title">
             <h2>De-Listed Books</h2>
-            <div class="delist-sub-title">
+            <div class="sub-title">
                 <div class="content-title-category">
                 <select name="categoryFill">
                     <option value="Null">Choose Category</option>

@@ -1,4 +1,3 @@
-/* library staff dashboard styles */
 .page {
   display: flex;
   flex-direction: column;
@@ -19,6 +18,12 @@
   line-height: 2;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.sub-title {
+  display: flex;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -66,7 +71,6 @@
   padding: 1rem 2rem;
 }
 
-
 .usr-search {
   margin: 0.5rem;
 }
@@ -97,12 +101,6 @@
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-}
-
-.recieve-book-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 .status {
@@ -167,23 +165,23 @@
   justify-content: end;
 }
 
-.recieve-book-table {
+.mark-damaged{
   display: flex;
-  justify-content: center;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
 }
 
 .check{
   text-align: center;
-
 }
 
-.check input{
+.check input,.mark-damaged input[type=checkbox]{
   width: 1.5rem;
   height: 1.5rem;
+}
+
+.mark-damaged input[type=submit]:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }

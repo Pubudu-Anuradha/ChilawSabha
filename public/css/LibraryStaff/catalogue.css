@@ -1,13 +1,3 @@
-/* Book catalog page style library staff  */
-.catalog-sub-title,
-.lostbook-sub-title,
-.delist-sub-title,
-.damaged-sub-title {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
 .content-title-category select {
   padding: 6px 16px;
   border: 1px solid var(--grey);
@@ -18,12 +8,6 @@
 
 .content-title-category select>option {
   color: var(--black);
-}
-
-.action-btn-set {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
 }
 
 .pagination-bar {

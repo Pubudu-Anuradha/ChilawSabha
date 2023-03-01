@@ -30,7 +30,7 @@
                     <td>For education purpose</td>
                     <td>12/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>
@@ -43,7 +43,7 @@
                     <td>Popular Release</td>
                     <td>13/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>
@@ -56,7 +56,7 @@
                     <td>For education purpose</td>
                     <td>12/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>
@@ -69,7 +69,7 @@
                     <td>Popular Release</td>
                     <td>13/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>
@@ -82,7 +82,7 @@
                     <td>For education purpose</td>
                     <td>12/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>
@@ -95,7 +95,7 @@
                     <td>Popular Release</td>
                     <td>13/12/2022</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
                             <button class="btn reject bg-red">Reject</button>
                         </div>

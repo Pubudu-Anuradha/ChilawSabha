@@ -5,7 +5,7 @@
             $page_title = "BOOK CATALOGUE";
             echo '<h2>' . $page_title . '</h2>';
             ?>  
-            <div class="catalog-sub-title">  
+            <div class="sub-title">  
                 <input type="button" onclick="generate('#catalog','<?php echo $page_title ?>',4)" value="Export To PDF" class="btn bg-green"/>
                 <div class="content-title-category">
                     <select name="categoryFill">
@@ -43,7 +43,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus Kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -56,7 +56,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -69,7 +69,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus Kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -82,7 +82,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -95,7 +95,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus Kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -108,7 +108,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>
@@ -121,7 +121,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus Kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
                             <button class="btn lost bg-red">Lost</button>
                             <button class="btn delist bg-orange">Delist</button>

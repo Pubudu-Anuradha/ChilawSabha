@@ -63,7 +63,7 @@ class LibraryStaff extends Controller
     public function addusers()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Addusers',styles:['LibraryStaff/index','LibraryStaff/adduser','Components/form']);
+        $this->view('LibraryStaff/Addusers',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function addbooks()

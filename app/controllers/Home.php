@@ -33,7 +33,7 @@ class Home extends Controller
     public function bookCatalogue()
     {
         // TODO: Use table component and Pagination components
-        $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['table']);
+        $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['LibraryStaff/catalogue','LibraryStaff/index','Home/portal','Components/table']);
     }
     public function addComplaint()
     {

@@ -2,7 +2,7 @@
     <div class="page">
         <div class="title">
             <h2>Damaged Books</h2>
-            <div class="damaged-sub-title">
+            <div class="sub-title">
                 <div class="content-title-category">
                 <select name="categoryFill">
                     <option value="Null">Choose Category</option>
@@ -39,7 +39,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>
@@ -51,7 +51,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>
@@ -62,7 +62,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>
@@ -73,7 +73,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>
@@ -84,7 +84,7 @@
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>
@@ -95,7 +95,7 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn bg-green white">Reconditioned</button>
                         </div>
                     </td>

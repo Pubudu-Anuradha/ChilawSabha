@@ -27,7 +27,7 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
@@ -38,7 +38,7 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
@@ -49,7 +49,7 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
@@ -60,7 +60,7 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
@@ -71,7 +71,7 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
@@ -82,7 +82,7 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
+                        <div class="btn-column">
                             <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>

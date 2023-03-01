@@ -53,8 +53,11 @@
                 <input type="text" name="recmethod" id="recmethod" maxlength="255" required>
             </div>
             <div class="submitButtonContainer">
-                <label for="markdamaged">Mark As Damaged</label><input type="checkbox" name="damagedcheck" id="damagedcheck">
-                <input type="submit" name="Submit" value="Confirm" class="submit-btn">
+                <div class="mark-damaged">
+                    <label for="markdamaged">Mark As Damaged</label>
+                    <input type="checkbox" name="damagedcheck" id="damagedcheck">
+                    <input type="submit" name="Submit" value="Confirm">
+                </div>
             </div>
         </form>
     </div>
