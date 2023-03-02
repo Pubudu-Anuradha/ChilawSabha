@@ -13,7 +13,7 @@ class Controller
     }
 
     //Render a defined view and pass the data provided by the caller
-    public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = ['main'])
+    public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = [])
     {
         if($this->logged_in_user){
             array_push($styles,'loggedin_layout');

@@ -1,8 +1,8 @@
 <div class="content">
-    <div class="delistbooks">
-        <div class="delist-book-title">
+    <div class="page">
+        <div class="title">
             <h2>De-Listed Books</h2>
-            <div class="delist-sub-title">
+            <div class="sub-title">
                 <div class="content-title-category">
                 <select name="categoryFill">
                     <option value="Null">Choose Category</option>
@@ -21,14 +21,16 @@
             </div>
         </div>
 
-        <div class="delist-table">
+        <div class="content-table">
             <table>
-                <tr>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                    </tr>
+                </thead>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>

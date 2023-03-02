@@ -1,3 +1,12 @@
+<?php
+$eventstat = $data['EventStat'];
+foreach ($eventstat['result'] as $evestat):
+    $views[] = $evestat['views'];
+    $names[] = $evestat['name'];
+endforeach;
+// var_dump($names);
+?>
+
 <div class="content admin-analytics">
 <div class="admin-dashboard">
     <h2 class="analytics-topic">Dashboard</h2>
@@ -51,208 +60,76 @@
 </div>
 
 <script>
+    window.onload = vBarChart(<?php echo json_encode($views); ?>,<?php echo json_encode($names); ?>,'most-viewed-events');
+    window.onload = vBarChart(<?php echo json_encode($views); ?>,<?php echo json_encode($names); ?>,'most-viewed-services');
+    window.onload = vBarChart(<?php echo json_encode($views); ?>,<?php echo json_encode($names); ?>,'most-viewed-projects');
+    window.onload = vBarChart(<?php echo json_encode($views); ?>,<?php echo json_encode($names); ?>,'most-viewed-announcements');
 
-    var eventValues = ["E01", "E02", "E03","E04"];
-    var servValues = ["S01", "S02", "S03","S04"];
-    var projValues = ["P01", "P02", "P03","P04"];
-    var annValues = ["A01", "A02", "A03","A04"];
-    var yValues = [80, 49, 44,60];
-    var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+    function vBarChart(yval,xval,id){
+      var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB","lightblue"];
+      // Setup Block
+      const data = {
+        labels: xval,
+        datasets: [
+          {
+            label: "Dataset",
+            backgroundColor: barColors,
+            data: yval,
+            borderWidth: 2,
+            borderRadius:25,
+            borderSkipped: false,
+          }
+        ]
+      };
 
-        new Chart("most-viewed-events", {
-        type: "bar",
-        data: {
-          labels: eventValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          // For bar charts
-          scales: {
-            x: {
-              border: {
-                display: false,
+      // Config Block
+      const config = {
+          type: "bar",
+          data,
+          options: {
+            // For bar charts
+            scales: {
+              x: {
+                border: {
+                  display: false,
+                },
+                grid: {
+                  display: false
+                }
               },
-              grid: {
+              y: {
                 display: false
               }
             },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
-            }
-          }
-        }
-    });
-
-    new Chart("most-viewed-services", {
-        type: "bar",
-        data: {
-          labels: servValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          // For bar charts
-          scales: {
-            x: {
-              border: {
+            // for horizontol or vertical bar
+            indexAxis: 'x',
+            plugins:{
+              legend: {
                 display: false,
+                position: 'right',
+                labels: {
+                  boxWidth: 15
+                }
               },
-              grid: {
-                display: false
-              }
-            },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
-            }
-          }
-        }
-    });
-
-    new Chart("most-viewed-projects", {
-        type: "bar",
-        data: {
-          labels: projValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          // For bar charts
-          scales: {
-            x: {
-              border: {
+              title: {
                 display: false,
-              },
-              grid: {
-                display: false
+                text: "Vertical Bar Chart Test",
+                position: "bottom"
               }
-            },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
             }
           }
-        }
-    });
+      };
 
-    new Chart("most-viewed-announcements", {
-        type: "bar",
-        data: {
-          labels: annValues,
-          datasets: [
-            {
-              label: "Dataset",
-              backgroundColor: barColors,
-              data: yValues,
-              borderWidth: 2,
-              borderRadius:25,
-              borderSkipped: false,
-            }
-          ]
-        },
-        options: {
-          // For bar charts
-          scales: {
-            x: {
-              border: {
-                display: false,
-              },
-              grid: {
-                display: false
-              }
-            },
-            y: {
-              display: false
-            }
-          },
-          // for horizontol or vertical bar
-          indexAxis: 'x',
-          plugins:{
-            legend: {
-              display: false,
-              position: 'right',
-              labels: {
-                boxWidth: 15
-              }
-            },
-            title: {
-              display: false,
-              text: "Vertical Bar Chart Test",
-              position: "bottom"
-            }
-          }
-        }
-    });
+      if (id === 'complaint-in-month') {
+        config.options.responsive = true;
+        config.options.maintainAspectRatio = false;
+      }
+
+      // Render Block
+      const chart = new Chart(
+        document.getElementById(id),
+        config
+      );
+    }
 
 </script>

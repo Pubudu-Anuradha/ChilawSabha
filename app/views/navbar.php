@@ -1,4 +1,10 @@
 <div class="navbar">
+    <input type="checkbox" name="anonymous" id="hamburger-trigger">
+    <div class="lines">
+        <span class="line1"></span>
+        <span class="line2"></span>
+        <span class="line3"></span>
+    </div>
     <div class="navbar-items">
         <ul>
             <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
@@ -7,13 +13,6 @@
                     <?php foreach(['Financial','Government','Tender'] as $category):?>
                         <li onclick='window.location.href="<?=URLROOT . "/Posts/Announcements?category=$category"?>"'><?= $category ?></li>
                     <?php endforeach; ?>
-                </ul>
-            </li>
-            <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a>
-                <ul class="dropdown-content">
-                    <li>Forms</li>
-                    <li>Tender Notices</li>
-                    <li>Gazettes</li>
                 </ul>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Events</a>
@@ -37,6 +36,7 @@
                     <li>Kindergardens</li>
                 </ul>
             </li>
+            <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
         </ul>
         <ul class="login-list">

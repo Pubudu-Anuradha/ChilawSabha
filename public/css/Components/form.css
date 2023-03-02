@@ -4,7 +4,7 @@
   margin: 3rem auto;
   padding: 1rem;
   border-radius: 1rem;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .fullForm {
@@ -13,7 +13,8 @@
   font-size: 1rem;
 }
 
-select, textarea {
+select,
+textarea {
   -ms-box-sizing: content-box;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
@@ -32,18 +33,17 @@ select, textarea {
   padding: 0.5rem;
 }
 
-.input-wrapper{
+.input-wrapper {
   box-sizing: border-box;
 }
 
-.input-wrapper 
-  input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not(
-    [type="file"]
-  ):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not(
-    [type="tel"]
-  ):not([type="search"]):not([type="time"]),
+.input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
 .input-wrapper textarea {
+  width: calc(100% - 2rem);
+}
+
+input[type=file] {
   width: calc(100% - 2rem);
 }
 
@@ -60,9 +60,11 @@ input[type=search],
 input[type=time],
 input[type=file],
 select,
-textarea{
+textarea {
   padding: 0.75rem;
   background-color: var(--fadedblue);
+  /* padding: 0.5rem;
+  background-color: var(--lightblue); */
   border-radius: 0.5rem;
   border: none;
   box-shadow: 4px 4px 5px 0px var(--grey);
@@ -81,7 +83,7 @@ input[type=search]:focus,
 input[type=time]:focus,
 input[type=file]:focus,
 select:focus,
-textarea:focus{
+textarea:focus {
   transform: scale(1.01);
   outline: none;
 }
@@ -89,7 +91,7 @@ textarea:focus{
 .checkboxInputs,
 .radiobuttonInputs {
   display: grid;
-  gap:.2rem 1rem;
+  gap: .2rem 1rem;
   grid-template-columns: fit-content(20%) auto;
 }
 
@@ -111,12 +113,13 @@ input[type=submit] {
   margin: 1rem;
   padding: 1rem 1.5rem;
 }
-.submitButton >  input:hover{
+
+.submitButton>input:hover {
   transform: scale(1.1);
   cursor: pointer;
 }
 
-input + span {
+input+span {
   display: flex;
   position: relative;
   justify-content: center;
@@ -137,3 +140,23 @@ input:valid + span::after {
   content: "✓";
   color: var(--green);
 } */
+label {
+  font-size: medium;
+}
+
+textarea {
+  resize: vertical;
+}
+
+@media screen and (max-width: 767px) {
+  .fullForm {
+    display: block;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+  }
+
+  .inputfield {
+    display: flex;
+    flex-direction: column;
+  }
+}

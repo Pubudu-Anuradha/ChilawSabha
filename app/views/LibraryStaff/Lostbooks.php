@@ -1,8 +1,8 @@
 <div class="content">
-    <div class="lostbooks">
-        <div class="lost-book-title">
+    <div class="page">
+        <div class="title">
             <h2>Lost Books</h2>
-            <div class="lostbook-sub-title">
+            <div class="sub-title">
                 <div class="content-title-category">
                 <select name="categoryFill">
                     <option value="Null">Choose Category</option>
@@ -21,24 +21,26 @@
             </div>
         </div>
 
-        <div class="lostbook-table">
+        <div class="content-table">
             <table>
-                <tr>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                    <th>Action</th>
+                <thead>
+                    <tr>
+                        <th>Accession No</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-                </tr>
                 <tr>
                     <td>P305</td>
                     <td>Harry Poter</td>
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -48,8 +50,8 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -59,8 +61,8 @@
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -70,8 +72,8 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -81,8 +83,8 @@
                     <td>J.K. Rowling</td>
                     <td>Animus kiado</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>
@@ -92,8 +94,8 @@
                     <td>James Clear</td>
                     <td>Penguin Random</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn found">Found</button>
+                        <div class="btn-column">
+                            <button class="btn found bg-green">Found</button>
                         </div>
                     </td>
                 </tr>

@@ -1,8 +1,9 @@
 <div class="content">
-    <h1>
-        User Management
-    </h1>
-    <hr>
+    <?php
+          $page_title = "User Management";
+          echo '<h2 class="analytics-topic">'. $page_title . '</h2>';
+    ?>
+    <!-- <hr> -->
     <?php
     $table = $data['Users'];
     $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','Complaint'=>'Complaint Handler'];
@@ -37,7 +38,7 @@
     </div>
 
     <div class="content-table">
-        <table>
+        <table id="pdf">
             <thead>
                 <tr>
                     <th>Email</th>
@@ -114,4 +115,48 @@
         </div>
     </div>
     </form>
+
+    <input type="button" onclick="generate('#pdf','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
+
 </div>
+
+<script>
+    function generate(id,title,num_of_cloumns) {
+        var doc = new jsPDF('p', 'pt', 'a4');
+
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
+
+        var x = (doc . internal . pageSize . width - txtwidth) / 2;
+
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for(let i=0; i<num_of_cloumns; i++){
+            columns.push(i);
+        }
+
+
+        doc.autoTable({
+            html: id,
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
+</script>

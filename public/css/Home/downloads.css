@@ -1,0 +1,56 @@
+/* styles for download page */
+.download-page {
+  margin-top: 1.5rem;
+  overflow: auto;
+}
+
+.download-page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 90%;
+}
+
+.download-topic {
+  border-bottom: 1px solid var(--black);
+  line-height: 2;
+}
+
+.download-accordin {
+  width: 100%;
+  cursor: pointer;
+  padding: 1rem 1rem;
+  background-color: var(--lightblue);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.download-accordin:hover {
+  background-color: var(--blue);
+}
+
+.panel {
+  width: 100%;
+  padding: 1rem 1rem;
+  background-color: #ffffff;
+  display: none;
+}
+
+.panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.panel ul>li {
+  padding: 0.4rem;
+}
+
+.download-page a {
+  text-decoration: none;
+  color: var(--black);
+}

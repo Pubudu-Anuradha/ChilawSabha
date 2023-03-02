@@ -4,3 +4,4 @@ downloads/*
 !downloads/placeholder.txt
 confidential/Admin/*
 !confidential/Admin/placeholder.txt
+vendor/
