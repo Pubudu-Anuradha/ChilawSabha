@@ -110,6 +110,11 @@
   border-bottom-left-radius: 10px;
 }
 
+.search-box {
+  width: max-content;
+  position: relative;
+}
+
 .search:valid~span:after,
 .search:invalid~span:after {
   box-sizing: border-box;

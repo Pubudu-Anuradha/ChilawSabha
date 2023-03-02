@@ -107,18 +107,18 @@ class Model
         }
     }
 
-    protected function selectPaginated($table, $columns = '*', $conditions = '')
+    protected function selectPaginated($table, $columns = '*', $conditions = '',$page_name='page',$page_size_name = 'size')
     {
         $row_count = $this->select($table, 'COUNT(*) as recordCount', $conditions);
         $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
 
-        // $page is set from pagenumber and size set on $_GET
+        // $page is set from page number and size set on $_GET
         $page = [0, 10];
-        if (isset($_GET['page']) && $_GET['page'] > 0) {
-            $page[0] = (int) $_GET['page'];
+        if (isset($_GET[$page_name]) && $_GET[$page_name] > 0) {
+            $page[0] = (int) $_GET[$page_name];
         }
-        if (isset($_GET['size']) && $_GET['size'] > 10) {
-            $page[1] = (int) $_GET['size'];
+        if (isset($_GET[$page_size_name]) && $_GET[$page_size_name] > 10) {
+            $page[1] = (int) $_GET[$page_size_name];
         }
         // Convert page number to offset
         $page[0] *= $page[1];

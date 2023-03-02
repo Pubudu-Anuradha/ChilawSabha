@@ -75,10 +75,15 @@ tbody>tr:last-child {
   font-weight: 600;
   font-size: medium;
   transition: 200ms ease-in-out;
+  width: max-content;
 }
 
 .btn:hover {
   transform: scale(1.1);
+}
+
+.btn::before {
+  margin-right: 5px;
 }
 
 .delist::before {
