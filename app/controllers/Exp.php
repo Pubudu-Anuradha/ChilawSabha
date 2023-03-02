@@ -1,4 +1,5 @@
 <?php class Exp extends Controller{
+  // EXAMPLE ONLY. DELETE WHEN DONE
   public function index()
   {
     $model = $this->model('ExpModel');
