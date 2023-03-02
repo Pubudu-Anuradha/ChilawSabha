@@ -3,8 +3,8 @@
 .btn-column {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 10px;
+  justify-content: center;
+  gap: 1rem;
 }
 
 table,
@@ -70,8 +70,6 @@ tbody>tr:last-child {
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
-  color: #000;
-  color: var(--black);
   display: inline-block;
   border-radius: 5px;
   font-weight: 600;

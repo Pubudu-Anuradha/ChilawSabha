@@ -1,6 +1,6 @@
 <div class="content">
-    <div class="libraryusers">
-        <div class="library-disabled-user-title">
+    <div class="page">
+        <div class="title">
             <h2>Disabled Users</h2>
             <div class="content-title-search">
                 <input type="text" name="search" placeholder=" Search" id="search">
@@ -9,7 +9,7 @@
                 </button>
             </div>
         </div>
-        <div class="library-disabled-user-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>
@@ -27,8 +27,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -38,8 +38,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -49,8 +49,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -60,8 +60,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -71,8 +71,8 @@
                     <td>nimal@gmail.com</td>
                     <td>0756438989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>
@@ -82,8 +82,8 @@
                     <td>sadun@gmail.com</td>
                     <td>0726568989</td>
                     <td>
-                        <div class="action-btn-set">
-                            <button class="btn enable">Enable</button>
+                        <div class="btn-column">
+                            <button class="btn enable bg-green">Enable</button>
                         </div>
                     </td>
                 </tr>

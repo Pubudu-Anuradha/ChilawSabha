@@ -45,7 +45,7 @@
             </div>
         </div>
         <!-- TODO: Make Contact Cards instead of a table -->
-        <div class="contact-table">
+        <div class="content-table">
             <table>
                 <thead>
                     <tr>

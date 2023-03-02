@@ -15,7 +15,7 @@ class LibraryStaff extends Controller
 
     public function analytics()
     {
-        $this->view('LibraryStaff/Analytics',styles:['LibraryStaff/analytics']);
+        $this->view('LibraryStaff/Analytics',styles:['LibraryStaff/index','LibraryStaff/analytics']);
     }
     
     public function bookcatalog()
@@ -27,13 +27,13 @@ class LibraryStaff extends Controller
     public function bookrequest()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Bookrequest',styles:['LibraryStaff/index','LibraryStaff/request','LibraryStaff/catalogue','Components/table']);
+        $this->view('LibraryStaff/Bookrequest',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function lostbooks()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Lostbooks',styles:['LibraryStaff/index','LibraryStaff/lost','LibraryStaff/catalogue','Components/table']);
+        $this->view('LibraryStaff/Lostbooks',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function delistedbooks()
@@ -63,24 +63,24 @@ class LibraryStaff extends Controller
     public function addusers()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Addusers',styles:['LibraryStaff/index','LibraryStaff/adduser','Components/form']);
+        $this->view('LibraryStaff/Addusers',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function addbooks()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Addbooks',styles:['LibraryStaff/analytics','LibraryStaff/addbook','Components/form']);
+        $this->view('LibraryStaff/Addbooks',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function editbooks()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Editbooks');
+        $this->view('LibraryStaff/Editbooks',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function editusers()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Editusers');
+        $this->view('LibraryStaff/Editusers',styles:['LibraryStaff/index','Components/form']);
     }
 }

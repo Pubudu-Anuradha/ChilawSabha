@@ -1,52 +1,3 @@
-/* Book catalog page style library staff  */
-.bookcatalog,
-.bookrequest,
-.lostbooks,
-.delistbooks,
-.damagedbooks,
-.libraryusers,
-.bookform,
-.adduserform {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 80%;
-}
-
-.bookcatalog h2,
-.bookrequest h2,
-.lostbooks h2,
-.delistbooks h2,
-.damagedbooks h2,
-.libraryusers h2,
-.bookform h2,
-.adduserform h2 {
-  margin: 0;
-}
-
-.bookcatalog-title,
-.bookrequest-title,
-.lost-book-title,
-.delist-book-title,
-.damaged-book-title,
-.library-user-title,
-.library-disabled-user-title {
-  border-bottom: 1px solid var(--black);
-  line-height: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.catalog-sub-title,
-.lostbook-sub-title,
-.delist-sub-title,
-.damaged-sub-title {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
 .content-title-category select {
   padding: 6px 16px;
   border: 1px solid var(--grey);
@@ -57,44 +8,6 @@
 
 .content-title-category select>option {
   color: var(--black);
-}
-
-.book-catalog-table,
-.book-request-table,
-.lostbook-table,
-.delist-table,
-.damaged-table,
-.library-user-table,
-.library-disabled-user-table {
-  display: flex;
-  justify-content: center;
-}
-
-.action-btn-set {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.edit {
-  background-color: var(--yellow);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-
-.lost {
-  background-color: var(--red);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-
-.delist {
-  background-color: var(--orange);
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-}
-
-.edit:hover,
-.lost:hover,
-.delist:hover {
-  transform: scale(1.1);
 }
 
 .pagination-bar {

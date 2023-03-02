@@ -1,11 +1,23 @@
 /* Library Portal related styles*/
 .head-area h1 {
   font-weight: 300;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .head-area hr {
   margin-bottom: 2rem;
+}
+
+.sub-head-area{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lower-content{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .portal-main {
