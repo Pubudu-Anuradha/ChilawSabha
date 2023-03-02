@@ -32,22 +32,18 @@ select, textarea {
   padding: 0.5rem;
 }
 
-.inputDiv {
+.input-wrapper{
   box-sizing: border-box;
 }
 
-.inputDiv
+.input-wrapper 
   input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not(
     [type="file"]
   ):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not(
     [type="tel"]
   ):not([type="search"]):not([type="time"]),
-.inputDiv select,
-.inputDiv textarea {
-  width: calc(100% - 2rem);
-}
-
-input[type=file]{
+.input-wrapper select,
+.input-wrapper textarea {
   width: calc(100% - 2rem);
 }
 
@@ -127,7 +123,7 @@ input + span {
   padding: 0.2rem;
 }
 
-input:invalid {
+/* input:invalid {
   border-bottom: 2px solid var(--red);
   box-shadow: 4px 2px 5px 0px var(--grey);
 }
@@ -140,4 +136,4 @@ input:invalid + span::after {
 input:valid + span::after {
   content: "✓";
   color: var(--green);
-}
+} */

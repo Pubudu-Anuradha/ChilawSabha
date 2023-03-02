@@ -5,7 +5,11 @@ Text::email('Enter your Email','email','email-id', 'email-in', 'Enter your email
 
 Text::password('Enter your password','password','password-id','password-in','Please Enter your password here',"(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})", 'current-password');
 
-Text::textarea('Enter your message','message','message-id','message-in','Please Enter your message here','Saman Kumara is okay');
+Text::textarea('Enter your message','message','message-id','message-in','Please Enter your message here','Saman Kumara is okay', 10, 30, true);
+
+Time::date('Enter your date','date','maxdate-id','maxdate-in','date', date("Y-m-d"), NULL, true);
+
+Time::date('Enter your date','date','mindate-id','mindate-in','date', NULL, date("Y-m-d"), true);
 
 Group::select('Select your word','selection',[
     'a'=>'Apple',
