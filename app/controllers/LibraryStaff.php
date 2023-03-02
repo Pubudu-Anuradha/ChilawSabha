@@ -9,66 +9,78 @@ class LibraryStaff extends Controller
 
     public function index()
     {
-        $this->view('LibraryStaff/index');
+        // TODO: USE COMPONENTS AND REDO
+        $this->view('LibraryStaff/index',styles:['LibraryStaff/index','Components/modal' ,'Components/table']);
     }
 
     public function analytics()
     {
-        $this->view('LibraryStaff/Analytics');
+        $this->view('LibraryStaff/Analytics',styles:['LibraryStaff/index','LibraryStaff/analytics']);
     }
     
     public function bookcatalog()
     {
-        $this->view('LibraryStaff/Bookcatalog');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Bookcatalog',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function bookrequest()
     {
-        $this->view('LibraryStaff/Bookrequest');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Bookrequest',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function lostbooks()
     {
-        $this->view('LibraryStaff/Lostbooks');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Lostbooks',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function delistedbooks()
     {
-        $this->view('LibraryStaff/Delistedbooks');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Delistedbooks',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function damagedbooks()
     {
-        $this->view('LibraryStaff/Damagedbooks');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Damagedbooks',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function users()
     {
-        $this->view('LibraryStaff/Users');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Users',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function disabledusers()
     {
-        $this->view('LibraryStaff/Disabledusers');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Disabledusers',styles:['LibraryStaff/index','LibraryStaff/catalogue','Components/table']);
     }
 
     public function addusers()
     {
-        $this->view('LibraryStaff/Addusers');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Addusers',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function addbooks()
     {
-        $this->view('LibraryStaff/Addbooks');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Addbooks',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function editbooks()
     {
-        $this->view('LibraryStaff/Editbooks');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Editbooks',styles:['LibraryStaff/index','Components/form']);
     }
 
     public function editusers()
     {
-        $this->view('LibraryStaff/Editusers');
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Editusers',styles:['LibraryStaff/index','Components/form']);
     }
 }

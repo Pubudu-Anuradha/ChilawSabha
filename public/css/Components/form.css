@@ -1,0 +1,162 @@
+.formContainer {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 3rem auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-x: auto;
+}
+
+.fullForm {
+  display: grid;
+  padding: 1rem 4rem;
+  font-size: 1rem;
+}
+
+select,
+textarea {
+  -ms-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.input-field label {
+  margin: auto 0;
+  text-align: left;
+}
+
+.input-field {
+  display: grid;
+  grid-template-columns: 20fr 50fr 2fr;
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+.input-wrapper {
+  box-sizing: border-box;
+}
+
+.input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
+.input-wrapper select,
+.input-wrapper textarea {
+  width: calc(100% - 2rem);
+}
+
+input[type=file] {
+  width: calc(100% - 2rem);
+}
+
+input[type=text],
+input[type=password],
+input[type=checkbox],
+input[type=radio],
+input[type=date],
+input[type=datetime-local],
+input[type=email],
+input[type=number],
+input[type=tel],
+input[type=search],
+input[type=time],
+input[type=file],
+select,
+textarea {
+  padding: 0.75rem;
+  background-color: var(--fadedblue);
+  /* padding: 0.5rem;
+  background-color: var(--lightblue); */
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 4px 4px 5px 0px var(--grey);
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=checkbox]:focus,
+input[type=radio]:focus,
+input[type=date]:focus,
+input[type=datetime-local]:focus,
+input[type=email]:focus,
+input[type=number]:focus,
+input[type=tel]:focus,
+input[type=search]:focus,
+input[type=time]:focus,
+input[type=file]:focus,
+select:focus,
+textarea:focus {
+  transform: scale(1.01);
+  outline: none;
+}
+
+.checkboxInputs,
+.radiobuttonInputs {
+  display: grid;
+  gap: .2rem 1rem;
+  grid-template-columns: fit-content(20%) auto;
+}
+
+.submitButtonContainer {
+  margin: 1rem;
+  padding: 1rem;
+  text-align: right;
+}
+
+.submitButton {
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: var(--lightblue);
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.submitButton>input:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+input+span {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding: 0.2rem;
+}
+
+/* input:invalid {
+  border-bottom: 2px solid var(--red);
+  box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+input:invalid + span::after {
+  content: "✖";
+  color: var(--red);
+}
+
+input:valid + span::after {
+  content: "✓";
+  color: var(--green);
+} */
+label {
+  font-size: medium;
+}
+
+textarea {
+  resize: vertical;
+}
+
+@media screen and (max-width: 767px) {
+  .fullForm {
+    display: block;
+    padding: 1rem 1rem;
+    font-size: 1rem;
+  }
+
+  .inputfield {
+    display: flex;
+    flex-direction: column;
+  }
+}

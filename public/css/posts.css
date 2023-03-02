@@ -1,6 +1,3 @@
-*:not(.footer) {
-  transition: 200ms ease-in-out;
-}
 .posts {
   display: flex;
   display: flex;
@@ -9,6 +6,7 @@
   gap: 1rem;
   align-items: center;
 }
+
 .post {
   padding: 0.5rem;
   background-color: var(--fadedblue);
@@ -16,63 +14,80 @@
   width: 100%;
   border-radius: 10px;
 }
+
 .shadow {
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
 }
+
 .post .title {
   font-size: larger;
   display: inline;
 }
+
 .post .title a {
   text-decoration: none;
   color: var(--black);
   text-decoration: underline;
 }
+
 .post hr {
   color: var(--grey);
 }
+
 .post .shortdesc {
   color: var(--grey);
   padding: 0.5rem 0;
 }
+
 .details {
   display: flex;
   gap: 1rem;
 }
+
 .details .author {
   float: left;
   margin-right: auto;
 }
+
 .details .date {
   float: right;
 }
+
 .details .category {
   float: right;
 }
+
 .details .date::before {
   content: "🗓";
 }
+
 .details .category::before {
   content: "🏷";
 }
+
 .details .author::before {
   content: "🖋";
 }
+
 .cat-title {
   font-size: xx-large;
 }
+
 .filters {
   margin: 1.5rem 0;
   width: 80%;
 }
+
 .filters form {
   display: flex;
   gap: 30px;
   justify-content: space-evenly;
 }
+
 .filters form {
   font-size: 1.1rem;
 }
+
 .filters form input,
 .filters form select,
 .page-size select,
@@ -82,22 +97,26 @@
   padding: 0 10px;
   font-size: 1.1rem;
 }
+
 .filters form select,
 .page-size select,
 .page-nos select {
   border-radius: 10px;
   background-color: #fff;
 }
+
 .search {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-.search-box{
+
+.search-box {
   width: max-content;
   position: relative;
 }
-.search:valid ~ span:after,
-.search:invalid ~ span:after {
+
+.search:valid~span:after,
+.search:invalid~span:after {
   box-sizing: border-box;
   content: "🔍";
   position: absolute;
@@ -112,6 +131,7 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .page-nav {
   display: flex;
   justify-content: space-evenly;
@@ -129,36 +149,7 @@
   border-radius: 50%;
   position: relative;
 }
-/* .first::after {
-  position: absolute;
-  font-size: 30px;
-  top: -10px;
-  bottom: -10px;
-  right: 7.5px;
-  content: "«";
-}
-.prev::after {
-  position: absolute;
-  font-size: 15px;
-  right: 7.5px;
-  top: 2.5px;
-  content: "❮";
-}
-.next::after {
-  position: absolute;
-  font-size: 15px;
-  right: 7.5px;
-  top: 2.5px;
-  content: "❯";
-}
-.last::after {
-  position: absolute;
-  font-size: 30px;
-  top: -10px;
-  bottom: -10px;
-  right: 7.5px;
-  content: "»";
-} */
+
 .page-nos,
 .page-size {
   display: inline-flex;
@@ -166,6 +157,7 @@
   gap: 0.5rem;
   font-size: 1.1rem;
 }
+
 .page-nav {
   margin: 2rem 0;
 }
@@ -175,36 +167,43 @@
   justify-content: center;
   margin: 1rem 0;
 }
+
 .slideshow {
   width: 60%;
   aspect-ratio: 16/9;
 }
+
 .attachments {
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .attachments .heading {
   font-size: large;
   border-bottom: 1px solid var(--grey);
   width: 90%;
 }
+
 .attachments .links {
   display: grid;
   width: 90%;
   grid-template-areas: "a a a a";
   grid-gap: 1rem;
 }
+
 .attachments .links a {
   text-decoration: none;
 }
+
 .attachments .links a::before {
   content: "🗎";
   text-decoration: none;
 }
 
 @media screen and (max-width: 767px) {
+
   /* WHEN SCREEN IS NARROWER THAN 768px */
   .attachments .links {
     grid-template-areas: "a a a";
@@ -212,6 +211,7 @@
 }
 
 @media screen and (max-width: 259px) {
+
   /* WHEN SCREEN IS NARROWER THAN LOGO */
   .attachments .links {
     grid-template-areas: "a";
