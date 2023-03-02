@@ -270,7 +270,7 @@ body {
   padding-inline-start: 0;
 }
 
-.navbar-items ut:not(.login-list) {
+.navbar-items ul:not(.login-list) {
   overflow-x: auto;
 }
 
