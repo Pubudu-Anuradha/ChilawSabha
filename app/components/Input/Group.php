@@ -6,7 +6,7 @@ class Group {
     // ['value'=>'displayName']
   ){
     $id = $id ? $id : $name;?>
-  <div class="inputfield">
+  <div class="input-field">
     <label for="<?= $id ?>"><?= $title ?></label>
     <select name="<?= $name ?>"
             <?=$id ? 'id="' . $id . '"' : ''?>
@@ -31,7 +31,7 @@ class Group {
   ){
     if(is_null($type)) throw new Exception("Invalid Group rendering call", 1);
   ?>
-  <div class="inputfield">
+  <div class="input-field">
     <label for="<?=$name?>"><?=$title?></label>
     <div class="option-set">
       <?php $i = 1;

@@ -5,7 +5,7 @@ class Other{
     public static function number(
         $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL
     ) { ?>
-    <div class="inputfield">
+    <div class="input-field">
         <label for="<?= $id ?>">
             <?= $title ?>    
         </label>
@@ -27,7 +27,7 @@ class Other{
     public static function submit(
         $name, $id = null, $class = null,$value=NULL,$disabled=false
     ) { ?>
-    <div class="inputfield">
+    <div class="input-field">
         <input type="submit" 
             name="<?=$name?>"
             <?=$id ? "id=\"$id\"" : ''?>

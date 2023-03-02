@@ -4,7 +4,7 @@ class Files{
     $title,$name, $id = null, $required=true,$accept = NULL,$multiple = true
   ){ 
     $id = $id ? $id : $name;?>
-  <div class="inputfield file-upload">
+  <div class="input-field file-upload">
     <label for="<?= $id ?>">
       <?= $title ?>
     </label>
