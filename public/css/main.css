@@ -270,10 +270,6 @@ body {
   padding-inline-start: 0;
 }
 
-.navbar-items ul:not(.login-list) {
-  overflow-x: auto;
-}
-
 .navbar-items ul.login-list {
   gap: 1rem;
 }
