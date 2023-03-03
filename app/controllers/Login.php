@@ -168,6 +168,7 @@ class Login extends Controller
                         </html>
                     ";
                     $this->send($_POST['forgot-email'], 'Password Reset', $content);
+                    echo ($userCreds['result'][0]. "     " . $resetCode . "     " . $resetTime);
                     $model->setResetCode($userCreds['result'][0], [$resetCode, $resetTime]);
                     
                 }else if($userCreds['nodata']) {
