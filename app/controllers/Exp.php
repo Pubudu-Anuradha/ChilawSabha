@@ -19,10 +19,11 @@
               ]);
             break;
           case 'add':
-            $validated = $this->validateInputs($reqJSON,['name','address','age'],'add');
-            if($validated)
-            $this->returnJSON($model->addRecord($validated));
-            else $this->returnJSON($reqJSON);
+            $validated = $this->validateInputs($reqJSON,['name|l255','address|l255','age|i[10:20]','time','test|?','test1|l[1:]','test2|?|l[:100]','test2|?|l[1:100]',],'add');
+            // if(!$validated['error'])
+            // $this->returnJSON($model->addRecord($validated));
+            // else $this->returnJSON($reqJSON);
+            $this->returnJSON($validated);
             break;
           case 'update':
             if(!is_null($id)){

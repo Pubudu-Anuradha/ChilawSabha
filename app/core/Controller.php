@@ -49,24 +49,83 @@ class Controller
             unset($data[$submitMethod]);
         }
         $validated = [];
-        foreach ($fields as $field) {
-            if (isset($data[$field]) && !empty($data[$field])) {
-                // Add fields with non empty value to validated array
-                $validated[$field] = $data[$field];
-                unset($data[$field]); // remove the field from original array
-            } else {
-                // false if either field isn't set or value is empty
-                return false;
+        $errors = [];
+
+        $set_error = function($name,$value) use(&$errors){
+            if(!isset($errors[$name])){
+                $errors[$name] = [$value];
+            }else{
+                $errors[$name][] = $value;
             }
+        };
+        
+        foreach ($fields as $field) {
+            $options = explode('|',$field);
+            $field = $options[0];
+            unset($options[0]);
+
+            // ? can be used to say a field is allowed to be empty
+            $can_be_empty = array_search('?',$options);
+            if($can_be_empty === false){
+                if(!isset($data[$field])){
+                    $set_error('missing',$field);
+                    continue;
+                }else if(empty($data[$field])){
+                    $set_error('empty',$field);
+                    continue;
+                }
+            }else{
+                unset($options[$can_be_empty]);
+            }
+
+            $number_rules = preg_grep('/^[i|d]\[\d*:\d*\]$/',$options);
+            print_r($number_rules);
+            foreach($number_rules as $rule){
+                try{
+                    $val = $rule[0] == 'i' ? intval($data[$field]):doubleval($data[$field]); 
+                    [$min,$max] = explode(':',ltrim(rtrim($rule,']'),'id['));
+                    // echo "$val :: [$min:$max]\n";
+                    if(!empty($min)){
+                        $min = $rule[0] == 'i' ? intval($min):doubleval($min);
+                        if($val < $min){
+                            $set_error('min',$field);
+                            continue;
+                        }
+                    }
+                    if(!empty($max)){
+                        $max = $rule[0] == 'i' ? intval($max):doubleval($max);
+                        if($val > $max){
+                            $set_error('max',$field);
+                            continue;
+                        }
+                    }
+                    // echo "$val :: [$min:$max]\n";
+                } catch (Exception $e){
+                    $set_error('number',$field);
+                }
+            }
+
+            $validated[$field] = $data[$field];
+            // if (isset($data[$field])) {
+            //     // Add fields with non empty value to validated array
+            //     $validated[$field] = $data[$field] . "$field";
+            //     unset($data[$field]); // remove the field from original array
+            // } else {
+            //     // false if either field isn't set or value is empty
+            //     return false;
+            // }
         }
 
-        if ($data) {
-            // False if more data is left on $data
-            return false;
-        }
+        // if ($data) {
+        //     // False if more data is left on $data
+        //     return false;
+        // }
 
         // return the valid data
-        return $validated;
+        // return $validated;
+        return [
+            $validated,$errors
+        ];
     }
 
     public function returnJSON(array $var)

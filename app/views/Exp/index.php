@@ -36,9 +36,10 @@ Table::Table(['id' => 'ID', 'name' => 'Name', 'address' => 'Address', 'age' => '
       },
       body: JSON.stringify(form)
       }).then(result => result.json()).then(response =>{
-        if(response.success == true){
-          window.location.reload();
-        }
+        consol.log(JSON.stringify(response));
+        // if(response.success == true){
+        //   window.location.reload();
+        // }
       }).catch(e => console.log(e))
   })
 
