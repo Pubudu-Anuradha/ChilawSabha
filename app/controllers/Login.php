@@ -51,8 +51,6 @@ class Login extends Controller
             if(isset($_POST['forgot-email'])){
                 $model = $this->model('LoginModel');
                 $userCreds = $model->getUserCredentials($_POST['forgot-email']);
-                echo($userCreds);
-
                 if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
                     $resetCode = rand(100000,999999);
                     $resetTimeFormat = mktime(
@@ -60,7 +58,7 @@ class Login extends Controller
                     );
                     $resetTime = date('Y-m-d H:i:s', $resetTimeFormat);
 
-                    $content = "
+                    $content = `
                         <!DOCTYPE html>
                         <html lang='en'>
                         
@@ -69,8 +67,8 @@ class Login extends Controller
                             <meta http-equiv='X-UA-Compatible' content='IE=edge' />
                             <meta name='viewport' content='width=device-width, initial-scale=1.0' />
                             <title>Password Reset</title>
-                            <?php foreach (\$styles as \$style) { ?>
-                                <link rel='stylesheet' href=\"<?= URLROOT . '/public/css/' . \$style ?>.css\">
+                            <?php foreach ($styles as $style) { ?>
+                                <link rel='stylesheet' href="<?= URLROOT . '/public/css/' . $style ?>.css">
                             <?php } ?>
                             <style>
                                 * {
@@ -166,10 +164,12 @@ class Login extends Controller
                             </div>
                         </body>
                         </html>
-                    ";
-                    //Email::send($_POST['forgot-email'], 'Password Reset', $content);
-                    Email::send('$_POST["forgot-email"]', 'Password Reset', $content);
-                    $model->setResetCode('users', [$resetCode, $resetTime]);
+                    `;
+                    ?>
+                    <?= $resetCode." ".$resetTime." ".$_POST["forgot-email"] ?>
+                    <?php
+                    $model->setResetCode($_POST['forgot-email'], ['resetCode'=>$resetCode, 'resetTime'=>$resetTime] , $_POST['forgot-email']);
+                    Email::send($_POST['forgot-email'], 'Password Reset', $content);
                     
                 }else if($userCreds['nodata']) {
                     $data['nouser'] = 'No User found with that email';
