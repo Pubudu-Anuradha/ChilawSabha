@@ -2,7 +2,6 @@
 
 class Login extends Controller
 {
-    use Email;
     public function index()
     {
         $data = [];

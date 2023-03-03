@@ -8,7 +8,7 @@ require_once 'vendor/phpmailer/phpmailer/src/Exception.php';
 require_once 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require_once 'vendor/phpmailer/phpmailer/src/SMTP.php';
 
-trait Email{
+class Email{
     private static string $Host     = "smtp.gmail.com";
     private static string $Username = "chlawpsproject@gmail.com";
     private static string $Password = "ksbslwlvdbghcbmp";
