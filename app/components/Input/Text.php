@@ -11,12 +11,12 @@ class Text
             <?= $title ?>    
         </label>
         <div class="input-wrapper">
-            <input type="<?= $type ? $type : 'text'?>" 
-                name="<?=$name?>"
-                id="<?=$id?>"
+            <input <?= $type ? "type= \"$type\" " : 'text'?>
+                name="<?=$name?> "
+                id="<?=$id?> "
                 <?=$class ? "class=\"$class\" " : ''?>
                 <?=$value ? "value=\"$value\" " : ''?>
-                <?="placeholder=\"$placeholder\" "?>
+                <?=$placeholder ? "placeholder=\"$placeholder\" " : ''?>
                 <?=$maxlength ? "maxlength=\"$maxlength\" " : ''?>
                 <?=$minlength ? "minlength=\"$minlength\" " : ''?>
                 <?=$pattern ? "pattern=\"$pattern\" " : ''?>
@@ -53,7 +53,7 @@ class Text
         </label>
         <div class="input-wrapper">
             <textarea 
-                name="<?=$name?>"
+                name="<?=$name?> "
                 <?=$id ? "id= \"$id\" " : ''?>
                 <?=$class ? "class= \"$class\" " : ''?>
                 <?=$placeholder ? "placeholder= \"$placeholder\" " : ''?>

@@ -4,17 +4,17 @@ class Files{
     $title,$name, $id = null, $required=true,$accept = NULL,$multiple = true
   ){ 
     $id = $id ? $id : $name;?>
-  <div class="inputfield file-upload">
+  <div class="input-field file-upload">
     <label for="<?= $id ?>">
       <?= $title ?>
     </label>
     <div class="file_upload">
-      <input type="file" 
-            name="<?= $name . $multiple?'[]':'' ?>"
-            id="<?= $id ?>"
-            <?= $accept?"accept=\"$accept\"":''?>
-            <?= $required?'required':''?>
-            <?= $multiple?'multiple':''?>
+      <input type="file " 
+            name="<?= $name . $multiple?'[] ':'' ?>"
+            id="<?= $id ?> "
+            <?= $accept?"accept= \"$accept\" ":''?>
+            <?= $required?'required ':''?>
+            <?= $multiple?'multiple ':''?>
       >
       <div class="previews"></div>
     </div>
