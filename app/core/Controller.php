@@ -16,7 +16,7 @@ class Controller
     public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = [])
     {
         if ($this->logged_in_user) {
-            array_push($styles, 'loggedin_layout');
+            array_push($styles, 'logged_in_layout');
         }
         require_once 'app/views/Header.php';
         if ($this->logged_in_user) {
@@ -26,12 +26,12 @@ class Controller
         require_once 'app/views/Footer.php';
     }
 
-    //Check authenitation for a role by seeing if session variables are set properly.
-    //If not, redirect to appropriate page using $redir parameter
-    public function authenticateRole($role, $redir = '/Home/')
+    //Check authentication for a role by seeing if session variables are set properly.
+    //If not, redirect to appropriate page using $redirect parameter
+    public function authenticateRole($role, $redirect = '/Home/')
     {
         if (!isset($_SESSION['login'])) {
-            header('location:' . URLROOT . $redir);
+            header('location:' . URLROOT . $redirect);
             die();
         } else if ($_SESSION['role'] != $role) {
             header('location:' . URLROOT . '/Other/Forbidden');
@@ -43,27 +43,45 @@ class Controller
 
     protected function validateInputs($data, $fields, $submitMethod = 'Submit')
     {
+        // Rules can be set in fields separated by '|' to do some basic validation here itself.
+        // Available rules are
+        // '?'          <- Optional(can be empty or not given)
+        // 'i[min:max]' <- Integer in inclusive range(values are both optional)
+        // 'd[min:max]' <- Same as above but using double
+        // 'l[min:max]' <- String length in inclusive range
+        // 'e'          <- Validate Email
         if (isset($data[$submitMethod])) {
             unset($data[$submitMethod]);
         }
         $validated = [];
         $errors = [];
 
-        $set_error = function ($name, $value) use (&$errors) {
+        $set_error = function ($name, $field) use (&$errors, &$data) {
             if (!isset($errors[$name])) {
-                $errors[$name] = [$value];
+                $errors[$name] = [$field];
             } else {
-                $errors[$name][] = $value;
+                $errors[$name][] = $field;
+            }
+            if (isset($data[$field])) {
+                unset($data[$field]);
+            }
+        };
+
+        $set_validated = function ($field) use (&$validated, &$data) {
+            if (isset($data[$field])) {
+                $validated[$field] = $data[$field];
+                unset($data[$field]);
+            } else {
+                throw new Exception("Trying to set a non existing value as validated", 1);
             }
         };
 
         foreach ($fields as $field) {
-            $options = explode('|', $field);
-            $field = $options[0];
-            unset($options[0]);
+            $rules = explode('|', $field);
+            $field = $rules[0];
+            unset($rules[0]);
 
-            // ? can be used to say a field is allowed to be empty
-            $can_be_empty = array_search('?', $options);
+            $can_be_empty = array_search('?', $rules);
             if ($can_be_empty === false) {
                 if (!isset($data[$field])) {
                     $set_error('missing', $field);
@@ -73,20 +91,22 @@ class Controller
                     continue;
                 }
             }
-            unset($options[$can_be_empty]);
-            if(!empty($data[$field])){
+            unset($rules[$can_be_empty]);
+            if (!empty($data[$field])) {
                 // Not empty, Checking rules.
                 // Rules follow the precedence order as set in this function.
                 // No need to worry about rule order when calling the function.
 
-                $number_range_rule = preg_grep('/^[i|d]\[\d*:\d*\]$/', $options);
-                if(count($number_range_rule) > 1){
+                $number_range_rule = preg_grep('/^[i|d]\[\d*:\d*\]$/', $rules) ?? false;
+                if ($number_range_rule !== false && count($number_range_rule) > 1) {
                     throw new Exception("Too Many number rules. Use Only one", 1);
-                }else if(count($number_range_rule) == 1){
+                } else if ($number_range_rule !== false && count($number_range_rule) == 0) {
                     try {
-                        $rule = $number_range_rule[0];
-                        $val = $rule[0] == 'i' ? intval($data[$field]) : doubleval($data[$field]);
-                        [$min, $max] = explode(':', ltrim(rtrim($rule, ']'), 'id['));
+                        $rule = $number_range_rule[0] ?? false;
+                        $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
+                        $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
+                        $min = $split[0] ?? '';
+                        $max = $split[1] ?? '';
                         if (!empty($min)) {
                             $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
                             if ($val < $min) {
@@ -101,7 +121,7 @@ class Controller
                                 continue;
                             }
                         }
-                        $validated[$field] = $val;
+                        $set_validated($field);
                         continue;
                     } catch (Exception $e) {
                         $set_error('number', $field);
@@ -109,15 +129,15 @@ class Controller
                     }
                 }
 
-                $string_length_rule = preg_grep('/^l\[\d*:\d*\]$/', $options);
-                if(count($string_length_rule) > 1){
+                $string_length_rule = preg_grep('/^l\[\d*:\d*\]$/', $rules);
+                if (count($string_length_rule) > 1) {
                     throw new Exception("Too Many String length rules. Use only one", 1);
-                }else if(count($string_length_rule)==1){
+                } else if (count($string_length_rule) == 1) {
                     try {
                         $rule = $string_length_rule[0];
                         $val = strlen($data[$field]);
                         [$min, $max] = explode(':', ltrim(rtrim($rule, ']'), 'l['));
-                        // echo "$val :: [$min:$max]\n";
+                        echo "$val :: [$min:$max]\n";
                         if (!empty($min)) {
                             $min = intval($min);
                             if ($val < $min) {
@@ -140,36 +160,35 @@ class Controller
 
                 }
 
-                $email_rule = array_search('e',$options);
-                if($email_rule !== false){
-                    if(!filter_var($data[$field],FILTER_VALIDATE_EMAIL)){
-                        $set_error('email',$field);
-                    }else{
-                        $validated[$field] = $data[$field];   
+                $email_rule = array_search('e', $rules);
+                if ($email_rule !== false) {
+                    if (!filter_var($data[$field], FILTER_VALIDATE_EMAIL)) {
+                        $set_error('email', $field);
+                    } else {
+                        $set_validated($field);
                     }
                     continue;
                 }
+                // TODO: Add more rules as required
 
+                // Rules ended. set field as valid
+                $set_validated($field);
+            } else {
+                // Set null if '?' rule is present and no value given
+                $validated[$field] = null;
+                if (isset($data[$field])) {
+                    unset($data[$field]);
+                }
             }
-
-            // $validated[$field] = $data[$field];
-            // if (isset($data[$field])) {
-            //     // Add fields with non empty value to validated array
-            //     $validated[$field] = $data[$field] . "$field";
-            //     unset($data[$field]); // remove the field from original array
-            // } else {
-            //     // false if either field isn't set or value is empty
-            //     return false;
-            // }
         }
 
-        // if ($data) {
-        //     // False if more data is left on $data
-        //     return false;
-        // }
+        if ($data) {
+            // Rules not defined for these fields
+            foreach ($data as $key => $value) {
+                $set_error('extra?', [$key => $value]);
+            }
+        }
 
-        // return the valid data
-        // return $validated;
         return [
             $validated, $errors,
         ];
