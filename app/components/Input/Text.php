@@ -39,9 +39,9 @@ class Text
     }
 
     public static function email(
-        $title,$name, $id, $class = null,$placeholder,$readonly=NULL
+        $title,$name, $id, $class = null,$placeholder,$pattern=NULL,$readonly=NULL
     ) { 
-        Text::text($title,$name,$id,$class,true,NULL, $placeholder,'email',100,5,$readonly,NULL,NULL,NULL);
+        Text::text($title,$name,$id,$class,true,NULL, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL,NULL);
     }
     
     public static function textarea(
