@@ -20,11 +20,20 @@ class Admin extends Controller
         $model = $this->model('StaffModel');
         switch ($page) {
             case 'Add':
-                $this->view('Admin/User/Add', 'Add a new User', ['Add' => isset($_POST['Add']) ? $model->addStaff(
-                    $this->validateInputs($_POST, [
-                        'email', 'name', 'password', 'address', 'contact_no', 'nic', 'role',
-                    ], 'Add')
-                ) : false], ['Components/form']);
+                if(isset($_POST['Add'])){
+                    [$valid,$err] = $this->validateInputs($_POST, [
+                            'email|e', 'name|l[:255]', 'password|l[:255]', 'address',
+                            'contact_no', 'nic', 'role',], 'Add');
+                    $this->view('Admin/User/Add', 'Add a new User',
+                                count($err) > 0 ? // Set data according to presence of errors
+                                    ['errors' => $err] :
+                                    ['Add' => $model->addStaff($valid)],
+                                ['Components/form']);
+                }else{
+                    $this->view('Admin/User/Add', 'Add a new User',
+                                [],
+                                ['Components/form']);
+                }
                 break;
             case 'Edit':
                 $this->view('Admin/User/Edit', 'Edit User', ['edit' => isset($_POST['Edit']) ? $model->editStaff($id, $this->validateInputs($_POST, [
