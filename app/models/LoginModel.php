@@ -5,14 +5,14 @@ class LoginModel extends Model
     {
         $email = mysqli_real_escape_string($this->conn,$email);
         return $this->select(
-            'user', 'name,password_hash,type', "email='$email'"
+            'users', 'name,password_hash,user_type', "email='$email'"
         );
     }
     public function getStaffRole($email)
     {
         $email = mysqli_real_escape_string($this->conn,$email);
         return $this->select(
-            'user u join staff s on u.user_id=s.user_id and u.type="Staff"', 's.Role as role', "u.email='$email'"
+            'users u join staff s on u.user_id=s.user_id and u.user_type=1 join staff_type t on s.staff_type=t.staff_type_id', 't.staff_type as role', "u.email='$email'"
         );
     }
 

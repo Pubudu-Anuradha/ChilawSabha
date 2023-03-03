@@ -19,7 +19,7 @@ class Login extends Controller
                         // Password matches stored hash.. Determining UserRole
                         // If not staff member, Default to LibraryMember
                         $role = 'LibraryMember';
-                        if($user['type']=='Staff'){
+                        if($user['user_type']==1){
                             $staffUser = $model->getStaffRole($_POST['email']); 
                             $role = $staffUser['result'][0]['role'];
                         }
@@ -47,10 +47,11 @@ class Login extends Controller
         $data = [];
         if(isset($_POST['Submit'])){
 
-        }elseif(isset($_POST['resetCode'])){
+        }else if(isset($_POST['resetCode'])){
             if(isset($_POST['forgot-email'])){
                 $model = $this->model('LoginModel');
                 $userCreds = $model->getUserCredentials($_POST['forgot-email']);
+                echo($userCreds);
 
                 if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
                     $resetCode = rand(100000,999999);
@@ -166,9 +167,9 @@ class Login extends Controller
                         </body>
                         </html>
                     ";
-                    $this->send($_POST['forgot-email'], 'Password Reset', $content);
-                    echo ($userCreds['result'][0]. "     " . $resetCode . "     " . $resetTime);
-                    $model->setResetCode($userCreds['result'][0], [$resetCode, $resetTime]);
+                    //Email::send($_POST['forgot-email'], 'Password Reset', $content);
+                    Email::send('$_POST["forgot-email"]', 'Password Reset', $content);
+                    $model->setResetCode('users', [$resetCode, $resetTime]);
                     
                 }else if($userCreds['nodata']) {
                     $data['nouser'] = 'No User found with that email';
