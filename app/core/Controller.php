@@ -68,4 +68,10 @@ class Controller
         // return the valid data
         return $validated;
     }
+
+    public function returnJSON(array $var)
+    {
+        header("Content-type: application/json");
+        echo json_encode($var);
+    }
 }
