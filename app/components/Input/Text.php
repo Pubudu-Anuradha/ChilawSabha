@@ -11,20 +11,20 @@ class Text
             <?= $title ?>    
         </label>
         <div class="input-wrapper">
-            <input <?= $type ? "type= \"$type\" " : 'text'?>
-                name="<?=$name?> "
-                id="<?=$id?> "
-                <?=$class ? "class=\"$class\" " : ''?>
-                <?=$value ? "value=\"$value\" " : ''?>
-                <?=$placeholder ? "placeholder=\"$placeholder\" " : ''?>
-                <?=$maxlength ? "maxlength=\"$maxlength\" " : ''?>
-                <?=$minlength ? "minlength=\"$minlength\" " : ''?>
-                <?=$pattern ? "pattern=\"$pattern\" " : ''?>
-                <?=$readonly ? "readonly=\"$readonly\" " : ''?>
-                <?=$spellcheck ? "spellcheck=\"$spellcheck\" " : ''?>
-                <?=$autocomplete ? "autocomplete=\"$autocomplete\" " : ''?>
-                <?=$required ? "required " : ''?>
-                <?=$disabled ? "disabled " : ''?>
+            <input <?= $type ? "type= \"$type\"" : 'text' ?>
+                name="<?= $name ?>"
+                id="<?= $id ?>"
+                <?= $class ? "class=\"$class\"" : '' ?>
+                <?= $value ? "value=\"$value\"" : '' ?>
+                <?= $placeholder ? "placeholder=\"$placeholder\"" : '' ?>
+                <?= $maxlength ? "maxlength=\"$maxlength\"" : '' ?>
+                <?= $minlength ? "minlength=\"$minlength\"" : '' ?>
+                <?= $pattern ? "pattern=\"$pattern\"" : '' ?>
+                <?= $readonly ? "readonly=\"$readonly\"" : '' ?>
+                <?= $spellcheck ? "spellcheck=\"$spellcheck\"" : '' ?>
+                <?= $autocomplete ? "autocomplete=\"$autocomplete\"" : '' ?>
+                <?= $required ? "required" : '' ?>
+                <?= $disabled ? "disabled" : '' ?>
             />
             <span></span>
         </div>
@@ -53,15 +53,15 @@ class Text
         </label>
         <div class="input-wrapper">
             <textarea 
-                name="<?=$name?> "
-                <?=$id ? "id= \"$id\" " : ''?>
-                <?=$class ? "class= \"$class\" " : ''?>
-                <?=$placeholder ? "placeholder= \"$placeholder\" " : ''?>
-                <?= "rows= \"$rows\" "?>
-                <?= "cols= \"$cols\" "?>
-                <?=$required ? "required " : ''?>
-                <?=$spellcheck ? "spellcheck= \"$spellcheck\" " : ''?>
-            ><?=$value ?$value: ''?>
+                name="<?= $name?>"
+                <?= $id ? "id= \"$id\"" : '' ?>
+                <?= $class ? "class= \"$class\"" : '' ?>
+                <?= $placeholder ? "placeholder= \"$placeholder\"" : '' ?>
+                <?= "rows= \"$rows\"" ?>
+                <?= "cols= \"$cols\"" ?>
+                <?= $required ? "required" : '' ?>
+                <?= $spellcheck ? "spellcheck= \"$spellcheck\"" : '' ?>
+            ><?= $value ?$value: '' ?>
             </textarea>
         </div>
     </div>

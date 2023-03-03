@@ -10,13 +10,13 @@ class Time
             <?= $title ?>    
         </label>
         <div class="input-wrapper">
-            <input type="<?= $type ? $type : 'time'?> " 
-                name="<?=$name?> "
-                id="<?=$id?> "
-                <?=$class ? "class=\"$class\" " : ''?>
-                <?=$max ? "max=\"$max\" " : ''?>
-                <?=$min ? "min=\"$min\" " : ''?>
-                <?=$required ? "required " : ''?>
+            <input type="<?= $type ? $type : 'time' ?>" 
+                name="<?= $name ?>"
+                id="<?= $id ?>"
+                <?= $class ? "class=\"$class\"" : '' ?>
+                <?= $max ? "max=\"$max\"" : '' ?>
+                <?= $min ? "min=\"$min\"" : '' ?>
+                <?= $required ? "required" : '' ?>
             />
         </div>
     </div>

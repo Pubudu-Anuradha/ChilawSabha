@@ -5,17 +5,17 @@ class Group {
     // Options must be an associative array
     // ['value'=>'displayName']
   ){
-    $id = $id ? $id : $name;?>
+    $id = $id ? $id : $name; ?>
   <div class="input-field">
     <label for="<?= $id ?>"><?= $title ?></label>
-    <select name="<?= $name ?> "
-            <?=$id ? "id= \"$id\" " : ''?>
-            <?=$class ?"class= \"$class\" " : ''?>
-            <?= $required? 'required ' : ''?>
+    <select name="<?= $name ?>"
+            <?= $id ? "id= \"$id\"" : '' ?>
+            <?= $class ?"class= \"$class\"" : '' ?>
+            <?= $required? 'required' : '' ?>
     >
     <?php foreach($options as $value=>$name): ?>
-      <option value="<?=$value?>" <?= $selected && $selected==$value ? 'selected ':'' ?>>
-          <?=$name?>
+      <option value="<?= $value ?>" <?= $selected && $selected==$value ? 'selected' :'' ?>>
+          <?= $name ?>
       </option>
     <?php endforeach; ?>
     </select>
@@ -32,18 +32,18 @@ class Group {
     if(is_null($type)) throw new Exception("Invalid Group rendering call", 1);
   ?>
   <div class="input-field">
-    <label for="<?=$name?>"><?=$title?></label>
+    <label for="<?= $name ?>"><?= $title ?></label>
     <div class="option-set">
       <?php $i = 1;
       foreach($values as $value=>$label): ?>
-        <input type="<?= $type ?> "
-              value="<?= $value ?> "
-              name="<?= $name ?> "
-              id="<?= "$id_prefix\_$i" ?> "
-              <?= $required? 'required ' : ''?>
+        <input type="<?= $type ?>"
+              value="<?= $value ?>"
+              name="<?= $name ?>"
+              id="<?= "$id_prefix\_$i" ?>"
+              <?= $required? 'required' : '' ?>
               <?= $checked && ( 
                 (is_array($checked) && in_array($value,$checked) ) || (is_string($checked) &&  $checked == $value)
-                ) ? 'checked ' : ''?>
+                ) ? 'checked' : ''?>
         >
         <label for="<?= "$id_prefix\_$i" ?>">
           <?= $label ?>
