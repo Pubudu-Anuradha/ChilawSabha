@@ -505,3 +505,10 @@ body {
 *:not(.footer) {
   transition: all 200ms ease-in-out;
 }
+
+.error{
+  color: var(--red);
+}
+.error::before{
+  content: "*";
+}

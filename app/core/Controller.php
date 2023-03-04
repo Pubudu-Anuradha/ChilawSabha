@@ -100,7 +100,7 @@ class Controller
                 $number_range_rule = preg_grep('/^[i|d]\[\d*:\d*\]$/', $rules) ?? false;
                 if ($number_range_rule !== false && count($number_range_rule) > 1) {
                     throw new Exception("Too Many number rules. Use Only one", 1);
-                } else if ($number_range_rule !== false && count($number_range_rule) == 0) {
+                } else if ($number_range_rule !== false && count($number_range_rule) == 1) {
                     try {
                         $rule = $number_range_rule[0] ?? false;
                         $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
@@ -134,10 +134,11 @@ class Controller
                     throw new Exception("Too Many String length rules. Use only one", 1);
                 } else if (count($string_length_rule) == 1) {
                     try {
-                        $rule = $string_length_rule[0];
+                        $rule = $string_length_rule[0] ?? false;
                         $val = strlen($data[$field]);
-                        [$min, $max] = explode(':', ltrim(rtrim($rule, ']'), 'l['));
-                        echo "$val :: [$min:$max]\n";
+                        $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
+                        $min = $split[0] ?? '';
+                        $max = $split[1] ?? '';
                         if (!empty($min)) {
                             $min = intval($min);
                             if ($val < $min) {
@@ -152,10 +153,10 @@ class Controller
                                 continue;
                             }
                         }
-                        // echo "$val :: [$min:$max]\n";
                     } catch (Exception $e) {
                         // Should probably ignore
                         $set_error('strlen', $field);
+                        continue;
                     }
 
                 }

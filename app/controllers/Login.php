@@ -29,40 +29,49 @@ class Login extends Controller
                         // User with email exists
                         $user = $userCredentials['result'][0];
                         $data['user'] = $user;
-                        if (password_verify($validated['passwd'], $user['password_hash'])) {
-                            // Password matches stored hash.. Determining UserRole
-                            // If not staff member, Default to LibraryMember
-                            $role = false;
-                            if ($user['user_type'] === 1) {
-                                $staffUser = $model->getStaffRoleId($validated['email']);
-                                if (!$staffUser || $staffUser['error'] ?? false) {
+                        $user_active = [
+                            1 => true,
+                            2 => false
+                        ][$user['state_id']] ?? false;
+                        
+                        if($user_active){
+                            if (password_verify($validated['passwd'], $user['password_hash'])) {
+                                // Password matches stored hash.. Determining UserRole
+                                // If not staff member, Default to LibraryMember
+                                $role = false;
+                                if ($user['user_type'] === 1) {
+                                    $staffUser = $model->getStaffRoleId($validated['email']);
+                                    if (!$staffUser || $staffUser['error'] ?? false) {
+                                        // Should Never happen
+                                        $data['errors']['login error'] = true;
+                                    } else {
+                                        $role = [
+                                            1 => 'Admin',
+                                            2 => 'LibraryStaff',
+                                            3 => 'Complaint',
+                                            4 => 'Storage',
+                                        ][$staffUser['result'][0]['type_id']] ?? false;
+                                    }
+                                } else if ($user['user_type'] == 2) {
+                                    $role = 'LibraryMember';
+                                }
+                                if (!$role) {
                                     // Should Never happen
                                     $data['errors']['login error'] = true;
                                 } else {
-                                    $role = [
-                                        1 => 'Admin',
-                                        2 => 'LibraryStaff',
-                                        3 => 'Complaint',
-                                        4 => 'Storage',
-                                    ][$staffUser['result'][0]['type_id']] ?? false;
+                                    // Set session Variables
+                                    $_SESSION['login'] = true;
+                                    $_SESSION['role'] = $role;
+                                    $_SESSION['email'] = $user['email'];
+                                    $_SESSION['name'] = $user['name'];
+                                    header("location:" . URLROOT . "/$role");
+                                    die();
                                 }
-                            } else if ($user['user_type'] == 2) {
-                                $role = 'LibraryMember';
-                            }
-                            if (!$role) {
-                                // Should Never happen
-                                $data['errors']['login error'] = true;
                             } else {
-                                // Set session Variables
-                                $_SESSION['login'] = true;
-                                $_SESSION['role'] = $role;
-                                $_SESSION['email'] = $user['email'];
-                                $_SESSION['name'] = $user['name'];
-                                header("location:" . URLROOT . "/$role");
-                                die();
+                                $data['errors']['password match'] = $validated['passwd'];
                             }
-                        } else {
-                            $data['errors']['password match'] = $validated['passwd'];
+                        }else{
+                            $data['errors']['disabled'] = true;
                         }
                     } else {
                         $data['errors']['no email'] = $validated['email'];
