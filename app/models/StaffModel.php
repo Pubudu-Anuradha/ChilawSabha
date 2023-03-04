@@ -30,6 +30,10 @@ class StaffModel extends Model{
         $condidions);
     }
 
+    public function get_roles(){
+        return $this->select('staff_type');
+    }
+
     public function getStaffbyID($id)
     {
         return $this->select('user u join staff s on u.user_id=s.user_id and u.type="Staff"',
@@ -48,6 +52,7 @@ class StaffModel extends Model{
             $user['contact_no'],
             $user['nic'],
             $user['role'],
+            $_SESSION['user_id']
         ]);
 
     }

@@ -33,9 +33,6 @@ textarea {
   padding: 0.5rem;
 }
 
-.input-wrapper {
-  box-sizing: border-box;
-}
 
 .input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
@@ -85,6 +82,8 @@ input[type=file]:focus,
 select:focus,
 textarea:focus {
   transform: scale(1.01);
+  background-color: var(--lightblue);
+  color:var(--black);
   outline: none;
 }
 
@@ -126,7 +125,18 @@ input+span {
   padding: 0.2rem;
 }
 
-/* input:invalid {
+.input-wrapper {
+  display: grid;
+  grid-template-columns: auto fit-content(5%);
+  box-sizing: border-box;
+}
+
+input + span {
+  display: flex;
+  align-items: center;
+}
+
+input:invalid {
   border-bottom: 2px solid var(--red);
   box-shadow: 4px 2px 5px 0px var(--grey);
 }
@@ -139,7 +149,7 @@ input:invalid + span::after {
 input:valid + span::after {
   content: "✓";
   color: var(--green);
-} */
+}
 label {
   font-size: medium;
 }

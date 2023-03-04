@@ -63,6 +63,7 @@ class Login extends Controller
                                     $_SESSION['login'] = true;
                                     $_SESSION['role'] = $role;
                                     $_SESSION['email'] = $user['email'];
+                                    $_SESSION['user_id'] = $user['user_id'];
                                     $_SESSION['name'] = $user['name'];
                                     header("location:" . URLROOT . "/$role");
                                     die();
