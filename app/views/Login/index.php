@@ -1,5 +1,6 @@
 <div class="login-form">
     <div class="login-form-content">
+        <pre><?php var_dump($data);?></pre>
         <div class="login-title">
             <img src="<?= URLROOT . '/public/assets/user.png' ?>" class="login-img" alt="Login img">
             <h1>USER LOGIN</h1>
@@ -7,7 +8,7 @@
         <form action="<?= URLROOT . "/Login/index" ?>" method="post" class="login-field">
             <div class="field">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" maxlength="255">
             </div>
             <div class="field">
                 <label for="passwd">Password</label>
@@ -15,7 +16,7 @@
             </div>
             <div class="field">
                 <a href="<?=URLROOT . '/Login/passwordReset' ?>">Forgot your password?</a>
-                <input type="submit" name="Submit" value="Login" class="submit-btn">
+                <input type="submit" name="Login" value="Login" class="submit-btn">
             </div>
         </form>
     </div>

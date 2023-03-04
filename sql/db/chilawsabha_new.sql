@@ -793,12 +793,12 @@ CREATE TABLE `storage_manager` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `user_type` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `contact_no` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
-  `password_hash` varchar(100) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
   `password_reset_code` varchar(20) DEFAULT NULL,
   `reset_code_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
