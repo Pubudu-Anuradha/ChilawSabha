@@ -20,19 +20,21 @@ class Admin extends Controller
         $model = $this->model('StaffModel');
         switch ($page) {
             case 'Add':
-                if(isset($_POST['Add'])){
-                    [$valid,$err] = $this->validateInputs($_POST, [
-                            'email|e', 'name|l[:255]', 'password|l[:255]', 'address',
-                            'contact_no', 'nic', 'role',], 'Add');
+                $data = ['roles' => $model->get_roles()['result']];
+                if (isset($_POST['Add'])) {
+                    [$valid, $err] = $this->validateInputs($_POST, [
+                        'email|e', 'name|l[:255]', 'password|l[:255]', 'address',
+                        'contact_no', 'nic', 'role|i[1:4]'], 'Add');
+                    $data['errors'] = $err;
+                    $data['old'] = $_POST;
+                    $data = array_merge(count($err) > 0 ?
+                        // Set data according to presence of errors
+                        ['errors' => $err] : ['Add' => $model->addStaff($valid)], $data);
+                    $this->view('Admin/User/Add', 'Add a new User', $data,
+                        ['Components/form']);
+                } else {
                     $this->view('Admin/User/Add', 'Add a new User',
-                                count($err) > 0 ? // Set data according to presence of errors
-                                    ['errors' => $err] :
-                                    ['Add' => $model->addStaff($valid)],
-                                ['Components/form']);
-                }else{
-                    $this->view('Admin/User/Add', 'Add a new User',
-                                [],
-                                ['Components/form']);
+                        $data, ['Components/form']);
                 }
                 break;
             case 'Edit':

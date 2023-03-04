@@ -1,9 +1,9 @@
 <?php
 $eventstat = $data['EventStat'];
-foreach ($eventstat['result'] as $evestat):
-    $views[] = $evestat['views'];
-    $names[] = $evestat['name'];
-endforeach;
+// foreach ($eventstat['result'] as $evestat):
+//     $views[] = $evestat['views'];
+//     $names[] = $evestat['name'];
+// endforeach;
 // var_dump($names);
 ?>
 

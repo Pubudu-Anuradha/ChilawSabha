@@ -253,6 +253,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .navbar-items {
@@ -356,6 +357,11 @@ body {
 
   /* WHEN SCREEN IS NARROWER THAN 768px */
   /* Responsive navbar styles */
+  .navbar{
+    padding: 0;
+    padding-left: 1rem;
+  }
+
   .navbar-items ul li a {
     padding: 10px .5rem;
     color: var(--black);
@@ -470,6 +476,10 @@ body {
   .main {
     width: 100%;
   }
+
+  .items > a.sidebar-drop{
+    padding: 15px;
+  }
 }
 
 @media screen and (max-width: 259px) {
@@ -504,4 +514,11 @@ body {
 
 *:not(.footer) {
   transition: all 200ms ease-in-out;
+}
+
+.error{
+  color: var(--red);
+}
+.error::before{
+  content: "*";
 }

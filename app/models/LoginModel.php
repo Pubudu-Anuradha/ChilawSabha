@@ -4,11 +4,11 @@ class LoginModel extends Model
     public function getUserCredentials($email)
     {
         $email = mysqli_real_escape_string($this->conn,$email);
-        return $this->select('user', 'name,password_hash,type', "email='$email'");
+        return $this->select('users', conditions: "email='$email'");
     }
-    public function getStaffRole($email)
+    public function getStaffRoleId($email)
     {
         $email = mysqli_real_escape_string($this->conn,$email);
-        return $this->select('user u join staff s on u.user_id=s.user_id and u.type="Staff"', 's.Role as role', "u.email='$email'");
+        return $this->select('users u join staff s on u.user_id=s.user_id and u.user_type=1', 's.staff_type as type_id', "u.email='$email'");
     }
 }
