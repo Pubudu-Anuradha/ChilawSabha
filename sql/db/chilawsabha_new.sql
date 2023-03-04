@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1-1.fc37
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 26, 2023 at 08:59 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Generation Time: Mar 04, 2023 at 12:41 PM
+-- Server version: 10.5.18-MariaDB
+-- PHP Version: 8.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `chilawsabha_new`
+-- Database: `chilawsabha`
 --
 
 -- --------------------------------------------------------
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `announcements` (
   `post_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `books` (
   `recieved_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `recieved_method` varchar(100) NOT NULL,
   `recieved_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `book_requests` (
   `requested_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `accepted/rejected_by` int(11) DEFAULT NULL,
   `accepted/rejected_time` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,7 @@ CREATE TABLE `book_requests` (
 CREATE TABLE `book_status` (
   `status_id` int(11) NOT NULL,
   `status` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `book_status`
@@ -105,7 +105,7 @@ CREATE TABLE `category_codes` (
   `category_id` int(11) NOT NULL,
   `category_code` varchar(10) NOT NULL,
   `category_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -127,7 +127,7 @@ CREATE TABLE `complaint` (
   `accept_time` timestamp NULL DEFAULT NULL,
   `resolve_time` timestamp NULL DEFAULT NULL,
   `resolve_description` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -138,7 +138,7 @@ CREATE TABLE `complaint` (
 CREATE TABLE `complaint_categories` (
   `category_id` int(11) NOT NULL,
   `complaint_category` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `complaint_categories`
@@ -157,7 +157,7 @@ INSERT INTO `complaint_categories` (`category_id`, `complaint_category`) VALUES
 
 CREATE TABLE `complaint_handler` (
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -168,7 +168,7 @@ CREATE TABLE `complaint_handler` (
 CREATE TABLE `complaint_images` (
   `complaint_id` int(11) NOT NULL,
   `url` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -182,7 +182,7 @@ CREATE TABLE `complaint_notes` (
   `handler_id` int(11) NOT NULL,
   `note` varchar(1000) NOT NULL,
   `note_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,7 @@ CREATE TABLE `complaint_notes` (
 CREATE TABLE `complaint_status` (
   `status_id` int(11) NOT NULL,
   `complaint_status` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `complaint_status`
@@ -213,7 +213,7 @@ INSERT INTO `complaint_status` (`status_id`, `complaint_status`) VALUES
 CREATE TABLE `completed_books` (
   `membership_id` int(11) NOT NULL,
   `accession_no` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -227,7 +227,7 @@ CREATE TABLE `contact_us_persons` (
   `email` varchar(100) NOT NULL,
   `added_by` int(11) NOT NULL,
   `added_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -238,7 +238,7 @@ CREATE TABLE `contact_us_persons` (
 CREATE TABLE `damaged_action` (
   `action_id` int(11) NOT NULL,
   `de_list_action` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `damaged_action`
@@ -264,7 +264,7 @@ CREATE TABLE `damaged_books` (
   `re_list_description` varchar(100) DEFAULT NULL,
   `re_list_record_time` timestamp NULL DEFAULT NULL,
   `re_listed_recorded_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -275,7 +275,7 @@ CREATE TABLE `damaged_books` (
 CREATE TABLE `disabled_action` (
   `disabled_action_id` int(11) NOT NULL,
   `disabled_action` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `disabled_action`
@@ -301,7 +301,7 @@ CREATE TABLE `disabled_members` (
   `re_enabled_desscription` varchar(100) DEFAULT NULL,
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_time` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -319,7 +319,7 @@ CREATE TABLE `disabled_staff` (
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_reason` varchar(255) DEFAULT NULL,
   `re_enabled_time` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -335,7 +335,7 @@ CREATE TABLE `edit_members` (
   `address` varchar(255) DEFAULT NULL,
   `edited_by` int(11) NOT NULL,
   `edited_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -354,7 +354,7 @@ CREATE TABLE `edit_staff` (
   `address` varchar(200) DEFAULT NULL,
   `edited_by` int(11) NOT NULL,
   `edited_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -367,7 +367,7 @@ CREATE TABLE `emergency_categories` (
   `category_name` varchar(50) NOT NULL,
   `added_by` int(11) NOT NULL,
   `added_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -378,7 +378,7 @@ CREATE TABLE `emergency_categories` (
 CREATE TABLE `emergency_contact` (
   `place_id` int(11) NOT NULL,
   `contact_no` varchar(12) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -393,7 +393,7 @@ CREATE TABLE `emergency_places` (
   `address` varchar(200) NOT NULL,
   `added_by` int(11) NOT NULL,
   `added_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -408,7 +408,7 @@ CREATE TABLE `events` (
   `start_time` time DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `end_time` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -419,7 +419,7 @@ CREATE TABLE `events` (
 CREATE TABLE `event status` (
   `status_id` int(11) NOT NULL,
   `event_status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `event status`
@@ -439,7 +439,7 @@ INSERT INTO `event status` (`status_id`, `event_status`) VALUES
 CREATE TABLE `favourite_books` (
   `membership_id` int(11) NOT NULL,
   `accession_no` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -451,7 +451,7 @@ CREATE TABLE `image` (
   `image_id` int(11) NOT NULL,
   `image_name` varchar(100) NOT NULL,
   `image_url` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -469,7 +469,7 @@ CREATE TABLE `lend_recieve_books` (
   `extended_time` int(11) NOT NULL,
   `recieved_date` timestamp NULL DEFAULT NULL,
   `recieved_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -481,13 +481,19 @@ CREATE TABLE `library_member` (
   `member_id` int(11) NOT NULL,
   `membership_id` varchar(20) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `no_of_books_lost` int(11) NOT NULL,
-  `member_state` int(11) NOT NULL,
-  `fine_amount` decimal(8,2) NOT NULL,
-  `no_of_books_damaged` int(11) NOT NULL,
+  `no_of_books_lost` int(11) NOT NULL DEFAULT 0,
+  `fine_amount` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `no_of_books_damaged` int(11) NOT NULL DEFAULT 0,
   `added_by` int(11) NOT NULL,
   `added_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `library_member`
+--
+
+INSERT INTO `library_member` (`member_id`, `membership_id`, `user_id`, `no_of_books_lost`, `fine_amount`, `no_of_books_damaged`, `added_by`, `added_time`) VALUES
+(1, '975', 2, 0, 0.00, 0, 3, '2023-03-04 10:23:41');
 
 -- --------------------------------------------------------
 
@@ -497,7 +503,7 @@ CREATE TABLE `library_member` (
 
 CREATE TABLE `library_staff` (
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -514,26 +520,7 @@ CREATE TABLE `lost_books` (
   `found_description` varchar(100) DEFAULT NULL,
   `found_record_time` timestamp NULL DEFAULT NULL,
   `found_record_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `member_state`
---
-
-CREATE TABLE `member_state` (
-  `member_state_id` int(11) NOT NULL,
-  `member_state` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `member_state`
---
-
-INSERT INTO `member_state` (`member_state_id`, `member_state`) VALUES
-(1, 'Active'),
-(2, 'Disabled');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -545,7 +532,7 @@ CREATE TABLE `other_pages` (
   `page_id` int(11) NOT NULL,
   `page _name` varchar(100) NOT NULL,
   `views` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -558,7 +545,7 @@ CREATE TABLE `page_content` (
   `page_id` int(11) NOT NULL,
   `content_name` varchar(100) NOT NULL,
   `content` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -569,7 +556,7 @@ CREATE TABLE `page_content` (
 CREATE TABLE `page_image` (
   `page_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -581,7 +568,7 @@ CREATE TABLE `plan_to_read_books` (
   `membership_id` int(11) NOT NULL,
   `accession_no` int(11) NOT NULL,
   `priority` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -599,7 +586,7 @@ CREATE TABLE `post` (
   `visible_start_date` date DEFAULT NULL,
   `posted_by` int(11) NOT NULL,
   `posted_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -611,7 +598,7 @@ CREATE TABLE `post_attachments` (
   `post_id` int(11) NOT NULL,
   `attachment_name` varchar(100) NOT NULL,
   `attachment_url` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -623,7 +610,7 @@ CREATE TABLE `post_contact` (
   `post_id` int(11) NOT NULL,
   `contact_name` varchar(100) NOT NULL,
   `contact_no` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -634,7 +621,7 @@ CREATE TABLE `post_contact` (
 CREATE TABLE `post_images` (
   `post_id` int(11) NOT NULL,
   `image_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -645,7 +632,7 @@ CREATE TABLE `post_images` (
 CREATE TABLE `post_type` (
   `post_type_id` int(11) NOT NULL,
   `post_type` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `post_type`
@@ -667,7 +654,7 @@ CREATE TABLE `projects` (
   `post_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `expected_end_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -678,7 +665,7 @@ CREATE TABLE `projects` (
 CREATE TABLE `project_status` (
   `status_id` int(11) NOT NULL,
   `project_status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `project_status`
@@ -698,7 +685,7 @@ INSERT INTO `project_status` (`status_id`, `project_status`) VALUES
 CREATE TABLE `services` (
   `post_id` int(11) NOT NULL,
   `service_category` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -709,7 +696,7 @@ CREATE TABLE `services` (
 CREATE TABLE `service_categories` (
   `category_id` int(11) NOT NULL,
   `service_category` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `service_categories`
@@ -730,29 +717,18 @@ CREATE TABLE `staff` (
   `user_id` int(11) NOT NULL,
   `nic` varchar(15) NOT NULL,
   `staff_type` int(11) NOT NULL,
-  `staff_state` int(11) NOT NULL,
-  `added_by` int(11) NOT NULL,
+  `added_by` int(11) DEFAULT NULL,
   `added_time` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Table structure for table `staff_states`
+-- Dumping data for table `staff`
 --
 
-CREATE TABLE `staff_states` (
-  `staff_state_id` int(11) NOT NULL,
-  `staff_state` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `staff_states`
---
-
-INSERT INTO `staff_states` (`staff_state_id`, `staff_state`) VALUES
-(1, 'Active'),
-(2, 'Disabled');
+INSERT INTO `staff` (`user_id`, `nic`, `staff_type`, `added_by`, `added_time`) VALUES
+(1, '200027000650', 1, NULL, '2023-03-04 07:32:42'),
+(3, '200027000640', 2, 1, '2023-03-04 10:18:22'),
+(4, '200027000630', 3, 1, '2023-03-04 10:19:31');
 
 -- --------------------------------------------------------
 
@@ -763,7 +739,7 @@ INSERT INTO `staff_states` (`staff_state_id`, `staff_state`) VALUES
 CREATE TABLE `staff_type` (
   `staff_type_id` int(11) NOT NULL,
   `staff_type` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `staff_type`
@@ -783,7 +759,7 @@ INSERT INTO `staff_type` (`staff_type_id`, `staff_type`) VALUES
 
 CREATE TABLE `storage_manager` (
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -795,13 +771,43 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `user_type` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `contact_no` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `password_reset_code` varchar(20) DEFAULT NULL,
   `reset_code_time` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `user_type`, `state_id`, `name`, `contact_no`, `address`, `password_hash`, `password_reset_code`, `reset_code_time`) VALUES
+(1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', 761323251, 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', 761323250, 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', 761323249, 'Marawila', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayake', 761323248, 'Uraliyagara', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_state`
+--
+
+CREATE TABLE `user_state` (
+  `state_id` int(11) NOT NULL,
+  `state` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_state`
+--
+
+INSERT INTO `user_state` (`state_id`, `state`) VALUES
+(1, 'Active'),
+(2, 'Disabled');
 
 -- --------------------------------------------------------
 
@@ -812,7 +818,7 @@ CREATE TABLE `users` (
 CREATE TABLE `user_type` (
   `user_type_id` int(11) NOT NULL,
   `user_type` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_type`
@@ -830,7 +836,7 @@ INSERT INTO `user_type` (`user_type_id`, `user_type`) VALUES
 
 CREATE TABLE `website_admin` (
   `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -1052,7 +1058,6 @@ ALTER TABLE `library_member`
   ADD PRIMARY KEY (`member_id`),
   ADD UNIQUE KEY `membership_id` (`membership_id`),
   ADD KEY `library_member_added_by_fk` (`added_by`),
-  ADD KEY `library_member_state_fk` (`member_state`),
   ADD KEY `library_member_user_id_fk` (`user_id`);
 
 --
@@ -1069,12 +1074,6 @@ ALTER TABLE `lost_books`
   ADD KEY `lost_book_accession_no_fk` (`accession_no`),
   ADD KEY `lost_book_record_by_fk` (`lost_record_by`),
   ADD KEY `found_book_record_by_fk` (`found_record_by`);
-
---
--- Indexes for table `member_state`
---
-ALTER TABLE `member_state`
-  ADD PRIMARY KEY (`member_state_id`);
 
 --
 -- Indexes for table `other_pages`
@@ -1169,14 +1168,7 @@ ALTER TABLE `staff`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `nic` (`nic`),
   ADD KEY `staff_added_by_fk` (`added_by`),
-  ADD KEY `staff_state_fk` (`staff_state`),
   ADD KEY `staff_type_fk` (`staff_type`);
-
---
--- Indexes for table `staff_states`
---
-ALTER TABLE `staff_states`
-  ADD PRIMARY KEY (`staff_state_id`);
 
 --
 -- Indexes for table `staff_type`
@@ -1196,7 +1188,15 @@ ALTER TABLE `storage_manager`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD KEY `user_type_fk` (`user_type`);
+  ADD KEY `user_type_fk` (`user_type`),
+  ADD KEY `user_states_fk` (`state_id`);
+
+--
+-- Indexes for table `user_state`
+--
+ALTER TABLE `user_state`
+  ADD PRIMARY KEY (`state_id`),
+  ADD UNIQUE KEY `state` (`state`);
 
 --
 -- Indexes for table `user_type`
@@ -1344,19 +1344,13 @@ ALTER TABLE `lend_recieve_books`
 -- AUTO_INCREMENT for table `library_member`
 --
 ALTER TABLE `library_member`
-  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lost_books`
 --
 ALTER TABLE `lost_books`
   MODIFY `lost_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `member_state`
---
-ALTER TABLE `member_state`
-  MODIFY `member_state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `other_pages`
@@ -1395,12 +1389,6 @@ ALTER TABLE `service_categories`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `staff_states`
---
-ALTER TABLE `staff_states`
-  MODIFY `staff_state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `staff_type`
 --
 ALTER TABLE `staff_type`
@@ -1410,7 +1398,13 @@ ALTER TABLE `staff_type`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user_state`
+--
+ALTER TABLE `user_state`
+  MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_type`
@@ -1570,8 +1564,7 @@ ALTER TABLE `lend_recieve_books`
 -- Constraints for table `library_member`
 --
 ALTER TABLE `library_member`
-  ADD CONSTRAINT `library_member_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `library_staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `library_member_state_fk` FOREIGN KEY (`member_state`) REFERENCES `member_state` (`member_state_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `library_member_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `library_member_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
@@ -1652,8 +1645,7 @@ ALTER TABLE `services`
 -- Constraints for table `staff`
 --
 ALTER TABLE `staff`
-  ADD CONSTRAINT `staff_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_state_fk` FOREIGN KEY (`staff_state`) REFERENCES `staff_states` (`staff_state_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `staff_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `staff_type_fk` FOREIGN KEY (`staff_type`) REFERENCES `staff_type` (`staff_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -1667,6 +1659,7 @@ ALTER TABLE `storage_manager`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
+  ADD CONSTRAINT `user_states_fk` FOREIGN KEY (`state_id`) REFERENCES `user_state` (`state_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_type_fk` FOREIGN KEY (`user_type`) REFERENCES `user_type` (`user_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
