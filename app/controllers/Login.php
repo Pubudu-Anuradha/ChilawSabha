@@ -4,11 +4,11 @@ class Login extends Controller
 {
     public function index()
     {
-        if($_SESSION['login'] ?? false){
+        if ($_SESSION['login'] ?? false) {
             $role = $_SESSION['role'] ?? false;
-            if(!$role){
+            if (!$role) {
                 $this->Logout();
-            }else{
+            } else {
                 header("location:" . URLROOT . "/$role");
             }
             die();
@@ -19,7 +19,7 @@ class Login extends Controller
             [$validated, $errors] = $this->validateInputs($_POST, [
                 'email|e|l[:255]', 'passwd',
             ], 'Login');
-            $data['valid'] = $validated;
+            $data['old'] = $_POST;
             $data['errors'] = $errors;
             if (count($errors) == 0) {
                 $model = $this->model('LoginModel');
@@ -34,12 +34,10 @@ class Login extends Controller
                             // If not staff member, Default to LibraryMember
                             $role = false;
                             if ($user['user_type'] === 1) {
-                                $staffUser = $model->getStaffRole($validated['email']);
-                                $data['staffuser'] = $staffUser;
-                                // $role = $staffUser['result'][0]['role'];
+                                $staffUser = $model->getStaffRoleId($validated['email']);
                                 if (!$staffUser || $staffUser['error'] ?? false) {
                                     // Should Never happen
-                                    $data['errors']['login_error'] = true;
+                                    $data['errors']['login error'] = true;
                                 } else {
                                     $role = [
                                         1 => 'Admin',
@@ -53,7 +51,7 @@ class Login extends Controller
                             }
                             if (!$role) {
                                 // Should Never happen
-                                $data['errors']['login_error'] = true;
+                                $data['errors']['login error'] = true;
                             } else {
                                 // Set session Variables
                                 $_SESSION['login'] = true;
@@ -70,7 +68,7 @@ class Login extends Controller
                         $data['errors']['no email'] = $validated['email'];
                     }
                 } else {
-                    $data['errors']['login_error'] = true;
+                    $data['errors']['login error'] = true;
                 }
             }
         }
