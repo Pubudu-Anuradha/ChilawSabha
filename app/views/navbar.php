@@ -67,6 +67,11 @@
                     bottom: 7.5px;
                     left: -45px;
                 }
+                @media screen and (max-width: 767px) {
+                    .login-btn::before{
+                        bottom: 0px;
+                    }
+                }
             </style>
         </ul>
     </div>

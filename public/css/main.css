@@ -253,6 +253,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .navbar-items {
@@ -356,6 +357,11 @@ body {
 
   /* WHEN SCREEN IS NARROWER THAN 768px */
   /* Responsive navbar styles */
+  .navbar{
+    padding: 0;
+    padding-left: 1rem;
+  }
+
   .navbar-items ul li a {
     padding: 10px .5rem;
     color: var(--black);
@@ -469,6 +475,10 @@ body {
   /* Other Misc */
   .main {
     width: 100%;
+  }
+
+  .items > a.sidebar-drop{
+    padding: 15px;
   }
 }
 
