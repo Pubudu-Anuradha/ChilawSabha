@@ -30,27 +30,14 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
     }
 } ?>
         <form class="fullForm" method="post">
-        <?php 
-            $count_missing = count($errors['missing']??[]);
-            $count_empty = count($errors['empty']??[]);
-            if( $count_missing > 0): ?>
-                <div class="error">
-                    The field<?=$count_missing > 1 ? 's': ''?> :
-                <?php  foreach($errors['missing']??[] as $field): ?>
-                    <?= $field ?> , 
-                <?php endforeach; ?>
-                <?= $count_missing > 1 ? 'are': 'is'?> missing. The form may have been altered. please contact the Administration.
-                </div>
-        <?php endif;
-            if( $count_empty > 0): ?>
-                <div class="error">
-                    The field<?=$count_empty > 1 ? 's': ''?> :
-                <?php  foreach($errors['empty']??[] as $field): ?>
-                    <?= $field ?> , 
-                <?php endforeach; ?>
-                <?= $count_empty > 1 ? 'are': 'is'?> empty. please fill <?=$count_empty > 1 ? 'them' : 'it'?>.
-                </div>
-        <?php endif;
+        <?php
+        echo "<pre>";
+        var_dump($data);
+        echo "</pre>";
+            Errors::validation_errors($errors,[
+                'email' => "User's email",
+                'address' => 'User\'s Address'
+            ]); 
             $warn("Please enter a valid email",'email');
             Text::email('User\'s email', 'email', 'email',
                         placeholder:'Enter new user\'s email', value:$old['email'] ?? null);
@@ -60,14 +47,14 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
             Text::password('Password(DEMO ONLY)', 'password', 'password',
                         placeholder:'Enter a password');
             Text::text('User\'s address', 'address', 'address',
-                        placeholder:'Enter new user\'s address', maxlength:255,
+                        placeholder:'Enter new user\'s address',required:false, maxlength:255,
                         value:$old['address'] ?? null);
             Text::text('User\'s contact number', 'contact_no', 'contact_no',
                         '+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
                         pattern:"(\+94\d{9})|\d{10}", value:$old['contact_no'] ?? null);
             Text::text('User\'s NIC', 'nic', 'nic', 'XXXX or XXXXV',required:false, maxlength:12,
                         pattern:"(\d{12})|(\d{10}(V|v))", value:$old['nic'] ?? null);
-
+            ?>  <input type="date" name="dt" id="dt"> <?php
             // ? Maybe do this in controller
             $roles = [];
             foreach ($data['roles'] as $role) {

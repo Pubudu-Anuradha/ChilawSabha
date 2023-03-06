@@ -23,8 +23,10 @@ class Admin extends Controller
                 $data = ['roles' => $model->get_roles()['result']];
                 if (isset($_POST['Add'])) {
                     [$valid, $err] = $this->validateInputs($_POST, [
-                        'email|e', 'name|l[:255]', 'password|l[:255]', 'address',
-                        'contact_no', 'nic', 'role|i[1:4]'], 'Add');
+                        'email|e|u[users]', 'name|l[:255]', 'password|l[:255]', 'address|l[10:255]',
+                        'contact_no', 'nic', 
+                        'role|i[1:4]',
+                        'dt|dt[:2000-09-26]'], 'Add');
                     $data['errors'] = $err;
                     $data['old'] = $_POST;
                     $data = array_merge(count($err) > 0 ?
