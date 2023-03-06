@@ -19,15 +19,17 @@ class Errors
     {
         // This function is meant to be used to catch all server side error rendering
         // $errors is the generic errors array returned by Controller->validateInputs.
-        // ! All possible generic errors must be handled here.
         // $aliases is an optional array with aliases for each field name
+        // ! All possible generic errors must be handled here.
 
+        // * '?'          <- Optional(can be empty or not given) -> missing|empty
         $missing_fields = $errors['missing'] ?? false;
         if ($missing_fields !== false) {
             Errors::switch_aliases($missing_fields, $aliases);
             $plural = count($missing_fields) > 1;
             $message = 'The field' . ($plural ? 's' : '') . ' <b>' . implode(',', $missing_fields) .
-                '</b> ' . ($plural ? 'are' : 'is') . ' missing. Please make sure to include ' . ($plural ? 'them.' : 'it.');
+                '</b> ' . ($plural ? 'are' : 'is') . ' missing. Please make sure to include ' .
+                ($plural ? 'them.' : 'it.');
             Errors::generic($message);
         }
 
@@ -36,8 +38,25 @@ class Errors
             Errors::switch_aliases($empty_fields, $aliases);
             $plural = count($empty_fields) > 1;
             $message = 'The field' . ($plural ? 's' : '') . ' <b>' . implode(',', $empty_fields) .
-                '</b> ' . ($plural ? 'are' : 'is') . ' empty. Please make sure to fill ' . ($plural ? 'them.' : 'it.');
+                '</b> ' . ($plural ? 'are' : 'is') . ' empty. Please make sure to fill ' .
+                ($plural ? 'them.' : 'it.');
             Errors::generic($message);
         }
+
+        // * 'i[min:max]' <- Integer in inclusive range(values are both optional) -> min|max|number
+        // * 'd[min:max]' <- Same as above but using double -> min|max|number
+        $number_errors = $errors['number'] ?? false;
+        if ($number_errors !== false) {
+            Errors::switch_aliases($number_errors, $aliases);
+            $plural = count($number_errors) > 1;
+            $message = 'There was an error parsing the number' . ($plural ? 's' : '') . ' in <b>' .
+            implode(',', $number_errors) . '</b> Please check those input' . ($plural ? 's.' : '.');
+            Errors::generic($message);
+        }
+
+        // TODO: min,max and errors below this
+        // * 'l[min:max]' <- String length in inclusive range -> min_len|max_len
+        // * 'e'          <- Validate Email -> email
+
     }
 }

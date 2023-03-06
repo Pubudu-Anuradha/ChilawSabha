@@ -45,11 +45,11 @@ class Controller
     {
         // Rules can be set in fields separated by '|' to do some basic validation here itself.
         // Available rules are
-        // '?'          <- Optional(can be empty or not given)
-        // 'i[min:max]' <- Integer in inclusive range(values are both optional)
-        // 'd[min:max]' <- Same as above but using double
-        // 'l[min:max]' <- String length in inclusive range
-        // 'e'          <- Validate Email
+        // '?'          <- Optional(can be empty or not given) -> missing|empty
+        // 'i[min:max]' <- Integer in inclusive range(values are both optional) -> min|max|number
+        // 'd[min:max]' <- Same as above but using double -> min|max|number
+        // 'l[min:max]' <- String length in inclusive range -> min_len|max_len
+        // 'e'          <- Validate Email -> email
         if (isset($data[$submitMethod])) {
             unset($data[$submitMethod]);
         }
@@ -171,6 +171,7 @@ class Controller
                     continue;
                 }
                 // TODO: Add more rules as required
+                // ! MUST UPDATE GENERAL ERROR HANDLER COMPONENT WHEN ADDING NEW RULES
 
                 // Rules ended. set field as valid
                 $set_validated($field);
