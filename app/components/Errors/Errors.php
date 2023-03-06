@@ -66,7 +66,8 @@ class Errors
             Errors::switch_aliases_first_index($min_num_errors,$aliases);
             foreach($min_num_errors as $err){
                 [$field,$min] = $err;
-                Errors::generic("The value in $field must be greater than or equal to $min.");
+                $message = "The value in $field must be greater than or equal to $min.";
+                Errors::generic($message);
             }
         }
 
@@ -75,13 +76,33 @@ class Errors
             Errors::switch_aliases_first_index($max_num_errors,$aliases);
             foreach($max_num_errors as $err){
                 [$field,$max] = $err;
-                Errors::generic("The value in $field must be lower than or equal to $max.");
+                $message = "The value in $field must be lower than or equal to $max.";
+                Errors::generic($message);
             }
         }
-        
-        // TODO: min,max and errors below this
-        // * 'l[min:max]' <- String length in inclusive range -> min_len|max_len
-        // * 'e'          <- Validate Email -> email
 
+        // * 'l[min:max]' <- String length in inclusive range -> min_len|max_len
+        $min_len_errors = $errors['min_len'] ?? false;
+        if($min_len_errors !== false) {
+            Errors::switch_aliases_first_index($min_len_errors,$aliases);
+            foreach($min_len_errors as $err){
+                [$field,$min] = $err;
+                $min-=1;
+                $message = "$field must be longer than $min characters.";
+                Errors::generic($message);
+            }
+        }
+
+        $max_len_errors = $errors['max_len'] ?? false;
+        if($max_len_errors !== false) {
+            Errors::switch_aliases_first_index($max_len_errors,$aliases);
+            foreach($max_len_errors as $err){
+                [$field,$max] = $err;
+                $max+=1;
+                $message = "$field must be shorter than $max characters.";
+                Errors::generic($message);
+            }
+        }
+        // * 'e'          <- Validate Email -> email
     }
 }

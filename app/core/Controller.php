@@ -53,6 +53,7 @@ class Controller
         if (isset($data[$submitMethod])) {
             unset($data[$submitMethod]);
         }
+        $old = json_encode($data);
         $validated = [];
         $errors = [];
 
@@ -62,17 +63,21 @@ class Controller
             } else {
                 $errors[$name][] = $field;
             }
-            if (isset($data[$field])) {
+            if(is_array($field)){
+                if(isset($data[$field[0] ?? false])){
+                    unset($data[$field[0]]);
+                }
+            } else if (isset($data[$field])) {
                 unset($data[$field]);
             }
         };
 
-        $set_validated = function ($field) use (&$validated, &$data) {
+        $set_validated = function ($field) use (&$validated, &$data,&$old) {
             if (isset($data[$field])) {
                 $validated[$field] = $data[$field];
                 unset($data[$field]);
             } else {
-                throw new Exception("Trying to set a non existing value as validated", 1);
+                throw new Exception(json_encode([$old,$field , $data]) . " Trying to set a non existing value as validated", 1);
             }
         };
 
@@ -102,27 +107,33 @@ class Controller
                     throw new Exception("Too Many number rules. Use Only one", 1);
                 } else if ($number_range_rule !== false && count($number_range_rule) == 1) {
                     try {
-                        $rule = $number_range_rule[0] ?? false;
-                        $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
-                        $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
-                        $min = $split[0] ?? '';
-                        $max = $split[1] ?? '';
-                        if (!empty($min)) {
-                            $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
-                            if ($val < $min) {
-                                $set_error('min', [$field,$min]);
-                                continue;
+                        $done = false;
+                        foreach($number_range_rule as $_ => $rule){
+                            echo $rule;
+                            $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
+                            $min = $split[0] ?? '';
+                            $max = $split[1] ?? '';
+                            if (!empty($min)) {
+                                $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
+                                if ($val < $min) {
+                                    $set_error('min', [$field,$min]);
+                                    $done = true;
+                                    continue;
+                                }
                             }
-                        }
-                        if (!empty($max)) {
-                            $max = $rule[0] == 'i' ? intval($max) : doubleval($max);
-                            if ($val > $max) {
-                                $set_error('max', [$field,$max]);
-                                continue;
+                            if (!empty($max)) {
+                                $max = $rule[0] == 'i' ? intval($max) : doubleval($max);
+                                if ($val > $max) {
+                                    $set_error('max', [$field,$max]);
+                                    $done = true;
+                                    continue;
+                                }
                             }
+                            $set_validated($field);
+                            $done = true;
                         }
-                        $set_validated($field);
-                        continue;
+                        if($done) continue;
                     } catch (Exception $e) {
                         $set_error('number', $field);
                         continue;
@@ -134,25 +145,33 @@ class Controller
                     throw new Exception("Too Many String length rules. Use only one", 1);
                 } else if (count($string_length_rule) == 1) {
                     try {
-                        $rule = $string_length_rule[0] ?? false;
-                        $val = strlen($data[$field]);
-                        $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
-                        $min = $split[0] ?? '';
-                        $max = $split[1] ?? '';
-                        if (!empty($min)) {
-                            $min = intval($min);
-                            if ($val < $min) {
-                                $set_error('min_len', [$field,$min]);
-                                continue;
+                        $done = false;
+                        foreach($string_length_rule as $_ => $rule){
+                            echo $rule;
+                            $rule = $string_length_rule[1] ?? false;
+                            $val = strlen($data[$field]);
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'l['));
+                            $min = $split[0] ?? '';
+                            $max = $split[1] ?? '';
+                        echo "< | $min : $max | >";
+                            if (!empty($min)) {
+                                $min = intval($min);
+                                if ($val < $min) {
+                                    $set_error('min_len', [$field,$min]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            if (!empty($max)) {
+                                $max = intval($max);
+                                if ($val > $max) {
+                                    $set_error('max_len', [$field,$max]);
+                                    $done = true;
+                                    continue;
+                                }
                             }
                         }
-                        if (!empty($max)) {
-                            $max = intval($max);
-                            if ($val > $max) {
-                                $set_error('max_len', [$field,$max]);
-                                continue;
-                            }
-                        }
+                        if($done) continue;
                     } catch (Exception $e) {
                         // Should probably ignore
                         $set_error('strlen', $field);

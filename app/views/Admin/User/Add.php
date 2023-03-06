@@ -31,6 +31,9 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
 } ?>
         <form class="fullForm" method="post">
         <?php
+        echo "<pre>";
+        var_dump($data);
+        echo "</pre>";
             Errors::validation_errors($errors,[
                 'address' => 'User\'s Address'
             ]); 
