@@ -101,6 +101,31 @@ class Controller
                 // Not empty, Checking rules.
                 // Rules follow the precedence order as set in this function.
                 // No need to worry about rule order when calling the function.
+                $unique_rule = preg_grep('/^u\[.*\]$/', $rules) ?? false;
+                if($unique_rule !== false && count($unique_rule) > 1){
+                    throw new Exception("Too Many unique rules. Use Only one", 1);
+                } else if ($unique_rule !== false && count($unique_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($unique_rule as $rule) {
+                            $table = rtrim(ltrim(ltrim($rule,'u'),'['),']');
+                            if(empty($table)) throw new Exception(
+                                    "Make sure unique rule has non_empty table name"
+                                );
+                            else {
+                                $model = new Model;
+                                if($model->exists($table,[$field => $data[$field]])) {
+                                    $set_error('unique',$field);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                        }
+                        if($done) continue;
+                    } catch(Exception $e) {
+                        $set_error('unique_check',$field);
+                    }
+                }
 
                 $number_range_rule = preg_grep('/^[i|d]\[\d*:\d*\]$/', $rules) ?? false;
                 if ($number_range_rule !== false && count($number_range_rule) > 1) {
@@ -141,19 +166,17 @@ class Controller
                 }
 
                 $string_length_rule = preg_grep('/^l\[\d*:\d*\]$/', $rules);
-                if (count($string_length_rule) > 1) {
+                if ($string_length_rule!==false && count($string_length_rule) > 1) {
                     throw new Exception("Too Many String length rules. Use only one", 1);
                 } else if (count($string_length_rule) == 1) {
                     try {
                         $done = false;
                         foreach($string_length_rule as $_ => $rule){
-                            echo $rule;
                             $rule = $string_length_rule[1] ?? false;
                             $val = strlen($data[$field]);
                             $split = explode(':', ltrim(rtrim($rule, ']'), 'l['));
                             $min = $split[0] ?? '';
                             $max = $split[1] ?? '';
-                        echo "< | $min : $max | >";
                             if (!empty($min)) {
                                 $min = intval($min);
                                 if ($val < $min) {
