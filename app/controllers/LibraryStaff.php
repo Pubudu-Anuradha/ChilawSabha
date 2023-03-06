@@ -10,12 +10,12 @@ class LibraryStaff extends Controller
     public function index()
     {
         // TODO: USE COMPONENTS AND REDO
-        $this->view('LibraryStaff/index',styles:['LibraryStaff/index','Components/modal' ,'Components/table']);
+        $this->view('LibraryStaff/index',styles:['LibraryStaff/index' ,'Components/table','Components/form','Components/modal']);
     }
 
     public function analytics()
     {
-        $this->view('LibraryStaff/Analytics',styles:['LibraryStaff/index','LibraryStaff/analytics']);
+        $this->view('LibraryStaff/Analytics',styles:['LibraryStaff/index','LibraryStaff/analytics','Components/form']);
     }
     
     public function bookcatalog()

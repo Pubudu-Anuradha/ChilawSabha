@@ -105,13 +105,18 @@ textarea:focus {
 }
 
 input[type=submit] {
-  background-color: var(--lightblue);
-  border-radius: 0.5rem;
-  font-size: 1.2rem;
-  border-radius: 1rem;
-  margin: 1rem;
-  padding: 1rem 1.5rem;
+  background-color: var(--blue);
+  border: none;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: medium;
+  transition: 200ms ease-in-out;
+  width: max-content;
 }
+
 
 .submitButton>input:hover {
   transform: scale(1.1);
