@@ -110,14 +110,14 @@ class Controller
                         if (!empty($min)) {
                             $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
                             if ($val < $min) {
-                                $set_error('min', $field);
+                                $set_error('min', [$field,$min]);
                                 continue;
                             }
                         }
                         if (!empty($max)) {
                             $max = $rule[0] == 'i' ? intval($max) : doubleval($max);
                             if ($val > $max) {
-                                $set_error('max', $field);
+                                $set_error('max', [$field,$max]);
                                 continue;
                             }
                         }
@@ -142,14 +142,14 @@ class Controller
                         if (!empty($min)) {
                             $min = intval($min);
                             if ($val < $min) {
-                                $set_error('min_len', $field);
+                                $set_error('min_len', [$field,$min]);
                                 continue;
                             }
                         }
                         if (!empty($max)) {
                             $max = intval($max);
                             if ($val > $max) {
-                                $set_error('max_len', $field);
+                                $set_error('max_len', [$field,$max]);
                                 continue;
                             }
                         }

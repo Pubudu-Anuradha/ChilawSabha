@@ -1,7 +1,7 @@
 <?php
 class Errors
 {
-    private static function generic(&$message, $id = null, $class = null)
+    public static function generic(&$message, $id = null, $class = null)
     {?>
     <div class="error<?=!is_null($class) ? " $class" : ''?>"
         <?=!is_null($id) ? "id=\"$id\"" : ''?>>
@@ -12,6 +12,13 @@ class Errors
     {
         for ($i = 0; $i < count($arr); ++$i) {
             $arr[$i] = $aliases[$arr[$i]] ?? $arr[$i];
+        }
+    }
+
+    private static function switch_aliases_first_index(&$arr, &$aliases)
+    {
+        for ($i = 0; $i < count($arr); ++$i) {
+            $arr[$i][0] = $aliases[$arr[$i][0]] ?? $arr[$i][0];
         }
     }
 
@@ -54,6 +61,24 @@ class Errors
             Errors::generic($message);
         }
 
+        $min_num_errors = $errors['min'] ?? false;
+        if($min_num_errors !== false) {
+            Errors::switch_aliases_first_index($min_num_errors,$aliases);
+            foreach($min_num_errors as $err){
+                [$field,$min] = $err;
+                Errors::generic("The value in $field must be greater than or equal to $min.");
+            }
+        }
+
+        $max_num_errors = $errors['max'] ?? false;
+        if($max_num_errors !== false) {
+            Errors::switch_aliases_first_index($max_num_errors,$aliases);
+            foreach($max_num_errors as $err){
+                [$field,$max] = $err;
+                Errors::generic("The value in $field must be lower than or equal to $max.");
+            }
+        }
+        
         // TODO: min,max and errors below this
         // * 'l[min:max]' <- String length in inclusive range -> min_len|max_len
         // * 'e'          <- Validate Email -> email
