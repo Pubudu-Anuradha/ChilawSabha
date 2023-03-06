@@ -54,7 +54,7 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
                         pattern:"(\+94\d{9})|\d{10}", value:$old['contact_no'] ?? null);
             Text::text('User\'s NIC', 'nic', 'nic', 'XXXX or XXXXV',required:false, maxlength:12,
                         pattern:"(\d{12})|(\d{10}(V|v))", value:$old['nic'] ?? null);
-
+            ?>  <input type="date" name="dt" id="dt"> <?php
             // ? Maybe do this in controller
             $roles = [];
             foreach ($data['roles'] as $role) {

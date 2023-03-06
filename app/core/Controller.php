@@ -49,6 +49,7 @@ class Controller
         // 'i[min:max]' <- Integer in inclusive range(values are both optional) -> min|max|number
         // 'd[min:max]' <- Same as above but using double -> min|max|number
         // 'l[min:max]' <- String length in inclusive range -> min_len|max_len
+        // 'dt[start_dt:end_dt]' <- DateTime inclusive range -> after|before|date_parse
         // 'e'          <- Validate Email -> email
         // 'u[table]'    <- Check uniqueness -> unique|unique_check
 
@@ -174,7 +175,6 @@ class Controller
                     try {
                         $done = false;
                         foreach($string_length_rule as $_ => $rule){
-                            $rule = $string_length_rule[1] ?? false;
                             $val = strlen($data[$field]);
                             $split = explode(':', ltrim(rtrim($rule, ']'), 'l['));
                             $min = $split[0] ?? '';
@@ -214,6 +214,43 @@ class Controller
                     }
                     continue;
                 }
+
+                $date_range_rule = preg_grep('/^dt\[(\d*-\d*\d*)?:(\d*-\d*-\d*)?\]$/', $rules);
+                if ($date_range_rule !==false && count($date_range_rule) > 1) {
+                    throw new Exception("Too Many Date Range rules. Use only one", 1);
+                } else if (count($date_range_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($date_range_rule as $_ => $rule){
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'dt['));
+                            $start = $split[0] ?? '';
+                            $end = $split[1] ?? '';
+                            $val = IntlCalendar::fromDateTime($data[$field],null);
+                            if (!empty($start)) {
+                                $start = IntlCalendar::fromDateTime($start,null);
+                                if($val->before($start)) {
+                                    $set_error('before', [$field,$start]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            if (!empty($end)) {
+                                $end = IntlCalendar::fromDateTime($end,null);
+                                if($val->after($end)) {
+                                    $set_error('after', [$field,$end]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                        }
+                        if($done) continue;
+                    } catch (Exception $e) {
+                        // Should probably ignore
+                        $set_error('date_parse', $field);
+                        continue;
+                    }
+                }
+
                 // TODO: Add more rules as required
                 // ! MUST UPDATE GENERAL ERROR HANDLER COMPONENT WHEN ADDING NEW RULES
 
