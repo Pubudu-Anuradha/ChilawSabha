@@ -23,7 +23,7 @@
                     </div>
                     <div class="lend-confirm">
                         <button type="button" class="btn white bg-blue" onclick="openModal()">Lend</button>
-                        <?php Modal::Modal(content:'Are You Sure?',textarea:true,title:"Please add a Note",rows:10,cols:50,btnlist:['confirm'=>'closeModal()']); ?>
+                        <?php Modal::Modal(content:'Are You Sure?',textarea:true,title:"Please add a Note",rows:10,cols:50,btnlist:['Confirm'=>'closeModal()']); ?>
                     </div>
                 </div>
                 <div class="status">
