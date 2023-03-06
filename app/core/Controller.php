@@ -226,18 +226,21 @@ class Controller
                             $start = $split[0] ?? '';
                             $end = $split[1] ?? '';
                             $val = IntlCalendar::fromDateTime($data[$field],null);
+                            // ? Return time?
                             if (!empty($start)) {
                                 $start = IntlCalendar::fromDateTime($start,null);
-                                if($val->before($start)) {
-                                    $set_error('before', [$field,$start]);
+                                if($val->before($start) && !$val->equals($start)) {
+                                    $set_error('before', [$field,
+                                                $start->toDateTime()->format('Y-m-d')]);
                                     $done = true;
                                     continue;
                                 }
                             }
                             if (!empty($end)) {
                                 $end = IntlCalendar::fromDateTime($end,null);
-                                if($val->after($end)) {
-                                    $set_error('after', [$field,$end]);
+                                if($val->after($end) && !$val->equals($end)) {
+                                    $set_error('after', [$field,
+                                                $end->toDateTime()->format('Y-m-d')]);
                                     $done = true;
                                     continue;
                                 }

@@ -123,6 +123,32 @@ class Errors
             }
         }
 
+        // * 'dt[start_dt:end_dt]' <- DateTime inclusive range -> after|before|date_parse
+        $before_errors = $errors['before'] ?? false;
+        if($before_errors !== false) {
+            errors::switch_aliases_first_index($before_errors,$aliases);
+            foreach($before_errors as [$field,$start]) {
+                $message = "the date on '$field' has to be after $start.";
+                errors::generic($message);
+            }
+        }
+        $after_errors = $errors['after'] ?? false;
+        if($after_errors !== false) {
+            errors::switch_aliases_first_index($after_errors,$aliases);
+            foreach($after_errors as [$field,$end]) {
+                $message = "the date on '$field' has to be before $end.";
+                errors::generic($message);
+            }
+        }
+        $date_parse_errors = $errors['date_parse'] ?? false;
+        if($date_parse_errors !== false) {
+            Errors::switch_aliases($date_parse_errors,$aliases);
+            foreach($date_parse_errors as $field) {
+                $message = "There was an error while parsing the date you entered on '$field'. Please try again. If the issue persists, please contact the administration.";
+                errors::generic($message);
+            }
+        }
+
         // * extras? -> extra data present in the form? May indicate security risk
         $ext = $errors['extras?'] ?? false;
         if($ext !== false) {
