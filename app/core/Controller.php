@@ -50,6 +50,8 @@ class Controller
         // 'd[min:max]' <- Same as above but using double -> min|max|number
         // 'l[min:max]' <- String length in inclusive range -> min_len|max_len
         // 'e'          <- Validate Email -> email
+        // 'u[table]'    <- Check uniqueness -> unique|unique_check
+
         if (isset($data[$submitMethod])) {
             unset($data[$submitMethod]);
         }
@@ -101,6 +103,7 @@ class Controller
                 // Not empty, Checking rules.
                 // Rules follow the precedence order as set in this function.
                 // No need to worry about rule order when calling the function.
+
                 $unique_rule = preg_grep('/^u\[.*\]$/', $rules) ?? false;
                 if($unique_rule !== false && count($unique_rule) > 1){
                     throw new Exception("Too Many unique rules. Use Only one", 1);
@@ -134,7 +137,6 @@ class Controller
                     try {
                         $done = false;
                         foreach($number_range_rule as $_ => $rule){
-                            echo $rule;
                             $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
                             $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
                             $min = $split[0] ?? '';

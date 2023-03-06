@@ -35,6 +35,7 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
         var_dump($data);
         echo "</pre>";
             Errors::validation_errors($errors,[
+                'email' => "User's email",
                 'address' => 'User\'s Address'
             ]); 
             $warn("Please enter a valid email",'email');

@@ -22,8 +22,7 @@ class Errors
         }
     }
 
-    public static function validation_errors(&$errors, $aliases = [])
-    {
+    public static function validation_errors(&$errors, $aliases = []) {
         // This function is meant to be used to catch all server side error rendering
         // $errors is the generic errors array returned by Controller->validateInputs.
         // $aliases is an optional array with aliases for each field name
@@ -103,6 +102,32 @@ class Errors
                 Errors::generic($message);
             }
         }
+
         // * 'e'          <- Validate Email -> email
+        $email_errors = $errors['email'] ?? false;
+        if($email_errors !== false) {
+            Errors::switch_aliases($email_errors,$aliases);
+            foreach($email_errors as $field){
+                $message = "The email entered on $field is an invalid email. if you believe this is a mistake, please contact the administration.";
+                errors::generic($message);
+            }
+        }
+
+        // * 'u[table]'    <- Check uniqueness -> unique|unique_check
+        $unique_errors = $errors['unique'] ?? false;
+        if($unique_errors !== false) {
+            Errors::switch_aliases($unique_errors,$aliases);
+            foreach($unique_errors as $field) {
+                $message = "The value you entered on '$field' is a already exists in the database. You may need to use another value.";
+                errors::generic($message);
+            }
+        }
+
+        // * extras? -> extra data present in the form? May indicate security risk
+        $ext = $errors['extras?'] ?? false;
+        if($ext !== false) {
+            $message = "Unexpected data detected... Your connection to the website may have been tampered with. Please contact administration.";
+            Errors::generic($message);
+        }
     }
 }
