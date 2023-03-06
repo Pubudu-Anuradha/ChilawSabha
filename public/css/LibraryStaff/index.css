@@ -126,11 +126,14 @@
   gap: 2rem;
 }
 
+.status-content >div> div{
+  cursor: pointer;
+}
+
 .status-dot{
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background-color: var(--green);
 }
 
 .lend-form {

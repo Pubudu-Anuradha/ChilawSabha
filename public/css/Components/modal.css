@@ -5,7 +5,7 @@
   z-index: 1;
   left: 0;
   top: 0;
-  padding-top: 20rem;
+  padding-top: 30vh;
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
@@ -30,6 +30,7 @@
 
 .model-text>p {
   font-size: 1.5rem;
+  margin: 0;
 }
 
 .close-section {
@@ -53,4 +54,10 @@
   align-self: flex-end;
   display: flex;
   gap: 0.5rem;
+}
+
+/* to overide form text area styles. add this modal.css at the end when including */
+.input-field{
+  display: flex;
+  flex-direction: column;
 }
