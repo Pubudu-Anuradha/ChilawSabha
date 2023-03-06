@@ -27,14 +27,16 @@ class Other{
     public static function submit(
         $name, $id = null, $class = null,$value=NULL,$disabled=false
     ) { ?>
-    <div class="input-field">
-        <input type="submit" 
-            name="<?=$name?>"
-            <?=$id ? "id=\"$id\"" : ''?>
-            <?=$class ? "class=\"$class\"" : ''?>
-            <?=$value ? "value=\"$value\"" : ''?>
-            <?=$disabled ? 'disabled' : ''?>
-        />
+    <div class="submitButtonContainer">
+        <div class="submitButton">
+            <input type="submit" 
+                name="<?=$name?>"
+                <?=$id ? "id=\"$id\"" : ''?>
+                <?=$class ? "class=\"$class\"" : ''?>
+                <?=$value ? "value=\"$value\"" : ''?>
+                <?=$disabled ? 'disabled' : ''?>
+            />
+        </div>
     </div>
     <?php
     }

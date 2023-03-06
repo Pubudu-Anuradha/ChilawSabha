@@ -8,6 +8,7 @@ $components = [
   'Pagination/Top and Bottom',
   'Table/Table',
   'Slideshow/Slideshow',
+  'Modal/Modal'
   'Errors/Errors'
 ];
 foreach($components as $component){
