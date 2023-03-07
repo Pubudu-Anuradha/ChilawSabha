@@ -45,20 +45,23 @@
                 <tbody  class="dragdrop">
                     <?php if (!$table['nodata'] && !$table['error']):
                         foreach ($table['result'] as $plrbooks): ?>
-
-	                            <tr draggable="true" class="draggable" id="<?=$plrbooks['accNo']?>">
+	                            <tr draggable="true" class="draggable" id="<?=$plrbooks['accession_no']?>">
 	                                <td>
 	                                    <div class="changeOrder-bar">
 	                                        <button> &#9776; </button>
 	                                    </div>
 	                                </td>
-	                                <td><?=$plrbooks['accNo']?></td>
-	                                <td><?=$plrbooks['Title']?></td>
-	                                <td><?=$plrbooks['Author']?></td>
-	                                <td><?=$plrbooks['Publisher']?></td>
+	                                <td><?=$plrbooks['accession_no']?></td>
+	                                <td><?=$plrbooks['title']?></td>
+	                                <td><?=$plrbooks['author']?></td>
+	                                <td><?=$plrbooks['publisher']?></td>
 	                                <td>
 	                                    <div class="action-btn-set">
-	                                        <button class="btn status-available" disabled>Available</button>
+                                            <?php if($plrbooks['status']=='Available'):?>
+	                                            <button class="btn status-available" disabled>Available</button>
+                                            <?php elseif($plrbooks['status']=='Lent'):?>
+                                                <button class="btn status-available" disabled>Lent</button>
+                                            <?php endif;?>
 	                                    </div>
 	                                </td>
 	                                <td>
@@ -78,13 +81,6 @@
                     <?php endif;?>
                 </tbody>
             </table>
-        </div>
-        <div class="pagination-bar">
-            <div class="pagination-item">1</div>
-            <div class="pagination-item"> 2</div>
-            <div class="pagination-item">3</div>
-            <div class="pagination-item">4</div>
-            <div class="pagination-item"> &#62; </div>
         </div>
     </div>
 </div>
