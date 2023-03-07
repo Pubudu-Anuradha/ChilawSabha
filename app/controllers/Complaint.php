@@ -12,8 +12,8 @@ class Complaint extends Controller
     }
     public function addComplaint()
     {
-        $data = [];
-        if (isset($_POST['submit'])) {
+        // $data = [];
+        // if (isset($_POST['submit'])) {
             // if (
             //     isset($_POST['nameInputField']) && !empty($_POST['nameInputField'])
             //     && isset($_POST['emailInputField']) && !empty($_POST['emailInputField'])
@@ -35,30 +35,28 @@ class Complaint extends Controller
             //     $data['message'] = 'Invalid Parameters';
             // }
 
-            var_dump($_POST);
+            // var_dump($_POST);
+            // $validated = $this -> validateInputs($_POST,['name',
+            // 'email',
+            // 'phone',
+            // 'address' ,
+            // 'select', 
+            // 'message',
+            // 'date']);
+            //     var_dump($validated);
+            // if($validated){
+            //     $model = $this->model('ComplaintModel');
+            //     $data['AddComplaint']= $model -> AddComplaint($validated);
+            // }
+        // }
 
-            $validated = $this -> validateInputs($_POST,['nameInputField',
-            'emailInputField',
-            'phoneInputField',
-            'addressInputField' ,
-            'selectOptionField', 
-            'messageInputField',
-            'dateInputField'],'submit');
-                var_dump($validated);
-            if($validated){
-                $model = $this->model('ComplaintModel');
-                $data['AddComplaint']= $model -> AddComplaint($validated);
-            }
-        }
-
-        $this->view('Complaint/addComplaint', 'Complaint',  $data , ['main', 'complaint']);
-        
-    //  $model = $this->model('ComplaintModel');
-    //  $this->view('Complaint/addComplaint', 'Add Complaint',
-    //  ['AddComplaint' => isset($_POST['submit']) ? $model->addComplaint($this->validateInputs($_POST, [
-    //     'name', 'email', 'mobi_num', 'address', 'category', 'message','date',
-    //  ], 'submit')) : null], ['main', 'complaint']);
-     
+        // $this->view('Complaint/addComplaint', 'Complaint',  $data , ['main', 'complaint']);
+        var_dump($_POST);
+     $model = $this->model('ComplaintModel');
+     $this->view('Complaint/addComplaint', 'Add Complaint',
+     ['AddComplaint' => isset($_POST['submit']) ? $model->addComplaint($this->validateInputs($_POST, [
+        'name', 'email', 'phone', 'address', 'select', 'message','date',
+     ], 'Submit')) : null], ['main', 'complaint']);
     }
 
     // public function viewComplaint()
@@ -87,8 +85,28 @@ class Complaint extends Controller
         $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [], ['main', 'complaint']);
     }
 
-    // public function addNote()
-    // {
-    //     $this->view('Complaint/addNote', 'Add Notes', [], ['main', 'complaint']);
-    // }
+    public function myProcessingClickedComplaint()
+    {
+        $this->view('Complaint/myProcessingClickedComplaint', 'My Working Complaint', [], ['main', 'complaint']);
+    }
+
+    public function myResolvedClickedComplaint()
+    {
+        $this->view('Complaint/myResolvedClickedComplaint', 'My Resolved Complaint', [], ['main', 'complaint']);
+    }
+
+    public function newClickedComplaint()
+    {
+        $this->view('Complaint/newClickedComplaint', 'New Complaint', [], ['main', 'complaint']);
+    }
+    
+    public function otherHandlerProcessingClickedComplaint()
+    {
+        $this->view('Complaint/otherHandlerProcessingClickedComplaint', 'Complaints', [], ['main', 'complaint']);
+    }
+
+    public function otherHandlerResolvedClickedComplaint()
+    {
+        $this->view('Complaint/otherHandlerResolvedClickedComplaint', 'Complaints', [], ['main', 'complaint']);
+    }
 }

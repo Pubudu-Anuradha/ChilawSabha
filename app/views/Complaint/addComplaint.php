@@ -6,42 +6,42 @@
         <h2>
             Complaint Form <hr class="hr1">
         </h2>
-        <!-- <?php var_dump($data); ?> -->
         <div class="formContainer">
             <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
             <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
+            
             <div class="inputfield">
                 <label for="textInput">Complainer Name: </label>
                 <div class="inputDiv">
-                    <input type="text" name="nameInputField" id="textInput" placeholder="Enter Name">
+                    <input type="text" name="name" id="textInput" placeholder="Enter Name">
                 </div>
             </div>
 
             <div class="inputfield">
                 <label for="emailInput">Enter your email: </label>
                 <div class="inputDiv">
-                    <input type="email" id="emailInput" name="emailInputField" placeholder="Enter Email">
+                    <input type="email" id="emailInput" name="email" placeholder="Enter Email">
                 </div>
             </div>
 
             <div class="inputfield">
                 <label for="phoneInput">Enter your phone number:</label>
                 <div class="inputDiv">
-                    <input type="tel" id="phoneInput" name="phoneInputField" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
+                    <input type="tel" id="phoneInput" name="phone" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
                 </div>
             </div>
 
             <div class="inputfield">
                 <label for="textInput">Address: </label>
                 <div class="inputDiv">
-                    <input type="text" name="addressInputField" id="textInput" placeholder="Enter Address">
+                    <input type="text" name="address" id="textInput" placeholder="Enter Address">
                 </div>
             </div>
 
             <div class="inputfield">
                 <label for="selectOption">Choose a name:</label>
                 <div class="inputDiv">
-                    <select id="selectOption" name="selectOptionField">
+                    <select id="selectOption" name="select">
                         <option value="Garbage disposal">Garbage disposal</option>
                         <option value="Land issues">Land issues</option>
                         <option value="Unauthorized construction">Unauthorized construction</option>
@@ -56,22 +56,22 @@
             <div class="inputfield">
                 <label for="noteInput">Briefly Describe your incident:</label>
                 <div class="inputDiv">
-                    <textarea id="noteInput" name="messageInputField" rows="10" cols="30"></textarea>
+                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
                 </div>
             </div>
 
             <div class="inputfield">
                 <label for="noteInput">Date:</label>
                 <div class="inputDiv">
-                    <input id="noteInput" name="dateInputField" placeholder="Date" type="date" required>
+                    <input id="noteInput" name="date" placeholder="Date" type="date" required>
 
                 </div>
             </div>
 
-            <div class="inputfield">
+            <!-- <div class="inputfield">
                 <label for="fileInput">Select a file:</label>
                 <input type="file" id="fileInput" name="fileInputField">
-            </div>
+            </div> -->
 
 
             <div class="submitButtonContainer">
