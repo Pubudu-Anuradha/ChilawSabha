@@ -831,14 +831,6 @@ INSERT INTO `user_type` (`user_type_id`, `user_type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `website_admin`
---
-
-CREATE TABLE `website_admin` (
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
 -- Indexes for dumped tables
 --
 
@@ -1204,11 +1196,6 @@ ALTER TABLE `user_state`
 ALTER TABLE `user_type`
   ADD PRIMARY KEY (`user_type_id`);
 
---
--- Indexes for table `website_admin`
---
-ALTER TABLE `website_admin`
-  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1475,7 +1462,7 @@ ALTER TABLE `completed_books`
 -- Constraints for table `contact_us_persons`
 --
 ALTER TABLE `contact_us_persons`
-  ADD CONSTRAINT `contact_us_added_by` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `contact_us_added_by` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `damaged_books`
@@ -1501,8 +1488,8 @@ ALTER TABLE `disabled_members`
 ALTER TABLE `disabled_staff`
   ADD CONSTRAINT `disabled_staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `staff_disabled_action_fk` FOREIGN KEY (`disabled_action`) REFERENCES `disabled_action` (`disabled_action_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `staff_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `staff_disabled_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `edit_members`
@@ -1514,7 +1501,7 @@ ALTER TABLE `edit_members`
 -- Constraints for table `edit_staff`
 --
 ALTER TABLE `edit_staff`
-  ADD CONSTRAINT `edit_staff-by_fk` FOREIGN KEY (`edited_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `edit_staff-by_fk` FOREIGN KEY (`edited_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `edit_staff_type_fk` FOREIGN KEY (`staff_type`) REFERENCES `staff_type` (`staff_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `edit_staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -1522,7 +1509,7 @@ ALTER TABLE `edit_staff`
 -- Constraints for table `emergency_categories`
 --
 ALTER TABLE `emergency_categories`
-  ADD CONSTRAINT `emergency_category_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `emergency_category_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `emergency_contact`
@@ -1534,7 +1521,7 @@ ALTER TABLE `emergency_contact`
 -- Constraints for table `emergency_places`
 --
 ALTER TABLE `emergency_places`
-  ADD CONSTRAINT `emergency_place_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `emergency_place_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `emergency_place_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `emergency_categories` (`category_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
@@ -1606,7 +1593,7 @@ ALTER TABLE `plan_to_read_books`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_type_fk` FOREIGN KEY (`post_type`) REFERENCES `post_type` (`post_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `posted_by_fk` FOREIGN KEY (`posted_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `posted_by_fk` FOREIGN KEY (`posted_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `post_attachments`
@@ -1662,12 +1649,6 @@ ALTER TABLE `users`
   ADD CONSTRAINT `user_states_fk` FOREIGN KEY (`state_id`) REFERENCES `user_state` (`state_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_type_fk` FOREIGN KEY (`user_type`) REFERENCES `user_type` (`user_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
---
--- Constraints for table `website_admin`
---
-ALTER TABLE `website_admin`
-  ADD CONSTRAINT `website_admin_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

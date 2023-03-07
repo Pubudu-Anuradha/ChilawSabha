@@ -75,4 +75,7 @@ class StaffModel extends Model{
         ];
     }
 
+    public function putEditHistory($data){
+        return $this->insert('edit_staff',$data);
+    }
 }

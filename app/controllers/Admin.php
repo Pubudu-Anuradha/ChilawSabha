@@ -78,6 +78,14 @@ class Admin extends Controller
                                 ['Edit' => !is_null($id) ? $model->editStaff($id,$valid) : null],
                                 $data
                             );
+                            if(($data['Edit']['user']['success'] ?? false) == true) {
+                                $edit_history = array_merge($_POST,[
+                                    'user_id' => $id,
+                                    'edited_by' => $_SESSION['user_id'],
+                                ]);
+                                if(isset($edit_history['Edit'])) unset($edit_history['Edit']);
+                                $model->putEditHistory($edit_history);
+                            }
                         }
                     }
                 }
