@@ -20,18 +20,25 @@ class Admin extends Controller
         $model = $this->model('StaffModel');
         switch ($page) {
             case 'Add':
-                $data = ['roles' => $model->get_roles()['result']];
+                $data = ['roles' => $model->get_roles()['result']??[0=>'error getting roles']];
                 if (isset($_POST['Add'])) {
                     [$valid, $err] = $this->validateInputs($_POST, [
-                        'email|e|u[users]', 'name|l[:255]', 'password|l[:255]', 'address|l[10:255]',
-                        'contact_no', 'nic', 
+                        'email|l[:255]|e|u[users]',
+                        'name|l[:255]',
+                        'password|l[5:]',
+                        'address|l[:255]',
+                        'contact_no|l[10:12]',
+                        'nic|l[10:12]',
                         'role|i[1:4]',
-                        'dt|dt[:2000-09-26]'], 'Add');
+                    ], 'Add');
                     $data['errors'] = $err;
                     $data['old'] = $_POST;
-                    $data = array_merge(count($err) > 0 ?
-                        // Set data according to presence of errors
-                        ['errors' => $err] : ['Add' => $model->addStaff($valid)], $data);
+                    if(count($err) == 0) {
+                        $data = array_merge(
+                            ['Add' => $model->addStaff($valid)],
+                            $data
+                        );
+                    }
                     $this->view('Admin/User/Add', 'Add a new User', $data,
                         ['Components/form']);
                 } else {
@@ -56,7 +63,11 @@ class Admin extends Controller
                 $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['Components/table', 'posts']);
                 break;
             default:
-                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['Components/table', 'posts']);
+                $this->view('Admin/User/index', 'Manage Users',
+                    ['Users' => $model->getStaff(),
+                     'roles' => $model->get_roles()['result']??[0=>'error getting roles']], 
+                     ['Components/table', 'posts']
+                );
         }
     }
     public function Announcements($page = 'index', $id = null)

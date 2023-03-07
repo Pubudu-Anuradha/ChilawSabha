@@ -3,10 +3,10 @@
           $page_title = "User Management";
           echo '<h2 class="analytics-topic">'. $page_title . '</h2>';
     ?>
-    <!-- <hr> -->
+    <hr>
     <?php
     $table = $data['Users'];
-    $roles = ['All'=>'All','Admin'=>'Administrator','LibraryStaff'=>'Library Staff Member','Complaint'=>'Complaint Handler'];
+    $roles = $data['roles'];
     ?>
 
     <script>
@@ -28,9 +28,9 @@
                     Filter by Role
                 </label>
                 <select onchange="send()" name="role" id="role">
-                    <?php foreach ($roles as $role=>$name):?>
-                        <option value="<?=$role?>" <?php if(isset($_GET['role']) && $_GET['role']==$role) {echo 'selected';} ?>>
-                            <?=$name?>
+                    <?php foreach ($roles as $role):?>
+                        <option value="<?=$role['staff_type_id']?>" <?php if(isset($_GET['role']) && $_GET['role']==$role['staff_type_id']) {echo 'selected';} ?>>
+                            <?= $role['staff_type'] ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -59,7 +59,7 @@
                     <td><?= $user['address']?></td>
                     <td><?= $user['contact_no']?></td>
                     <td><?= $user['nic']?></td>
-                    <td><?= $roles[$user['role']]?></td>
+                    <td><?= $user['role']?></td>
                     <td>
                         <div  class="btn-column">
                             <a href="<?=URLROOT . '/Admin/Users/Edit/' . $user['user_id']?>" class="btn bg-yellow edit"> Edit </a>
@@ -73,7 +73,6 @@
                     <tr>
                         <td colspan="8">
                             No matching Users 
-                            <?php var_dump($data); ?>
                         </td>
                     </tr>
                 <?php endif; ?>

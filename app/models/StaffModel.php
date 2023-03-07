@@ -1,8 +1,8 @@
 <?php 
 class StaffModel extends Model{
-    public function getStaff($state='working')
+    public function getStaff($state=1)
     {
-        $condidions = ["s.state='$state'"];
+        $conditions = ["us.state_id=$state"];
         if(isset($_GET['search']) && !empty($_GET['search'])){
             $search_term = mysqli_real_escape_string($this->conn,$_GET['search']);
             $search_fields = [
@@ -10,24 +10,26 @@ class StaffModel extends Model{
                 'u.name',
                 'u.address',
                 'u.contact_no',
-                's.NIC',
+                's.nic',
             ];
             for($i = 0;$i<count($search_fields);++$i){
                 $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
             }
-            array_push($condidions,'('.implode(' || ',$search_fields).')');
+            array_push($conditions,'('.implode(' || ',$search_fields).')');
         }
 
-        if(isset($_GET['role']) && !empty($_GET['role']) && $_GET['role']!='All'){
+        if(isset($_GET['role']) && !empty($_GET['role']) && $_GET['role']!='0'){
             $role = mysqli_real_escape_string($this->conn,$_GET['role']);
-            array_push($condidions,"s.role = '$role'");
+            array_push($conditions,"st.staff_type_id = '$role'");
         }
         
-        $condidions = implode(' && ',$condidions);
+        $conditions = implode(' && ',$conditions);
         
-        return $this->selectPaginated('user u join staff s on u.user_id=s.user_id and u.type="Staff"',
-        'u.user_id as user_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,s.state as state,s.nic as nic,s.role as role',
-        $condidions);
+        return $this->selectPaginated(
+            'users u join user_state us join staff s join staff_type st
+             on u.user_id=s.user_id and us.state_id=u.state_id and u.user_type=1 and st.staff_type_id=s.staff_type',
+        'u.user_id as user_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,us.state as state,s.nic as nic,st.staff_type as role',
+        $conditions);
     }
 
     public function get_roles(){
