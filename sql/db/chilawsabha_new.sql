@@ -350,7 +350,7 @@ CREATE TABLE `edit_staff` (
   `nic` varchar(15) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contact_no` int(11) DEFAULT NULL,
+  `contact_no` varchar(12) DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL,
   `edited_by` int(11) NOT NULL,
   `edited_time` timestamp NOT NULL DEFAULT current_timestamp()
@@ -609,7 +609,7 @@ CREATE TABLE `post_attachments` (
 CREATE TABLE `post_contact` (
   `post_id` int(11) NOT NULL,
   `contact_name` varchar(100) NOT NULL,
-  `contact_no` int(11) NOT NULL
+  `contact_no` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -773,7 +773,7 @@ CREATE TABLE `users` (
   `user_type` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `contact_no` int(11) NOT NULL,
+  `contact_no` varchar(12) NOT NULL,
   `address` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `password_reset_code` varchar(20) DEFAULT NULL,
@@ -785,10 +785,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `user_type`, `state_id`, `name`, `contact_no`, `address`, `password_hash`, `password_reset_code`, `reset_code_time`) VALUES
-(1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', 761323251, 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', 761323250, 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', 761323249, 'Marawila', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayake', 761323248, 'Uraliyagara', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL);
+(1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', '0761323251', 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', '0761323250', 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', '0761323249', 'Marawila', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayake', '0761323248', 'Uraliyagara', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL);
 
 -- --------------------------------------------------------
 

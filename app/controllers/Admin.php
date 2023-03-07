@@ -47,9 +47,43 @@ class Admin extends Controller
                 }
                 break;
             case 'Edit':
-                $this->view('Admin/User/Edit', 'Edit User', ['edit' => isset($_POST['Edit']) ? $model->editStaff($id, $this->validateInputs($_POST, [
-                    'email', 'name', 'address', 'contact_no',
-                ], 'Edit')) : null, 'staff' => $id != null ? $model->getStaffbyID($id) : false], ['Components/form']);
+                $data = [];
+                if(isset($_POST['Edit'])){
+                    $changes = [];
+                    $current_user = $model->getStaffByID($id)['result'][0];
+                    $validator = [
+                       'email' => 'email|u[users]|l[:255]|e',
+                       'name' => 'name|l[:255]',
+                       'address' => 'address|l[:255]',
+                       'contact_no' => 'contact_no|l[10:12]',
+                    ];
+                    foreach($current_user as $field=>$value){
+                        if(isset($_POST[$field])){
+                            if($_POST[$field] !== $value){
+                                if($validator[$field] ?? false){
+                                    $changes[] = $validator[$field];
+                                }
+                            }else{
+                                unset($_POST[$field]);
+                            }
+                        }
+                    }
+
+                    if(count($changes) > 0){
+                        [$valid, $err] = $this->validateInputs($_POST, $changes , 'Edit');
+                        $data['errors'] = $err;
+                        $data['old'] = $_POST;
+                        if(count($err) == 0) {
+                            $data = array_merge(
+                                ['Edit' => !is_null($id) ? $model->editStaff($id,$valid) : null],
+                                $data
+                            );
+                        }
+                    }
+                }
+                $this->view('Admin/User/Edit', 'Edit user', array_merge(
+                    ['staff' => $id != null ? $model->getStaffByID($id) : false],$data),
+                    ['Components/form']);
                 break;
             case 'Enable':
                 $id != null ? $model->changestate($id, 'working') : false;

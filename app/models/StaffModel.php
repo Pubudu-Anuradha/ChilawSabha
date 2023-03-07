@@ -36,11 +36,12 @@ class StaffModel extends Model{
         return $this->select('staff_type');
     }
 
-    public function getStaffbyID($id)
+    public function getStaffByID($id)
     {
-        return $this->select('user u join staff s on u.user_id=s.user_id and u.type="Staff"',
-        'u.user_id as user_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,s.state as state,s.nic as nic,s.role as role',
-        "s.state='working' && u.user_id=$id");
+        return $this->select('users u join user_state us join staff s join staff_type st
+             on u.user_id=s.user_id and us.state_id=u.state_id and u.user_type=1 and st.staff_type_id=s.staff_type',
+        'u.user_id as user_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,us.state as state,s.nic as nic,st.staff_type as role',
+        "u.user_id=$id");
     }
 
     public function addStaff($user)
@@ -59,11 +60,12 @@ class StaffModel extends Model{
 
     }
     public function editStaff($id,$data){
-        $user = $this->update('user',$data,"user_id=$id");
+        $user = $this->update('users',$data,"user_id=$id");
         return[
-            'user' =>$user,
+            'user' => $user,
         ];
     }
+    
     public function changeState($id,$state){
         $user = $this->update('staff',[
             'state'=>$state
