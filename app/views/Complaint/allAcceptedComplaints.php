@@ -20,7 +20,6 @@
                         <th>Category</th>
                         <th>Handler Name</th>
                         <th>Date</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -29,12 +28,12 @@
                         <td>11</td>
                         <td>W.P Alwis</td>
                         <td>Garbage Disposal</td>
-                        <td>C.V. Perera</td>
+                        <td>W.M.S.M. Dissanayake</td>
                         <td>2022.12.15</td>
-                        <td>Processing</td>
                         <td>
                             <div class="btn-column">
-                                <button class="btn view">View</button>
+                                <!-- If the complaint is a my working complaint -->
+                                <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myProcessingClickedComplaint"?>"'>View</button>
                             </div>
                         </td>
                     </tr>
@@ -45,10 +44,10 @@
                         <td>Garbage Disposal</td>
                         <td>C.V. Perera</td>
                         <td>2022.12.30</td>
-                        <td>Resolved</td>
                         <td>
                             <div class="btn-column">
-                                <button class="btn view">View</button>
+                                <!-- If the complaint is a other handler's working complaint -->
+                                <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/otherHandlerProcessingClickedComplaint"?>"' >View</button>
                             </div>
                         </td>
                     </tr>
@@ -59,7 +58,6 @@
                         <td>Garbage Disposal</td>
                         <td>C.V. Perera</td>
                         <td>2022.12.31</td>
-                        <td>Processing</td>
                         <td>
                             <div class="btn-column">
                                 <button class="btn view">View</button>
@@ -82,7 +80,6 @@
                         <th>Category</th>
                         <th>Handler Name</th>
                         <th>Date</th>
-                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -91,12 +88,11 @@
                         <td>12</td>
                         <td>W.P Alwis</td>
                         <td>Garbage Disposal</td>
-                        <td>C.V. Perera</td>
+                        <td>W.M.S.M Dissanayake</td>
                         <td>2022.12.15</td>
-                        <td>Processing</td>
                         <td>
                             <div class="btn-column">
-                                <button class="btn view">View</button>
+                                <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myResolvedClickedComplaint"?>"'>View</button>
                             </div>
                         </td>
                     </tr>
@@ -107,10 +103,9 @@
                         <td>Garbage Disposal</td>
                         <td>C.V. Perera</td>
                         <td>2022.12.30</td>
-                        <td>Resolved</td>
                         <td>
                             <div class="btn-column">
-                                <button class="btn view">View</button>
+                                <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/otherHandlerResolvedClickedComplaint"?>"'>View</button>
                             </div>
                         </td>
                     </tr>
@@ -121,7 +116,6 @@
                         <td>Garbage Disposal</td>
                         <td>C.V. Perera</td>
                         <td>2022.12.31</td>
-                        <td>Processing</td>
                         <td>
                             <div class="btn-column">
                                 <button class="btn view">View</button>

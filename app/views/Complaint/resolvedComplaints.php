@@ -21,7 +21,7 @@
                     <td>2022.12.15</td>
                     <td>
                         <div  class="btn-column">
-                            <button class="btn view">View</button>
+                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myResolvedClickedComplaint"?>"'>View</button>
                         </div>
                     </td>
                 </tr>
