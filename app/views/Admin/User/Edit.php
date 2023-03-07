@@ -44,23 +44,29 @@ if(!is_null($staff)): ?>
 
         <?php
         $edit_history = $data['edit_history'] ?? false;
-        if($edit_history !== false) {
-            $post = $staff;
+        if($edit_history !== false && count($edit_history) !== 0): ?>
+        <h2>Edit History</h2>
+        <hr>
+<?php       $post = $staff;
             $fields = [
                 'email' => "Email",
                 'name' => 'Name',
                 'address' => 'Address',
                 'contact_no' => 'Contact number',
             ]; 
-            foreach($edit_history as $edit) {
-                foreach($fields as $field => $name){
-                    if($edit[$field] !== null && $edit[$field] !== $post[$field]){
-                        echo $edit['time'].$edit['changed_by']." $name " . $edit[$field] . "=>" . $post[$field] . "<br>";
-                        $post[$field] = $edit[$field];
-                    }
-                }
-            }
-        }
+            foreach($edit_history as $edit): 
+                foreach($fields as $field => $name):
+                    if($edit[$field] !== null && $edit[$field] !== $post[$field]): ?>
+                    <div class="record">
+                        on <span class="time"> <?= $edit['time'] ?> </span> :
+                        <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from 
+                        "<?= $edit[$field] ?>" to "<?=$post[$field]?>".
+                    </div>
+                        <?php $post[$field] = $edit[$field];
+                    endif;
+                endforeach;
+            endforeach;
+        endif;
         ?>
     </div>
 <?php else:?>
