@@ -41,6 +41,27 @@ if(!is_null($staff)): ?>
                         pattern:"(\+94\d{9})|0\d{9}", value:$staff['contact_no'] ?? null);
             Other::submit('Edit','Edit',value:'Save Changes'); ?>
         </form>
+
+        <?php
+        $edit_history = $data['edit_history'] ?? false;
+        if($edit_history !== false) {
+            $post = $staff;
+            $fields = [
+                'email' => "Email",
+                'name' => 'Name',
+                'address' => 'Address',
+                'contact_no' => 'Contact number',
+            ]; 
+            foreach($edit_history as $edit) {
+                foreach($fields as $field => $name){
+                    if($edit[$field] !== null && $edit[$field] !== $post[$field]){
+                        echo $edit['time'].$edit['changed_by']." $name " . $edit[$field] . "=>" . $post[$field] . "<br>";
+                        $post[$field] = $edit[$field];
+                    }
+                }
+            }
+        }
+        ?>
     </div>
 <?php else:?>
     ERROR retrieving user information

@@ -20,7 +20,7 @@ class Admin extends Controller
         $model = $this->model('StaffModel');
         switch ($page) {
             case 'Add':
-                $data = ['roles' => $model->get_roles()['result']??[0=>'error getting roles']];
+                $data = ['roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']];
                 if (isset($_POST['Add'])) {
                     [$valid, $err] = $this->validateInputs($_POST, [
                         'email|l[:255]|e|u[users]',
@@ -33,7 +33,7 @@ class Admin extends Controller
                     ], 'Add');
                     $data['errors'] = $err;
                     $data['old'] = $_POST;
-                    if(count($err) == 0) {
+                    if (count($err) == 0) {
                         $data = array_merge(
                             ['Add' => $model->addStaff($valid)],
                             $data
@@ -48,49 +48,62 @@ class Admin extends Controller
                 break;
             case 'Edit':
                 $data = [];
-                if(isset($_POST['Edit'])){
+                if (isset($_POST['Edit'])) {
                     $changes = [];
                     $current_user = $model->getStaffByID($id)['result'][0];
                     $validator = [
-                       'email' => 'email|u[users]|l[:255]|e',
-                       'name' => 'name|l[:255]',
-                       'address' => 'address|l[:255]',
-                       'contact_no' => 'contact_no|l[10:12]',
+                        'email' => 'email|u[users]|l[:255]|e',
+                        'name' => 'name|l[:255]',
+                        'address' => 'address|l[:255]',
+                        'contact_no' => 'contact_no|l[10:12]',
                     ];
-                    foreach($current_user as $field=>$value){
-                        if(isset($_POST[$field])){
-                            if($_POST[$field] !== $value){
-                                if($validator[$field] ?? false){
+                    foreach ($current_user as $field => $value) {
+                        if (isset($_POST[$field])) {
+                            if ($_POST[$field] !== $value) {
+                                if ($validator[$field] ?? false) {
                                     $changes[] = $validator[$field];
                                 }
-                            }else{
+                            } else {
                                 unset($_POST[$field]);
                             }
                         }
                     }
 
-                    if(count($changes) > 0){
-                        [$valid, $err] = $this->validateInputs($_POST, $changes , 'Edit');
+                    if (count($changes) > 0) {
+                        [$valid, $err] = $this->validateInputs($_POST, $changes, 'Edit');
                         $data['errors'] = $err;
                         $data['old'] = $_POST;
-                        if(count($err) == 0) {
+                        if (count($err) == 0) {
                             $data = array_merge(
-                                ['Edit' => !is_null($id) ? $model->editStaff($id,$valid) : null],
+                                ['Edit' => !is_null($id) ? $model->editStaff($id, $valid) : null],
                                 $data
                             );
-                            if(($data['Edit']['user']['success'] ?? false) == true) {
-                                $edit_history = array_merge($_POST,[
+                            if (($data['Edit']['user']['success'] ?? false) == true) {
+                                $edit_history = [];
+                                foreach($valid as $field => $value) {
+                                    $edit_history[$field] = $current_user[$field];
+                                }
+                                $edit_history = array_merge($edit_history, [
                                     'user_id' => $id,
                                     'edited_by' => $_SESSION['user_id'],
                                 ]);
-                                if(isset($edit_history['Edit'])) unset($edit_history['Edit']);
+                                if (isset($edit_history['Edit'])) {
+                                    unset($edit_history['Edit']);
+                                }
+
                                 $model->putEditHistory($edit_history);
                             }
                         }
                     }
                 }
+                if ($id != null) {
+                    $res = $model->getEditHistory($id)['result'] ?? false;
+                    if (!($res['nodata'] ?? false)) {
+                        $data['edit_history'] = $res;
+                    }
+                }
                 $this->view('Admin/User/Edit', 'Edit user', array_merge(
-                    ['staff' => $id != null ? $model->getStaffByID($id) : false],$data),
+                    ['staff' => $id != null ? $model->getStaffByID($id) : false], $data),
                     ['Components/form']);
                 break;
             case 'Enable':
@@ -107,8 +120,8 @@ class Admin extends Controller
             default:
                 $this->view('Admin/User/index', 'Manage Users',
                     ['Users' => $model->getStaff(),
-                     'roles' => $model->get_roles()['result']??[0=>'error getting roles']], 
-                     ['Components/table', 'posts']
+                        'roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']],
+                    ['Components/table', 'posts']
                 );
         }
     }
