@@ -57,22 +57,18 @@ class StaffModel extends Model{
             $user['role'],
             $_SESSION['user_id']
         ]);
+    }
 
-    }
     public function editStaff($id,$data){
-        $user = $this->update('users',$data,"user_id=$id");
-        return[
-            'user' => $user,
-        ];
+        $user_id = mysqli_real_escape_string($this->conn,$id);
+        return $this->update('users',$data,"user_id='$user_id' and user_type=1");
     }
-    
+
     public function changeState($id,$state){
-        $user = $this->update('staff',[
-            'state'=>$state
-        ],"user_id=$id");
-        return[
-            'user' =>$user,
-        ];
+        $user_id = mysqli_real_escape_string($this->conn,$id);
+        return ($state == 1 || $state == 2) ? $this->update('users',[
+            'state_id'=>$state
+        ],"user_id='$user_id' and user_type=1") : false;
     }
 
     public function putEditHistory($data){

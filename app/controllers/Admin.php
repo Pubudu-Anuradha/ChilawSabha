@@ -104,18 +104,21 @@ class Admin extends Controller
                 }
                 $this->view('Admin/User/Edit', 'Edit user', array_merge(
                     ['staff' => $id != null ? $model->getStaffByID($id) : false], $data),
-                    ['Components/form']);
+                    ['Components/form','Admin/index']);
                 break;
             case 'Enable':
-                $id != null ? $model->changestate($id, 'working') : false;
-                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
+                $id != null ? $model->changeState($id, 1) : false;
+                $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['staff' => $id != null ? $model->getStaffByID($id) : false,'Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
                 break;
             case 'Disabled':
                 $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
                 break;
             case 'Disable':
-                $id != null ? $model->changestate($id, 'disabled') : false;
-                $this->view('Admin/User/index', 'Manage Users', ['Users' => $model->getStaff()], ['Components/table', 'posts']);
+                $id != null ? $model->changeState($id, 2) : false;
+                $this->view('Admin/User/index', 'Manage Users', [
+                    'disabled' => $id != null ? $model->getStaffByID($id) : false,
+                    'Users' => $model->getStaff()
+                ], ['Components/table', 'posts']);
                 break;
             default:
                 $this->view('Admin/User/index', 'Manage Users',

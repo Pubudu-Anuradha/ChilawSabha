@@ -4,7 +4,7 @@ $page_title = "User Management";
 echo '<h2 class="analytics-topic">'. $page_title . '</h2> <hr />';
 $table = $data['Users'];
 $roles = $data['roles'] ?? [];
-
+$user_disabled = $data['disabled']['result'][0]?? false;
 $roles_assoc = [];
 foreach($roles as $role) {
     $roles_assoc[''.$role['staff_type_id']] = $role['staff_type'];   
@@ -22,6 +22,12 @@ $aliases = [
     'nic' => 'NIC number',
     'role' => 'User Role'
 ];
+
+if($user_disabled !== false){
+    $message = '<b>' . $user_disabled['name'] . '(' . $user_disabled['email'] .
+               ')</b> was disabled.';
+    Errors::generic($message);
+}
 
 Table::Table($aliases,$table['result'],actions:[
     'Edit' => [[URLROOT . '/Admin/Users/Edit/%s', 'user_id'],'bg-yellow edit'],    
