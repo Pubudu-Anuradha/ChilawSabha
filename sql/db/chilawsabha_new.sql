@@ -748,8 +748,7 @@ CREATE TABLE `staff_type` (
 INSERT INTO `staff_type` (`staff_type_id`, `staff_type`) VALUES
 (1, 'Website Admin'),
 (2, 'Library Staff'),
-(3, 'Complaint Handler'),
-(4, 'Storage Manager');
+(3, 'Complaint Handler');
 
 -- --------------------------------------------------------
 

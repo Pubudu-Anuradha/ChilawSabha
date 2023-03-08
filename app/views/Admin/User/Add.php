@@ -52,8 +52,10 @@ $old = $data['old'] ?? false;
                         value:$old['nic'] ?? null);
             // ? Maybe do this in controller
             $roles = [];
-            foreach ($data['roles'] as $role) {
-                $roles[$role['staff_type_id']] = $role['staff_type'];
+            foreach (array_reverse($data['roles']) as $role) {
+                if($role['staff_type_id'] != 0){ // All isn't a valid role.
+                    $roles[$role['staff_type_id']] = $role['staff_type'];
+                }
             }
 
             Group::select('Role', 'role', $roles, 'role',
@@ -65,4 +67,25 @@ $old = $data['old'] ?? false;
 </div>
 <script>
     expandSideBar('sub-items-user');
+    const roleSelector = document.querySelector('select#role');
+    console.log(roleSelector);
+    const submitButton = document.querySelector('input#add');
+    const warnIfAdmin = (e) => {
+        roleSelector.querySelectorAll('option').forEach(option => {
+            // console.log(option.selected,option.value)
+            if(option.value == '1' && option.selected) {
+                alert('You are about to add an Admin. Admins have the power to alter website content and add users as they please. Proceed only if absolutely necessary.');
+                roleSelector.style.backgroundColor = 'red';
+                roleSelector.style.fontWeight = 'bolder';
+                submitButton.style.backgroundColor = 'red';
+                submitButton.value = "Add an Admin User";
+            }else{
+                roleSelector.style.backgroundColor = 'var(--fadedblue)';
+                roleSelector.style.fontWeight = 'normal';
+                submitButton.style.backgroundColor = 'var(--blue)';
+                submitButton.value = "Add User";
+            }
+        });
+    }
+    roleSelector.addEventListener('change',warnIfAdmin);
 </script>
