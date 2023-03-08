@@ -5,6 +5,7 @@ echo '<h2 class="analytics-topic">'. $page_title . '</h2> <hr />';
 $table = $data['Users'];
 $roles = $data['roles'] ?? [];
 $user_disabled = $data['disabled']['result'][0]?? false;
+$disable_error = $data['disable_error'] ?? false;
 $roles_assoc = [];
 foreach($roles as $role) {
     $roles_assoc[''.$role['staff_type_id']] = $role['staff_type'];   
@@ -22,6 +23,11 @@ $aliases = [
     'nic' => 'NIC number',
     'role' => 'User Role'
 ];
+
+if($disable_error) {
+    $message = "There was an error while disabling user";
+    Errors::generic($message);
+}
 
 if($data['self_disable_error'] ?? false) {
     $message = '<b>You are not allowed to disable yourself</b>';

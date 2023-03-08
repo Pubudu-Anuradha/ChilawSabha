@@ -64,8 +64,40 @@ class StaffModel extends Model {
         return $this->update('users',$data,"user_id='$user_id' and user_type=1");
     }
 
-    public function changeState($id,$state){
+    public function changeState($id,$state,$reason=[]){
         $user_id = mysqli_real_escape_string($this->conn,$id);
+        if($state == 2) {
+            $reason['user_id'] = $user_id;
+            $reason['disabled_by'] = $_SESSION['user_id'];
+            var_dump($reason);
+            $res = $this -> insert('disabled_staff',$reason);
+            var_dump($res);
+            if($res){
+                return $this->update('users',[
+                    'state_id'=> 2
+                ],"user_id='$user_id' and user_type=1");
+            }
+            return false;
+        }else if($state == 1) {
+            $last_disable = $this->select(
+                'disabled_staff','disable_id',"user_id='$user_id' and re_enabled_by IS NULL and re_enabled_reason IS NULL and re_enabled_time IS NULL")
+                ['result'][0]['disable_id'] ?? false;
+            if($last_disable !== false) {
+                $re_by = $_SESSION['user_id'];
+                $reason = mysqli_real_escape_string($this->conn,$reason['re_enabled_reason']);
+                $query = "UPDATE disabled_staff SET re_enabled_by='$re_by', 
+                          re_enabled_reason='$reason',re_enabled_time=current_timestamp() 
+                          WHERE disable_id='$last_disable'";
+                $result = $this->conn->query($query);
+                if($result) {
+                    return $this->update('users',[
+                        'state_id'=> 1
+                    ],"user_id='$user_id' and user_type=1");
+                }
+                return false;
+            }
+            return false;
+        }
         return ($state == 1 || $state == 2) ? $this->update('users',[
             'state_id'=>$state
         ],"user_id='$user_id' and user_type=1") : false;

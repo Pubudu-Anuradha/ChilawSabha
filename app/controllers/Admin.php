@@ -106,16 +106,57 @@ class Admin extends Controller
                     ['staff' => $id != null ? $model->getStaffByID($id) : false], $data),
                     ['Components/form','Admin/index']);
                 break;
+            case 'Disable':
+                if(isset($_POST['confirm'])){
+                    $error = false;
+                    if($id != null && $id!=$_SESSION['user_id']) {
+                        [$valid,$err] = $this->validateInputs($_POST,[
+                            'disable_reason|l[:255]'
+                        ],'confirm');
+                        if($model->changeState($id, 2, $valid) == false){
+                            $id = null;
+                            $error = true;
+                        }
+                    }
+                    $this->view('Admin/User/index', 'Manage Users', [
+                        'disabled' => ($id != null && $id != $_SESSION['user_id']) ?
+                        $model->getStaffByID($id) : false,
+                        'disable_error' => $error,
+                        'self_disable_error' => ($id != null && $id == $_SESSION['user_id']),
+                        'Users' => $model->getStaff(),
+                        'roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']
+                    ], ['Components/table', 'posts']);
+                } else {
+                    $this->view('Admin/User/Disable', 'Disable User' ,[
+                    'disabled' => ($id != null && $id != $_SESSION['user_id']) ?
+                    $model->getStaffByID($id) : false,
+                    ],['Components/form']);
+                }
+                break;
             case 'Enable':
-                // $id != null ? $model->changeState($id, 1) : false;
-                // $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['staff' => $id != null ? $model->getStaffByID($id) : false,'Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
-                $data = [];
-                $model->changeState($id, 1);
-                $this->view('Admin/User/Disabled', 'Manage Disabled Users', [
-                    'enabled' => $id != null ? $model->getStaffByID($id) : false,
-                    'Users' => $model->getStaff(2),
-                    'roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']
-                ], ['Components/table', 'posts']);
+                if(isset($_POST['confirm'])) {
+                    $error = false;
+                    if($id != null && $id!=$_SESSION['user_id']) {
+                        [$valid,$err] = $this->validateInputs($_POST,[
+                            're_enabled_reason|l[:255]'
+                        ],'confirm');
+                        if($model->changeState($id, 1, $valid) == false){
+                            $id = null;
+                            $error = true;
+                        }
+                    }
+                    $this->view('Admin/User/Disabled', 'Manage Disabled Users', [
+                        'enabled' => $id != null ? $model->getStaffByID($id) : false,
+                        'enable_error' => $error,
+                        'Users' => $model->getStaff(2),
+                        'roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']
+                    ], ['Components/table', 'posts']);
+                }else{
+                    $this->view('Admin/User/Enable', 'Re-Enable User' ,[
+                    'enable' => ($id != null && $id != $_SESSION['user_id']) ?
+                    $model->getStaffByID($id) : false,
+                    ],['Components/form']);
+                }
                 break;
             case 'Disabled':
                 $this->view('Admin/User/Disabled', 'Manage Disabled Users',
@@ -124,19 +165,6 @@ class Admin extends Controller
                     ['Components/table', 'posts']
                 );
                 // $this->view('Admin/User/Disabled', 'Manage Disabled Users', ['Users' => $model->getStaff('disabled')], ['Components/table', 'posts']);
-                break;
-            case 'Disable':
-                $data = [];
-                if($id != null && $id!=$_SESSION['user_id']) {
-                    $model->changeState($id, 2);
-                }
-                $this->view('Admin/User/index', 'Manage Users', [
-                    'disabled' => ($id != null && $id != $_SESSION['user_id']) ?
-                    $model->getStaffByID($id) : false,
-                    'self_disable_error' => ($id != null && $id == $_SESSION['user_id']),
-                    'Users' => $model->getStaff(),
-                    'roles' => $model->get_roles()['result'] ?? [0 => 'error getting roles']
-                ], ['Components/table', 'posts']);
                 break;
             default:
                 $this->view('Admin/User/index', 'Manage Users',

@@ -269,25 +269,6 @@ CREATE TABLE `damaged_books` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `disabled_action`
---
-
-CREATE TABLE `disabled_action` (
-  `disabled_action_id` int(11) NOT NULL,
-  `disabled_action` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `disabled_action`
---
-
-INSERT INTO `disabled_action` (`disabled_action_id`, `disabled_action`) VALUES
-(1, 'Re-Enable'),
-(2, 'Re-Enabled');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `disabled_members`
 --
 
@@ -297,7 +278,6 @@ CREATE TABLE `disabled_members` (
   `disable_description` varchar(100) NOT NULL,
   `disabled_by` int(11) NOT NULL,
   `disabled_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `disabled_action` int(11) NOT NULL,
   `re_enabled_desscription` varchar(100) DEFAULT NULL,
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_time` timestamp NULL DEFAULT NULL
@@ -315,10 +295,9 @@ CREATE TABLE `disabled_staff` (
   `disable_reason` varchar(255) NOT NULL,
   `disabled_by` int(11) NOT NULL,
   `disabled_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `disabled_action` int(11) NOT NULL,
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_reason` varchar(255) DEFAULT NULL,
-  `re_enabled_time` timestamp NULL DEFAULT current_timestamp()
+  `re_enabled_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -944,12 +923,6 @@ ALTER TABLE `damaged_books`
   ADD KEY `damaged_book_action_fk` (`damaged_action`);
 
 --
--- Indexes for table `disabled_action`
---
-ALTER TABLE `disabled_action`
-  ADD PRIMARY KEY (`disabled_action_id`);
-
---
 -- Indexes for table `disabled_members`
 --
 ALTER TABLE `disabled_members`
@@ -957,7 +930,6 @@ ALTER TABLE `disabled_members`
   ADD KEY `disabled_user_id_fk` (`user_id`),
   ADD KEY `member_disabled_by_fk` (`disabled_by`),
   ADD KEY `member_re_enabled_by_fk` (`re_enabled_by`),
-  ADD KEY `member_disabled_action_fk` (`disabled_action`);
 
 --
 -- Indexes for table `disabled_staff`
@@ -965,7 +937,6 @@ ALTER TABLE `disabled_members`
 ALTER TABLE `disabled_staff`
   ADD PRIMARY KEY (`disable_id`),
   ADD KEY `disabled_staff_user_id_fk` (`user_id`),
-  ADD KEY `staff_disabled_action_fk` (`disabled_action`),
   ADD KEY `staff_disabled_by_fk` (`disabled_by`),
   ADD KEY `staff_disabled_re_enabled_by_fk` (`re_enabled_by`);
 
@@ -1267,12 +1238,6 @@ ALTER TABLE `damaged_books`
   MODIFY `damaged_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `disabled_action`
---
-ALTER TABLE `disabled_action`
-  MODIFY `disabled_action_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `disabled_members`
 --
 ALTER TABLE `disabled_members`
@@ -1477,7 +1442,6 @@ ALTER TABLE `damaged_books`
 --
 ALTER TABLE `disabled_members`
   ADD CONSTRAINT `disabled_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `library_member` (`member_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `member_disabled_action_fk` FOREIGN KEY (`disabled_action`) REFERENCES `disabled_action` (`disabled_action_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `member_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `library_staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `member_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `library_staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -1486,7 +1450,6 @@ ALTER TABLE `disabled_members`
 --
 ALTER TABLE `disabled_staff`
   ADD CONSTRAINT `disabled_staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_action_fk` FOREIGN KEY (`disabled_action`) REFERENCES `disabled_action` (`disabled_action_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `staff_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `staff_disabled_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
