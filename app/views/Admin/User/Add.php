@@ -63,3 +63,6 @@ $old = $data['old'] ?? false;
         </form>
     </div>
 </div>
+<script>
+    expandSideBar('sub-items-user');
+</script>

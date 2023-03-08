@@ -4,7 +4,7 @@ class LibraryStaff extends Controller
 {
     public function __construct()
     {
-        $this->authenticateRole('LibraryStaff');
+        // $this->authenticateRole('LibraryStaff');
     }
 
     public function index()

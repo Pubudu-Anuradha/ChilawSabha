@@ -73,3 +73,6 @@ if(!is_null($staff)): ?>
     ERROR retrieving user information
 <?php endif;?>
 </div>
+<script>
+    expandSideBar('sub-items-user');
+</script>

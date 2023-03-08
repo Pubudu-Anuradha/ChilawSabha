@@ -1,5 +1,5 @@
 <?php 
-class StaffModel extends Model{
+class StaffModel extends Model {
     public function getStaff($state=1)
     {
         $conditions = ["us.state_id=$state"];

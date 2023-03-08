@@ -23,13 +23,18 @@ $aliases = [
     'role' => 'User Role'
 ];
 
+if($data['self_disable_error'] ?? false) {
+    $message = '<b>You are not allowed to disable yourself</b>';
+    Errors::generic($message);
+}
+
 if($user_disabled !== false){
     $message = '<b>' . $user_disabled['name'] . '(' . $user_disabled['email'] .
                ')</b> was disabled.';
     Errors::generic($message);
 }
 
-Table::Table($aliases,$table['result'],actions:[
+Table::Table($aliases,$table['result'],id:"pdf",actions:[
     'Edit' => [[URLROOT . '/Admin/Users/Edit/%s', 'user_id'],'bg-yellow edit'],    
     'Disable' => [[URLROOT . '/Admin/Users/Disable/%s', 'user_id'],'bg-red delist'],    
 ],empty:count($table['result']??[])==0,empty_msg:'No matching users found'); 
@@ -39,6 +44,9 @@ Pagination::bottom('filter-form', $data['Users']['page'], $data['Users']['count'
     <input type="button" onclick="generate('#pdf','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
 
 </div>
+<script>
+    expandSideBar('sub-items-user');
+</script>
 
 <script>
     function generate(id,title,num_of_cloumns) {
