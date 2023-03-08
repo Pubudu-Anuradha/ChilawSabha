@@ -128,7 +128,7 @@ INSERT INTO `users` (`user_id`, `email`, `user_type`, `state_id`, `name`, `conta
 (1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', '0761323251', 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
 (2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', '0761323250', 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
 (3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', '0761323249', 'Marawala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(4, 'sandaru@gmail.com', 1, 2, 'Sandaru Dissanayakee', '0761323248', 'Uraliyagara2', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayakee', '0761323248', 'Uraliyagara2', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
 
 -- --------------------------------------------------------
 
