@@ -44,20 +44,23 @@ if(!is_null($staff)): ?>
 
         <?php
         $edit_history = $data['edit_history'] ?? false;
+        $post = $staff;
+        $fields = [
+            'email' => "Email",
+            'name' => 'Name',
+            'address' => 'Address',
+            'contact_no' => 'Contact number',
+        ];
         if($edit_history !== false && count($edit_history) !== 0): ?>
-        <h2>Edit History</h2>
-        <hr>
-<?php       $post = $staff;
-            $fields = [
-                'email' => "Email",
-                'name' => 'Name',
-                'address' => 'Address',
-                'contact_no' => 'Contact number',
-            ]; 
+            <div class="edit-history card">
+                <h2>User Details Edit History</h2>
+                <hr>
+        <?php
+            $i = 0;
             foreach($edit_history as $edit): 
                 foreach($fields as $field => $name):
                     if($edit[$field] !== null && $edit[$field] !== $post[$field]): ?>
-                    <div class="record">
+                    <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
                         on <span class="time"> <?= $edit['time'] ?> </span> :
                         <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from 
                         "<?= $edit[$field] ?>" to "<?=$post[$field]?>".
@@ -68,6 +71,7 @@ if(!is_null($staff)): ?>
             endforeach;
         endif;
         ?>
+            </div>
     </div>
 <?php else:?>
     ERROR retrieving user information

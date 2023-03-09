@@ -47,15 +47,17 @@ class Admin extends Controller
                 }
                 break;
             case 'View':
-                $data = ['user' => ($id != null) ? 
+                $data = [
+                        'user_id' => $id,
+                        'user' => ($id != null) ? 
                                     ($model->getStaffById($id)['result'][0] ?? false) : false,
                         'edit_history' => ($id != null) ? 
                                     ($model->getEditHistory($id)['result'] ?? false) : false,
                         'state_history' => ($id != null) ?
-                                    ($model->getStateHistory($id)?? false) : false
+                                    ($model->getStateHistory($id)['result'] ?? false) : false
                 ];
-                $this->view('Admin/User/View', 'User:' . $data['user']['name'] ?? 'Not found',
-                            $data, ['Components/form','Admin/index']);
+                $this->view('Admin/User/View', 'User:' . ($data['user']['name'] ?? 'Not found'),
+                            $data, ['Components/form','Admin/index','Components/table']);
                 break;
             case 'Edit':
                 $data = [];
