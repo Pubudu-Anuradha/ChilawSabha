@@ -106,8 +106,9 @@
       ></a
     >
     <div class="sub-items" id="sub-items-user">
-      <a href="<?=URLROOT . '/Admin/Users/Add'?>">Create User</a>
-      <a href="<?=URLROOT . '/Admin/Users/Disabled'?>">Disabled User List</a>
+      <a href="<?=URLROOT . '/Admin/Users'?>">Active Users</a>
+      <a href="<?=URLROOT . '/Admin/Users/Disabled'?>">Disabled Users</a>
+      <a href="<?=URLROOT . '/Admin/Users/Add'?>">Create new User</a>
     </div>
   </div>
 </div>
