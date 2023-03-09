@@ -269,25 +269,6 @@ CREATE TABLE `damaged_books` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `disabled_action`
---
-
-CREATE TABLE `disabled_action` (
-  `disabled_action_id` int(11) NOT NULL,
-  `disabled_action` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `disabled_action`
---
-
-INSERT INTO `disabled_action` (`disabled_action_id`, `disabled_action`) VALUES
-(1, 'Re-Enable'),
-(2, 'Re-Enabled');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `disabled_members`
 --
 
@@ -297,7 +278,6 @@ CREATE TABLE `disabled_members` (
   `disable_description` varchar(100) NOT NULL,
   `disabled_by` int(11) NOT NULL,
   `disabled_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `disabled_action` int(11) NOT NULL,
   `re_enabled_desscription` varchar(100) DEFAULT NULL,
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_time` timestamp NULL DEFAULT NULL
@@ -315,10 +295,9 @@ CREATE TABLE `disabled_staff` (
   `disable_reason` varchar(255) NOT NULL,
   `disabled_by` int(11) NOT NULL,
   `disabled_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `disabled_action` int(11) NOT NULL,
   `re_enabled_by` int(11) DEFAULT NULL,
   `re_enabled_reason` varchar(255) DEFAULT NULL,
-  `re_enabled_time` timestamp NULL DEFAULT current_timestamp()
+  `re_enabled_time` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -350,7 +329,7 @@ CREATE TABLE `edit_staff` (
   `nic` varchar(15) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contact_no` int(11) DEFAULT NULL,
+  `contact_no` varchar(12) DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL,
   `edited_by` int(11) NOT NULL,
   `edited_time` timestamp NOT NULL DEFAULT current_timestamp()
@@ -609,7 +588,7 @@ CREATE TABLE `post_attachments` (
 CREATE TABLE `post_contact` (
   `post_id` int(11) NOT NULL,
   `contact_name` varchar(100) NOT NULL,
-  `contact_no` int(11) NOT NULL
+  `contact_no` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -748,8 +727,7 @@ CREATE TABLE `staff_type` (
 INSERT INTO `staff_type` (`staff_type_id`, `staff_type`) VALUES
 (1, 'Website Admin'),
 (2, 'Library Staff'),
-(3, 'Complaint Handler'),
-(4, 'Storage Manager');
+(3, 'Complaint Handler');
 
 -- --------------------------------------------------------
 
@@ -773,7 +751,7 @@ CREATE TABLE `users` (
   `user_type` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `contact_no` int(11) NOT NULL,
+  `contact_no` varchar(12) NOT NULL,
   `address` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `password_reset_code` varchar(20) DEFAULT NULL,
@@ -785,10 +763,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `user_type`, `state_id`, `name`, `contact_no`, `address`, `password_hash`, `password_reset_code`, `reset_code_time`) VALUES
-(1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', 761323251, 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', 761323250, 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', 761323249, 'Marawila', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
-(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayake', 761323248, 'Uraliyagara', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL);
+(1, 'pubudu@gmail.com', 1, 1, 'S.D.P.A. Satharasinghe', '0761323251', 'Medagama Road, Karukkuwa, Madampe', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(2, 'tharindu@gmail.com', 2, 1, 'Tharindu Sampath', '0761323250', 'Pambala', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(3, 'hasala@gmail.com', 1, 1, 'Hasala Dissanayake', '0761323249', 'Marawila', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL),
+(4, 'sandaru@gmail.com', 1, 1, 'Sandaru Dissanayake', '0761323248', 'Uraliyagara', '$2y$10$YR1DnqQYUdyL.C4kNpBaP.PhO4sj2m3mibFrglzc95YVx2mFrQPz2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -829,14 +807,6 @@ INSERT INTO `user_type` (`user_type_id`, `user_type`) VALUES
 (2, 'Library Member');
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `website_admin`
---
-
-CREATE TABLE `website_admin` (
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -953,12 +923,6 @@ ALTER TABLE `damaged_books`
   ADD KEY `damaged_book_action_fk` (`damaged_action`);
 
 --
--- Indexes for table `disabled_action`
---
-ALTER TABLE `disabled_action`
-  ADD PRIMARY KEY (`disabled_action_id`);
-
---
 -- Indexes for table `disabled_members`
 --
 ALTER TABLE `disabled_members`
@@ -966,7 +930,6 @@ ALTER TABLE `disabled_members`
   ADD KEY `disabled_user_id_fk` (`user_id`),
   ADD KEY `member_disabled_by_fk` (`disabled_by`),
   ADD KEY `member_re_enabled_by_fk` (`re_enabled_by`),
-  ADD KEY `member_disabled_action_fk` (`disabled_action`);
 
 --
 -- Indexes for table `disabled_staff`
@@ -974,7 +937,6 @@ ALTER TABLE `disabled_members`
 ALTER TABLE `disabled_staff`
   ADD PRIMARY KEY (`disable_id`),
   ADD KEY `disabled_staff_user_id_fk` (`user_id`),
-  ADD KEY `staff_disabled_action_fk` (`disabled_action`),
   ADD KEY `staff_disabled_by_fk` (`disabled_by`),
   ADD KEY `staff_disabled_re_enabled_by_fk` (`re_enabled_by`);
 
@@ -1204,11 +1166,6 @@ ALTER TABLE `user_state`
 ALTER TABLE `user_type`
   ADD PRIMARY KEY (`user_type_id`);
 
---
--- Indexes for table `website_admin`
---
-ALTER TABLE `website_admin`
-  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1279,12 +1236,6 @@ ALTER TABLE `damaged_action`
 --
 ALTER TABLE `damaged_books`
   MODIFY `damaged_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `disabled_action`
---
-ALTER TABLE `disabled_action`
-  MODIFY `disabled_action_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `disabled_members`
@@ -1475,7 +1426,7 @@ ALTER TABLE `completed_books`
 -- Constraints for table `contact_us_persons`
 --
 ALTER TABLE `contact_us_persons`
-  ADD CONSTRAINT `contact_us_added_by` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `contact_us_added_by` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `damaged_books`
@@ -1491,7 +1442,6 @@ ALTER TABLE `damaged_books`
 --
 ALTER TABLE `disabled_members`
   ADD CONSTRAINT `disabled_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `library_member` (`member_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `member_disabled_action_fk` FOREIGN KEY (`disabled_action`) REFERENCES `disabled_action` (`disabled_action_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `member_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `library_staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `member_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `library_staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -1500,9 +1450,8 @@ ALTER TABLE `disabled_members`
 --
 ALTER TABLE `disabled_staff`
   ADD CONSTRAINT `disabled_staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_action_fk` FOREIGN KEY (`disabled_action`) REFERENCES `disabled_action` (`disabled_action_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `staff_disabled_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `staff_disabled_by_fk` FOREIGN KEY (`disabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `staff_disabled_re_enabled_by_fk` FOREIGN KEY (`re_enabled_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `edit_members`
@@ -1514,7 +1463,7 @@ ALTER TABLE `edit_members`
 -- Constraints for table `edit_staff`
 --
 ALTER TABLE `edit_staff`
-  ADD CONSTRAINT `edit_staff-by_fk` FOREIGN KEY (`edited_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `edit_staff-by_fk` FOREIGN KEY (`edited_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `edit_staff_type_fk` FOREIGN KEY (`staff_type`) REFERENCES `staff_type` (`staff_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `edit_staff_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
@@ -1522,7 +1471,7 @@ ALTER TABLE `edit_staff`
 -- Constraints for table `emergency_categories`
 --
 ALTER TABLE `emergency_categories`
-  ADD CONSTRAINT `emergency_category_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `emergency_category_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `emergency_contact`
@@ -1534,7 +1483,7 @@ ALTER TABLE `emergency_contact`
 -- Constraints for table `emergency_places`
 --
 ALTER TABLE `emergency_places`
-  ADD CONSTRAINT `emergency_place_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `emergency_place_added_by_fk` FOREIGN KEY (`added_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `emergency_place_category_id_fk` FOREIGN KEY (`category_id`) REFERENCES `emergency_categories` (`category_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
@@ -1606,7 +1555,7 @@ ALTER TABLE `plan_to_read_books`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_type_fk` FOREIGN KEY (`post_type`) REFERENCES `post_type` (`post_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `posted_by_fk` FOREIGN KEY (`posted_by`) REFERENCES `website_admin` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `posted_by_fk` FOREIGN KEY (`posted_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `post_attachments`
@@ -1662,12 +1611,6 @@ ALTER TABLE `users`
   ADD CONSTRAINT `user_states_fk` FOREIGN KEY (`state_id`) REFERENCES `user_state` (`state_id`) ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_type_fk` FOREIGN KEY (`user_type`) REFERENCES `user_type` (`user_type_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
---
--- Constraints for table `website_admin`
---
-ALTER TABLE `website_admin`
-  ADD CONSTRAINT `website_admin_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `staff` (`user_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

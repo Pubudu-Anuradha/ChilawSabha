@@ -208,7 +208,12 @@
   .attachments .links {
     grid-template-areas: "a a a";
   }
-}
+
+  .filters form{
+    flex-direction: column;
+  }
+
+  }
 
 @media screen and (max-width: 259px) {
 

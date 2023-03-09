@@ -30,7 +30,9 @@ class Controller
     //If not, redirect to appropriate page using $redirect parameter
     public function authenticateRole($role, $redirect = '/Home/')
     {
-        if (!isset($_SESSION['login'])) {
+        if (!isset($_SESSION['login']) || !isset($_SESSION['user_id']) ||
+            !isset($_SESSION['role'])  || !isset($_SESSION['email'])   ||
+            !isset($_SESSION['name'])) {
             header('location:' . URLROOT . $redirect);
             die();
         } else if ($_SESSION['role'] != $role) {
