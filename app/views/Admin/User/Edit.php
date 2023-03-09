@@ -9,8 +9,8 @@ if(!is_null($staff)): ?>
     <hr>
     <div class="formContainer">
         <?php if(isset($data['Edit'])):
-                if(!$data['Edit']['user']['success']):
-                    $message = "Failed to Edit user " . $data['Edit']['user']['errmsg'];
+                if(!$data['Edit']['success']):
+                    $message = "Failed to Edit user " . $data['Edit']['errmsg'];
                     Errors::generic($message);
                 else: ?>
                 <div class="success">

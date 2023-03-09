@@ -78,7 +78,7 @@ class Admin extends Controller
                                 ['Edit' => !is_null($id) ? $model->editStaff($id, $valid) : null],
                                 $data
                             );
-                            if (($data['Edit']['user']['success'] ?? false) == true) {
+                            if (($data['Edit']['success'] ?? false) == true) {
                                 $edit_history = [];
                                 foreach($valid as $field => $value) {
                                     $edit_history[$field] = $current_user[$field];
