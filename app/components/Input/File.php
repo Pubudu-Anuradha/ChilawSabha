@@ -10,7 +10,7 @@ class Files{
     </label>
     <div class="file_upload">
       <input type="file" 
-            name="<?= $name . $multiple?'[]':'' ?>"
+            name="<?= $name . ($multiple ? '[]':'') ?>"
             id="<?= $id ?>"
             <?= $accept?"accept=\"$accept\"":''?>
             <?= $required?'required':''?>

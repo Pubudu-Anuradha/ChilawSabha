@@ -193,8 +193,62 @@ class Admin extends Controller
 
         switch ($page) {
             case 'Add':
-                $this->view('Admin/Announcements/Add','Add a new Announcement',
-                            [],['Components/form']);
+                if(isset($_POST['Add'])) {
+                    [$valid,$err] = $this->validateInputs($_POST,[
+                        'title|l[:255]',
+                        'short_description|l[:1000]',
+                        'content',
+                        'visible_start_date|dt['.date('Y-m-d').':]',
+                        'attachments|?',
+                        'photos|?',
+                    ],'Add');
+                    $photo_count = count($_FILES['photos']['name'] ?? []);
+                    if($photo_count == 1){
+                        if(($_FILES['photos']['name'][0]??'')=='') $photo_count = 0;
+                    }
+                    $attach_count = count($_FILES['attachments']['name'] ?? []);
+                    if($attach_count == 1){
+                        if(($_FILES['attachments']['name'][0]??'')=='') $attach_count = 0;
+                    }
+                    if($photo_count > 0) {
+                        for($i = 0; $i < $photo_count; ++$i) {
+                            if($_FILES['photos']['error'][$i] !== 0) {
+                                if(!isset($err['photos'])) 
+                                    $err['photos'] = [
+                                        $_FILES['photos']['name'][$i]
+                                    ];
+                                else 
+                                    $err['photos'][] = $_FILES['photos']['name'][$i];
+                            }
+                        }
+                    }
+                    if($attach_count > 0) {
+                        for($i = 0; $i < $attach_count; ++$i) {
+                            if($_FILES['attachments']['error'][$i] !== 0) {
+                                if(!isset($err['attach'])) 
+                                    $err['attach'] = [
+                                        $_FILES['attachments']['name'][$i]
+                                    ];
+                                else 
+                                    $err['attach'][] = $_FILES['attachments']['name'][$i];
+                            }
+                        }
+                    }
+                    if(count($err) == 0){
+                        // Store images
+
+                        // Store Attachments
+
+                        $this->view('Admin/Announcements/Add','Add a new Announcement',
+                                    [$valid,$err,$_FILES],['Components/form']);
+                    } else {
+                        $this->view('Admin/Announcements/Add','Add a new Announcement',
+                                    ['old'=>$_POST,'errors' => $err],['Components/form']);
+                    }
+                } else {
+                    $this->view('Admin/Announcements/Add','Add a new Announcement',
+                                [],['Components/form']);
+                }
                 break;
             case 'Edit':
                 break;

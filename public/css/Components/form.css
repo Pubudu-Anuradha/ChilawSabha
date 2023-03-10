@@ -164,12 +164,13 @@ textarea {
 
 /* Upload Preview Style */
 .previews {
-  width: calc(100% - 1rem);
+  width:100%;
   box-sizing: border-box;
-  background-color: var(--lightblue);
+  background-color: var(--fadedblue);
   border-radius: 10px;
-  padding: 0 4rem;
+  padding: 0 1rem;
   margin-top: 1rem;
+  box-shadow: 4px 2px 5px 0px var(--grey);
 }
 
 .previews>div {
@@ -198,18 +199,19 @@ textarea {
 
 .previews>div>div>button {
   margin-right: 1rem;
-  height: 2rem;
-  width: 2rem;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   background-color: var(--red);
   color: #000;
-  font-size: larger;
-  font-weight: 900;
   border: none;
-  border-radius: 50%;
+  border-radius: 10px;
   border: 1px solid #000;
+  box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+.previews>div>div>button::before {
+  content: '🗙';
 }
 
 @media screen and (max-width: 767px) {
