@@ -30,7 +30,7 @@
             <label for="search">
                 Search
             </label>
-            <div class="search-box">
+            <div class="searchbox">
               <input class="search" type="search"
                       name="<?= $search_name ?>" id="<? $search_name ?>"
                       value="<?= isset($_GET[$search_name]) ? $_GET[$search_name]:''?>"

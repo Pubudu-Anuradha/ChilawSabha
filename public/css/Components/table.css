@@ -60,9 +60,10 @@ tbody>tr:last-child {
 }
 
 .content-table {
-  display: flex;
+  display: inline-block;
   justify-content: center;
-  overflow: auto;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
 .btn {
@@ -70,6 +71,7 @@ tbody>tr:last-child {
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
+  color: var(--black);
   display: inline-block;
   border-radius: 5px;
   font-weight: 600;
