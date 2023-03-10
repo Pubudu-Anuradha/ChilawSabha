@@ -11,11 +11,11 @@ class Table{
     'Action 1' => [
     ['F string %s %s', 'id','name'],// sprintf arguments "%s string" followed by column names
     // contents of column will be used as actual arguments.
-    'edit' // classes for the action button
+    'edit' ,'#'// classes for the action button
     ],
     'View' => [
     ['view/%s', 'id'],
-    'view bg-green'
+    'view bg-green', '#'
     ],
   ],$empty = false,$empty_msg = 'No content found'){
     $action_count = count($actions);
@@ -61,7 +61,7 @@ class Table{
                 // Embedding the intended value to the href string
                 $href = call_user_func_array('sprintf',$func[0]);
               ?>
-                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>"><?= $name ?></a>
+                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $func[2] ?>"><?= $name ?></a>
             <?php endforeach;?>
                 </div>
               </td>
