@@ -193,6 +193,8 @@ class Admin extends Controller
 
         switch ($page) {
             case 'Add':
+                $this->view('Admin/Announcements/Add','Add a new Announcement',
+                            [],['Components/form']);
                 break;
             case 'Edit':
                 break;
