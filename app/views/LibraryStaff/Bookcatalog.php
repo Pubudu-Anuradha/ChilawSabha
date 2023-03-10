@@ -1,135 +1,42 @@
 <div class="content">
+
+    <?php
+        $table = $data['Books'];
+    ?>
+
     <div class="page">
         <div class="title">
-            <?php
-            $page_title = "BOOK CATALOGUE";
+            <?php $page_title = "BOOK CATALOGUE";
             echo '<h2>' . $page_title . '</h2>';
             ?>  
-            <div class="sub-title">  
-                <input type="button" onclick="generate('#catalog','<?php echo $page_title ?>',4)" value="Export To PDF" class="btn bg-green"/>
-                <div class="content-title-category">
-                    <select name="categoryFill">
-                        <option value="Null">Choose Category</option>
-                        <option value="Philosophy">Philosophy</option>
-                        <option value="Languages">Languages</option>
-                        <option value="Natural Sciences">Natural Sciences</option>
-                        <option value="Literature">Literature</option>
-                    </select>
-                </div>
-                <div class="content-title-search">
-                    <input type="text" name="search" placeholder=" Search" id="search">
-                    <button>
-                        <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
-                    </button>
-                </div>
-            </div>
-
+            <input type="button" onclick="generate('#bookCatalog','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
-        <div class="content-table">
-            <table id="catalog">
-                <thead>
-                    <tr>
-                        <th>Accession No</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+    </div>
 
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn edit bg-yellow" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Editbooks'?>'">Edit</button>
-                            <button class="btn lost bg-red">Lost</button>
-                            <button class="btn delist bg-orange">Delist</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <?php Pagination::Top('/LibraryStaff/bookcatalog', select_filters:[
+            'category_name' =>[
+                'Choose by Category' , [
+                    'All' => "All",
+                    'Science' => 'Science',
+                    'Geography' => 'Geography',
+                ]
+            ]
+        ]);?>
+
+        <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category'],
+            $table['result'],'bookCatalog',
+            actions:[
+                'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white'],
+                'Lost'=>[['#'],'btn lost bg-red white','openModal()'],
+                'Delist'=>[[URLROOT.'/LibraryStaff/Delist/%s','accession_no'],'btn delist bg-orange white'],
+            ]
+    
+        );?>
+        <?php Modal::Modal(content:'Are You Sure?', textarea:true, title:"Please add a Note", rows:10, cols:50);?>
+
+
+        <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
+
 
     </div>
 </div>
@@ -174,4 +81,20 @@
         })
         doc.save(title.concat('.pdf'));
     }
+
+        var modal = document.getElementById("myModal");
+
+        function closeModal(){
+            modal.style.display = "none";
+        }
+        function openModal(){
+            modal.style.display = "block";
+        }
+
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+
 </script>

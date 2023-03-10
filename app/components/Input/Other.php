@@ -20,6 +20,7 @@ class Other{
             <?=$max ? "max=\"$max\"" : ''?>
             <?=$required ? 'required' : ''?>
         />
+        <span></span>
     </div>
     <?php
     }
