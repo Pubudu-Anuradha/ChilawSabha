@@ -193,18 +193,10 @@ class Admin extends Controller
 
         switch ($page) {
             case 'Add':
-                $this->view('Admin/Announcements/Add', 'Add Announcement',
-                    ['Add' => isset($_POST['Add']) ? $model->addAnnouncement($this->validateInputs($_POST, [
-                        'title', 'category', 'shortdesc', 'author', 'content',
-                    ], 'Add')) : null], ['Components/form']);
                 break;
             case 'Edit':
-                $this->view('Admin/Announcements/Edit', 'Edit Announcement', ['edit' => isset($_POST['Edit']) ? $model->editAnnouncement($id, $this->validateInputs($_POST, [
-                    'title', 'content', 'category', 'shortdesc', 'author',
-                ], 'Edit')) : null, 'announcement' => $id != null ? $model->getAnnouncement($id) : false], ['Components/form']);
                 break;
             case 'View':
-                $this->view('Admin/Announcements/View', 'View Announcement', ['announcement' => $id != null ? $model->getAnnouncement($id) : false], ['Components/table', 'posts']);
                 break;
             default:
                 $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements()], ['Components/table', 'posts']);
