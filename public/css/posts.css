@@ -75,13 +75,20 @@
 
 .filters {
   margin: 1.5rem 0;
-  width: 80%;
 }
 
 .filters form {
   display: flex;
   gap: 30px;
   justify-content: space-evenly;
+}
+
+.filters .filter {
+  display: flex;
+}
+
+.filter > label {
+  margin-right: .5rem;
 }
 
 .filters form {
@@ -213,7 +220,10 @@
     flex-direction: column;
   }
 
+  .filters .filter {
+    flex-direction: column;
   }
+}
 
 @media screen and (max-width: 259px) {
 

@@ -1,3 +1,51 @@
 .time {
   font-family: 'Courier New', Courier, monospace;
 }
+
+.detail{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "span span";
+}
+
+.card-container {
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card {
+  box-sizing: border-box;
+  width: fit-content;
+  line-break: strict;
+  max-width: min(80rem,100%);
+  border-radius:20px;
+  padding: 1rem;
+  border: 1px solid var(--fadedblue);
+}
+
+
+.card > h1 {
+  text-align: center;
+}
+
+.state-history, .edit-history {
+  width: 100%;
+}
+
+.options {
+  display: flex;
+  padding: .5rem;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.b {
+  background-color: var(--fadedblue);
+}
+
+.record {
+  line-height: 3;
+  padding: 0 1rem;
+}

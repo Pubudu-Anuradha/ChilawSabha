@@ -60,9 +60,10 @@ tbody>tr:last-child {
 }
 
 .content-table {
-  display: flex;
+  display: inline-block;
   justify-content: center;
-  overflow: auto;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
 .btn {

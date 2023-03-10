@@ -41,6 +41,7 @@ if($user_disabled !== false){
 }
 
 Table::Table($aliases,$table['result'],id:"pdf",actions:[
+    'View' => [[URLROOT . '/Admin/Users/View/%s', 'user_id'],'bg-blue view'],    
     'Edit' => [[URLROOT . '/Admin/Users/Edit/%s', 'user_id'],'bg-yellow edit'],    
     'Disable' => [[URLROOT . '/Admin/Users/Disable/%s', 'user_id'],'bg-red delist'],    
 ],empty:count($table['result']??[])==0,empty_msg:'No matching users found'); 

@@ -69,9 +69,7 @@ class StaffModel extends Model {
         if($state == 2) {
             $reason['user_id'] = $user_id;
             $reason['disabled_by'] = $_SESSION['user_id'];
-            var_dump($reason);
             $res = $this -> insert('disabled_staff',$reason);
-            var_dump($res);
             if($res){
                 return $this->update('users',[
                     'state_id'=> 2
@@ -101,6 +99,13 @@ class StaffModel extends Model {
         return ($state == 1 || $state == 2) ? $this->update('users',[
             'state_id'=>$state
         ],"user_id='$user_id' and user_type=1") : false;
+    }
+
+    public function getStateHistory($id) {
+        $user_id = mysqli_real_escape_string($this->conn,$id);
+        return $this->select('disabled_staff ds join users u on u.user_id=ds.user_id join users u2 on u2.user_id=ds.disabled_by LEFT JOIN users u3 on ds.re_enabled_by=u3.user_id',
+        'ds.disable_reason as d_reason,u2.name as d_name,ds.disabled_time as d_time, ds.re_enabled_reason as r_reason, u3.name as r_name, ds.re_enabled_time as r_time',
+        "ds.user_id='$user_id' and u.user_type=1 ORDER BY ds.disabled_time DESC");
     }
 
     public function putEditHistory($data){

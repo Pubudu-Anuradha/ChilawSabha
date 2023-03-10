@@ -40,6 +40,7 @@ if($user_enabled !== false):
 
 Table::Table($aliases,$table['result'],actions:[
     'Re-enable' => [[URLROOT . '/Admin/Users/Enable/%s', 'user_id'],'bg-green enable'],    
+    'View' => [[URLROOT . '/Admin/Users/View/%s', 'user_id'],'bg-blue view'],    
 ],empty:count($table['result'] ?? []) == 0,empty_msg:'No Disabled users found'); 
 
 Pagination::bottom('filter-form', $data['Users']['page'], $data['Users']['count']); ?>

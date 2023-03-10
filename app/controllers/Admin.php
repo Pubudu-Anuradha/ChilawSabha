@@ -46,6 +46,19 @@ class Admin extends Controller
                         $data, ['Components/form']);
                 }
                 break;
+            case 'View':
+                $data = [
+                        'user_id' => $id,
+                        'user' => ($id != null) ? 
+                                    ($model->getStaffById($id)['result'][0] ?? false) : false,
+                        'edit_history' => ($id != null) ? 
+                                    ($model->getEditHistory($id)['result'] ?? false) : false,
+                        'state_history' => ($id != null) ?
+                                    ($model->getStateHistory($id)['result'] ?? false) : false
+                ];
+                $this->view('Admin/User/View', 'User:' . ($data['user']['name'] ?? 'Not found'),
+                            $data, ['Components/form','Admin/index','Components/table']);
+                break;
             case 'Edit':
                 $data = [];
                 if (isset($_POST['Edit'])) {
