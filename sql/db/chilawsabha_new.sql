@@ -866,11 +866,26 @@ INSERT INTO `user_type` (`user_type_id`, `user_type`) VALUES
 (1, 'Staff'),
 (2, 'Library Member');
 
+--
+-- Table structure for table `file_original_names`
+--
+
+CREATE TABLE `file_original_names` (
+  `name` varchar(255) NOT NULL,
+  `orig` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `file_original_names`
+--
+ALTER TABLE `file_original_names`
+  ADD PRIMARY KEY (`name`);
 
 --
 -- Indexes for table `announcements`

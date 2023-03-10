@@ -234,11 +234,13 @@ class Admin extends Controller
                             }
                         }
                     }
-                    if(count($err) == 0){
+                    if(count($err) == 0) {
                         // Store images
-
+                        $images = Upload::storeUploadedImages('public/upload/','photos');
                         // Store Attachments
+                        $attachments = Upload::storeUploadedFiles('downloads/','attachments',true);
 
+                    echo"</pre>";
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
                                     [$valid,$err,$_FILES],['Components/form']);
                     } else {
