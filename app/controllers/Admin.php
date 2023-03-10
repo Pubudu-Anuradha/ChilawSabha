@@ -195,7 +195,7 @@ class Admin extends Controller
             case 'Add':
                 if(isset($_POST['Add'])) {
                     [$valid,$err] = $this->validateInputs($_POST,[
-                        'title|l[:255]',
+                        'title|u[post]|l[:255]',
                         'short_description|l[:1000]',
                         'content',
                         'visible_start_date|dt['.date('Y-m-d').':]',
@@ -237,10 +237,20 @@ class Admin extends Controller
                     if(count($err) == 0) {
                         // Store images
                         $images = Upload::storeUploadedImages('public/upload/','photos');
+                        $image_errors = false;
+                        for($i=0;$i < count($images); ++$i) {
+                            $image_errors |= (!$images[$i]['error']);
+                        }
                         // Store Attachments
                         $attachments = Upload::storeUploadedFiles('downloads/','attachments',true);
+                        $attach_errors = false;
+                        for($i=0;$i < count($attachments); ++$i) {
+                            $attach_errors |= (!$attachments[$i]['error']);
+                        }
 
-                    echo"</pre>";
+                        $model = $this->model('AnnouncementModel');
+                        $model->putAnnouncement($valid,$images,$attachments);
+                        
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
                                     [$valid,$err,$_FILES],['Components/form']);
                     } else {
