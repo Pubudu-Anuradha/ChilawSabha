@@ -17,7 +17,7 @@ class Table{
     ['view/%s', 'id'],
     'view bg-green', '#'
     ],
-  ],$empty = false,$empty_msg = 'No content found'){
+  ],$empty_msg = 'No content found'){
     $action_count = count($actions);
   ?>
   <div class="content-table">
@@ -42,8 +42,8 @@ class Table{
         </tr>
       </thead>
       <tbody>
-        <?php if(!$empty):
-        foreach($row_data as $row):?>
+        <?php if(!$row_data['nodata']):
+        foreach($row_data['result'] as $row):?>
           <tr>
             <?php foreach($columns as $col_name => $title): ?>
               <td>
