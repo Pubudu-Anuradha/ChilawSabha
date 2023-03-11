@@ -16,6 +16,14 @@ class LoginModel extends Model
         );
     }
 
+    public function getPasswordResetCredentials($email)
+    {
+        $email = mysqli_real_escape_string($this->conn,$email);
+        return $this->select(
+            'users', 'email,password_reset_code,reset_code_time', "email='$email'"
+        );
+    }
+
     public function setResetCode($email, $data){
         $email = mysqli_real_escape_string($this->conn,$email);
         $resetTime = $this->update('users', [
@@ -24,6 +32,20 @@ class LoginModel extends Model
         ], "email='$email'");
         return [
             'resetTime' => $resetTime,
+        ];
+    }
+
+    public function changePassword(){
+        $email = mysqli_real_escape_string($this->conn,$_POST['forgot-email']);
+        $password = mysqli_real_escape_string($this->conn,$_POST['new-password']);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $resetPassword = $this->update('users', [
+            'password_hash' => $password,
+            'password_reset_code' => null,
+            'reset_code_time' => null,
+        ], "email='$email'");
+        return [
+            'resetPassword' => $resetPassword,
         ];
     }
 }
