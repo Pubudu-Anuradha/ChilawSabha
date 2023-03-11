@@ -43,22 +43,9 @@ class BookModel extends Model
 
     public function addBook($book)
     {
-        return $this->insert('books',[
-            'title'=>$book['title'],
-            'author'=>$book['author'],
-            'publisher'=>$book['publisher'],
-            'place_of_publication'=>$book['place_of_publication'],
-            'date_of_publication'=>$book['date_of_publication'],
-            'category_code'=>$book['category_code'],
-            'accession_no'=>$book['accession_no'],
-            'price'=>$book['price'],
-            'pages'=>$book['pages'],
-            'recieved_date'=>$book['recieved_date'],
-            'recieved_method'=>$book['recieved_method'],
-            'state'=>1,
-            'isbn'=>$book['isbn'],
-            'recieved_by'=>$_SESSION['user_id']
-        ]);
+        $book['state'] = 1;
+        $book['recieved_by'] = $_SESSION['user_id'];
+        return $this->insert('books',$book);
     }
 
     public function editBook($id,$data){
