@@ -21,7 +21,8 @@ textarea {
   box-sizing: content-box;
 }
 
-.input-field label {
+.input-field label,
+.input-field-submit label {
   margin: auto 0;
   text-align: left;
 }
@@ -29,17 +30,40 @@ textarea {
 .input-field {
   display: grid;
   grid-template-columns: 20fr 50fr 2fr;
-  margin: 0.5rem;
   padding: 0.5rem;
+}
+
+.input-field-submit {
+  display: grid;
+  grid-template-columns: 50fr 20fr 2fr;
+  padding: 0.5rem;
+}
+
+.reset-input-field{
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 .input-wrapper {
   box-sizing: border-box;
+  margin: auto 1rem;
+}
+
+#reset-code{
+  margin: auto 1rem;
+  border-radius: 1rem 1rem 0 0;
+  outline: none;
+}
+
+#reset-code-btn{
+  border-radius: 0 0 1rem 1rem;
+  margin-top: 0;
 }
 
 .input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
-.input-wrapper textarea {
+.input-wrapper textarea,
+#reset-code-btn {
   width: calc(100% - 2rem);
 }
 
@@ -107,7 +131,6 @@ textarea:focus {
 
 input[type=submit] {
   background-color: var(--lightblue);
-  border-radius: 0.5rem;
   font-size: 1.2rem;
   border-radius: 1rem;
   margin: 1rem;
@@ -155,8 +178,17 @@ textarea {
     font-size: 1rem;
   }
 
-  .inputfield {
+  .input-field,
+  .input-field-submit {
     display: flex;
     flex-direction: column;
+  }
+
+  .pw-reset-title h1{
+    text-align: center;
+  }
+
+  #submit-btn-id{
+    margin: 1rem auto;
   }
 }
