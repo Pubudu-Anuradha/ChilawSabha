@@ -2,6 +2,7 @@
 
 class Other{
 
+    //Changes min ,max,value formats like this because if value of any of them is zero turnary relationship will ignore it.
     public static function number(
         $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL
     ) { ?>
@@ -14,10 +15,10 @@ class Other{
             <?=$id ? "id=\"$id\"" : ''?>
             <?=$class ? "class=\"$class\"" : ''?>
             <?=$placeholder ? "placeholder=\"$placeholder\"" : ''?>
-            <?=$value ? "value=\"$value\"" : ''?>
+            <?= "value=\"" . ($value ?? '') . "\"" ?>
             <?=$step ? "step=\"$step\"" : ''?>
-            <?=$min ? "min=\"$min\"" : ''?>
-            <?=$max ? "max=\"$max\"" : ''?>
+            <?= "min=\"" . ($min ?? '') . "\"" ?>
+            <?= "max=\"" . ($max ?? '') . "\"" ?>
             <?=$required ? 'required' : ''?>
         />
         <span></span>
