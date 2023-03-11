@@ -27,7 +27,8 @@ class Other{
     public static function submit(
         $name, $id = null, $class = null,$value=NULL,$disabled=false
     ) { ?>
-    <div class="input-field">
+    <div class="input-field-submit">
+        <div></div>        
         <input type="submit" 
             name="<?= $name ?>"
             <?= $id ? "id=\"$id\"" : '' ?>

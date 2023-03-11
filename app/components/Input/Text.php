@@ -33,15 +33,15 @@ class Text
     }
 
     public static function password(
-        $title,$name, $id , $class = null,$placeholder,$pattern=NULL, $autocomplete=NULL
+        $title,$name, $id , $class = null,$required,$placeholder,$pattern=NULL, $autocomplete=NULL
     ) { 
-        Text::text($title,$name,$id,$class,true,NULL,$placeholder,'password',15,8,$pattern,NULL,NULL,$autocomplete,NULL);
+        Text::text($title,$name,$id,$class,$required,NULL,$placeholder,'password',15,8,$pattern,NULL,NULL,$autocomplete,NULL);
     }
 
     public static function email(
-        $title,$name, $id, $class = null,$placeholder,$pattern=NULL,$readonly=NULL
+        $title,$name, $id, $class = null, $value= null,$placeholder,$pattern=NULL,$readonly=NULL
     ) { 
-        Text::text($title,$name,$id,$class,true,NULL, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL,NULL);
+        Text::text($title,$name,$id,$class,true,$value, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL,NULL);
     }
     
     public static function textarea(
