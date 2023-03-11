@@ -46,139 +46,116 @@ class Login extends Controller
     {
         $data = [];
         if(isset($_POST['Submit'])){
-
+            if(isset($_POST['resetCode']) && isset($_POST['forgot-email']) && isset($_POST['new-password']) && isset($_POST['confirm-password'])){
+                $model = $this->model('LoginModel');
+                $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
+                $mail = $userCreds['result'][0]['email'];
+                if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
+                    $resetCode = $userCreds['result'][0]['password_reset_code'];
+                    $resetTime = $userCreds['result'][0]['reset_code_time'];
+                    date_default_timezone_set('Asia/Colombo');
+                    $currentTime = date('Y-m-d H:i:s');
+                    if($resetCode == $_POST['resetCode'] && $resetTime > $currentTime){
+                        if($_POST['new-password'] == $_POST['confirm-password']){
+                            $data = $model->changePassword();
+                            if($data['resetPassword']){
+                                $data['success'] = 'Password Changed Successfully';
+                                unset($_POST['forgot-email']);
+                                unset($_POST['resetCode']);
+                                unset($_POST['Submit']);
+                            }else{
+                                $data['error'] = 'Password Change Failed';
+                            }
+                        }else{
+                            $data['error'] = 'Passwords do not match';
+                        }
+                    }else{
+                        $data['error'] = 'Invalid Reset Code';
+                    }
+                }else{
+                    $data['error'] = 'Invalid Email';
+                }
+            }else{
+                if(isset($_POST['Submit'])){
+                    unset($_POST['Submit']);
+                }
+            }
         }else if(isset($_POST['resetCode'])){
             if(isset($_POST['forgot-email'])){
                 $model = $this->model('LoginModel');
-                $userCreds = $model->getUserCredentials($_POST['forgot-email']);
+                $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
+                $mail = $userCreds['result'][0]['email'];
                 if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
                     $resetCode = rand(100000,999999);
+                    date_default_timezone_set('Asia/Colombo');
                     $resetTimeFormat = mktime(
                         date('H'), date('i')+5, date('s'), date('m'), date('d'), date('Y')
                     );
                     $resetTime = date('Y-m-d H:i:s', $resetTimeFormat);
-
-                    $content = `
-                        <!DOCTYPE html>
-                        <html lang='en'>
-                        
-                        <head>
-                            <meta charset='UTF-8' />
-                            <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-                            <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-                            <title>Password Reset</title>
-                            <?php foreach ($styles as $style) { ?>
-                                <link rel='stylesheet' href="<?= URLROOT . '/public/css/' . $style ?>.css">
-                            <?php } ?>
-                            <style>
-                                * {
-                                    margin: 0;
-                                    padding: 0;
-                                    box-sizing: border-box;
-                                }
-                                body{
-                                    background-color: var(--bgcolor);
-                                }
-                                .reset-content-div {
-                                    margin: 5rem auto;
-                                    padding: 2rem 2rem;
-                                    width: 40rem;
-                                    justify-content: center;
-                                    align-items: center;
-                                    border: 1px solid var(--lightblue);
-                                    background-color: var(--fadedblue);
-                                    border-radius: 1rem;
-                                }
-                                .reset-content-div h1{
-                                    font-size: 2rem;
-                                    font-weight: 700;
-                                    color: #000000;
-                                    margin-bottom: 2rem;
-                                }
-                                .reset-code{
-                                    justify-content: center;
-                                    align-items: center;
-                                    box-sizing: border-box;
-                                    text-align: center;
-                                    width: fit-content;
-                                    padding: 1rem 2rem;
-                                    border-radius: 1rem;
-                                    background-color: var(--lightblue);
-                                    margin: 1rem 3rem;
-                                    color: var(--white);
-                                }
-                                p{
-                                    font-size: 1.2rem;
-                                    font-weight: 500;
-                                    color: #000000;
-                                }
-                                @media screen and (max-width: 768px) {
-                                    .reset-content-div {
-                                        width: 80%;
-                                        padding: 1rem 1rem;
-                                    }
-                                    .reset-content-div h1{
-                                        font-size: 1.5rem;
-                                        margin-bottom: 1rem;
-                                    }
-                                    .reset-code{
-                                        margin: 1rem 1rem;
-                                    }
-                                    p{
-                                        font-size: 1rem;
-                                    }
-                                }
-                            </style>
-                        </head>
-                        
-                        <body>
-                            <div class='logo-area'>
-                                <div class='logo-items' onclick='window.location.href= \"<?=URLROOT . '/Home'?>\"'>
-                                    <div class='logo'>
-                                        <img src=\"<?= URLROOT . '/public/assets/logo.jpg' ?>\" height='100' width='90' alt='Sabha Logo'>
-                                    </div>
-                                    <div class='sabha-title'>
-                                        <img src=\"<?= URLROOT . '/public/assets/logo_text.png' ?>\" height='100' alt='Chilaw Pradeshiya Sabha'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='reset-content-div'>
-                                <h1>User Password Reset</h1>
-                                <p>
+                    
+                    $content = "<div class=\"main-container\" style=\"margin: 0; padding: 0; box-sizing: border-box; font-family: poppins; background-color: #ffffff;\">";
+                    $content .= "<div class='logo-area' style=\"text-align: center; display: flex; align-items: center; justify-content: center; overflow-x: hidden;\">";
+                    $content .= "<div class='logo-items' style=\"padding: 1rem; display: flex; gap: 20px; cursor:pointer;\" onclick='window.location.href= \"http://localhost/ChilawSabha/Home\"'>";
+                    $content .= "<div class='logo'>";
+                    $content .= "<img src=\"http://localhost/ChilawSabha/public/assets/logo.jpg\" height='100' width='90' alt='Sabha Logo'>";
+                    $content .= "</div>
+                                <div class='sabha-title' style=\"height: 100px; align-items: center;\">";
+                    $content .= "<img src=\"http://localhost/ChilawSabha/public/assets/logo_text.png\" height='100' alt='Chilaw Pradeshiya Sabha'>";
+                    $content .= "</div>";
+                    $content .= "</div>";
+                    $content .= "</div>
+                                <div class='reset-content-div' style=\"margin: 5rem auto; padding: 2rem 2rem; width: 40rem; display:block; justify-content: center; align-items: center; border: 1px solid #93B4F2; background-color: #F0F5FE; border-radius: 1rem;\">"; 
+                    $content .= "<h1 style=\"font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 2rem;\">User Password Reset</h1>
+                                <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
                                     Use following code to reset your password:
                                 </p>
                         
-                                <div class='reset-code'>
+                                <div class='reset-code' style=\"justify-content: center; align-items: center; box-sizing: border-box; text-align: center; width: fit-content; padding: 0.5rem 2rem; border-radius: 1rem; background-color: #93B4F2; margin: 1rem 3rem; color: #ffffff;\">
                                     <h2>$resetCode</h2>
                                 </div>
                                 
-                                <p>If you don't use this code within 5 minutes, it will expire.<br/> 
-                                To get a new password reset link, 
-                                    <a href='<?= URLROOT . ?>/Login/passwordReset'>
-                                        Click Here!
-                                    </a><br/>
-                                </p>&nbsp;<br/>
+                                <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">If you don't use this code within 5 minutes, it will expire.<br/> 
+                                To get a new password reset link,</p> <a href=\"http://localhost/ChilawSabha/Login/passwordReset\">
+                                    Click Here!
+                                </a><br/>
+                                &nbsp;<br/>
                         
-                                <p>Thanks,<br/>
-                                Chilaw Pradeshiya Sabha </p>
-                            </div>
-                        </body>
-                        </html>
-                    `;
-                    ?>
-                    <?= $resetCode." ".$resetTime." ".$_POST["forgot-email"] ?>
-                    <?php
-                    $model->setResetCode($_POST['forgot-email'], ['resetCode'=>$resetCode, 'resetTime'=>$resetTime] , $_POST['forgot-email']);
-                    Email::send($_POST['forgot-email'], 'Password Reset', $content);
+                                <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">Thanks,<br/>
+                                Chilaw Pradeshiya Sabha </p>";
+                    $content .= "</div>";
+                    $content .= "</div>";
                     
+                    
+                    $model->setResetCode($mail, ['resetCode'=>$resetCode, 'resetTime'=>$resetTime]);
+                    Email::send($mail, 'Password Reset', $content);
+
+
                 }else if($userCreds['nodata']) {
                     $data['nouser'] = 'No User found with that email';
                 } else {
                     $data['reseterr'] = 'Error while searching for user..! Please try again';
                 }
+            }else{
+                if(isset($_POST['resetCode'])){
+                    unset($_POST['resetCode']);
+                }
             }
         }
         $this->view('Login/passwordReset', 'Reset Password', [], ['main', 'Components/form', 'login']);
+    }
+
+    public function codeTime(){
+        $model = $this->model('LoginModel');
+        $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
+        $resetTime = $userCreds['result'][0]['reset_code_time'];
+        $resetTime = strtotime($resetTime);
+        $currentTime = time();
+        $timeDiff = $resetTime-$currentTime;
+        if($timeDiff >= 0){
+            return $timeDiff;
+        }else{
+            unset($_POST['resetCode']);
+        }
     }
 
     public function Logout($redirect = 'Home/index')
