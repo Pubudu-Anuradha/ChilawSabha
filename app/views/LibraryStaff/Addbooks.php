@@ -27,7 +27,7 @@ $old = $data['old'] ?? false;
                 }?>
 
                 <?php Group::select('Book Category','category_code',$categories,selected:$old['role'] ?? null);?>
-                <?php Text::text('Accession No','accession_no','accession_no','Insert Accession No',maxlength:100);?>
+                <?php Other::number('Accession No', 'accession_no', 'accession_no', placeholder:'Insert Accession No', min:0);?>
                 <?php Text::text('ISBN No','isbn','isbn','Insert ISBN No',maxlength:50);?>
                 <?php Other::number('Price','price','price',placeholder:'Insert Book Price',step:0.01,min:0);?>
                 <?php Other::number('No of Pages','pages','pages',placeholder:'Insert No of Pages', min:1);?>
