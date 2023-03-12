@@ -4,7 +4,7 @@ class Other{
 
     //Changes min ,max,value formats like this because if value of any of them is zero turnary relationship will ignore it.
     public static function number(
-        $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL
+        $title,$name, $id = null, $class = null,$placeholder=NULL,$value=NULL,$required=true,$step=NULL,$min=NULL,$max=NULL,$readonly=NULL
     ) { ?>
     <div class="input-field">
         <label for="<?= $id ?>">
@@ -20,6 +20,7 @@ class Other{
             <?= "min=\"" . ($min ?? '') . "\"" ?>
             <?= "max=\"" . ($max ?? '') . "\"" ?>
             <?=$required ? 'required' : ''?>
+            <?=$readonly ? 'readonly' : ''?>
         />
         <span></span>
     </div>
