@@ -11,11 +11,11 @@ class Table{
     'Action 1' => [
     ['F string %s %s', 'id','name'],// sprintf arguments "%s string" followed by column names
     // contents of column will be used as actual arguments.
-    'edit' ,'#'// classes for the action button
+    'edit' ,['%s','id']// classes for the action button
     ],
     'View' => [
     ['view/%s', 'id'],
-    'view bg-green', '#'
+    'view bg-green', ['modal(%s)','id']
     ],
   ],$empty = false,$empty_msg = 'No content found'){
     $action_count = count($actions);
@@ -43,14 +43,15 @@ class Table{
       </thead>
       <tbody>
         <?php if(!$empty):
-        foreach($row_data as $row):?>
+        foreach($row_data as $row):;?>
+        
           <tr>
             <?php foreach($columns as $col_name => $title): ?>
               <td>
                 <?= $row[$col_name] ?>
               </td>
             <?php endforeach; ?>
-            <?php if($action_count>0): ?>
+            <?php if($action_count>0):?>
               <td>
                 <div class="btn-column">
              <?php foreach($actions as $name => $func):
@@ -58,10 +59,17 @@ class Table{
                 for($i = 1;$i < count($func[0]);++$i){
                   $func[0][$i] = $row[$func[0][$i]];
                 }
+                for($i = 1;$i < count($func[2]);++$i){
+                  $func[2][$i] = $row[$func[2][$i]];
+                }
                 // Embedding the intended value to the href string
                 $href = call_user_func_array('sprintf',$func[0]);
+                // Embedding the intended value to the js function
+                $jsfunc = call_user_func_array('sprintf', $func[2]);
+
               ?>
-                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $func[2] ?>"><?= $name ?></a>
+
+                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $jsfunc ?>"><?= $name ?></a>
             <?php endforeach;?>
                 </div>
               </td>
