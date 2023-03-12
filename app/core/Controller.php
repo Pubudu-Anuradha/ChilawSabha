@@ -96,7 +96,7 @@ class Controller
                 if (!isset($data[$field])) {
                     $set_error('missing', $field);
                     continue;
-                } else if (empty($data[$field])) {
+                } else if (empty($data[$field]) && !is_numeric($data[$field])) {
                     $set_error('empty', $field);
                     continue;
                 }
