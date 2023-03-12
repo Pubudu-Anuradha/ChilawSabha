@@ -1,113 +1,35 @@
 <div class="content">
+
+    <?php
+        $table = $data['Books'];
+    ?>
     <div class="page">
         <div class="title">
-            <h2>Lost Books</h2>
-            <div class="sub-title">
-                <div class="content-title-category">
-                <select name="categoryFill">
-                    <option value="Null">Choose Category</option>
-                    <option value="Philosophy">Philosophy</option>
-                    <option value="Languages">Languages</option>
-                    <option value="Natural Sciences">Natural Sciences</option>
-                    <option value="Literature">Literature</option>
-                </select>
-                </div>
-                <div class="content-title-search">
-                    <input type="text" name="search" placeholder=" Search" id="search">
-                    <button>
-                        <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
-                    </button>
-                </div>
-            </div>
+            <?php $page_title = "LOST BOOKS";
+            echo '<h2>' . $page_title . '</h2>';
+            ?>  
+            <input type="button" onclick="generate('#lostBooks','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
+    </div>
 
-        <div class="content-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Accession No</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
+    <?php Pagination::Top('/LibraryStaff/lostbooks', select_filters:[
+        'category_name' => [
+            'Choose by Category', [
+                'All' => "All",
+                'Science' => 'Science',
+                'Geography' => 'Geography',
+            ],
+        ],
+    ]);?>
 
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn found bg-green">Found</button>
-                        </div>
-                    </td>
-                </tr>
-               
-            </table>
-        </div>
-        <div class="pagination-bar">
-            <div class="pagination-item">1</div>
-            <div class="pagination-item"> 2</div>
-            <div class="pagination-item">3</div>
-            <div class="pagination-item">4</div>
-            <div class="pagination-item"> &#62; </div>
-        </div>
+    <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','lost_description' => 'Description'],
+        $table['result'], 'lostBooks',
+        actions:[
+            'Found' => [[URLROOT . '/LibraryStaff/Lostbooks/%s', 'accession_no'], 'btn found bg-green white',['#']],
+        ],empty:$table['nodata']
+    );?>
+
+    <?php Pagination::bottom('filter-form', $data['Books']['page'], $data['Books']['count']);?>
+
     </div>
 </div>

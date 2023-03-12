@@ -2,6 +2,7 @@
 
     <?php
         $table = $data['Books'];
+        // var_dump($table['result']);
     ?>
 
     <div class="page">
@@ -26,13 +27,13 @@
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category'],
             $table['result'],'bookCatalog',
             actions:[
-                'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white'],
-                'Lost'=>[['#'],'btn lost bg-red white','openModal()'],
-                'Delist'=>[[URLROOT.'/LibraryStaff/Delist/%s','accession_no'],'btn delist bg-orange white'],
-            ]
+                'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white',['#']],
+                'Lost'=>[['#'],'btn lost bg-red white',['openModal(%s)','accession_no']],
+                'Delist'=>[[URLROOT.'/LibraryStaff/Delist/%s','accession_no'],'btn delist bg-orange white',['#']],
+            ],empty:$table['nodata']
     
         );?>
-        <?php Modal::Modal(content:'Are You Sure?', textarea:true, title:"Please add a Note", rows:10, cols:50);?>
+        <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'accession_no');?>
 
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
@@ -42,6 +43,7 @@
 </div>
 
 <script>
+
     function generate(id,title,num_of_cloumns) {
         
         var doc = new jsPDF('p', 'pt', 'a4');
@@ -83,11 +85,13 @@
     }
 
         var modal = document.getElementById("myModal");
+        var input = document.getElementById("accession_no");
 
         function closeModal(){
             modal.style.display = "none";
         }
-        function openModal(){
+        function openModal(id){
+            input.value = id;
             modal.style.display = "block";
         }
 
@@ -96,5 +100,6 @@
             modal.style.display = "none";
         }
         }
+
 
 </script>
