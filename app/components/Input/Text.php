@@ -52,6 +52,7 @@ class Text
             <?=$title?>
         </label>
         <div class="input-wrapper">
+            <!-- textarea closing tag should be right after value.if not there will be whitespaces -->
             <textarea
                 name="<?=$name?>"
                 <?=$id ? "id= \"$id\"" : ''?>
@@ -61,8 +62,7 @@ class Text
                 <?="cols= \"$cols\""?>
                 <?=$required ? "required" : ''?>
                 <?=$spellcheck ? "spellcheck=\"$spellcheck\"" : ''?>
-            ><?=$value ? $value : ''?>
-            </textarea>
+            ><?=$value ? $value : ''?></textarea>
         </div>
     </div>
     <?php
