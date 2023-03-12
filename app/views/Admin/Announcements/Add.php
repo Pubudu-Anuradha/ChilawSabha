@@ -1,4 +1,7 @@
 <?php // TODO: Add functionality
+
+use function PHPSTORM_META\type;
+
 require_once "common.php";
 $old = $data['old'] ?? false;
 ?>
@@ -12,7 +15,6 @@ $old = $data['old'] ?? false;
             <?php
             echo "<pre>";
             var_dump($data);
-            var_dump($_FILES);
             echo "</pre>";
             $errors = $data['errors'] ?? [];
             Errors::validation_errors($errors,$alias);
@@ -20,6 +22,12 @@ $old = $data['old'] ?? false;
             Text::text($alias[0][1],$alias[0][0],$alias[0][0],$alias[0][2],spellcheck:true,
                        required:false,
                        value:$old[$alias[0][0]] ?? null);
+            $types_assoc = [];
+            foreach($data['types']??[] as $type) {
+                if($type['ann_type'] !== 'All')
+                    $types_assoc[$type['ann_type_id']] = $type['ann_type'];
+            }
+            Group::select('Announcement Category','ann_type_id',$types_assoc,required:false);
             Text::text($alias[1][1],$alias[1][0],$alias[1][0],$alias[1][2],spellcheck:true,
                        value:$old[$alias[1][0]] ?? null);
             Text::textarea($alias[2][1],$alias[2][0],$alias[2][0],$alias[2][2],spellcheck:true,
@@ -31,8 +39,14 @@ $old = $data['old'] ?? false;
                     $message = "There was an error while uploading $attach. Please try again.";
                     Errors::generic($message);
                 endforeach;
-            endif;
-            Files::any('Attachments','attachments','attachments',required:false);
+            endif; ?>
+            <div class="input-field">
+                <label for="pin">Pin to front Page</label>
+                <div class="input-wrapper" style="display:block;">
+                    <input type="checkbox" name="pinned" id="pin" style="height:1.2rem;aspect-ratio:1/1;" checked>
+                </div>
+            </div>
+            <?php Files::any('Attachments','attachments','attachments',required:false);
             if($errors['photos'] ?? false):
                 foreach($errors['photos'] as $photo):
                     $message = "There was an error while uploading $photo. Please try again.";

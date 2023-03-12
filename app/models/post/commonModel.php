@@ -56,7 +56,7 @@
                             ]);
                         }
                     }
-                return ['put_announcement' => $id,$image_errors,$attach_errors];
+                return ['put' => [$id,$image_errors,$attach_errors]];
             }
         }
         return false;

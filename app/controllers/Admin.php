@@ -198,22 +198,23 @@ class Admin extends Controller
                         'title|u[post]|l[:255]',
                         'short_description|l[:1000]',
                         'content',
+                        'ann_type_id|i[1:]',
                         'visible_start_date|dt['.date('Y-m-d').':]',
+                        'pinned|?',
                         'attachments|?',
                         'photos|?',
                     ],'Add');
                     if(count($err) == 0) {
-                        $model = $this->model('AnnouncementModel');
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                    [$model->putAnnouncement($valid),$valid,$err,$_FILES],
+                                    [$model->putAnnouncement($valid),$valid,$err,$_FILES,'types'=>$model->getTypes()],
                                     ['Components/form']);
                     } else {
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                    ['old'=>$_POST,'errors' => $err],['Components/form']);
+                                    ['types'=>$model->getTypes(),'old'=>$_POST,'errors' => $err],['Components/form']);
                     }
                 } else {
                     $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                [],['Components/form']);
+                                ['types'=>$model->getTypes()],['Components/form']);
                 }
                 break;
             case 'Edit':

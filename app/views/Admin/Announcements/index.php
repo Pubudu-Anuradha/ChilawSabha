@@ -9,7 +9,7 @@ require_once 'common.php';
     <hr>
     <pre><?php var_dump($data); ?></pre>
     <?php
-    Table::Table(['title' => 'Announcement Title','posted_time' => 'Time posted'],$data['announcements']['result'] ?? [],actions:[
+    Table::Table(['title' => 'Announcement Title','posted_time' => 'Time posted','ann_type'=>'Type'],$data['announcements']['result'] ?? [],actions:[
         'View' => [[URLROOT . '/Admin/Announcements/View/%s','post_id'],'bg-blue view'],
         'Edit' => [['#'],'bg-yellow edit'],
     ],empty_msg:'No announcements available')

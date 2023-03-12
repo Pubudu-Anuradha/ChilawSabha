@@ -3,10 +3,17 @@ class AnnouncementModel extends PostModel {
     public function putAnnouncement($data) {
         // Separate Post and Announcement data
         // ? nothing to separate yet 
+        $announcement = [
+            'ann_type_id' => $data['ann_type_id'], 
+        ];
+        unset($data['ann_type_id']);
+        $data['pinned'] = boolval($data['pinned'] ?? 0);
         $post_data = $data;
         $post = $this->putPost($post_data,1);
+        var_dump($post);
         if($post !== false) {
-            // ? nothing announcement specific to do?
+            $announcement['post_id'] = $post['put'][0];
+            var_dump($this->insert('announcements',$announcement));
         }
         return [$post];
     }
@@ -15,12 +22,13 @@ class AnnouncementModel extends PostModel {
         $id = mysqli_real_escape_string($this->conn,$id);
         $announcement = $this->select(
             // 'post p join announcements a on p.post_id=a.post_id',
-            'post p',
+            'post p join announcements a join announcements_type at on p.post_id=a.post_id and at.ann_type_id=a.ann_type_id',
             'p.title as title,
              p.short_description as short_description,
              p.content as content,
+             at.ann_type as ann_type,
              p.visible_start_date as visible_start_date',
-        "p.post_id='$id'");
+        "p.post_id='$id' and p.post_type=1");
         if(!($announcement['error'] ?? true)) {
             $images = $this->select(
                 'post_images pi JOIN file_original_names orn ON pi.image_file_name=orn.name',
@@ -32,6 +40,7 @@ class AnnouncementModel extends PostModel {
                 'orn.name as name,
                  orn.orig as orig',
             "pa.post_id='$id'")['result'] ?? [];
+            var_dump($announcement);
             return [$announcement['result'] ?? [],$images,$attachments];
         } else {
             return  false;
@@ -55,11 +64,10 @@ class AnnouncementModel extends PostModel {
             array_push($conditions,'('.implode(' || ',$search_fields).')');
         }
 
-        // TODO
-        // if(isset($_GET['category']) && !empty($_GET['category']) && $_GET['category']!='All'){
-        //     $category = mysqli_real_escape_string($this->conn,$_GET['category']);
-        //     array_push($condidions,"a.category = '$category'");
-        // }
+        if(isset($_GET['category']) && !empty($_GET['category']) && $_GET['category']!='0'){
+            $category = mysqli_real_escape_string($this->conn,$_GET['category']);
+            array_push($conditions,"a.ann_type_id = '$category'");
+        }
 
         $sort = 'DESC';
         if(isset($_GET['sort'])){
@@ -72,10 +80,18 @@ class AnnouncementModel extends PostModel {
         $conditions = implode(' && ',$conditions);
         return $this->selectPaginated(
             // 'post p join announcement a on p.id=a.id',
-            'post p',
-            'p.post_id as post_id,p.title as title,p.posted_time as posted_time',
+            'post p join announcements a join announcements_type at on p.post_id=a.post_id and a.ann_type_id=at.ann_type_id',
+            'p.post_id as post_id,p.title as title,p.posted_time as posted_time,at.ann_type as ann_type',
             "$conditions ORDER BY p.posted_time $sort"
         );
+    }
+    
+    public function editAnnouncement() {
+        
+    }
+
+    public function getTypes() {
+        return $this->select('announcements_type')['result'] ?? [];
     }
 }
 // class AnnouncementModel extends Model
