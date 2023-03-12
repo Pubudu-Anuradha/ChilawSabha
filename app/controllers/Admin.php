@@ -202,57 +202,11 @@ class Admin extends Controller
                         'attachments|?',
                         'photos|?',
                     ],'Add');
-                    $photo_count = count($_FILES['photos']['name'] ?? []);
-                    if($photo_count == 1){
-                        if(($_FILES['photos']['name'][0]??'')=='') $photo_count = 0;
-                    }
-                    $attach_count = count($_FILES['attachments']['name'] ?? []);
-                    if($attach_count == 1){
-                        if(($_FILES['attachments']['name'][0]??'')=='') $attach_count = 0;
-                    }
-                    if($photo_count > 0) {
-                        for($i = 0; $i < $photo_count; ++$i) {
-                            if($_FILES['photos']['error'][$i] !== 0) {
-                                if(!isset($err['photos'])) 
-                                    $err['photos'] = [
-                                        $_FILES['photos']['name'][$i]
-                                    ];
-                                else 
-                                    $err['photos'][] = $_FILES['photos']['name'][$i];
-                            }
-                        }
-                    }
-                    if($attach_count > 0) {
-                        for($i = 0; $i < $attach_count; ++$i) {
-                            if($_FILES['attachments']['error'][$i] !== 0) {
-                                if(!isset($err['attach'])) 
-                                    $err['attach'] = [
-                                        $_FILES['attachments']['name'][$i]
-                                    ];
-                                else 
-                                    $err['attach'][] = $_FILES['attachments']['name'][$i];
-                            }
-                        }
-                    }
                     if(count($err) == 0) {
-                        // Store images
-                        $images = Upload::storeUploadedImages('public/upload/','photos');
-                        $image_errors = false;
-                        for($i=0;$i < count($images); ++$i) {
-                            $image_errors |= (!$images[$i]['error']);
-                        }
-                        // Store Attachments
-                        $attachments = Upload::storeUploadedFiles('downloads/','attachments',true);
-                        $attach_errors = false;
-                        for($i=0;$i < count($attachments); ++$i) {
-                            $attach_errors |= (!$attachments[$i]['error']);
-                        }
-
                         $model = $this->model('AnnouncementModel');
-                        $model->putAnnouncement($valid,$images,$attachments);
-                        
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                    [$valid,$err,$_FILES],['Components/form']);
+                                    [$model->putAnnouncement($valid),$valid,$err,$_FILES],
+                                    ['Components/form']);
                     } else {
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
                                     ['old'=>$_POST,'errors' => $err],['Components/form']);
@@ -265,6 +219,9 @@ class Admin extends Controller
             case 'Edit':
                 break;
             case 'View':
+                $this->view('Admin/Announcements/View','Announcement',[
+                    'announcement' => $model->getAnnouncement($id)
+                ],[]);
                 break;
             default:
                 $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements()], ['Components/table', 'posts']);

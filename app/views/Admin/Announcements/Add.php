@@ -26,7 +26,6 @@ $old = $data['old'] ?? false;
                        value:$old[$alias[2][0]] ?? null);
             Time::date($alias[3][1],$alias[3][0],$alias[3][0],min:date('Y-m-d'),
                        value:$old[$alias[3][0]] ?? date('Y-m-d'));
-            // TODO: Add contacts
             if($errors['attach'] ?? false):
                 foreach($errors['attach'] as $attach):
                     $message = "There was an error while uploading $attach. Please try again.";
