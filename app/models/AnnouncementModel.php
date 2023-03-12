@@ -2,7 +2,6 @@
 class AnnouncementModel extends PostModel {
     public function putAnnouncement($data) {
         // Separate Post and Announcement data
-        // ? nothing to separate yet 
         $announcement = [
             'ann_type_id' => $data['ann_type_id'], 
         ];
@@ -10,10 +9,9 @@ class AnnouncementModel extends PostModel {
         $data['pinned'] = boolval($data['pinned'] ?? 0);
         $post_data = $data;
         $post = $this->putPost($post_data,1);
-        var_dump($post);
         if($post !== false) {
             $announcement['post_id'] = $post['put'][0];
-            var_dump($this->insert('announcements',$announcement));
+            $this->insert('announcements',$announcement);
         }
         return [$post];
     }
@@ -22,12 +20,14 @@ class AnnouncementModel extends PostModel {
         $id = mysqli_real_escape_string($this->conn,$id);
         $announcement = $this->select(
             // 'post p join announcements a on p.post_id=a.post_id',
-            'post p join announcements a join announcements_type at on p.post_id=a.post_id and at.ann_type_id=a.ann_type_id',
+            'post p join announcements a on p.post_id=a.post_id',
             'p.title as title,
              p.short_description as short_description,
              p.content as content,
-             at.ann_type as ann_type,
-             p.visible_start_date as visible_start_date',
+             a.ann_type_id as ann_type_id,
+             p.visible_start_date as visible_start_date,
+             p.pinned as pinned,
+             p.hidden as hidden',
         "p.post_id='$id' and p.post_type=1");
         if(!($announcement['error'] ?? true)) {
             $images = $this->select(
@@ -40,8 +40,7 @@ class AnnouncementModel extends PostModel {
                 'orn.name as name,
                  orn.orig as orig',
             "pa.post_id='$id'")['result'] ?? [];
-            var_dump($announcement);
-            return [$announcement['result'] ?? [],$images,$attachments];
+            return [$announcement['result'][0] ?? [],$images,$attachments];
         } else {
             return  false;
         }
@@ -81,134 +80,39 @@ class AnnouncementModel extends PostModel {
         return $this->selectPaginated(
             // 'post p join announcement a on p.id=a.id',
             'post p join announcements a join announcements_type at on p.post_id=a.post_id and a.ann_type_id=at.ann_type_id',
-            'p.post_id as post_id,p.title as title,p.posted_time as posted_time,at.ann_type as ann_type',
+            'p.post_id as post_id,
+            p.title as title,
+            p.posted_time as posted_time,
+            at.ann_type as ann_type,
+            p.pinned as pinned,
+            p.hidden as hidden',
             "$conditions ORDER BY p.posted_time $sort"
         );
     }
     
-    public function editAnnouncement() {
-        
+    public function editAnnouncement($id,$post_data,$ann_data) {
+        $post = true;
+        if(count($post_data) > 0) {
+            $post = $this->editPost($id,$post_data);
+        }
+        if($post) {
+            $current = $this->select('announcements',conditions:"post_id='$id'")['result'][0] ?? false;
+            var_dump($current);
+            if($current!== false) {
+                if($this->update('announcements',$ann_data,"post_id='$id'")['success'] ?? false) {
+                    foreach($ann_data as $field => $_) {
+                        $ann_data[$field] = $current[$field];
+                    }
+                    $ann_data['post_id'] = $current['post_id'];
+                    $ann_data['edited_by'] = $_SESSION['user_id'];
+                    return $this->insert('announcements_edit',$ann_data)['success'] ?? false;
+                }
+            }
+        }
+        return $post;
     }
 
     public function getTypes() {
         return $this->select('announcements_type')['result'] ?? [];
     }
 }
-// class AnnouncementModel extends Model
-// {
-//     public function putAnnouncement($announcement, $images, $attachments)
-//     {
-//         unset($announcement['attachments']);
-//         unset($announcement['photos']);
-//         $announcement['post_type'] = 1;
-//         $announcement['posted_by'] = $_SESSION['user_id'];
-//         $announcement['views'] = 0;
-//         var_dump($announcement);
-//         $insert = $this->insert('post', $announcement);
-//         var_dump($insert);
-//         if ($insert['success'] ?? false) {
-//             $id = $this->conn->query('SELECT LAST_INSERT_ID() AS id');
-//             if ($id) {
-//                 $id = $id->fetch_all(MYSQLI_ASSOC)[0]['id'] ?? false;
-//                 if ($id !== false) {
-//                     if ($images) {
-//                         foreach ($images as $image) {
-//                             if (!($image['error'] ?? true)) {
-//                                 $this->insert('post_images',[
-//                                     'post_id'=>$id,
-//                                     'image_file_name'=>$image['name']
-//                                 ]);
-//                             }
-//                         }
-//                     }
-//                     if ($attachments) {
-//                         foreach ($attachments as $attachment) {
-//                             if (!($attachment['error'] ?? true)) {
-//                                 $this->insert('post_attachments',[
-//                                     'post_id'=>$id,
-//                                     'attach_file_name'=>$image['name']
-//                                 ]);
-//                             }
-//                         }
-//                     }
-//                 }
-//                 return ['id' => $id];
-//             } else {
-//                 return ['id' => null];
-//             }
-//         } else {
-//             return false;
-//         }
-//     }
-
-//     // public function getAnnouncements()
-//     // {
-//     //     $condidions = ["p.type='announcement'"];
-//     //     // search=&category=All&sort=DESC&page=1&size=50
-//     //     if(isset($_GET['search']) && !empty($_GET['search'])){
-//     //         $search_term = mysqli_real_escape_string($this->conn,$_GET['search']);
-//     //         $search_fields = [
-//     //             'p.title',
-//     //             'p.content',
-//     //             'a.shortdesc',
-//     //             'a.author',
-//     //         ];
-//     //         for($i = 0;$i<count($search_fields);++$i){
-//     //             $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
-//     //         }
-//     //         array_push($condidions,'('.implode(' || ',$search_fields).')');
-//     //     }
-
-//     //     if(isset($_GET['category']) && !empty($_GET['category']) && $_GET['category']!='All'){
-//     //         $category = mysqli_real_escape_string($this->conn,$_GET['category']);
-//     //         array_push($condidions,"a.category = '$category'");
-//     //     }
-
-//     //     $sort = 'DESC';
-//     //     if(isset($_GET['sort'])){
-//     //         $sort = $_GET['sort'];
-//     //         if(!($sort=='ASC' || $sort=='DESC')){
-//     //             $sort = 'DESC';
-//     //         }
-//     //     }
-
-//     //     $condidions = implode(' && ',$condidions);
-//     //     return $this->selectPaginated(
-//     //         'post p join announcement a on p.id=a.id',
-//     //         'p.id as id,p.title as title,a.shortdesc as shortdesc,p.content as description,p.date as date,a.category as category,a.author as author',
-//     //         "$condidions ORDER BY p.date $sort"
-//     //     );
-//     // }
-//     // public function getAnnouncement($id)
-//     // {
-//     //     return $this->select(
-//     //         'post p join announcement a on p.id=a.id',
-//     //         'p.id as id,p.title as title,a.shortdesc as shortdesc,p.content as description,p.date as date,a.category as category,a.author as author',
-//     //         "p.id=$id"
-//     //     );
-//     // }
-//     // public function addAnnouncement($data){
-//     //     return $this->callProcedure('putAnnouncement',[
-//     //         $data['title'],
-//     //         $data['content'],
-//     //         $data['category'],
-//     //         $data['shortdesc'],
-//     //         $data['author'],
-//     //     ]);
-//     // }
-//     // public function editAnnouncement($id,$data){
-//     //     $posts = $this->update('post',[
-//     //         'title'=>$data['title'],
-//     //         'content'=>$data['content'],
-//     //     ],"id=$id");
-//     //     $announce = $this->update('announcement',[
-//     //         'category'=>$data['category'],
-//     //         'shortdesc'=>$data['shortdesc'],
-//     //         'author'=>$data['author']
-//     //     ],"id=$id");
-//     //     return[
-//     //         'posts' =>$posts,
-//     //         'announce' =>$announce
-//     //     ];
-//     // }
-// }

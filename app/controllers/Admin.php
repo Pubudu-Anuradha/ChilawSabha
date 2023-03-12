@@ -218,10 +218,81 @@ class Admin extends Controller
                 }
                 break;
             case 'Edit':
+                $data = [];
+                $post_changes = [];
+                $ann_changes = [];
+                $current_post = $model->getAnnouncement($id);
+                if($current_post !== false) {
+                    $post_validator = [
+                        'title' => 'title|u[post]|l[:255]',
+                        'short_description' => 'short_description|l[:1000]',
+                        'content' => 'content',
+                        'visible_start_date' => 'visible_start_date|dt['.date('Y-m-d').':]',
+                        'pinned' => 'pinned|i[0:1]|?',
+                        'hidden' => 'hidden|i[0:1]|?',
+                    ];
+                    $ann_validator = [
+                        'ann_type_id' => 'ann_type_id|i[1:]', // in announcement table
+                    ];
+
+                    $post_data = $_POST;
+                    // Turning 'on' or 'off' to integer
+                    $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
+                    $post_data['hidden'] = boolval($post_data['hidden'] ?? false) ? 1 : 0;
+                    $ann_data = $_POST;
+
+                    foreach($post_validator as $field => $_) {
+                        unset($ann_data[$field]);
+                    }
+                    foreach($ann_validator as $field => $_) {
+                        unset($post_data[$field]);
+                    }
+                    foreach ($current_post[0] as $field => $value) {
+                        if (isset($post_data[$field])) {
+                            if ($post_data[$field] !== $value) {
+                                if ($post_validator[$field] ?? false) {
+                                    $post_changes[] = $post_validator[$field];
+                                }
+                            } else {
+                                unset($post_data[$field]);
+                            }
+                        }
+                        if (isset($ann_data[$field])) {
+                            if ($ann_data[$field] !== $value) {
+                                if ($ann_validator[$field] ?? false) {
+                                    $ann_changes[] = $ann_validator[$field];
+                                }
+                            } else {
+                                unset($ann_data[$field]);
+                            }
+                        }
+                    }
+                    // var_dump($post_changes);
+                    [$valid_post,$err_post] = $this->validateInputs($post_data,$post_changes,'Edit');
+                    [$valid_ann,$err_ann] = $this->validateInputs($ann_data,$ann_changes,'Edit');
+                    // echo "<br>";
+                    // var_dump($valid_post);
+                    $err = array_merge($err_ann,$err_post);
+                    if(count($err) == 0) {
+                        if($model->editAnnouncement($id,$valid_post,$valid_ann)) {
+                            $data['edited'] = true;
+                        } else {
+                            $data['edited'] = false;
+                        }
+                    }else {
+                        $data['errors'] = $err;
+                    }
+                }
+
+                $this->view('Admin/Announcements/Edit','Edit Announcement',array_merge($data,[
+                    'ann' => $model->getAnnouncement($id),
+                    'types' => $model->getTypes()
+                    ]), ['Components/form']);
                 break;
             case 'View':
                 $this->view('Admin/Announcements/View','Announcement',[
-                    'announcement' => $model->getAnnouncement($id)
+                    'announcement' => $model->getAnnouncement($id),
+                    'types' => $model->getTypes()
                 ],[]);
                 break;
             default:

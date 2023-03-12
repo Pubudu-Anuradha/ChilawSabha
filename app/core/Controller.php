@@ -45,6 +45,7 @@ class Controller
 
     protected function validateInputs($data, $fields, $submitMethod = 'Submit')
     {
+        var_dump($data,$fields); echo "<br>";
         // Rules can be set in fields separated by '|' to do some basic validation here itself.
         // Available rules are
         // '?'          <- Optional(can be empty or not given) -> missing|empty
@@ -102,7 +103,7 @@ class Controller
                 }
             }
             unset($rules[$can_be_empty]);
-            if (!empty($data[$field])) {
+            if ((!empty($data[$field])) || is_int($data[$field] ?? 'invalid')) {
                 // Not empty, Checking rules.
                 // Rules follow the precedence order as set in this function.
                 // No need to worry about rule order when calling the function.
