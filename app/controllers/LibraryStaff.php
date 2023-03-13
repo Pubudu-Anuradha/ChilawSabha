@@ -9,7 +9,27 @@ class LibraryStaff extends Controller
 
     public function index()
     {
-        // TODO: USE COMPONENTS AND REDO
+        $model = $this->model('BookModel');
+        // var_dump($_POST);
+
+        //only for search request added here. Need to add function for search results after clicking search btn
+        $reqJSON = file_get_contents('php://input');
+        // var_dump($_POST);
+        if($reqJSON){
+            $reqJSON = json_decode($reqJSON, associative:true);
+            if($reqJSON){
+                $response = $model->searchUser($reqJSON);  
+
+                $this->returnJSON([
+                    $response['result'],
+                ]);
+            die();
+            }
+            else $this->returnJSON([
+                'error'=>'Error Parsing JSON'
+            ]);
+        }
+
         $this->view('LibraryStaff/index', styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
     }
 
@@ -110,9 +130,12 @@ class LibraryStaff extends Controller
     {
         $model = $this->model('BookModel');
 
-        $data = ['categories' => $model->get_categories()['result']];
+        $data = ['categories' => $model->get_categories()['result'],'subcategories' => $model->get_sub_categories()['result']];
         
         if (isset($_POST['Add'])) {
+            //select only return subcategory id.
+            $_POST['category_code'] = $model->getCategoryCode($_POST['sub_category_code'])['result'][0]["category_id"];
+            var_dump($_POST['category_code']);
             [$valid, $err] = $this->validateInputs($_POST, [
                     'title|l[:255]',
                     'author|l[:255]',
@@ -120,6 +143,7 @@ class LibraryStaff extends Controller
                     'place_of_publication|l[:255]',
                     'date_of_publication',
                     'category_code',
+                    'sub_category_code',
                     'accession_no|i[0:]',
                     'price|d[0:]',
                     'pages|i[1:]',
@@ -127,7 +151,6 @@ class LibraryStaff extends Controller
                     'isbn|l[:50]',
                     'recieved_method|l[:255]',
                     ], 
-                    //remove this 
                 'Add');
             $data['errors'] = $err;
 
