@@ -24,7 +24,7 @@ td {
 
 table {
   border-collapse: collapse;
-  width: 100%;
+  min-width: 80%;
 }
 
 table,
@@ -60,7 +60,8 @@ tbody>tr:last-child {
 }
 
 .content-table {
-  display: inline-block;
+  width: 100%;
+  display: inline-flex;
   justify-content: center;
   box-sizing: border-box;
   overflow-x: auto;

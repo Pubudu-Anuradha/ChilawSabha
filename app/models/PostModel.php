@@ -67,7 +67,7 @@
         return $this->select('post',conditions:"post_id='$id'")['result'][0] ?? false;
     }
 
-    protected function editPost($id,$edited_post_data) {
+    public function editPost($id,$edited_post_data) {
         $id = mysqli_real_escape_string($this->conn,$id);
         $current = $this->select('post',conditions:"post_id='$id'")['result'][0] ?? false;
         if($current!== false) {
@@ -77,9 +77,6 @@
                 }
                 $edited_post_data['post_id'] = $current['post_id'];
                 $edited_post_data['edited_by'] = $_SESSION['user_id'];
-                echo "<pre>";
-                var_dump($edited_post_data);
-                echo "</pre>";
                 return $this->insert('post_edit',$edited_post_data)['success'] ?? false;
             }
         }

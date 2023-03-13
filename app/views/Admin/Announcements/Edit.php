@@ -9,6 +9,7 @@ $errors = $data['errors'] ?? []; ?>
 
     <form class="fullForm" method="post" enctype="multipart/form-data">
     <?php 
+            var_dump($data);
             Errors::validation_errors($errors,[
                 'title' =>'Announcement title',
                 'short_description'=> 'Short description',
@@ -29,21 +30,19 @@ $errors = $data['errors'] ?? []; ?>
                        value:$old[$alias[1][0]] ?? null);
             Text::textarea($alias[2][1],$alias[2][0],$alias[2][0],$alias[2][2],spellcheck:true,
                        value:$old[$alias[2][0]] ?? null);
-            Time::date($alias[3][1],$alias[3][0],$alias[3][0],min:date('Y-m-d'),
-                       value:$old[$alias[3][0]] ?? date('Y-m-d'));
             ?>
             <div class="input-field">
                 <label for="pin">Pin to front Page</label>
                 <div class="input-wrapper" style="display:block;">
                     <input type="checkbox" name="pinned" id="pin" style="height:1.2rem;
-                    aspect-ratio:1/1;" <?= ($old['pinned'] ?? false)? 'checked' : '' ?>>
+                    aspect-ratio:1/1;" <?= (($old['pinned'] ?? 0) == 1)? 'checked' : '' ?>>
                 </div>
             </div>
             <div class="input-field">
                 <label for="hide">Hidden</label>
                 <div class="input-wrapper" style="display:block;">
                     <input type="checkbox" name="hidden" id="hide" style="height:1.2rem;
-                    aspect-ratio:1/1;" <?= ($old['hidden'] ?? false)? 'checked' : '' ?>>
+                    aspect-ratio:1/1;" <?= (($old['hidden'] ?? 0) == 1)? 'checked' : '' ?>>
                 </div>
             </div>
             <?php 

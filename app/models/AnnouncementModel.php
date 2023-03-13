@@ -1,4 +1,4 @@
-<?php require_once 'post/commonModel.php';
+<?php require_once 'PostModel.php';
 class AnnouncementModel extends PostModel {
     public function putAnnouncement($data) {
         // Separate Post and Announcement data
@@ -25,7 +25,6 @@ class AnnouncementModel extends PostModel {
              p.short_description as short_description,
              p.content as content,
              a.ann_type_id as ann_type_id,
-             p.visible_start_date as visible_start_date,
              p.pinned as pinned,
              p.hidden as hidden',
         "p.post_id='$id' and p.post_type=1");
@@ -66,6 +65,16 @@ class AnnouncementModel extends PostModel {
         if(isset($_GET['category']) && !empty($_GET['category']) && $_GET['category']!='0'){
             $category = mysqli_real_escape_string($this->conn,$_GET['category']);
             array_push($conditions,"a.ann_type_id = '$category'");
+        }
+
+        if(isset($_GET['hidden']) && $_GET['hidden'] != 2){
+            $hidden = mysqli_real_escape_string($this->conn,$_GET['hidden']);
+            array_push($conditions,"p.hidden = '$hidden'");
+        }
+
+        if(isset($_GET['pinned']) && $_GET['pinned'] != 2){
+            $pinned = mysqli_real_escape_string($this->conn,$_GET['pinned']);
+            array_push($conditions,"p.pinned = '$pinned'");
         }
 
         $sort = 'DESC';

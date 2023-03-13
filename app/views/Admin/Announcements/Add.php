@@ -1,7 +1,4 @@
 <?php // TODO: Add functionality
-
-use function PHPSTORM_META\type;
-
 require_once "common.php";
 $old = $data['old'] ?? false;
 ?>
@@ -13,9 +10,6 @@ $old = $data['old'] ?? false;
     <div class="formContainer">
         <form class="fullForm" method="post" enctype="multipart/form-data">
             <?php
-            echo "<pre>";
-            var_dump($data);
-            echo "</pre>";
             $errors = $data['errors'] ?? [];
             Errors::validation_errors($errors,$alias);
 
@@ -32,8 +26,6 @@ $old = $data['old'] ?? false;
                        value:$old[$alias[1][0]] ?? null);
             Text::textarea($alias[2][1],$alias[2][0],$alias[2][0],$alias[2][2],spellcheck:true,
                        value:$old[$alias[2][0]] ?? null);
-            Time::date($alias[3][1],$alias[3][0],$alias[3][0],min:date('Y-m-d'),
-                       value:$old[$alias[3][0]] ?? date('Y-m-d'));
             if($errors['attach'] ?? false):
                 foreach($errors['attach'] as $attach):
                     $message = "There was an error while uploading $attach. Please try again.";
