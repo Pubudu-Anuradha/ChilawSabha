@@ -8,9 +8,6 @@ require_once 'common.php';
     </h1>
     <hr>
     <?php
-    echo "<pre>";
-    var_dump($data);
-    echo "</pre>";
     $types_assoc = [];
     foreach($data['types'] ?? [] as $type) {
         if($type['ann_type'] !== 'All')
@@ -70,6 +67,7 @@ require_once 'common.php';
                 hidden.box.style.width  = '1.5rem';
                 hidden.box.ariaLabel = 'hide or unhide post';
                 hidden.cell.appendChild(hidden.box);
+                hidden.cell.style.textAlign = 'center';
 
                 const pinned = {
                     cell:document.createElement('td'),
@@ -82,6 +80,7 @@ require_once 'common.php';
                 pinned.box.style.width  = '1.5rem';
                 pinned.box.ariaLabel = 'pin or unpin post';
                 pinned.cell.appendChild(pinned.box);
+                pinned.cell.style.textAlign = 'center';
 
                 row.insertBefore(hidden.cell,row.children[2]);
                 row.insertBefore(pinned.cell,hidden.cell);

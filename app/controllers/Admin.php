@@ -284,13 +284,13 @@ class Admin extends Controller
                 $this->view('Admin/Announcements/Edit','Edit Announcement',array_merge($data,[
                     'ann' => $model->getAnnouncement($id),
                     'types' => $model->getTypes()
-                    ]), ['Components/form']);
+                    ]), ['Components/form','Components/table','Admin/post']);
                 break;
             case 'View':
                 $this->view('Admin/Announcements/View','Announcement',[
                     'announcement' => $model->getAnnouncement($id),
                     'types' => $model->getTypes()
-                ],[]);
+                ],['Admin/post','Components/table']);
                 break;
             default:
                 $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements(),'types'=>$model->getTypes()], ['Components/table', 'posts']);

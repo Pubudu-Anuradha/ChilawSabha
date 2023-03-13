@@ -20,13 +20,17 @@ class AnnouncementModel extends PostModel {
         $id = mysqli_real_escape_string($this->conn,$id);
         $announcement = $this->select(
             // 'post p join announcements a on p.post_id=a.post_id',
-            'post p join announcements a on p.post_id=a.post_id',
-            'p.title as title,
+            'post p join announcements a join users u 
+             on p.post_id=a.post_id and u.user_id=p.posted_by',
+            'p.post_id as post_id,
+             p.title as title,
              p.short_description as short_description,
              p.content as content,
              a.ann_type_id as ann_type_id,
              p.pinned as pinned,
-             p.hidden as hidden',
+             p.hidden as hidden,
+             u.name as posted_by,
+             p.posted_time as posted_time',
         "p.post_id='$id' and p.post_type=1");
         if(!($announcement['error'] ?? true)) {
             $images = $this->select(
@@ -39,7 +43,26 @@ class AnnouncementModel extends PostModel {
                 'orn.name as name,
                  orn.orig as orig',
             "pa.post_id='$id'")['result'] ?? [];
-            return [$announcement['result'][0] ?? [],$images,$attachments];
+            $ann_edit_history = $this->select(
+                'announcements_edit e join announcements_type at join users u 
+                 on e.edited_by=u.user_id and at.ann_type_id=e.ann_type_id',
+                'at.ann_type as ann_type,
+                u.name as edited_by,
+                e.edited_time as edited_time',
+            "e.post_id='$id'")['result'] ?? [];
+            $post_edit_history = $this->select(
+                'post_edit e join users u 
+                 on e.edited_by=u.user_id',
+                'e.post_type as post_type,
+                 e.title as title,
+                 e.short_description as short_description,
+                 e.content as content,
+                 e.pinned as pinned,
+                 e.hidden as hidden,
+                 u.name as edited_by,
+                 e.edited_time as edited_time',
+            "e.post_id='$id'")['result'] ?? [];
+            return [$announcement['result'][0] ?? [],$images,$attachments,$ann_edit_history,$post_edit_history];
         } else {
             return  false;
         }

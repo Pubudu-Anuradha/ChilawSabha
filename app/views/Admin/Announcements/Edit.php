@@ -5,11 +5,13 @@ $errors = $data['errors'] ?? []; ?>
     <h1>
         Edit Announcement : <?= $old['title'] ?? 'Not Found' ?>
     </h1>
+        <div class="btn-column">
+            <a href="<?= URLROOT . '/Admin/Announcements/View/' . $old['post_id']?>" class="btn view bg-blue">Go to View Mode</a>
+        </div>
     <hr>
 
     <form class="fullForm" method="post" enctype="multipart/form-data">
     <?php 
-            var_dump($data);
             Errors::validation_errors($errors,[
                 'title' =>'Announcement title',
                 'short_description'=> 'Short description',
