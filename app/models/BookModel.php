@@ -47,11 +47,19 @@ class BookModel extends Model
         return $this->select('category_codes');
     }
 
+    public function get_sub_categories(){
+        return $this->select('sub_category_codes');
+    }
+
     public function addBook($book)
     {
         $book['state'] = 1;
         $book['recieved_by'] = $_SESSION['user_id'];
         return $this->insert('books',$book);
+    }
+
+    public function getCategoryCode($subCategory){
+        return $this->select('sub_category_codes','category_id',"sub_category_id=$subCategory");
     }
 
     public function editBook($id,$data){
@@ -88,5 +96,15 @@ class BookModel extends Model
             }
             return false;
         }
+    }
+
+    public function searchUser($user){
+        $search_term = mysqli_real_escape_string($this->conn, $user);
+
+        return $this->select(
+            'users u join library_member l on u.user_id=l.user_id',
+            'l.membership_id,u.name',
+            "u.name LIKE '%$search_term%' || l.membership_id LIKE '%$search_term%'"
+        );
     }
 }
