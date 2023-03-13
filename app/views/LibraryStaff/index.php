@@ -1,11 +1,14 @@
 <div class="content">
     <div class="page">
         <div class="lend-book">
-            <div class="content-title-search usr-search">
-                <input type="text" name="search" placeholder=" Search User" id="search">
-                <button>
-                    <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
-                </button>
+            <div class="usr-search">
+                <form action="<?=URLROOT . '/LibraryStaff/index' ?>" method="post" id="user-search-form">
+                    <input type="text" name="search" placeholder=" Search User" id="search" onkeyup="send()">
+                    <button>
+                        <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
+                    </button>
+                </form>
+                <div id ="usr-search-list" class="usr-search-list"></div>
             </div>
 
             <div class="lend-book-content">
@@ -123,6 +126,45 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+
+function send(){
+    var user = document.getElementById('search');
+    var searchDiv = document.getElementById('usr-search-list');
+
+    fetch("<?=URLROOT . '/LibraryStaff/index'?>",{
+        method:"POST",
+        headers: {
+            "Content-type":"application/json"
+        },
+        body: JSON.stringify(user.value)    
+    })
+    .then(response => response.json())
+    .then(response => {
+
+        if(response.length > 0){
+            searchDiv.innerHTML = '';
+            var i = 0;
+            response[0].forEach(result => {
+                const searchResultDiv = document.createElement('div');
+                searchResultDiv.classList.add('search-result');
+                searchResultDiv.innerHTML = response[0][i]['membership_id'] + " " + response[0][i]['name'];
+
+                searchResultDiv.addEventListener('click', () => {
+                    user.value = searchResultDiv.innerText;
+                    searchDiv.innerHTML = '';
+                });
+                window.addEventListener('click', () => {
+                    searchDiv.innerHTML = '';
+                });
+                searchDiv.append(searchResultDiv);
+                i++;
+            });
+        }
+    })
+    .catch(err => {
+        searchDiv.innerHTML = '';
+    });
 }
 
 </script>
