@@ -45,7 +45,7 @@ $old = $data['old'] ?? false;
                     Errors::generic($message);
                 endforeach;
             endif;
-            Files::images('Associated images','photos','photos',required:false);
+            Files::images('Pictures','photos','photos',required:false);
             Other::submit('Add',value:'Add new Announcement')
             ?>
         </form>

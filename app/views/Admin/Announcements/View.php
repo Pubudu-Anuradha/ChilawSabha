@@ -82,7 +82,7 @@ if(!empty($attachments)): ?>
 <?php endif;
 if(!empty($images)):?>
     <hr>
-    <h3>Attached Images</h3>
+    <h3>Pictures</h3>
     <div class="photos">
     <?php foreach($images as $image):
         $name = $image['name'] ?? '';
@@ -103,7 +103,7 @@ if(!empty($images)):?>
 <?php endif;
 if(!empty($edits)): ?>
 <hr>
-<h3>Edit History</h3>
+<h3>Content Edit History</h3>
 <?php $current = $announcement;
 $aliases = [
     'ann_type' => 'Announcement type',
@@ -121,18 +121,18 @@ $hide_pin = [
         0 => '<b>Pinned</b> the announcement to the frontpage',
     ]
 ];
+
 $formatter = new IntlDateFormatter(
     'en_US',
     IntlDateFormatter::LONG,
     IntlDateFormatter::SHORT,
-    'Asia/Colombo',
-    IntlDateFormatter::GREGORIAN
 );
 foreach($edits as $edit):
     $edited_by = $edit['edited_by'] ?? 'Not found';
     $edited_time = $edit['edited_time'] ?? false;
     if($edited_time !== false) {
-        $edited_time = $formatter->format(IntlCalendar::fromDateTime($edited_time,'si_LK'));
+        $date = IntlCalendar::fromDateTime($edited_time,null);
+        $edited_time = $formatter->format($date);
     } else {
         $edited_time = 'ERROR RETRIEVING DATE';
     }

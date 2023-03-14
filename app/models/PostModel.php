@@ -83,5 +83,89 @@
         return false;
     }
 
-    
+    public function getPhotoCount($id) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        return $this->select('post_images','count(*) as count',
+            "post_id='$id'")['result'][0]['count'];
+    }
+
+    // public function getAttachCount($id) {
+    //     $id = mysqli_real_escape_string($this->conn,$id);
+    //     return $this->select('post_attachments','count(*) as count',
+    //         "post_id='$id'")['result'][0]['count'];
+    // }
+
+    public function addPhotos($id,$name = 'photos') {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        if($this->exists('post',['post_id'  => $id])) {
+            //store images
+            $current_photo_count = $this->getPhotoCount($id);
+            if(count($_FILES[$name] ?? []) + $current_photo_count > 10) {
+                return ['error' => 'more_than_10'];
+            }
+            $images = Upload::storeUploadedImages('public/upload/','photos');
+            $image_errors = [];
+            if($images !== false)
+                for($i=0;$i < count($images); ++$i) {
+                    $image_errors[] = [
+                        $images[$i]['error'],
+                        $images[$i]['orig']
+                    ];
+                    if($images[$i]['error'] === false) {
+                        $this->insert('post_images',[
+                            'post_id' => $id,
+                            'image_file_name' => $images[$i]['name']
+                        ]);
+                    }
+                }
+            return $image_errors;
+        }
+        return ['error' => 'no post'];
+    }
+
+    public function addAttachments($id,$name='attachments') {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        if($this->exists('post',['post_id'  => $id])){
+            // Store Attachments
+            $attachments = Upload::storeUploadedFiles('downloads/',$name,true);
+            $attach_errors = [];
+            if($attachments !== false)
+                for($i=0;$i < count($attachments); ++$i) {
+                    $attach_errors[] = [
+                        $attachments[$i]['error'],
+                        $attachments[$i]['orig']
+                    ];
+                    if($attachments[$i]['error'] === false) {
+                        $this->insert('post_attachments',[
+                            'post_id' => $id,
+                            'attach_file_name' => $attachments[$i]['name']
+                        ]);
+                    }
+                }
+            return $attach_errors;
+        }
+        return ['error'=>'no_post'];
+    }
+
+    public function removePhoto($id,$file_name) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        $file_name = mysqli_real_escape_string($this->conn,$file_name);
+        $delete = $this->delete('post_images',
+            "post_id='$id' && image_file_name='$file_name'")['success'] ?? false;
+        if($delete && unlink('public/upload/' . $file_name)) {
+            $this->delete('file_original_names',"name='$file_name'");
+        }
+        return $delete;
+    }
+
+    public function removeAttach($id,$file_name) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        $file_name = mysqli_real_escape_string($this->conn,$file_name);
+        $delete = $this->delete('post_attachments',
+            "post_id='$id' && attach_file_name='$file_name'")['success'] ?? false;
+        if($delete && unlink('downloads/' . $file_name)){
+            $this->delete('file_original_names',"name='$file_name'");
+        }
+        return $delete;
+    }
 }

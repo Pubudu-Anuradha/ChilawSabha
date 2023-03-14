@@ -19,7 +19,43 @@
     border-radius: 10px;
 }
 
+.photo-card>.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.attachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.attachment {
+    display: inline-flex;
+    min-width: 30%;
+    box-sizing: border-box;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.photo-card>.row>button,.attachments>.attachment>button {
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: .5rem;
+    background-color: var(--red);
+}
+
+.photo-card>.row>button::before,.attachments>.attachment>button::before {
+    content: "×";
+    font-size: 2em;
+}
+
 .photos>.photo-card>.row>.orig-name {
+    max-width: calc(100% - 1.5rem);
     word-wrap: break-word;
 }
 

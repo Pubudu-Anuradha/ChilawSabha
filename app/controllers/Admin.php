@@ -280,6 +280,10 @@ class Admin extends Controller
                             $data['errors'] = $err;
                         }
                     }
+                }else if(isset($_POST['AddPhotos'])) {
+                    $data['AddPhotos'] = $model->addPhotos($id,'photos');
+                }else if(isset($_POST['AddAttach'])) {
+                    $data['AddAttach'] = $model->addAttachments($id,'attachments');
                 }
                 $this->view('Admin/Announcements/Edit','Edit Announcement',array_merge($data,[
                     'ann' => $model->getAnnouncement($id),
@@ -349,6 +353,11 @@ class Admin extends Controller
                         }else{
                             $this->returnJSON($err);
                         }
+                        break;
+                    case 'delPhoto':
+                        $this->returnJSON(
+                            ['success' => $model->removePhoto($id,$body['filename'] ?? '')]
+                        );
                         break;
                     default:
                         $this->returnJSON(['error' => 'Method']);
