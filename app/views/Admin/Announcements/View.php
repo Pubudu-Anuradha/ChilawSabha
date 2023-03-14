@@ -1,5 +1,5 @@
 <div class="content">
-<?php // TODO: Make Single announcement view
+<?php
 [$announcement,$images,$attachments,$edits] = $data['announcement'] !== false ? $data['announcement'] : [false,false,false,false];
 $types = $data['types'] ?? [];
 if(empty($announcement)): ?>

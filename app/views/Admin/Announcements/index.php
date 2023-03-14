@@ -1,4 +1,4 @@
-<?php // TODO: Make table with announcement titles and options 
+<?php
 require_once 'common.php';
 ?> 
 

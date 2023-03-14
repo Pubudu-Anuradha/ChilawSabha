@@ -1,4 +1,4 @@
-<?php // TODO: Add functionality
+<?php
 require_once "common.php";
 $old = $data['old'] ?? false;
 ?>
