@@ -1,73 +1,78 @@
 <div class="form">
-    <div class="side-menu">
-        <h1></h1>
-    </div>
     <div class="complaint-form">
         <h2>
-            Complaint Form <hr class="hr1">
+            Complaint Form 
         </h2>
+        <hr>
+
+        <!-- check whether data added or not -->
+        <div class="formContainer">
+            <?php if($data['Submit'])
+                    if(!$data['Submit']['success'])
+                        echo "Failed to add Complaint ".$data['Submit']['errmsg'];
+                    else
+                        echo "Added Successfully";
+            ?>
+
         <div class="formContainer">
             <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
             <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
+
             <div class="inputfield">
-                <label for="textInput">Complainer Name: </label>
+                <label for="name" >Complainer Name: </label>
                 <div class="inputDiv">
-                    <input type="text" name="name" id="textInput" placeholder="Enter Name">
+                    <input type="text" id="name" name="name" placeholder="Enter Name">
                 </div>
             </div>
 
             <div class="inputfield">
-                <label for="emailInput">Enter your email: </label>
+                <label for="email">Enter your email: </label>
                 <div class="inputDiv">
-                    <input type="email" id="emailInput" name="emailInputField" placeholder="Enter Email">
+                    <input type="email" id="email" name="email" placeholder="Enter Email">
                 </div>
             </div>
 
             <div class="inputfield">
-                <label for="phoneInput">Enter your phone number:</label>
+                <label for="phone_number">Enter your phone number:</label>
                 <div class="inputDiv">
-                    <input type="tel" id="phoneInput" name="phoneInputField" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
+                    <input type="tel" id="phone_number" name="phone_number" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
                 </div>
             </div>
 
             <div class="inputfield">
-                <label for="textInput">Address: </label>
+                <label for="address">Address: </label>
                 <div class="inputDiv">
-                    <input type="text" name="address" id="textInput" placeholder="Enter Address">
+                    <input type="text" id="address" name="address" placeholder="Enter Address">
                 </div>
             </div>
 
             <div class="inputfield">
-                <label for="selectOption">Choose a name:</label>
+                <label for="category">Choose a name:</label>
                 <div class="inputDiv">
-                    <select id="selectOption" name="selectOptionField">
-                        <option value="Garbage disposal">Garbage disposal</option>
-                        <option value="Land issues">Land issues</option>
-                        <option value="Unauthorized construction">Unauthorized construction</option>
-                        <option value="Street lamp">Street lamp</option>
-                        <option value="Roads require repair">Roads require repair</option>
-                        <option value="Damaged public infrastructure">Damaged public infrastructure</option>
-                        <option value="Other">Other</option>
+                    <select id="category" name="category">
+                        <?php $categories = ['Garbage disposal','Land issues','Unauthorized construction','Street lamp','Roads require repair','Damaged public infrastructure'];
+                        foreach($categories as $category): ?>
+                            <option value="<?=$category?>"><?=$category?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
 
             <div class="inputfield">
-                <label for="noteInput">Briefly Describe your incident:</label>
+                <label for="message">Briefly Describe your incident:</label>
                 <div class="inputDiv">
-                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
+                    <textarea id="message" name="message" rows="10" cols="30" placeholder="A short desription about the complaint" required></textarea>
                 </div>
             </div>
 
-            <div class="inputfield">
-                <label for="fileInput">Select a file:</label>
-                <input type="file" id="fileInput" name="fileInputField">
-            </div>
-
+            <!-- <div class="inputfield">
+                <label for="file">Select a file:</label>
+                <input type="file" id="file" name="file">
+            </div> -->
 
             <div class="submitButtonContainer">
                 <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
+                    <input type="submit" id="Submit" value="Submit" name="Submit">
                 </div>
             </div>
             </form>

@@ -1,6 +1,6 @@
 <div class="content">
     <h2>
-        New Complaints <hr class="hr1">
+        New Complaints 
     </h2>
     <div class="content-table">
         <table>

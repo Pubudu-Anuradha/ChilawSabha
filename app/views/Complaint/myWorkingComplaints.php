@@ -1,6 +1,6 @@
 <div class="content">
     <h2>
-        My Working Complaints <hr class="hr1">
+        My Working Complaints 
     </h2>
     <div class="content-table">
         <table>
