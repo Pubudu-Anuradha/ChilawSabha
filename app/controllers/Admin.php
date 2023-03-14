@@ -359,6 +359,11 @@ class Admin extends Controller
                             ['success' => $model->removePhoto($id,$body['filename'] ?? '')]
                         );
                         break;
+                    case 'delAttach':
+                        $this->returnJSON(
+                            ['success' => $model->removeAttach($id,$body['filename'] ?? '')]
+                        );
+                        break;
                     default:
                         $this->returnJSON(['error' => 'Method']);
                 }

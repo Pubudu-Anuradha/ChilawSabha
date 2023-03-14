@@ -77,6 +77,37 @@ $errors = $data['errors'] ?? []; ?>
             </div>
         <?php endforeach; ?>
         </div>
+        <script>
+            const photosContainer = document.querySelector('.photos');
+            if(photosContainer){
+                const cards = photosContainer.querySelectorAll('.photo-card');
+                if(cards) cards.forEach((card) => {
+                    const filename = card.querySelector('img').src.replace(/^.*\/public\/upload\//,'').trim();
+                    const originalName = card.querySelector('img').alt;
+                    card.querySelector('button').addEventListener('click',(e)=> {
+                        e.preventDefault();
+                        if(confirm('Are you sure you want to remove the image : '+originalName+'?')){
+                            fetch('<?= URLROOT .'/Admin/postsApi/delPhoto/' . $old['post_id'] ?>',{
+                                method:'POST',
+                                headers: {
+                                    "Content-type":"application/json"
+                                },
+                                body:JSON.stringify({
+                                    filename:filename
+                                })
+                            }).then(res=>res.json()).then(response => {
+                                if(response.success == true) {
+                                    alert('Deleted image : ' + originalName)
+                                    card.parentNode.removeChild(card);
+                                } else {
+                                    alert('Failed to delete ' + originalName);
+                                }
+                            }).catch(console.log)
+                        }
+                    });
+                });
+            }
+        </script>
     <?php endif; if(count($images) < 10):?>
         <form class="fullForm" method="post" enctype="multipart/form-data">
             <?php
@@ -102,6 +133,35 @@ $errors = $data['errors'] ?? []; ?>
                 </div>
             <?php endforeach; ?>
         </div>
+        <script>
+            document.querySelectorAll('.attachments > .attachment').forEach(attachment => {
+                const a = attachment.querySelector('a');
+                const originalName = a.innerHTML.trim();
+                const filename = a.href.trim().
+                    replace(/^.*\/Downloads\/file\//,'').trim();
+                attachment.querySelector('button').addEventListener('click',(e) => {
+                    e.preventDefault();
+                    if(confirm('Are you sure you want to remove the attachment : ' + originalName + '?')){
+                        fetch('<?= URLROOT .'/Admin/postsApi/delAttach/' . $old['post_id'] ?>',{
+                            method:'POST',
+                            headers: {
+                                "Content-type":"application/json"
+                            },
+                            body:JSON.stringify({
+                                filename:filename
+                            })
+                        }).then(res=>res.json()).then(response => {
+                            if(response.success == true) {
+                                alert('Deleted attachment : ' + originalName)
+                                attachment.parentNode.removeChild(attachment);
+                            } else {
+                                alert('Failed to delete ' + originalName);
+                            }
+                        }).catch(console.log)
+                    }
+                });
+            })
+        </script>
     <?php endif; ?>
     <hr>
     <form class="fullForm" method="post" enctype="multipart/form-data">
@@ -112,38 +172,3 @@ $errors = $data['errors'] ?? []; ?>
     </form>
 </div>
 <script src="<?= URLROOT . '/public/js/upload_previews.js'?>"></script>
-<script>
-    const photosContainer = document.querySelector('.photos');
-    if(photosContainer){
-        const cards = photosContainer.querySelectorAll('.photo-card');
-        if(cards) cards.forEach((card) => {
-            const filename = card.querySelector('img').src.replace(/^.*\/public\/upload\//,'').trim();
-            const original_name = card.querySelector('img').alt;
-            console.log(filename)
-            card.querySelector('button').addEventListener('click',(e)=> {
-                e.preventDefault();
-                console.log(filename);
-                if(confirm('Are you sure you want to remove the image : '+original_name+'?')){
-                    console.log('Removing',filename);
-                    fetch('<?= URLROOT .'/Admin/postsApi/delPhoto/' . $old['post_id'] ?>',{
-                        method:'POST',
-                        headers: {
-                            "Content-type":"application/json"
-                        },
-                        body:JSON.stringify({
-                            filename:filename
-                        })
-                    }).then(res=>res.json()).then(response => {
-                        console.log(response);
-                        if(response.success == true) {
-                            alert('Deleted image : '+original_name)
-                            card.parentNode.removeChild(card);
-                        } else {
-                            alert('Failed to delete ' + filename);
-                        }
-                    }).catch(console.log)
-                }
-            });
-        });
-    }
-</script>
