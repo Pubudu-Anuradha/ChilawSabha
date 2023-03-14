@@ -14,8 +14,10 @@ class LibraryStaff extends Controller
 
         //only for search request added here. Need to add function for search results after clicking search btn
         $reqJSON = file_get_contents('php://input');
-        // var_dump($_POST);
+
         if($reqJSON){
+            // var_dump($reqJSON);
+
             $reqJSON = json_decode($reqJSON, associative:true);
             if($reqJSON){
                 $response = $model->searchUser($reqJSON);  
@@ -35,6 +37,29 @@ class LibraryStaff extends Controller
 
     public function analytics()
     {
+        $model = $this->model('LibraryStatModel');
+
+        $reqJSON = file_get_contents('php://input');
+
+        if ($reqJSON) {
+
+            $reqJSON = json_decode($reqJSON, associative:true);
+
+            if ($reqJSON) {
+                $response = $model->getBorrowStat($reqJSON);
+
+                $this->returnJSON([
+                    $response['result'],
+                ]);
+                die();
+            } else {
+                $this->returnJSON([
+                    'error' => 'Error Parsing JSON',
+                ]);
+            }
+
+        }
+
         $this->view('LibraryStaff/Analytics', styles:['LibraryStaff/index', 'LibraryStaff/analytics', 'Components/form']);
     }
 
