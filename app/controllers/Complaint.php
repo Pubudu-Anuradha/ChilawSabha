@@ -51,12 +51,16 @@ class Complaint extends Controller
         // }
 
         // $this->view('Complaint/addComplaint', 'Complaint',  $data , ['main', 'complaint']);
-        var_dump($_POST);
+        var_dump(isset($_POST['submit']));
      $model = $this->model('ComplaintModel');
      $this->view('Complaint/addComplaint', 'Add Complaint',
-     ['AddComplaint' => isset($_POST['submit']) ? $model->addComplaint($this->validateInputs($_POST, [
+     ['AddComplaint' => isset($_POST['submit']) ? $model->AddComplaint($this->validateInputs($_POST, [
         'name', 'email', 'phone', 'address', 'select', 'message','date',
      ], 'Submit')) : null], ['main', 'complaint']);
+
+
+
+
     }
 
     // public function viewComplaint()

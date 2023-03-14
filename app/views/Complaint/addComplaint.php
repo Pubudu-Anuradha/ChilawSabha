@@ -7,8 +7,8 @@
             Complaint Form <hr class="hr1">
         </h2>
         <div class="formContainer">
-            <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
-            <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
+            <form id="complaint" name="complaint_form" class="fullForm" action="<?=URLROOT . "/Complaint/AddComplaint"?>" method="post">
+            <!-- <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?> -->
             
             <div class="inputfield">
                 <label for="textInput">Complainer Name: </label>
@@ -76,7 +76,7 @@
 
             <div class="submitButtonContainer">
                 <div class="submitButton">
-                    <input name="submit" type="submit" id="submit" value="Submit">
+                    <input name="Submit" type="submit" id="submit" value="Submit">
                 </div>
             </div>
             </form>

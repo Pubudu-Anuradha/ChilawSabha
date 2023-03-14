@@ -8,7 +8,16 @@ class ComplaintModel extends Model
     
     public function AddComplaint($data)
     {
-        return $this->insert('complaints',$data);
+        // return $this->insert('complaints',$data);
+        return $this->callProcedure('putcomplaint',[
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            $data['address'],
+            $data['select'],
+            $data['message'],
+            $data['date'],
+        ]);
     }
 
     public function GetComplaint()
