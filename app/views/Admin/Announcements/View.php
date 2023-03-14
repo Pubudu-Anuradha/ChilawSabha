@@ -1,6 +1,6 @@
 <div class="content">
 <?php // TODO: Make Single announcement view
-[$announcement,$images,$attachments,$ann_e,$post_e] = $data['announcement'] !== false ? $data['announcement'] : [false,false,false,false,false];
+[$announcement,$images,$attachments,$edits] = $data['announcement'] !== false ? $data['announcement'] : [false,false,false,false];
 $types = $data['types'] ?? [];
 if(empty($announcement)): ?>
     <h1>
@@ -27,11 +27,12 @@ if(empty($announcement)): ?>
                         break;
                     }
                 }
-                echo $type !== false ? $type : 'not found';
+                $announcement['ann_type'] = $type !== false ? $type : 'not found';
+                echo $announcement['ann_type'];
             ?>
         </div>
         <div class="field">
-            Short Summary
+            Summary
         </div>
         <div class="detail">
             <?= $announcement['short_description'] ?? 'Not found' ?>
@@ -67,9 +68,9 @@ if(empty($announcement)): ?>
             <?= $announcement['posted_time'] ?? 'Not found'?>
         </div>
     </div>
-    <hr>
 <?php endif;
 if(!empty($attachments)): ?>
+    <hr>
     <h3>Attached Files</h3>
     <div class="attachments">
         <?php foreach($attachments as $attachment):
@@ -78,9 +79,9 @@ if(!empty($attachments)): ?>
             <a href="<?= URLROOT . '/Downloads/file/' . $name?>"><?=$orig?></a>
         <?php endforeach; ?>
     </div>
-    <hr>
 <?php endif;
 if(!empty($images)):?>
+    <hr>
     <h3>Attached Images</h3>
     <div class="photos">
     <?php foreach($images as $image):
@@ -99,12 +100,68 @@ if(!empty($images)):?>
         </div>
     <?php endforeach; ?>
     </div>
-<?php endif; ?>
-<pre><?php
-    $edits = array_merge($ann_e,$post_e);
-    usort($edits,function ($a ,$b) {
-     return IntlCalendar::fromDateTime($a['edited_time'],null)->before(IntlCalendar::fromDateTime($b['edited_time'],null));
-    });
-    var_dump($edits);
-?></pre>
+<?php endif;
+if(!empty($edits)): ?>
+<hr>
+<h3>Edit History</h3>
+<?php $current = $announcement;
+$aliases = [
+    'ann_type' => 'Announcement type',
+    'title' => 'Announcement title',
+    'short_description' => 'Summary',
+    'content' => 'Announcement content',
+];
+$hide_pin = [
+    'hidden' => [
+        1 =>'<b>Unhid</b> the announcement from public',
+        0 =>'<b>Hid</b> the announcement from public',
+    ],
+    'pinned' => [
+        1 => '<b>Unpinned</b> the announcement from the frontpage',
+        0 => '<b>Pinned</b> the announcement to the frontpage',
+    ]
+];
+$formatter = new IntlDateFormatter(
+    'en_US',
+    IntlDateFormatter::LONG,
+    IntlDateFormatter::SHORT,
+    'Asia/Colombo',
+    IntlDateFormatter::GREGORIAN
+);
+foreach($edits as $edit):
+    $edited_by = $edit['edited_by'] ?? 'Not found';
+    $edited_time = $edit['edited_time'] ?? false;
+    if($edited_time !== false) {
+        $edited_time = $formatter->format(IntlCalendar::fromDateTime($edited_time,'si_LK'));
+    } else {
+        $edited_time = 'ERROR RETRIEVING DATE';
+    }
+    unset($edit['edited_by']);
+    unset($edit['edited_time']); ?>
+    <div class="edit">
+        Edited On <span class="time"><?= $edited_time ?></span> by
+        <?= $edited_by ?>
+    </div>
+    <ul>
+    <?php
+    foreach($edit as $field => $value):
+        if(!is_null($value) && $current[$field] != $value): ?>
+        <li>
+            <?php if($field!= 'hidden' && $field!='pinned'): ?>
+                changed
+                <b><?= $aliases[$field] ?? 'UNDEFINED' ?></b>
+                from 
+                "<?= $value ?>"
+                to
+                "<?= $current[$field] ?>".
+            <?php else: ?>
+                <?= $hide_pin[$field][$value] ?? 'UNDEFINED ACTION' ?>
+            <?php endif; ?>
+        </li>
+            <?php $current[$field] = $value;
+        endif;
+        endforeach; ?>
+    </ul>
+<?php endforeach;
+endif; ?>
 </div>

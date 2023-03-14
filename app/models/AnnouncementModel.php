@@ -62,7 +62,13 @@ class AnnouncementModel extends PostModel {
                  u.name as edited_by,
                  e.edited_time as edited_time',
             "e.post_id='$id'")['result'] ?? [];
-            return [$announcement['result'][0] ?? [],$images,$attachments,$ann_edit_history,$post_edit_history];
+            $edits = array_merge($ann_edit_history,$post_edit_history);
+            usort($edits,function ($a ,$b) {
+                return
+                    IntlCalendar::fromDateTime($a['edited_time'],null)
+                    ->before(IntlCalendar::fromDateTime($b['edited_time'],null));
+            });
+            return [$announcement['result'][0] ?? [],$images,$attachments,$edits];
         } else {
             return  false;
         }

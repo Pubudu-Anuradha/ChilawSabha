@@ -82,62 +82,6 @@
         }
         return false;
     }
-        // keep a copy of old post record
-        //try to update
 
-        // if update goes well put edit history
-        // don't care about success of edit history.
-    // if (isset($_POST['Edit'])) {
-    //     $changes = [];
-    //     $current_user = $model->getStaffByID($id)['result'][0];
-    //     $validator = [
-    //         'email' => 'email|u[users]|l[:255]|e',
-    //         'name' => 'name|l[:255]',
-    //         'address' => 'address|l[:255]',
-    //         'contact_no' => 'contact_no|l[10:12]',
-    //     ];
-    //     foreach ($current_user as $field => $value) {
-    //         if (isset($_POST[$field])) {
-    //             if ($_POST[$field] !== $value) {
-    //                 if ($validator[$field] ?? false) {
-    //                     $changes[] = $validator[$field];
-    //                 }
-    //             } else {
-    //                 unset($_POST[$field]);
-    //             }
-    //         }
-    //     }
-
-    //     if (count($changes) > 0) {
-    //         [$valid, $err] = $this->validateInputs($_POST, $changes, 'Edit');
-    //         $data['errors'] = $err;
-    //         $data['old'] = $_POST;
-    //         if (count($err) == 0) {
-    //             $data = array_merge(
-    //                 ['Edit' => !is_null($id) ? $model->editStaff($id, $valid) : null],
-    //                 $data
-    //             );
-    //             if (($data['Edit']['success'] ?? false) == true) {
-    //                 $edit_history = [];
-    //                 foreach($valid as $field => $value) {
-    //                     $edit_history[$field] = $current_user[$field];
-    //                 }
-    //                 $edit_history = array_merge($edit_history, [
-    //                     'user_id' => $id,
-    //                     'edited_by' => $_SESSION['user_id'],
-    //                 ]);
-    //                 if (isset($edit_history['Edit'])) {
-    //                     unset($edit_history['Edit']);
-    //                 }
-
-    //                 $model->putEditHistory($edit_history);
-    //             }
-    //         }
-    //     }
-    // }
-
-    // Put the data present in the fields prior to editing as a record in post_edit table
-    private function putEditHistory($edit_post_details) {
-
-    }
+    
 }
