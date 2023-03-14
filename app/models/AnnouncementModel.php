@@ -135,7 +135,6 @@ class AnnouncementModel extends PostModel {
         }
         if($post) {
             $current = $this->select('announcements',conditions:"post_id='$id'")['result'][0] ?? false;
-            var_dump($current);
             if($current!== false) {
                 if($this->update('announcements',$ann_data,"post_id='$id'")['success'] ?? false) {
                     foreach($ann_data as $field => $_) {

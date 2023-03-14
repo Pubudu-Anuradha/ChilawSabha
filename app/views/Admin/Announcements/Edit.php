@@ -56,9 +56,9 @@ $errors = $data['errors'] ?? []; ?>
             ?>
     </form>
 
-    <?php if(!empty($images)):?>
         <hr>
         <h3>Pictures</h3>
+    <?php if(!empty($images)):?>
         <div class="photos">
         <?php foreach($images as $image):
             $name = $image['name'] ?? '';
@@ -108,21 +108,21 @@ $errors = $data['errors'] ?? []; ?>
                 });
             }
         </script>
-    <?php endif; if(count($images) < 10):?>
+    <?php endif; if(count($images) < 20):?>
         <form class="fullForm" method="post" enctype="multipart/form-data">
             <?php
             if(($data['AddPhotos']['error'] ?? false) == 'more_than_10') {
                 $message = "You cannot add more than 10 pictures to an announcement";
                 Errors::generic($message);
             }
-            Files::images('Add more pictures','photos');
+            Files::images('Add more pictures','photos','photos-input');
             Other::submit('AddPhotos' ,value:'Add more pictures');
             ?>
         </form>
-    <?php endif;
-    if(!empty($attachments)): ?>
+    <?php endif; ?>
         <hr>
         <h3>Attached Files</h3>
+    <?php if(!empty($attachments)): ?>
         <div class="attachments">
             <?php foreach($attachments as $attachment):
                 $name = $attachment['name'] ?? '';
@@ -162,8 +162,7 @@ $errors = $data['errors'] ?? []; ?>
                 });
             })
         </script>
-    <?php endif; ?>
-    <hr>
+<?php endif; ?>
     <form class="fullForm" method="post" enctype="multipart/form-data">
         <?php
         Files::any('Add more Attachments','attachments');
