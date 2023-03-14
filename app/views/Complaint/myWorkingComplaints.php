@@ -1,6 +1,7 @@
 <div class="content">
     <h2>
-        My Working Complaints 
+        My Working Complaints
+        <hr class="hr1">
     </h2>
     <div class="content-table">
         <table>
@@ -20,9 +21,13 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.15</td>
                     <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
+                        <div class="btn-column">
+                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myProcessingClickedComplaint"?>"'>View</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
+
+
                     </td>
                 </tr>
 
@@ -32,9 +37,12 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.30</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
+
                     </td>
                 </tr>
 
@@ -44,14 +52,51 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.31</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
+                            <button type="button" class="btn view" onclick="openModal()">Add Note</button>
+
                         </div>
+
                     </td>
                 </tr>
 
             </tbody>
         </table>
     </div>
-
+    
+    <div class="popup popup-confirm">
+        <div id="popupModal" class="popup-modal">
+            <div class="popup-content">
+                <div class="close-section-popup"><span class="close-popup" onclick="closeModal()">&times;</span></div>
+                <div class="popup-text">
+                    <p>ADD NOTE</p>
+                    <div class="note-textarea">
+                        <textarea id="noteInput" name="message" rows="10" cols="64"></textarea>
+                    </div>
+                </div>
+                <div class="popup-submit-btn">
+                    <button class="btn bg-blue" onclick="closeModal()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    var modal = document.getElementById("popupModal");
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    function openModal() {
+        modal.style.display = "block";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

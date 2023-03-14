@@ -1,6 +1,6 @@
 <div class="content">
     <h2>
-        New Complaints 
+        New Complaints <hr class="hr1">
     </h2>
     <div class="content-table">
         <table>
@@ -22,7 +22,7 @@
                     <td>
                         <div  class="btn-column">
                             <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
+                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/newClickedComplaint"?>"'>View</button>
                         </div>
                     </td>
                 </tr>

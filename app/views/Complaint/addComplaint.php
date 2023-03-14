@@ -3,7 +3,6 @@
         <h2>
             Complaint Form 
         </h2>
-        <hr>
 
         <!-- check whether data added or not -->
         <div class="formContainer">
@@ -15,8 +14,7 @@
             ?>
 
         <div class="formContainer">
-            <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
-            <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
+            <form id="complaint" name="complaint form" class="fullForm" method="post">
 
             <div class="inputfield">
                 <label for="name" >Complainer Name: </label>
@@ -77,6 +75,7 @@
             </div>
             </form>
         </div>
+    </div>
     </div>
 </div>
 
