@@ -15,57 +15,276 @@ class Controller
     //Render a defined view and pass the data provided by the caller
     public function view($view, $title = 'Chilaw Pradeshiya Sabha', $data = [], $styles = [])
     {
-        if($this->logged_in_user){
-            array_push($styles,'loggedin_layout');
+        if ($this->logged_in_user) {
+            array_push($styles, 'logged_in_layout');
         }
         require_once 'app/views/Header.php';
-        if($this->logged_in_user){
+        if ($this->logged_in_user) {
             require_once 'app/views/' . $_SESSION['role'] . '/Sidebar.php';
         }
         require_once 'app/views/' . $view . '.php';
         require_once 'app/views/Footer.php';
     }
 
-    //Check authenitation for a role by seeing if session variables are set properly.
-    //If not, redirect to appropriate page using $redir parameter
-    public function authenticateRole($role, $redir = '/Home/')
+    //Check authentication for a role by seeing if session variables are set properly.
+    //If not, redirect to appropriate page using $redirect parameter
+    public function authenticateRole($role, $redirect = '/Home/')
     {
-        if (!isset($_SESSION['login'])) {
-            header('location:' . URLROOT . $redir);
+        if (!isset($_SESSION['login']) || !isset($_SESSION['user_id']) ||
+            !isset($_SESSION['role'])  || !isset($_SESSION['email'])   ||
+            !isset($_SESSION['name'])) {
+            header('location:' . URLROOT . $redirect);
             die();
         } else if ($_SESSION['role'] != $role) {
             header('location:' . URLROOT . '/Other/Forbidden');
             die();
-        } else{
+        } else {
             $this->logged_in_user = true;
         }
     }
 
-    // A function for ensuring that all fields in $fields and only those fields are in the $data array as keys,
-    // And ensuring that their values aren't empty. If valid the valid array will be returned, false otherwise.
     protected function validateInputs($data, $fields, $submitMethod = 'Submit')
     {
+        // Rules can be set in fields separated by '|' to do some basic validation here itself.
+        // Available rules are
+        // '?'          <- Optional(can be empty or not given) -> missing|empty
+        // 'i[min:max]' <- Integer in inclusive range(values are both optional) -> min|max|number
+        // 'd[min:max]' <- Same as above but using double -> min|max|number
+        // 'l[min:max]' <- String length in inclusive range -> min_len|max_len
+        // 'dt[start_dt:end_dt]' <- DateTime inclusive range -> after|before|date_parse
+        // 'e'          <- Validate Email -> email
+        // 'u[table]'    <- Check uniqueness -> unique|unique_check
+
         if (isset($data[$submitMethod])) {
             unset($data[$submitMethod]);
         }
+        $old = json_encode($data);
         $validated = [];
-        foreach ($fields as $field) {
-            if (isset($data[$field]) && !empty($data[$field])) {
-                // Add fields with non empty value to validated array
-                $validated[$field] = $data[$field];
-                unset($data[$field]); // remove the field from original array
+        $errors = [];
+
+        $set_error = function ($name, $field) use (&$errors, &$data) {
+            if (!isset($errors[$name])) {
+                $errors[$name] = [$field];
             } else {
-                // false if either field isn't set or value is empty
-                return false;
+                $errors[$name][] = $field;
+            }
+            if(is_array($field)){
+                if(isset($data[$field[0] ?? false])){
+                    unset($data[$field[0]]);
+                }
+            } else if (isset($data[$field])) {
+                unset($data[$field]);
+            }
+        };
+
+        $set_validated = function ($field) use (&$validated, &$data,&$old) {
+            if (isset($data[$field])) {
+                $validated[$field] = $data[$field];
+                unset($data[$field]);
+            } else {
+                throw new Exception(json_encode([$old,$field , $data]) . " Trying to set a non existing value as validated", 1);
+            }
+        };
+
+        foreach ($fields as $field) {
+            $rules = explode('|', $field);
+            $field = $rules[0];
+            unset($rules[0]);
+
+            $can_be_empty = array_search('?', $rules);
+            if ($can_be_empty === false) {
+                if (!isset($data[$field])) {
+                    $set_error('missing', $field);
+                    continue;
+                } else if (empty($data[$field]) && !is_int($data[$field])) {
+                    $set_error('empty', $field);
+                    continue;
+                }
+            }
+            unset($rules[$can_be_empty]);
+            if ((!empty($data[$field])) || is_int($data[$field] ?? 'invalid')) {
+                // Not empty, Checking rules.
+                // Rules follow the precedence order as set in this function.
+                // No need to worry about rule order when calling the function.
+
+                $unique_rule = preg_grep('/^u\[.*\]$/', $rules) ?? false;
+                if($unique_rule !== false && count($unique_rule) > 1){
+                    throw new Exception("Too Many unique rules. Use Only one", 1);
+                } else if ($unique_rule !== false && count($unique_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($unique_rule as $rule) {
+                            $table = rtrim(ltrim(ltrim($rule,'u'),'['),']');
+                            if(empty($table)) throw new Exception(
+                                    "Make sure unique rule has non_empty table name"
+                                );
+                            else {
+                                $model = new Model;
+                                if($model->exists($table,[$field => $data[$field]])) {
+                                    $set_error('unique',$field);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                        }
+                        if($done) continue;
+                    } catch(Exception $e) {
+                        $set_error('unique_check',$field);
+                    }
+                }
+
+                $number_range_rule = preg_grep('/^[i|d]\[\d*:\d*\]$/', $rules) ?? false;
+                if ($number_range_rule !== false && count($number_range_rule) > 1) {
+                    throw new Exception("Too Many number rules. Use Only one", 1);
+                } else if ($number_range_rule !== false && count($number_range_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($number_range_rule as $_ => $rule){
+                            $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
+                            $min = $split[0] ?? '';
+                            $max = $split[1] ?? '';
+                            if (!empty($min)) {
+                                $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
+                                if ($val < $min) {
+                                    $set_error('min', [$field,$min]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            if (!empty($max)) {
+                                $max = $rule[0] == 'i' ? intval($max) : doubleval($max);
+                                if ($val > $max) {
+                                    $set_error('max', [$field,$max]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            $set_validated($field);
+                            $done = true;
+                        }
+                        if($done) continue;
+                    } catch (Exception $e) {
+                        $set_error('number', $field);
+                        continue;
+                    }
+                }
+
+                $string_length_rule = preg_grep('/^l\[\d*:\d*\]$/', $rules);
+                if ($string_length_rule!==false && count($string_length_rule) > 1) {
+                    throw new Exception("Too Many String length rules. Use only one", 1);
+                } else if (count($string_length_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($string_length_rule as $_ => $rule){
+                            $val = strlen($data[$field]);
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'l['));
+                            $min = $split[0] ?? '';
+                            $max = $split[1] ?? '';
+                            if (!empty($min)) {
+                                $min = intval($min);
+                                if ($val < $min) {
+                                    $set_error('min_len', [$field,$min]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            if (!empty($max)) {
+                                $max = intval($max);
+                                if ($val > $max) {
+                                    $set_error('max_len', [$field,$max]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                        }
+                        if($done) continue;
+                    } catch (Exception $e) {
+                        // Should probably ignore
+                        $set_error('strlen', $field);
+                        continue;
+                    }
+
+                }
+
+                $email_rule = array_search('e', $rules);
+                if ($email_rule !== false) {
+                    if (!filter_var($data[$field], FILTER_VALIDATE_EMAIL)) {
+                        $set_error('email', $field);
+                    } else {
+                        $set_validated($field);
+                    }
+                    continue;
+                }
+
+                $date_range_rule = preg_grep('/^dt\[(\d*-\d*\d*)?:(\d*-\d*-\d*)?\]$/', $rules);
+                if ($date_range_rule !==false && count($date_range_rule) > 1) {
+                    throw new Exception("Too Many Date Range rules. Use only one", 1);
+                } else if (count($date_range_rule) == 1) {
+                    try {
+                        $done = false;
+                        foreach($date_range_rule as $_ => $rule){
+                            $split = explode(':', ltrim(rtrim($rule, ']'), 'dt['));
+                            $start = $split[0] ?? '';
+                            $end = $split[1] ?? '';
+                            $val = IntlCalendar::fromDateTime($data[$field],null);
+                            // ? Return time?
+                            if (!empty($start)) {
+                                $start = IntlCalendar::fromDateTime($start,null);
+                                if($val->before($start) && !$val->equals($start)) {
+                                    $set_error('before', [$field,
+                                                $start->toDateTime()->format('Y-m-d')]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                            if (!empty($end)) {
+                                $end = IntlCalendar::fromDateTime($end,null);
+                                if($val->after($end) && !$val->equals($end)) {
+                                    $set_error('after', [$field,
+                                                $end->toDateTime()->format('Y-m-d')]);
+                                    $done = true;
+                                    continue;
+                                }
+                            }
+                        }
+                        if($done) continue;
+                    } catch (Exception $e) {
+                        // Should probably ignore
+                        $set_error('date_parse', $field);
+                        continue;
+                    }
+                }
+
+                // TODO: Add more rules as required
+                // ! MUST UPDATE GENERAL ERROR HANDLER COMPONENT WHEN ADDING NEW RULES
+
+                // Rules ended. set field as valid
+                $set_validated($field);
+            } else {
+                // Set null if '?' rule is present and no value given
+                $validated[$field] = null;
+                if (isset($data[$field])) {
+                    unset($data[$field]);
+                }
             }
         }
 
         if ($data) {
-            // False if more data is left on $data
-            return false;
+            // Rules not defined for these fields
+            foreach ($data as $key => $value) {
+                $set_error('extra?', [$key => $value]);
+            }
         }
 
-        // return the valid data
-        return $validated;
+        return [
+            $validated, $errors,
+        ];
+    }
+
+    public function returnJSON(array $var)
+    {
+        header("Content-type: application/json; charset=utf-8");
+        echo json_encode($var);
     }
 }

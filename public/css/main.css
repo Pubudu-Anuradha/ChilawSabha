@@ -253,6 +253,7 @@ body {
   display: flex;
   justify-content: center;
   padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .navbar-items {
@@ -268,10 +269,6 @@ body {
   align-items: center;
   list-style: none;
   padding-inline-start: 0;
-}
-
-.navbar-items ut:not(.login-list) {
-  overflow-x: auto;
 }
 
 .navbar-items ul.login-list {
@@ -360,6 +357,11 @@ body {
 
   /* WHEN SCREEN IS NARROWER THAN 768px */
   /* Responsive navbar styles */
+  .navbar{
+    padding: 0;
+    padding-left: 1rem;
+  }
+
   .navbar-items ul li a {
     padding: 10px .5rem;
     color: var(--black);
@@ -474,6 +476,10 @@ body {
   .main {
     width: 100%;
   }
+
+  .items > a.sidebar-drop{
+    padding: 15px;
+  }
 }
 
 @media screen and (max-width: 259px) {
@@ -507,5 +513,16 @@ body {
 }
 
 *:not(.footer) {
-  transition: all 200ms ease-in-out;
+  transition: all 100ms ease-in-out;
+}
+
+.error{
+  color: var(--red);
+}
+.error::before{
+  content: "*";
+}
+
+.success{
+  color: var(--green);
 }

@@ -23,16 +23,7 @@
                     </div>
                     <div class="lend-confirm">
                         <button type="button" class="btn white bg-blue" onclick="openModal()">Lend</button>
-                        <div id="myModal" class="modal">
-                            <div class="modal-content">
-                                <div class="close-section"><span class="close" onclick="closeModal()">&times;</span></div>
-                                <div class="model-text"><p>Are You Sure?</p></div>
-                                <div class="popup-btn">
-                                    <button class="btn bg-green white" onclick="closeModal()">Confirm</button>
-                                    <button class="btn bg-red white" onclick="closeModal()">Close</button>
-                                </div>
-                            </div>
-                        </div>
+                        <?php Modal::Modal(content:'Are You Sure?',textarea:true,title:"Please add a Note",rows:10,cols:50,btnlist:['Confirm'=>'closeModal()']); ?>
                     </div>
                 </div>
                 <div class="status">
@@ -41,20 +32,24 @@
                     </div>
                     <div class="status-content">
                         <div>
+                            <h4>User Name : </h4>
+                            <div class="green"> Nimal Perera</div>
+                        </div>
+                        <div>
                             <h4>Lend Status : </h4>
-                            <div class="status-dot"></div>
+                            <div class="status-dot bg-green"></div>
                         </div>
                         <div>
                             <h4 >Fine Status : </h4>
-                            <h4 class="green"> Rs. 00 00 </h4> 
+                            <div class="green"> Rs. 00 00</div> 
                         </div>
                         <div>
                             <h4 >Books Lost : </h4>
-                            <h4 class="red"> 2</h4>
+                            <div class="red"> 2</div>
                         </div>
                         <div>
                             <h4>Books Damaged : </h4>
-                            <h4 class="red"> 3</h4>
+                            <div class="red"> 3</div>
                         </div>
                     </div>
                 </div>

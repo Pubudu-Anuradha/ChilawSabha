@@ -75,13 +75,21 @@
 
 .filters {
   margin: 1.5rem 0;
-  width: 80%;
 }
 
 .filters form {
   display: flex;
   gap: 30px;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.filters .filter {
+  display: flex;
+}
+
+.filter > label {
+  margin-right: .5rem;
 }
 
 .filters form {
@@ -135,6 +143,8 @@
 .page-nav {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .page-btn {
@@ -207,6 +217,14 @@
   /* WHEN SCREEN IS NARROWER THAN 768px */
   .attachments .links {
     grid-template-areas: "a a a";
+  }
+
+  .filters form{
+    flex-direction: column;
+  }
+
+  .filters .filter {
+    flex-direction: column;
   }
 }
 

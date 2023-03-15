@@ -2,14 +2,14 @@
 {
   public function index()
   {
-    $this->view('Components/index','Components test',[],['main','form']);
+    $this->view('Components/index','Components test',[],['Components/form']);
   }
   public function pagination()
   {
-    $this->view('Components/pagination','Pagination test',[],['main','table','posts']);
+    $this->view('Components/pagination','Pagination test',[],['Components/table','posts']);
   }
   public function table()
   {
-    $this->view('Components/table','Table test',[],['main','table','posts']);
+    $this->view('Components/table','Table test',[],['Components/table','posts']);
   }
 }

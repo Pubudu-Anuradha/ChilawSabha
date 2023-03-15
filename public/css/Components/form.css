@@ -73,22 +73,22 @@ textarea {
   width: calc(100% - 2rem);
 }
 
-input[type=file] {
+input[type="file"] {
   width: calc(100% - 2rem);
 }
 
-input[type=text],
-input[type=password],
-input[type=checkbox],
-input[type=radio],
-input[type=date],
-input[type=datetime-local],
-input[type=email],
-input[type=number],
-input[type=tel],
-input[type=search],
-input[type=time],
-input[type=file],
+input[type="text"],
+input[type="password"],
+input[type="checkbox"],
+input[type="radio"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+input[type="time"],
+input[type="file"],
 select,
 textarea {
   padding: 0.75rem;
@@ -100,34 +100,34 @@ textarea {
   box-shadow: 4px 4px 5px 0px var(--grey);
 }
 
-input[type=text]:focus,
-input[type=password]:focus,
-input[type=checkbox]:focus,
-input[type=radio]:focus,
-input[type=date]:focus,
-input[type=datetime-local]:focus,
-input[type=email]:focus,
-input[type=number]:focus,
-input[type=tel]:focus,
-input[type=search]:focus,
-input[type=time]:focus,
-input[type=file]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="checkbox"]:focus,
+input[type="radio"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="search"]:focus,
+input[type="time"]:focus,
+input[type="file"]:focus,
 select:focus,
 textarea:focus {
   transform: scale(1.01);
+  background-color: var(--lightblue);
+  color: var(--black);
   outline: none;
 }
 
 .checkboxInputs,
 .radiobuttonInputs {
   display: grid;
-  gap: .2rem 1rem;
+  gap: 0.2rem 1rem;
   grid-template-columns: fit-content(20%) auto;
 }
 
 .submitButtonContainer {
-  margin: 1rem;
-  padding: 1rem;
   text-align: right;
 }
 
@@ -135,12 +135,17 @@ textarea:focus {
   display: inline-block;
 }
 
-input[type=submit] {
-  background-color: var(--lightblue);
-  font-size: 1.2rem;
-  border-radius: 1rem;
-  margin: 1rem;
-  padding: 1rem 1.5rem;
+input[type="submit"] {
+  background-color: var(--blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: medium;
+  transition: 200ms ease-in-out;
+  width: max-content;
 }
 
 #authenticated-code{
@@ -160,26 +165,90 @@ input+span {
   padding: 0.2rem;
 }
 
-/* input:invalid {
+.input-wrapper {
+  display: grid;
+  grid-template-columns: auto fit-content(5%);
+  box-sizing: border-box;
+}
+
+input+span {
+  display: flex;
+  align-items: center;
+}
+
+input:invalid {
   border-bottom: 2px solid var(--red);
   box-shadow: 4px 2px 5px 0px var(--grey);
 }
 
-input:invalid + span::after {
+input:invalid+span::after {
   content: "✖";
   color: var(--red);
 }
 
-input:valid + span::after {
+input:valid+span::after {
   content: "✓";
   color: var(--green);
-} */
+}
+
 label {
   font-size: medium;
 }
 
 textarea {
   resize: vertical;
+}
+
+/* Upload Preview Style */
+.previews {
+  width:100%;
+  box-sizing: border-box;
+  background-color: var(--fadedblue);
+  border-radius: 10px;
+  padding: 0 1rem;
+  margin-top: 1rem;
+  box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+.previews>div {
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 120px;
+  display: flex;
+  padding: 1rem 0;
+}
+
+.previews>div:not(:last-child) {
+  border-bottom: 2px solid #000000;
+}
+
+.previews>div>div {
+  align-self: center;
+  float: left;
+  margin-right: auto;
+}
+
+.previews>div>img {
+  float: right;
+  margin-left: auto;
+  align-self: center;
+}
+
+.previews>div>div>button {
+  margin-right: 1rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--red);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  border: 1px solid #000;
+  box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+.previews>div>div>button::before {
+  content: '🗙';
 }
 
 @media screen and (max-width: 767px) {

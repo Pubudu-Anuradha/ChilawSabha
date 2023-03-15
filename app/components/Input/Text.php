@@ -7,14 +7,14 @@ class Text
         $maxlength=NULL, $minlength=NULL, $pattern=NULL, $readonly=NULL, $spellcheck=NULL, $autocomplete=false, $disabled=NULL, $msg=NULL
     ) { ?>
     <div class="input-field">
-        <label for="<?= $id ?>">
-            <?= $title ?>    
+        <label for="<?=$id?>">
+            <?=$title?>
         </label>
         <div class="input-wrapper">
             <span class="err-msg">
                 <?= $msg ?>
             </span>
-            <input <?= $type ? "type= \"$type\"" : 'text' ?>
+            <input type="<?=$type ? $type : 'text'?>"
                 name="<?= $name ?>"
                 id="<?= $id ?>"
                 <?= $class ? "class=\"$class\"" : '' ?>
@@ -45,26 +45,25 @@ class Text
     ) { 
         Text::text($title,$name,$id,$class,$required,$value, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL,NULL, $disabled,$msg);
     }
-    
+
     public static function textarea(
-        $title,$name, $id, $class = null,$placeholder,$value=NULL,$rows,$cols,$required=NULL,$spellcheck=false
-    ) { ?>
+        $title, $name, $id, $placeholder, $class = null, $value = null, $rows = 10, $cols = 80, $required = null, $spellcheck = false
+    ) {?>
     <div class="input-field">
-        <label for="<?= $name ?>">
-            <?= $title ?>    
+        <label for="<?=$id?>">
+            <?=$title?>
         </label>
         <div class="input-wrapper">
-            <textarea 
-                name="<?= $name?>"
-                <?= $id ? "id= \"$id\"" : '' ?>
-                <?= $class ? "class= \"$class\"" : '' ?>
-                <?= $placeholder ? "placeholder= \"$placeholder\"" : '' ?>
-                <?= "rows= \"$rows\"" ?>
-                <?= "cols= \"$cols\"" ?>
-                <?= $required ? "required" : '' ?>
-                <?= $spellcheck ? "spellcheck= \"$spellcheck\"" : '' ?>
-            ><?= $value ?$value: '' ?>
-            </textarea>
+            <textarea
+                name="<?=$name?>"
+                <?=$id ? "id= \"$id\"" : ''?>
+                <?=$class ? "class= \"$class\"" : ''?>
+                <?=$placeholder ? "placeholder= \"$placeholder\"" : ''?>
+                <?="rows= \"$rows\""?>
+                <?="cols= \"$cols\""?>
+                <?=$required ? "required" : ''?>
+                <?=$spellcheck ? "spellcheck=\"$spellcheck\"" : ''?>
+            ><?=$value ? $value : ''?></textarea>
         </div>
     </div>
     <?php

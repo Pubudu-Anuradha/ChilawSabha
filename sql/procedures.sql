@@ -21,14 +21,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `addStaff`(
 	IN email varchar(255),
 	IN password_hash varchar(255),
 	IN address varchar(255),
-	IN cintact_no varchar(15),
+	IN contact_no varchar(15),
     IN nic varchar(12),
-    IN role varchar(20)
+    IN role int,
+    IN adder_id int
 )
 BEGIN
-	INSERT INTO user (name,email,password_hash,address,contact_no,type)
-    VALUES (name,email,password_hash,address,contact_no,'Staff');
+	INSERT INTO users (email,user_type,state_id,name,contact_no,address,password_hash)
+    VALUES (email,1,1,name,contact_no,address,password_hash);
     SET @id = LAST_INSERT_ID();
-    INSERT INTO staff VALUES(@id,'working',nic,role);
+    INSERT INTO staff(user_id,nic,staff_type,added_by) VALUES(@id,nic,role,adder_id);
 END$$
 DELIMITER ;

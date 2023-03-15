@@ -24,27 +24,26 @@ class Model
 
         // Check data types and add '' quotes to strings
         foreach ($data as $key => $value) {
-            if(is_null($value)){
-                array_push($binds,'NULL');
-            }
-            else if (gettype($value) == 'string') {
+            if (is_null($value)) {
+                array_push($binds, 'NULL');
+            } else if (gettype($value) == 'string') {
                 $vals[] = &$data[$key];
                 $dataType .= "s";
-                array_push($binds,'?');
+                array_push($binds, '?');
             } else if (gettype($value) == 'double') {
                 $vals[] = &$data[$key];
                 $dataType .= "d";
-                array_push($binds,'?');
+                array_push($binds, '?');
             } else {
                 $vals[] = &$data[$key];
                 $dataType .= "i";
-                array_push($binds,'?');
+                array_push($binds, '?');
             }
         }
 
         try {
             // Prepare statement
-            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (".implode(',',$binds).")");
+            $stmt = $this->conn->prepare("INSERT INTO $table ($cols) VALUES (" . implode(',', $binds) . ")");
             // Bind data into prepared statement
             call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $vals));
 
@@ -107,7 +106,7 @@ class Model
         }
     }
 
-    protected function selectPaginated($table, $columns = '*', $conditions = '',$page_name='page',$page_size_name = 'size')
+    protected function selectPaginated($table, $columns = '*', $conditions = '', $page_name = 'page', $page_size_name = 'size')
     {
         $row_count = $this->select($table, 'COUNT(*) as recordCount', $conditions);
         $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
@@ -206,7 +205,8 @@ class Model
         }
     }
 
-    public function callProcedure($procedure,$fields){
+    public function callProcedure($procedure, $fields)
+    {
         // $fields is a numeric array.[Order Matters]
         // Use this method only if necessary.
         $prep_fields = [];
@@ -216,26 +216,26 @@ class Model
         $binds = [];
 
         // Check the data type
-        for ($i=0;$i<count($fields);++$i) {
-            if(is_null($fields[$i])){
-                array_push($binds,'NULL');
+        for ($i = 0; $i < count($fields); ++$i) {
+            if (is_null($fields[$i])) {
+                array_push($binds, 'NULL');
             } else if (gettype($fields[$i]) == 'string') {
                 $prep_fields[] = &$fields[$i];
                 $dataType .= "s";
-                array_push($binds,'?');
+                array_push($binds, '?');
             } else if (gettype($fields[$i]) == 'double') {
-                $prep_fields[] =&$fields[$i];
+                $prep_fields[] = &$fields[$i];
                 $dataType .= "d";
-                array_push($binds,'?');
+                array_push($binds, '?');
             } else {
-                $prep_fields[] =&$fields[$i];
+                $prep_fields[] = &$fields[$i];
                 $dataType .= "i";
-                array_push($binds,'?');
+                array_push($binds, '?');
             }
         }
         try {
             // Prepare statement
-            $sql = "CALL $procedure(".implode(',',$binds).")";
+            $sql = "CALL $procedure(" . implode(',', $binds) . ")";
             $stmt = $this->conn->prepare($sql);
             // Bind data into prepared statement
             call_user_func_array(array($stmt, 'bind_param'), array_merge(array($dataType), $prep_fields));
@@ -254,6 +254,44 @@ class Model
                 'errmsg' => $e->getMessage(),
             ];
         }
+    }
+
+    public function exists($table, $conditions, $condition_separator = ' && ')
+    {
+        // Function to check whether any record exists in $table
+        // that satisfies the given conditions
+        // * will fail silently if there are errors
+
+        $conditions_formatted = [];
+        $binds = [""];
+        foreach ($conditions as $col => $val) {
+            $string = "$col = ";
+            if (is_null($val)) {
+                $string .= 'NULL';
+            } else if (is_string($val)) {
+                $binds[] = &$conditions[$col];
+                $binds[0] .= "s";
+                $string .= '?';
+            } else if (is_double($val)) {
+                $binds[] = &$conditions[$col];
+                $binds[0] .= "d";
+                $string .= '?';
+            } else {
+                $binds[] = &$conditions[$col];
+                $binds[0] .= "i";
+                $string .= '?';
+            }
+            $conditions_formatted[] = $string;            
+        }
+        $conditions = implode($condition_separator,$conditions_formatted);
+
+        $stmt =$this->conn->prepare("SELECT COUNT(*) AS count FROM $table WHERE $conditions");
+        call_user_func_array(array($stmt, 'bind_param'), $binds);
+        $res = $stmt->execute();
+        $result = $res ? $stmt->get_result() : false;
+        $result = $result ? $result->fetch_all(MYSQLI_ASSOC) : false;
+
+        return ($result !== false) && (($result[0]['count'] ?? 0 ) !== 0);
     }
 
     public function __destruct()

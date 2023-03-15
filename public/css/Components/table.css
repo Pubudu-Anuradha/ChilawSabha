@@ -24,7 +24,7 @@ td {
 
 table {
   border-collapse: collapse;
-  width: 100%;
+  min-width: 80%;
 }
 
 table,
@@ -60,9 +60,11 @@ tbody>tr:last-child {
 }
 
 .content-table {
-  display: flex;
+  width: 100%;
+  display: inline-flex;
   justify-content: center;
-  overflow: auto;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
 
 .btn {
@@ -70,6 +72,7 @@ tbody>tr:last-child {
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
+  color: var(--black);
   display: inline-block;
   border-radius: 5px;
   font-weight: 600;
@@ -104,6 +107,14 @@ tbody>tr:last-child {
 
 .enable::before {
   content: "✓";
+}
+
+.waiting {
+  background-color: var(--grey);
+}
+
+.waiting::before {
+  content: "⌛";
 }
 
 @media screen and (max-width:767px) {
