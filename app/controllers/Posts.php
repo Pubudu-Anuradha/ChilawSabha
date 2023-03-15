@@ -6,6 +6,8 @@ class Posts extends Controller{
     // TODO: Announcements
     public function Announcements()
     {
+        $model = $this->model('AnnouncementModel');
+        $model->getFrontPage();
     }
     public function Announcement($id)
     {

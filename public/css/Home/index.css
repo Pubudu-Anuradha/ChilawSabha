@@ -169,7 +169,40 @@
   padding: 0.5rem;
 }
 
-.details>.title {
+.post:not(:last-child) {
+  border-bottom: 1px dashed var(--grey);
+}
+
+.pinned {
+  content: "📌";
+  position: relative;
+}
+
+.pinned:hover::before {
+  position: absolute;
+  display: inline-block;
+  bottom: 100%;
+  left: 50%;
+  width: 15em;
+  margin-left: -7.5em;
+  text-align: center;
+  font-weight: normal;
+  font-size: .7em;
+  border-radius: .2rem;
+  content: "This has been pinned";
+  background-color: var(--lightblue);
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.category {
+  text-align: right;
+}
+
+.title {
   font-size: medium;
   font-weight: 700;
 }

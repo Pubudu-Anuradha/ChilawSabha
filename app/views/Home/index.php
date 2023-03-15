@@ -87,27 +87,51 @@
         }
         .library-img,.sabha-img{
             background-position: center;
-            background-repeat: space;
+            background-repeat: no-repeat;
             background-size: contain;
         }
     </style>
     <div class="main-content">
+<?php
+    [$announcements,$services,$projects,$events] = $data['posts'] ?? [[],[],[],[]];
+    $formatter = new IntlDateFormatter(
+        'en_US',
+        IntlDateFormatter::LONG,
+        IntlDateFormatter::SHORT,
+    );
+?>
         <div class="posts bg-fd-blue">
             <div class="posts-header">
                 <a href="#"><h2 class="announcement-txt">Announcements</h2></a>
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
-            <!-- TODO: GET FROM MODEL -->
-            <!-- <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
+            <?php foreach($announcements as $ann): ?>
+                <div class="post">
+                    <div class="sabha-img" onclick="window.location.href = '<?= URLROOT . 
+                    '/Posts/Announcement/' . ($ann['post_id'] ?? '0') ?>'"></div>
+                    <div class="details">
+                        <div class="title-row">
+                            <a class="title"
+                            href="<?= URLROOT . '/Posts/Announcement/' . ($ann['post_id'] ?? '0')?>"
+                            > <?php if($ann['pinned']==1):?>
+                                <span class="pinned">&#128204;</span>
+                            <?php endif; ?>
+                            <?= $ann['title'] ?? 'Not Found' ?>
+                            <a class="category"
+                            href="<?= URLROOT . '/Posts/Announcements?category=' . ($ann['t_id'] ?? '0')?>"
+                            > <?= $ann['ann_type'] ?? 'Not Found' ?>
+                        </a>
+                        </div>
+                        <div class="summary">
+                            <?= $ann['short_description'] ?? 'Not Found' ?>
+                        </div>
+                        <div class="date">
+                            <?= $formatter->format(IntlCalendar::fromDateTime($ann['posted_time'] ?? '2022-01-01',null)) ?>
+                        </div>
                     </div>
                 </div>
-            </div> -->
+            <?php endforeach ?>
         </div>
 
         <div class="posts bg-fd-blue">

@@ -1,5 +1,8 @@
 <?php require_once 'PostModel.php';
 class AnnouncementModel extends PostModel {
+
+    private int $FRONTPAGE_UNPINNED_POSTS_PER_CATEGORY_COUNT = 5;
+
     public function putAnnouncement($data) {
         // Separate Post and Announcement data
         $announcement = [
@@ -151,5 +154,27 @@ class AnnouncementModel extends PostModel {
 
     public function getTypes() {
         return $this->select('announcements_type')['result'] ?? [];
+    }
+
+    public function getFrontPage() {
+        $table = 'post p join announcements a join announcements_type at
+             on p.post_id=a.post_id and a.ann_type_id=at.ann_type_id';
+        $columns = 'p.post_id as post_id,
+                    p.title as title,
+                    p.short_description as short_description,
+                    p.posted_time as posted_time,
+                    p.pinned as pinned,
+                    a.ann_type_id as t_id,
+                    at.ann_type as ann_type';
+
+        $pinned = $this->select($table,$columns,
+            "p.pinned=1 and p.hidden=0 ORDER BY p.posted_time DESC"
+        )['result'] ?? [];
+
+        $unpinned = $this->select($table,$columns,
+            'p.pinned=0 and p.hidden=0 ORDER BY p.posted_time DESC LIMIT ' .
+            $this->FRONTPAGE_UNPINNED_POSTS_PER_CATEGORY_COUNT .' OFFSET 0'
+        )['result'] ?? [];
+        return array_merge($pinned,$unpinned);
     }
 }
