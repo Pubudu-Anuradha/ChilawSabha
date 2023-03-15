@@ -2,9 +2,9 @@
 
 class Slideshow{
 
-    public static function Slideshow($images = []){
+    public static function Slideshow($images = [], $class = null){
 ?>
-        <div class="slideshow">
+        <div class="slideshow<?= $class ? ' '.$class : '' ?>">
 
         <img src="" alt="slideshow" id="slideshow">
 
