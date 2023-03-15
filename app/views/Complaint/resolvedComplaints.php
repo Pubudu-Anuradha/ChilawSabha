@@ -1,7 +1,10 @@
 <div class="content">
     <h2>
-        Resolved Complaints <hr class="hr1">
+        Resolved Complaints
+        <hr class="hr1">
     </h2>
+
+    <!-- TODO -->
     <div class="content-table">
         <table>
             <thead>
@@ -20,8 +23,8 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.15</td>
                     <td>
-                        <div  class="btn-column">
-                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myResolvedClickedComplaint"?>"'>View</button>
+                        <div class="btn-column">
+                            <button class="btn view" onclick='window.location.href="<?= URLROOT . "/Complaint/myResolvedClickedComplaint" ?>"'>View</button>
                         </div>
                     </td>
                 </tr>
@@ -32,24 +35,11 @@
                     <td>Garbage Disposal</td>
                     <td>2022.12.30</td>
                     <td>
-                        <div  class="btn-column">
+                        <div class="btn-column">
                             <button class="btn view">View</button>
                         </div>
                     </td>
                 </tr>
-
-                <tr>
-                    <td>13</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.31</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
-
             </tbody>
         </table>
     </div>

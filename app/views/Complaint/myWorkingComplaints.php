@@ -3,6 +3,8 @@
         My Working Complaints
         <hr class="hr1">
     </h2>
+
+    <!-- TODO -->
     <div class="content-table">
         <table>
             <thead>
@@ -22,12 +24,10 @@
                     <td>2022.12.15</td>
                     <td>
                         <div class="btn-column">
-                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/myProcessingClickedComplaint"?>"'>View</button>
+                            <button class="btn view" onclick='window.location.href="<?= URLROOT . "/Complaint/myProcessingClickedComplaint" ?>"'>View</button>
                             <button type="button" class="btn view" onclick="openModal()">Add Note</button>
 
                         </div>
-
-
                     </td>
                 </tr>
 
@@ -64,7 +64,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="popup popup-confirm">
         <div id="popupModal" class="popup-modal">
             <div class="popup-content">

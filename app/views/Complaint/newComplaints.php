@@ -1,7 +1,14 @@
 <div class="content">
     <h2>
-        New Complaints <hr class="hr1">
+        New Complaints
+        <hr class="hr1">
     </h2>
+
+    <!-- TODO -->
+    <?php
+    $table = $data['complaints'];
+    ?>
+
     <div class="content-table">
         <table>
             <thead>
@@ -13,46 +20,26 @@
                     <th>Action</th>
                 </tr>
             </thead>
+
             <tbody>
-                <tr>
-                    <td>11</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.15</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view" onclick='window.location.href="<?=URLROOT . "/Complaint/newClickedComplaint"?>"'>View</button>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>12</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.30</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>13</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.31</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
-
+                <?php if (!$table['nodata'] && !$table['error']) :
+                    foreach ($table['result'] as $ann) : ?>
+                        <tr>
+                            <td><?= $ann['id'] ?></td>
+                            <td><?= $ann['name'] ?></td>
+                            <td><?= $ann['category'] ?></td>
+                            <td><?= $ann['author'] ?></td>
+                            <td><?= $ann['date'] ?></td>
+                            <td><?= $ann['category'] ?></td>
+                            <td>
+                                <div class="btn-column">
+                                    <!-- when click my processing complaint -->
+                                    <a class="btn bg-green  view" href="<?= URLROOT . '/Complaint/newClickedComplaint/' . $ann['id'] ?>">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                <?php endforeach;
+                endif; ?>
             </tbody>
         </table>
     </div>
