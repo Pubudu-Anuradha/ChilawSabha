@@ -30,7 +30,7 @@ class Text
         </div>
     </div>
     <?php
-}
+    }
 
     public static function password(
         $title, $name, $id, $placeholder,$value = null, $class = null, $pattern = null, $autocomplete = null
@@ -45,7 +45,7 @@ class Text
     }
 
     public static function textarea(
-        $title, $name, $id, $class = null, $placeholder, $value = null, $rows, $cols, $required = null, $spellcheck = false
+        $title, $name, $id, $placeholder, $class = null, $value = null, $rows = 10, $cols = 80, $required = null, $spellcheck = false
     ) {?>
     <div class="input-field">
         <label for="<?=$id?>">
@@ -66,5 +66,5 @@ class Text
         </div>
     </div>
     <?php
-}
+    }
 }

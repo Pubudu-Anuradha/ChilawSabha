@@ -96,13 +96,13 @@ class Controller
                 if (!isset($data[$field])) {
                     $set_error('missing', $field);
                     continue;
-                } else if (empty($data[$field]) && !is_numeric($data[$field])) {
+                } else if (empty($data[$field]) && !is_int($data[$field])) {
                     $set_error('empty', $field);
                     continue;
                 }
             }
             unset($rules[$can_be_empty]);
-            if (!empty($data[$field])) {
+            if ((!empty($data[$field])) || is_int($data[$field] ?? 'invalid')) {
                 // Not empty, Checking rules.
                 // Rules follow the precedence order as set in this function.
                 // No need to worry about rule order when calling the function.
@@ -284,7 +284,7 @@ class Controller
 
     public function returnJSON(array $var)
     {
-        header("Content-type: application/json");
+        header("Content-type: application/json; charset=utf-8");
         echo json_encode($var);
     }
 }

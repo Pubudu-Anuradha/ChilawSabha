@@ -40,7 +40,7 @@
         </div>
         <?php foreach($select_filters as $name => $details):?>
         <div class="filter">
-            <label for="<?$name?>">
+            <label for="<?= $name ?>">
                 <?= $details[0] ?>
             </label>
             <select onchange="<?= $sender ?>()" name="<?= $name ?>" id="<?= $name ?>">
@@ -73,19 +73,20 @@
       $current = $page_data[0] / $size;
   ?>
   <div class="page-nav">
+      <?php if($page_count > 1):?>
       <div class="page-nos">
         <?php if($current!=0):?>
           <button id="<?=$page_no_name?>-first">First</button>
           <button id="<?=$page_no_name?>-prev">Previous</button>
-        <?php endif; ?>
-          <select name="<?=$page_no_name?>"
-                  onchange="<?=$sender?>()"
-                  id="<?= $page_no_name ?>-select">
-          <?php for ($i = 0; $i * $size < $count; $i++) : ?>
-              <option value="<?= $i ?>" <?= $i==$current?'selected' : ''?>>
-                  <?= $i + 1 ?>
-              </option>
-          <?php endfor ?>
+          <?php endif; ?>
+            <select name="<?=$page_no_name?>"
+                    onchange="<?=$sender?>()"
+                    id="<?= $page_no_name ?>-select">
+            <?php for ($i = 0; $i * $size < $count; $i++) : ?>
+                <option value="<?= $i ?>" <?= $i==$current?'selected' : ''?>>
+                    <?= $i + 1 ?>
+                </option>
+            <?php endfor; ?>
           </select>
           <?php if($current<$page_count-1):?>
           <button id="<?=$page_no_name?>-next">Next</button>
@@ -119,6 +120,7 @@
               <?= $sender ?>();
             })
             <?php endif; ?>
+            <?php if($current<$page_count-1):?>
             document.getElementById('<?=$page_no_name?>-next').addEventListener('click',(e)=>{
               const page_select = document.getElementById('<?= $page_no_name ?>-select');
               const page_select_len = page_select.childElementCount;
@@ -144,8 +146,10 @@
               options[page_select_len-1].selected = true;
               <?= $sender ?>();
             })
+            <?php endif; ?>
           </script>
       </div>
+      <?php endif;?>
       <div class="page-size">
           <label for="<?= $page_size_name ?>-id">
               No.of Posts per page

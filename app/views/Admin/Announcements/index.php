@@ -1,124 +1,128 @@
+<?php
+require_once 'common.php';
+?> 
+
 <div class="content">
-<!-- <?php
-var_dump($data);
-?> -->
-
-<h1>
-    Manage Announcements
-</h1>
-<hr>
-
-<script>
-    const send = ()=>{
-        document.getElementById('filterform').submit();
-    }
-</script>
-<div class="filters">
-    <form action="<?=URLROOT . '/Admin/Announcements'?>" method="get" id="filterform">
-        <div class="filter">
-            <label for="search">
-                Search
-            </label>
-            <input class="search" type="search" name="search" id="search" value="<?= isset($_GET['search']) ? $_GET['search']:''?>">
-            <span onclick="send()"></span>
-        </div>
-        <div class="filter">
-            <label for="category">
-                Filter by Category
-            </label>
-            <select onchange="send()" name="category" id="category">
-                <?php foreach (['All','Financial','Government','Tender'] as $cat):?>
-                    <option value="<?=$cat?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat) {echo 'selected';} ?>>
-                        <?=$cat?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="sort">
-                Sort by date
-            </label>
-            <select onchange="send()" name="sort" id="sort">
-                <?php foreach(['DESC'=>'Newest to Oldest','ASC'=>'Oldest to Newest'] as $val=>$desc):?>
-                    <option value="<?= $val ?>" <?php if(isset($_GET['sort']) && $_GET['sort']==$val) {echo 'selected';} ?>>
-                        <?=$desc?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-</div>
-
-<?php 
-$table = $data['announcements'];
-?>
-<div class="content-table">
-    <table>
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Title</th>
-                <th>Short Desctiption</th>
-                <th>Author</th>
-                <th>Date</th>
-                <th>Category</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if(!$table['nodata'] && !$table['error']):
-            foreach($table['result'] as $ann): ?>
-            <tr>
-                <td><?= $ann['id']?></td>
-                <td><?= $ann['title']?></td>
-                <td><?= $ann['shortdesc']?></td>
-                <td><?= $ann['author']?></td>
-                <td><?= $ann['date']?></td>
-                <td><?= $ann['category']?></td>
-                <td>
-                    <div  class="btn-column">
-                        <a class="btn bg-green  view"href="<?=URLROOT . '/Admin/Announcements/View/'.$ann['id']?>">View</a>
-                        <a class="btn bg-yellow edit"href="<?=URLROOT . '/Admin/Announcements/Edit/'.$ann['id']?>">Edit</a>
-                    </div>
-                </td>
-            </tr>
-            <?php endforeach; endif;?>
-        </tbody>
-    </table>
-</div>
-
-<div class="page-nav">
+    <h1>
+        Manage Announcements
+    </h1>
+    <hr>
     <?php
-    $page = $data['announcements']['page'];
-    $size = $page[1];
-    $max = $data['announcements']['count'];
-    $page_count = ceil($max / $size);
-    $current = $page[0] / $size;
-    ?>
-    <div class="page-nos">
-        <?php if($current!=0):?>
-            <a href="<?= URLROOT . "/Admin/Announcements?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
-            <a href="<?= URLROOT . "/Admin/Announcements?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
-        <?php endif; ?>
-        <select name="page" onchange="send()" id="page">
-            <?php
-            $i = 0;
-            for (; $i * $size < $max; $i++) : ?>
-                <option value="<?= $i ?>" <?= $i==$current?'selected' : ''?>><?= $i + 1 ?></option>
-            <?php endfor ?>
-        </select>
-        <?php if($current<$page_count-1):?>
-            <a href="<?= URLROOT . "/Admin/Announcements?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
-            <a href="<?= URLROOT . "/Admin/Announcements?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
-        <?php endif; ?>
-    </div>
-    <div class="page-size">
-        No.of Posts per page : <select name="size" onchange="send()" id="size">
-            <?php foreach ([10, 25, 50, 100] as $page_size) : ?>
-                <option value="<?= $page_size ?>" <?= $page_size == $size?'selected':''?>><?= $page_size ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-</div>
-</form>
+    $types_assoc = [];
+    foreach($data['types'] ?? [] as $type) {
+        if($type['ann_type'] !== 'All')
+            $types_assoc[$type['ann_type_id']] = $type['ann_type'];
+    }
+    Pagination::top('/Admin/Announcements',form_id:'ann-table-filter',select_filters:[
+        'category' =>[
+            'Filter by announcement type' , array_merge(['0' => 'All'] , $types_assoc)
+        ],
+        'hidden' => [
+            'Filter by visibility' , [
+                2 => 'All',
+                0 => 'visible',
+                1 => 'hidden'
+            ]
+        ],
+        'pinned' => [
+            'Filter Pinned Announcements' ,[
+                2 => 'All',
+                0 => 'not pinned',
+                1 => 'pinned'
+            ]
+        ]
 
+    ]);
+    Table::Table(['title' => 'Announcement Title','posted_time' => 'Time posted','ann_type'=>'Type'],$data['announcements']['result'] ?? [],actions:[
+        'View' => [[URLROOT . '/Admin/Announcements/View/%s','post_id'],'bg-blue view'],
+        'Edit' => [[URLROOT . '/Admin/Announcements/Edit/%s','post_id'],'bg-yellow edit'],
+    ],empty:!(count($data['announcements']['result']) > 0),empty_msg:'No announcements available');
+
+    Pagination::bottom('ann-table-filter',$data['announcements']['page'],$data['announcements']['count']);
+    ?>
+    <script>
+        const announcements = <?=json_encode($data['announcements']['result'] ?? []);?>;
+        if(announcements.length != 0) {
+            const table = document.querySelector('table');
+            const headerRow = table.querySelector('thead > tr');
+            const hiddenColumnHeader = document.createElement('th');
+            hiddenColumnHeader.innerHTML = "Hidden"
+            const pinnedColumnHeader = document.createElement('th');
+            pinnedColumnHeader.innerHTML = "Pinned"
+            headerRow.insertBefore(hiddenColumnHeader,headerRow.children[2]);
+            headerRow.insertBefore(pinnedColumnHeader,hiddenColumnHeader);
+
+            let i=0;
+            table.querySelectorAll('tbody > tr').forEach(row => {
+                let result = announcements[i++];
+
+                const hidden = {
+                    cell:document.createElement('td'),
+                    box:document.createElement('input'),
+                };
+                hidden.box.type = 'checkbox';
+                hidden.box.id = 'hide-unhide-' + result.post_id;
+                hidden.box.checked = result.hidden == 1 ? true : false;
+                hidden.box.style.height = '1.5rem';
+                hidden.box.style.width  = '1.5rem';
+                hidden.box.ariaLabel = 'hide or unhide post';
+                hidden.cell.appendChild(hidden.box);
+                hidden.cell.style.textAlign = 'center';
+
+                const pinned = {
+                    cell:document.createElement('td'),
+                    box:document.createElement('input'),
+                };
+                pinned.box.type = 'checkbox';
+                pinned.box.id = 'pin-unpin-' + result.post_id;
+                pinned.box.checked = result.pinned == 1 ? true : false;
+                pinned.box.style.height = '1.5rem';
+                pinned.box.style.width  = '1.5rem';
+                pinned.box.ariaLabel = 'pin or unpin post';
+                pinned.cell.appendChild(pinned.box);
+                pinned.cell.style.textAlign = 'center';
+
+                row.insertBefore(hidden.cell,row.children[2]);
+                row.insertBefore(pinned.cell,hidden.cell);
+
+                hidden.box.addEventListener('change', (e) => {
+                    hidden.box.disabled = true;
+                    const hide = {
+                        hidden:e.target.checked ? 1 : 0
+                    };
+                    fetch('<?=URLROOT . '/Admin/postsApi/Hide/'?>' + result.post_id, {
+                        method:'POST',
+                        headers: {
+                            "Content-type":"application/json"
+                        },
+                        body:JSON.stringify(hide)
+                    }).then(res => res.json()).then(response => {
+                        if(response.success !== true) {
+                            e.target.checked = e.target.checked ? false : true;
+                        }
+                        hidden.box.disabled = false;
+                    }).catch(console.log);
+                });
+                pinned.box.addEventListener('change', (e) => {
+                    pinned.box.disabled = true;
+                    const pin = {
+                        pinned:e.target.checked ? 1 : 0
+                    };
+                    fetch('<?=URLROOT . '/Admin/postsApi/Pin/'?>' + result.post_id, {
+                        method:'POST',
+                        headers: {
+                            "Content-type":"application/json"
+                        },
+                        body:JSON.stringify(pin)
+                    }).then(res => res.json()).then(response => {
+                        console.log(response);
+                        if(response.success !== true) {
+                            e.target.checked = e.target.checked ? false : true;
+                        }
+                        pinned.box.disabled = false;
+                    }).catch(console.log);
+                });
+            })
+        }
+    </script>
 </div>

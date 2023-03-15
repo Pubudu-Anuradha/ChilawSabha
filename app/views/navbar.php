@@ -1,5 +1,6 @@
 <div class="navbar">
-    <input type="checkbox" name="anonymous" id="hamburger-trigger">
+    <input type="checkbox" name="anonymous" id="hamburger-trigger"
+        aria-label="open or close the hamburger menu">
     <div class="lines">
         <span class="line1"></span>
         <span class="line2"></span>
