@@ -3,14 +3,32 @@ class Posts extends Controller{
     public function index()
     {
     }
+    // TODO: Announcements
     public function Announcements()
     {
-        $model = $this->model('postModel');
-        $this->view('Posts/announcements','Announcemets',['Posts'=>$model->getPosts()],['main','posts']);
     }
     public function Announcement($id)
     {
-        $model = $this->model('postModel');
-        $this->view('Posts/announcement','Announcemets',['Announcement'=>$model->getPost($id)],['main','posts']);
+    }
+    // TODO: Services
+    public function Services()
+    {
+    }
+    public function Service($id)
+    {
+    }
+    // TODO: Projects
+    public function Projects()
+    {
+    }
+    public function Project($id)
+    {
+    }
+    // TODO: Events
+    public function Events()
+    {
+    }
+    public function Event($id)
+    {
     }
 }

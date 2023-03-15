@@ -98,7 +98,8 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
-            <div class="post">
+            <!-- TODO: GET FROM MODEL -->
+            <!-- <div class="post">
                 <div class="sabha-img"></div>
                 <div class="details">
                     <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
@@ -106,25 +107,7 @@
                         21 January 2023
                     </div>
                 </div>
-            </div>
-            <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
-                    </div>
-                </div>
-            </div>
-            <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
-                    </div>
-                </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="posts bg-fd-blue">
@@ -133,15 +116,7 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
-                    </div>
-                </div>
-            </div>
+            <!-- TODO: GET FROM MODEL -->
         </div>
         <div class="posts bg-fd-blue">
             <div class="posts-header">
@@ -149,15 +124,7 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
-                    </div>
-                </div>
-            </div>
+            <!-- TODO: GET FROM MODEL -->
         </div>
 
         <div class="posts bg-fd-blue">
@@ -166,15 +133,7 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <div class="post">
-                <div class="sabha-img"></div>
-                <div class="details">
-                    <a class="title" href="#">REGISTER FOR COVID 19 VACCINATIONS</a>
-                    <div class="date">
-                        21 January 2023
-                    </div>
-                </div>
-            </div>
+            <!-- TODO: GET FROM MODEL -->
         </div>
 
         <div class="about-city">
