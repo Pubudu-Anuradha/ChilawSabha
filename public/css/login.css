@@ -86,7 +86,8 @@
   flex-direction: column;
 }
 
-.reset-code-btn {
+.reset-code-btn,
+.reset-code-label {
   padding: 0.2rem 1rem;
   border-radius: 0 0 5px 5px;
   background-color: var(--lightblue);
@@ -105,6 +106,18 @@
 .submit-field {
   justify-content: end;
   align-items: center;
+}
+
+.err-msg {
+  color: red;
+  font-size: small;
+  margin-left:1rem;
+}
+
+.success-msg {
+  color: green;
+  font-size: small;
+  margin-left:1rem;
 }
 
 @media screen and (max-width: 767px) {
