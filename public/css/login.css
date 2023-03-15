@@ -111,13 +111,13 @@
 .err-msg {
   color: red;
   font-size: small;
-  margin-left:1rem;
+  padding-left:1rem;
 }
 
 .success-msg {
   color: green;
   font-size: small;
-  margin-left:1rem;
+  padding-left:2rem;
 }
 
 @media screen and (max-width: 767px) {
