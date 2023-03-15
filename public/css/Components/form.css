@@ -25,6 +25,7 @@ textarea {
 .input-field-submit label {
   margin: auto 0;
   text-align: left;
+  vertical-align: middle;
 }
 
 .input-field {
@@ -42,6 +43,7 @@ textarea {
 .reset-input-field{
   display: grid;
   grid-template-columns: 1fr;
+
 }
 
 .input-wrapper {
@@ -55,7 +57,9 @@ textarea {
   outline: none;
 }
 
-#reset-code-btn{
+#reset-code-btn,
+#authenticate-code,
+#authenticated-code {
   border-radius: 0 0 1rem 1rem;
   margin-top: 0;
 }
@@ -63,7 +67,9 @@ textarea {
 .input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
 .input-wrapper textarea,
-#reset-code-btn {
+#reset-code-btn,
+#authenticate-code, 
+#authenticated-code {
   width: calc(100% - 2rem);
 }
 
@@ -135,6 +141,11 @@ input[type=submit] {
   border-radius: 1rem;
   margin: 1rem;
   padding: 1rem 1.5rem;
+}
+
+#authenticated-code{
+  background-color: var(--green);
+  color: var(--bgcolor);
 }
 
 .submitButton>input:hover {
