@@ -138,30 +138,80 @@ foreach($edits as $edit):
     }
     unset($edit['edited_by']);
     unset($edit['edited_time']); ?>
-    <div class="edit">
-        Edited On <span class="time"><?= $edited_time ?></span> by
-        <?= $edited_by ?>
+    <div class="edit-container">
+        <div class="edit">
+            Edited On <span class="time"><?= $edited_time ?></span> by
+            <?= $edited_by ?>
+        </div>
+        <ul>
+        <?php
+        foreach($edit as $field => $value):
+            if(!is_null($value) && $current[$field] != $value): ?>
+            <li>
+                <?php if($field!= 'hidden' && $field!='pinned'): ?>
+                    changed
+                    <b><?= $aliases[$field] ?? 'UNDEFINED' ?></b>
+                    from 
+                    "<?= $value ?>"
+                    to
+                    "<?= $current[$field] ?>".
+                <?php else: ?>
+                    <?= $hide_pin[$field][$value] ?? 'UNDEFINED ACTION' ?>
+                <?php endif; ?>
+            </li>
+                <?php $current[$field] = $value;
+            endif;
+            endforeach; ?>
+        </ul>
     </div>
-    <ul>
-    <?php
-    foreach($edit as $field => $value):
-        if(!is_null($value) && $current[$field] != $value): ?>
-        <li>
-            <?php if($field!= 'hidden' && $field!='pinned'): ?>
-                changed
-                <b><?= $aliases[$field] ?? 'UNDEFINED' ?></b>
-                from 
-                "<?= $value ?>"
-                to
-                "<?= $current[$field] ?>".
-            <?php else: ?>
-                <?= $hide_pin[$field][$value] ?? 'UNDEFINED ACTION' ?>
-            <?php endif; ?>
-        </li>
-            <?php $current[$field] = $value;
-        endif;
-        endforeach; ?>
-    </ul>
-<?php endforeach;
-endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 </div>
+<script>
+    const edits = document.querySelectorAll('.edit-container')
+    if(edits.length > 3){
+        const check = {
+            container:document.createElement('div'),
+            children:document.createElement('div')
+        };
+        check.container.innerHTML = "See more"
+        check.container.classList.add('toggle');
+        check.children.classList.add('invisible');
+        edits[3].parentNode.insertBefore(check.children,edits[3]);
+        edits[3].parentNode.insertBefore(check.container,edits[3]);
+        // Add see more option instead of printing all
+        edits.forEach((edit,index)=>{
+            if(index > 2) {
+                check.children.appendChild(edit);
+            }
+        });
+        const changeVisibility = () => {
+            check.children.classList.toggle('invisible')
+            if(!check.children.classList.contains('invisible')) {
+                check.container.innerHTML = "See less";
+            } else {
+                check.container.innerHTML = "See more";
+            }
+        }
+        check.container.addEventListener('click',changeVisibility)
+    }
+</script>
+<style>
+    .content * {
+        transition: transform .2s ease-in-out;
+        transform-origin: top;
+    }
+    .toggle {
+        width: 60%;
+        text-align: right;
+        color: var(--black);
+        text-decoration: underline;
+        background:linear-gradient(to right,rgba(255,255,255,0),var(--blue));
+        border-radius: 1rem;
+        padding: .2rem 1rem;
+    }
+    .invisible {
+        height: 0;
+        transform: scaleY(0);
+    }
+</style>
