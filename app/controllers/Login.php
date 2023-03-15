@@ -46,23 +46,25 @@ class Login extends Controller
     {
         $data = [];
         if(isset($_POST['Submit'])){
-            if(isset($_POST['resetCode']) && isset($_POST['forgot-email']) && isset($_POST['new-password']) && isset($_POST['confirm-password'])){
+            if(!empty($_POST['reset-code-text']) && !empty($_POST['forgot-email']) && !empty($_POST['new-password']) && !empty($_POST['confirm-password'])){
                 $model = $this->model('LoginModel');
                 $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
-                $mail = $userCreds['result'][0]['email'];
+                $data['mail'] = $userCreds['result'][0]['email'];
                 if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
                     $resetCode = $userCreds['result'][0]['password_reset_code'];
                     $resetTime = $userCreds['result'][0]['reset_code_time'];
                     date_default_timezone_set('Asia/Colombo');
                     $currentTime = date('Y-m-d H:i:s');
-                    if($resetCode == $_POST['resetCode'] && $resetTime > $currentTime){
+                    if($resetCode == $_POST['reset-code-text'] && $resetTime > $currentTime){
                         if($_POST['new-password'] == $_POST['confirm-password']){
-                            $data = $model->changePassword();
-                            if($data['resetPassword']){
+                            $change_password = $model->changePassword($data['mail'], $_POST['new-password']);
+                            if($change_password){
                                 $data['success'] = 'Password Changed Successfully';
                                 unset($_POST['forgot-email']);
-                                unset($_POST['resetCode']);
+                                unset($_POST['reset-code-text']);
                                 unset($_POST['Submit']);
+                                $model->removeResetDetails($data['mail']);
+                                $this->view('Login/index', 'Login', [],['login']);
                             }else{
                                 $data['error'] = 'Password Change Failed';
                             }
@@ -80,11 +82,42 @@ class Login extends Controller
                     unset($_POST['Submit']);
                 }
             }
-        }else if(isset($_POST['resetCode'])){
-            if(isset($_POST['forgot-email'])){
+        }else if(isset($_POST['authenticated'])){
+            $data['mail'] = $_POST['forgot-email'];
+            $data['resetCode'] = $_POST['reset-code-text'];
+            $data['authstatus'] = true;
+        }else if(isset($_POST['enterCode'])){
+            $data['authstatus'] = false;
+            if(!empty($_POST['forgot-email']) && !empty($_POST['reset-code-text'])){
                 $model = $this->model('LoginModel');
                 $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
-                $mail = $userCreds['result'][0]['email'];
+                $data['mail'] = $userCreds['result'][0]['email'];
+                if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
+                    $resetCode = $userCreds['result'][0]['password_reset_code'];
+                    $resetTime = $userCreds['result'][0]['reset_code_time'];
+                    date_default_timezone_set('Asia/Colombo');
+                    $currentTime = date('Y-m-d H:i:s');
+                    if($resetCode == $_POST['reset-code-text'] && $resetTime > $currentTime){
+                        $data['resetCode'] = $_POST['reset-code-text'];
+                        $data['authstatus'] = 'authenticaated';
+                    }else{
+                        $data['error'] = 'Invalid Reset Code';
+                    }
+                }else{
+                    $data['error'] = 'Invalid Email';
+                }
+            }
+            
+        }else if(isset($_POST['resetCode'])){
+            $data['noemail']='';
+            $data['codeTime']=NULL;
+            $data['mailsuccess']='';
+            $data['authstatus'] = '';
+            $data['mail']='';
+            if(!empty($_POST['forgot-email'])){
+                $model = $this->model('LoginModel');
+                $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
+                $data['mail'] = $userCreds['result'][0]['email'];
                 if ($userCreds && (!$userCreds['error'] && !$userCreds['nodata'])) {
                     $resetCode = rand(100000,999999);
                     date_default_timezone_set('Asia/Colombo');
@@ -125,37 +158,25 @@ class Login extends Controller
                     $content .= "</div>";
                     $content .= "</div>";
                     
-                    
-                    $model->setResetCode($mail, ['resetCode'=>$resetCode, 'resetTime'=>$resetTime]);
-                    Email::send($mail, 'Password Reset', $content);
-
-
+                    if($model->setResetCode($data['mail'], ['resetCode'=>$resetCode, 'resetTime'=>$resetTime])){
+                        if(Email::send($data['mail'], 'Password Reset', $content)){
+                            $data['mailsuccess'] = 'Reset Code Sent to your Email';
+                            $data['codeTime'] = $resetTime;
+                            $data['resetCode'] = '';
+                            unset($_POST['resetCode']);
+                        }
+                    }
                 }else if($userCreds['nodata']) {
                     $data['nouser'] = 'No User found with that email';
                 } else {
                     $data['reseterr'] = 'Error while searching for user..! Please try again';
                 }
             }else{
-                if(isset($_POST['resetCode'])){
-                    unset($_POST['resetCode']);
-                }
+                $data['noemail'] = "Please enter your email";
+                unset($_POST['resetCode']);
             }
         }
-        $this->view('Login/passwordReset', 'Reset Password', [], ['main', 'Components/form', 'login']);
-    }
-
-    public function codeTime(){
-        $model = $this->model('LoginModel');
-        $userCreds = $model->getPasswordResetCredentials($_POST['forgot-email']);
-        $resetTime = $userCreds['result'][0]['reset_code_time'];
-        $resetTime = strtotime($resetTime);
-        $currentTime = time();
-        $timeDiff = $resetTime-$currentTime;
-        if($timeDiff >= 0){
-            return $timeDiff;
-        }else{
-            unset($_POST['resetCode']);
-        }
+        $this->view('Login/passwordReset', 'Reset Password', $data, ['main', 'Components/form', 'login']);
     }
 
     public function Logout($redirect = 'Home/index')
