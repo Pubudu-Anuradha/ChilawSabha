@@ -1,6 +1,6 @@
 <?php
 require_once 'common.php';
-?> 
+?>
 
 <div class="content">
     <h1>
@@ -8,38 +8,40 @@ require_once 'common.php';
     </h1>
     <hr>
     <?php
-    $types_assoc = [];
-    foreach($data['types'] ?? [] as $type) {
-        if($type['ann_type'] !== 'All')
-            $types_assoc[$type['ann_type_id']] = $type['ann_type'];
+$types_assoc = [];
+foreach ($data['types'] ?? [] as $type) {
+    if ($type['ann_type'] !== 'All') {
+        $types_assoc[$type['ann_type_id']] = $type['ann_type'];
     }
-    Pagination::top('/Admin/Announcements',form_id:'ann-table-filter',select_filters:[
-        'category' =>[
-            'Filter by announcement type' , array_merge(['0' => 'All'] , $types_assoc)
-        ],
-        'hidden' => [
-            'Filter by visibility' , [
-                2 => 'All',
-                0 => 'visible',
-                1 => 'hidden'
-            ]
-        ],
-        'pinned' => [
-            'Filter Pinned Announcements' ,[
-                2 => 'All',
-                0 => 'not pinned',
-                1 => 'pinned'
-            ]
-        ]
 
-    ]);
-    Table::Table(['title' => 'Announcement Title','posted_time' => 'Time posted','ann_type'=>'Type'],$data['announcements']['result'] ?? [],actions:[
-        'View' => [[URLROOT . '/Admin/Announcements/View/%s','post_id'],'bg-blue view'],
-        'Edit' => [[URLROOT . '/Admin/Announcements/Edit/%s','post_id'],'bg-yellow edit'],
-    ],empty:!(count($data['announcements']['result']) > 0),empty_msg:'No announcements available');
+}
+Pagination::top('/Admin/Announcements', form_id:'ann-table-filter', select_filters:[
+    'category' => [
+        'Filter by announcement type', array_merge(['0' => 'All'], $types_assoc),
+    ],
+    'hidden' => [
+        'Filter by visibility', [
+            2 => 'All',
+            0 => 'visible',
+            1 => 'hidden',
+        ],
+    ],
+    'pinned' => [
+        'Filter Pinned Announcements', [
+            2 => 'All',
+            0 => 'not pinned',
+            1 => 'pinned',
+        ],
+    ],
 
-    Pagination::bottom('ann-table-filter',$data['announcements']['page'],$data['announcements']['count']);
-    ?>
+]);
+Table::Table(['title' => 'Announcement Title', 'posted_time' => 'Time posted', 'ann_type' => 'Type'], $data['announcements']['result'] ?? [], actions:[
+    'View' => [[URLROOT . '/Admin/Announcements/View/%s', 'post_id'], 'bg-blue view'],
+    'Edit' => [[URLROOT . '/Admin/Announcements/Edit/%s', 'post_id'], 'bg-yellow edit'],
+], empty:!(count($data['announcements']['result']) > 0), empty_msg:'No announcements available');
+
+Pagination::bottom('ann-table-filter', $data['announcements']['page'], $data['announcements']['count']);
+?>
     <script>
         const announcements = <?=json_encode($data['announcements']['result'] ?? []);?>;
         if(announcements.length != 0) {

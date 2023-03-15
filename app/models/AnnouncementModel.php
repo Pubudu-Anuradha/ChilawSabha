@@ -26,12 +26,13 @@ class AnnouncementModel extends PostModel
         $announcement = $this->select(
             // 'post p join announcements a on p.post_id=a.post_id',
             'post p join announcements a join users u
-             on p.post_id=a.post_id and u.user_id=p.posted_by',
+             on p.post_id=a.post_id and u.user_id=p.posted_by join announcements_type at on at.ann_type_id=a.ann_type_id',
             'p.post_id as post_id,
              p.title as title,
              p.short_description as short_description,
              p.content as content,
              a.ann_type_id as ann_type_id,
+             at.ann_type as ann_type,
              p.pinned as pinned,
              p.hidden as hidden,
              p.views as views,

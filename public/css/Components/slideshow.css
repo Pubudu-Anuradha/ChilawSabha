@@ -32,3 +32,7 @@
 .right-btn {
   right: 0;
 }
+
+.slideshow:hover {
+  transform: scale(1.1);
+}
