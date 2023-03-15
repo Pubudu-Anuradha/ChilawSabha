@@ -35,17 +35,28 @@ class LoginModel extends Model
         ];
     }
 
-    public function changePassword(){
-        $email = mysqli_real_escape_string($this->conn,$_POST['forgot-email']);
-        $password = mysqli_real_escape_string($this->conn,$_POST['new-password']);
-        $password = password_hash($password, PASSWORD_DEFAULT);
+    public function changePassword($email, $password){
+        $email = mysqli_real_escape_string($this->conn,$email);
+        $password = mysqli_real_escape_string($this->conn,$password);
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $resetPassword = $this->update('users', [
-            'password_hash' => $password,
+            'password_hash' => $password_hash,
             'password_reset_code' => null,
             'reset_code_time' => null,
         ], "email='$email'");
         return [
             'resetPassword' => $resetPassword,
+        ];
+    }
+
+    public function removeResetDetails($email){
+        $email = mysqli_real_escape_string($this->conn,$email);
+        $resetPassword = $this->update('users', [
+            'password_reset_code' => null,
+            'reset_code_time' => null,
+        ], "email='$email'");
+        return [
+            'removeReset' => $removeReset,
         ];
     }
 }
