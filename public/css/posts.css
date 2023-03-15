@@ -81,6 +81,7 @@
   display: flex;
   gap: 30px;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .filters .filter {
@@ -142,6 +143,8 @@
 .page-nav {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .page-btn {
