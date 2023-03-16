@@ -1,3 +1,15 @@
+<!-- Someone Style this -->
+<h1>
+    Welcome to the official website of the Chilaw Pradeshiya Sabha!
+</h1>
+<p>
+    We are proud to serve the people of Chilaw and provide them with essential services and
+    facilities. On this website, you can find information about announcements, projects, events,
+    services, make complaints, access web services for the public library and more. We hope this
+    website will help you connect with us and improve your quality of life in Chilaw. Thank you for
+    visiting and please feel free to contact us if you have any questions or suggestions.
+</p>
+<!-- add some additional navigation shortcuts here -->
 <?php Slideshow::Slideshow([URLROOT . "/public/assets/sabha1.jpg",URLROOT . "/public/assets/sabha2.jpg"]);?>
 <!-- <h2>Links</h2>
     <a href="<?=URLROOT . "/References/"?>"> References </a> <br> -->

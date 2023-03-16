@@ -68,7 +68,7 @@ if (!empty($images)):
         $orig = $image['orig'] ?? '';
         $photos[] = URLROOT . '/public/upload/' . $name;
     endforeach;
-    Slideshow::Slideshow($photos, 'shadow');
+    Slideshow::Slideshow($photos, 'grow shadow');
 endif;
 if (!empty($edits)): ?>
 <hr>

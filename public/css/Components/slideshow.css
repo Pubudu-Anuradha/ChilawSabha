@@ -33,6 +33,6 @@
   right: 0;
 }
 
-.slideshow:hover {
+.grow:hover {
   transform: scale(1.1);
 }
