@@ -1,10 +1,18 @@
 <?php
+require_once 'app/models/AnnouncementModel.php';
 
 class Home extends Controller
 {
     public function index()
     {
-        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['Home/index','Components/slideshow']);
+        $posts = [
+            (new AnnouncementModel)->getFrontPage(),
+            [], //TODO: Services
+            [], //TODO: Projects
+            []  //TODO: Events
+        ];
+        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],
+            styles:['Home/index','Components/slideshow']);
     }
     
     public function downloads()

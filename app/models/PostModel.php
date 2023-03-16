@@ -168,4 +168,9 @@
         }
         return $delete;
     }
+
+    public function incrementViews($id) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        return $this->callProcedure('increment_views',[$id]);
+    }
 }

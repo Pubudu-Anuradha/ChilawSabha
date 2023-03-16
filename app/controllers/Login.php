@@ -104,6 +104,14 @@ class Login extends Controller
             unset($_SESSION['name']);
         }
 
+        if (isset($_SESSION['email'])) {
+            unset($_SESSION['email']);
+        }
+
+        if (isset($_SESSION['user_id'])) {
+            unset($_SESSION['user_id']);
+        }
+
         header("location:$redirect");
         die();
     }

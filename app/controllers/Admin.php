@@ -220,7 +220,7 @@ class Admin extends Controller
                 $data = [];
                 $post_changes = [];
                 $ann_changes = [];
-                $current_post = $model->getAnnouncement($id);
+                $current_post = $model->getAnnouncement($id,true);
                 if(isset($_POST['Edit'])){
                     if($current_post !== false) {
                         $post_validator = [
@@ -286,18 +286,18 @@ class Admin extends Controller
                     $data['AddAttach'] = $model->addAttachments($id,'attachments');
                 }
                 $this->view('Admin/Announcements/Edit','Edit Announcement',array_merge($data,[
-                    'ann' => $model->getAnnouncement($id),
+                    'ann' => $model->getAnnouncement($id,true),
                     'types' => $model->getTypes()
                     ]), ['Components/form','Components/table','Admin/post']);
                 break;
             case 'View':
                 $this->view('Admin/Announcements/View','Announcement',[
-                    'announcement' => $model->getAnnouncement($id),
+                    'announcement' => $model->getAnnouncement($id,true),
                     'types' => $model->getTypes()
                 ],['Admin/post','Components/table']);
                 break;
             default:
-                $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements(),'types'=>$model->getTypes()], ['Components/table', 'posts']);
+                $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements(true),'types'=>$model->getTypes()], ['Components/table', 'posts']);
         }
     }
     public function Services($page = 'index')

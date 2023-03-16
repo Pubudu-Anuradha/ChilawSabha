@@ -1,0 +1,69 @@
+.posts {
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 1rem);
+  gap: 1rem;
+  align-items: center;
+}
+
+.post {
+  padding: 0.5rem;
+  background-color: var(--fadedblue);
+  max-width: 1000px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.shadow {
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+}
+
+.post .title {
+  font-size: larger;
+  display: inline;
+}
+
+.post .title a {
+  text-decoration: none;
+  color: var(--black);
+  text-decoration: underline;
+}
+
+.post hr {
+  color: var(--grey);
+}
+
+.post .shortdesc {
+  color: var(--grey);
+  padding: 0.5rem 0;
+}
+
+.details .author {
+  float: left;
+  margin-right: auto;
+}
+
+.details .date {
+  float: right;
+}
+
+.details .category {
+  float: right;
+}
+
+.details .date::before {
+  content: "🗓";
+}
+
+.details .category::before {
+  content: "🏷";
+}
+
+.details .author::before {
+  content: "🖋";
+}
+
+.cat-title {
+  font-size: xx-large;
+}
