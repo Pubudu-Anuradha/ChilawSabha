@@ -1,0 +1,28 @@
+.attachments {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.attachments .heading {
+  font-size: large;
+  border-bottom: 1px solid var(--grey);
+  width: 90%;
+}
+
+.attachments .links {
+  display: grid;
+  width: 90%;
+  grid-template-areas: "a a a a";
+  grid-gap: 1rem;
+}
+
+.attachments .links a {
+  text-decoration: none;
+}
+
+.attachments .links a::before {
+  content: "🗎";
+  text-decoration: none;
+}

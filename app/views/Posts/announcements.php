@@ -1,113 +1,95 @@
+<div class="content">
+    <h1>Announcements</h1>
+    <hr>
 <?php
-$posts = !$data['Posts']['error'] && !$data['Posts']['nodata'] ? $data['Posts']['result']:false;
-?>
-<script>
-    const send = ()=>{
-        document.getElementById('filterform').submit();
+$types_assoc = [];
+foreach ($data['types'] ?? [] as $type) {
+    if ($type['ann_type'] !== 'All') {
+        $types_assoc[$type['ann_type_id']] = $type['ann_type'];
     }
-</script>
-<div class="cat-title">
-    Announcements
-</div>
-<hr />
-<div class="filters">
-    <form action="<?=URLROOT . '/Posts/Announcements'?>" method="get" id="filterform">
-        <div class="filter">
-            <label for="search">
-                Search
-            </label>
-            <input class="search" type="search" name="search" id="search" value="<?= isset($_GET['search']) ? $_GET['search']:''?>">
-            <span onclick="send()"></span>
-        </div>
-        <div class="filter">
-            <label for="category">
-                Filter by Category
-            </label>
-            <select onchange="send()" name="category" id="category">
-                <?php foreach (['All','Financial','Government','Tender'] as $cat):?>
-                    <option value="<?=$cat?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat) {echo 'selected';} ?>>
-                        <?=$cat?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="sort">
-                Sort by date
-            </label>
-            <select onchange="send()" name="sort" id="sort">
-                <?php foreach(['DESC'=>'Newest to Oldest','ASC'=>'Oldest to Newest'] as $val=>$desc):?>
-                    <option value="<?= $val ?>" <?php if(isset($_GET['sort']) && $_GET['sort']==$val) {echo 'selected';} ?>>
-                        <?=$desc?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-</div>
-<?php if($posts):?>
-<div class="posts">
-        <?php foreach($posts as $post): ?>
-            <div class="post shadow">
-                <div class="title">
-                    <a href="<?=URLROOT . '/Posts/Announcement/'.$post['id']?>"><?=$post['title']?></a>
-                </div>
-                <hr>
-                <div class="shortdesc">
-                    <?=$post['shortdesc']?>
-                </div>
-                <div class="details">
-                    <div class="author">
-                        <?=$post['author']?>
+
+}
+Pagination::top('/Posts/Announcements', select_filters:[
+    'category' => [
+        'Announcement type', array_merge(['0' => 'All'], $types_assoc),
+    ],
+    'pinned' => [
+        'Pinned?', [
+            2 => 'All',
+            0 => 'not pinned',
+            1 => 'pinned',
+        ],
+    ],
+]);
+?>
+    <style>
+        .sabha-img{
+            background: url("<?=URLROOT . '/public/assets/logo.jpg'?>");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
+<?php
+$announcements = $data['ann']['result'] ?? [];
+$formatter = new IntlDateFormatter(
+    'en_US',
+    IntlDateFormatter::LONG,
+    IntlDateFormatter::SHORT,
+);?>
+        <div class="posts no-border">
+    <?php if (empty($announcements)): ?>
+        <h2>
+            No Announcements found
+        </h2>
+    <?php endif;
+foreach ($announcements as $ann): ?>
+            <div class="post-single">
+                <div class="details shadow">
+                    <div class="row">
+                        <a class="title"
+                        href="<?=URLROOT . '/Posts/Announcement/' . ($ann['post_id'] ?? '0')?>"
+                        ><h3>
+                            <?php if ($ann['pinned'] == 1): ?>
+                                <span class="pinned"></span>
+                            <?php endif;?>
+                            <?=$ann['title'] ?? 'Not Found'?>
+                        </h3>
+                        <a class="category"
+                        href="<?=URLROOT . '/Posts/Announcements?category=' . ($ann['t_id'] ?? '0')?>"
+                        > <?=$ann['ann_type'] ?? 'Not Found'?>
+                    </a>
                     </div>
-                    <div class='date'>
-                        <?=implode('/',explode('-',$post['date']))?>
+                    <div class="summary">
+                        <?=$ann['short_description'] ?? 'Not Found'?>
                     </div>
-                    <div class='category'>
-                        <a href="#">
-                            <?=$post['category']?>
-                        </a>
+                    <div class="content-truncated">
+                        <?php
+$content = $ann['content'];
+if (strlen($content) > 200) {
+    $content = substr($content, 0, 200);
+}
+$content .= '... <a href="' .
+    URLROOT . '/Posts/Announcement/' .
+    ($ann['post_id'] ?? '0') . '">';
+$content .= 'read more';
+$content .= '</a>';
+echo "&emsp;$content";
+?>                  </div>
+                    <div class="row">
+                        <div class="author">
+                            <?=$ann['posted_by'] ?? 'Not found'?>
+                        </div>
+                        <div class="views">
+                            <?=$ann['views']?>
+                        </div>
+                        <div class="date">
+                            <?=$formatter->format(IntlCalendar::fromDateTime($ann['posted_time'] ?? '2022-01-01', null))?>
+                        </div>
                     </div>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php endforeach?>
+        </div>
+    <?php Pagination::bottom('filter-form', $data['ann']['page'], $data['ann']['count']);?>
 </div>
-
-<div class="page-nav">
-    <?php
-    $page = $data['Posts']['page'];
-    $size = $page[1];
-    $max = $data['Posts']['count'];
-    $page_count = ceil($max / $size);
-    $current = $page[0] / $size;
-    ?>
-    <div class="page-nos">
-        <?php if($current!=0):?>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=0&size=$size" ?>" class="page-btn">&lt;&lt;</a>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=".($current - 1)."&size=$size" ?>" class="page-btn">&lt;</a>
-        <?php endif; ?>
-        <select name="page" onchange="send()" id="page">
-            <?php
-            $i = 0;
-            for (; $i * $size < $max; $i++) : ?>
-                <option value="<?= $i ?>" <?= $i==$current?'selected' : ''?>><?= $i + 1 ?></option>
-            <?php endfor ?>
-        </select>
-        <?php if($current<$page_count-1):?>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($current + 1) . "&size=$size" ?>" class="page-btn">&gt;</a>
-            <a href="<?= URLROOT . "/Posts/Announcements?page=" . ($page_count - 1) . "&size=$size" ?>" class="page-btn">&gt;&gt;</a>
-        <?php endif; ?>
-    </div>
-    <div class="page-size">
-        No.of Posts per page : <select name="size" onchange="send()" id="size">
-            <?php foreach ([10, 25, 50, 100] as $page_size) : ?>
-                <option value="<?= $page_size ?>" <?= $page_size == $size?'selected':''?>><?= $page_size ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-</div>
-</form>
-<?php else: ?>
-<div class="NoPosts">
-    No Posts available right now. Please check later
-</div>
-<?php endif; ?>
