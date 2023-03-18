@@ -35,7 +35,7 @@ class Home extends Controller
     public function bookRequest()
     {
         // TODO: Use Form Input components
-        $this->view('Home/bookRequest', 'Book Request', [], ['form']);
+        $this->view('Home/bookRequest', 'Book Request', [], ['Components/form']);
     }
 
     public function bookCatalogue()
