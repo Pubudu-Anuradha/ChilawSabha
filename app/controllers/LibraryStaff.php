@@ -20,7 +20,7 @@ class LibraryStaff extends Controller
 
             $reqJSON = json_decode($reqJSON, associative:true);
             if($reqJSON){
-                $response = $model->searchUser($reqJSON);  
+                $response = $model->searchUser($reqJSON);
 
                 $this->returnJSON([
                     $response['result'],
@@ -84,6 +84,7 @@ class LibraryStaff extends Controller
                     'size'
                 ], 'confirm');
                 // var_dump($err);
+                $data['errors'] = $err;
                 if(count($err) == 0){
                     if ($model->changeState($_GET['accession_no'], 4, $valid) == false) {
                         $_GET['accession_no'] = null;
@@ -156,11 +157,11 @@ class LibraryStaff extends Controller
         $model = $this->model('BookModel');
 
         $data = ['categories' => $model->get_categories()['result'],'subcategories' => $model->get_sub_categories()['result']];
-        
+
         if (isset($_POST['Add'])) {
             //select only return subcategory id.
             $_POST['category_code'] = $model->getCategoryCode($_POST['sub_category_code'])['result'][0]["category_id"];
-            var_dump($_POST['category_code']);
+
             [$valid, $err] = $this->validateInputs($_POST, [
                     'title|l[:255]',
                     'author|l[:255]',
@@ -175,7 +176,7 @@ class LibraryStaff extends Controller
                     'recieved_date',
                     'isbn|l[:50]',
                     'recieved_method|l[:255]',
-                    ], 
+                    ],
                 'Add');
             $data['errors'] = $err;
 
@@ -187,24 +188,30 @@ class LibraryStaff extends Controller
         }
     }
 
-    public function editbooks($id)
+    public function editbooks($id = null)
     {
         $model = $this->model('BookModel');
-        
 
-        $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' => isset($_POST['Edit']) ? $model->editBook($id, $this->validateInputs($_POST, [
-                    'title|l[:255]',
-                    'author|l[:255]',
-                    'publisher|l[:255]',
-                    'place_of_publication|l[:255]',
-                    'date_of_publication',
-                    'accession_no|i[0:]',
-                    'price|d[0:]',
-                    'pages|i[1:]',
-                    'recieved_date',
-                    'isbn|l[:50]',
-                    'recieved_method|l[:255]',
-        ], 'Edit')) : null, 'books' => $id != null ? $model->getBookbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
+        if(isset($_POST['Edit'])){
+            [$valid, $err] = $this->validateInputs($_POST, [
+                        'title|l[:255]',
+                        'author|l[:255]',
+                        'publisher|l[:255]',
+                        'place_of_publication|l[:255]',
+                        'date_of_publication',
+                        'price|d[0:]',
+                        'pages|i[1:]',
+                        'recieved_date',
+                        'isbn|l[:50]',
+                        'recieved_method|l[:255]',
+            ], 'Edit');
+            $data['errors'] = $err;
+
+            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
+            'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
+        }else{
+            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['books' => $id != null ? $model->getBookbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
+        }
 
     }
 

@@ -63,7 +63,7 @@ class BookModel extends Model
     }
 
     public function editBook($id,$data){
-        $book = $this->update('books',$data[0],"accession_no=$id");
+        $book = $this->update('books',$data,"accession_no=$id");
         return[
             'book'=>$book
         ];
