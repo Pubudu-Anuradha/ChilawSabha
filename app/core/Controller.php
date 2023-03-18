@@ -273,7 +273,7 @@ class Controller
         if ($data) {
             // Rules not defined for these fields
             foreach ($data as $key => $value) {
-                $set_error('extra?', [$key => $value]);
+                $set_error('extras?', [$key => $value]);
             }
         }
 
