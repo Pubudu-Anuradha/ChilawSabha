@@ -12,27 +12,39 @@ class LibraryStaff extends Controller
         $model = $this->model('BookModel');
         // var_dump($_POST);
 
-        //only for search request added here. Need to add function for search results after clicking search btn
-        $reqJSON = file_get_contents('php://input');
+        if(isset($_POST['search-btn'])){
+          $search = $_POST['search'];
+          preg_match('/\d+/',$search,$match);
+          // var_dump($match);
+          $searchKey = $match[0] ?? null;
+          if($searchKey == null){
+            $searchKey = $search;
+          }
+          // var_dump($searchKey);
+          $this->view('LibraryStaff/index','Chilaw Pradeshiya Sabha',['userStat' => $model->getUserDetails($searchKey)], styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
 
-        if($reqJSON){
-            // var_dump($reqJSON);
+        }else{
+          $reqJSON = file_get_contents('php://input');
+          if($reqJSON){
+              // var_dump($reqJSON);
 
-            $reqJSON = json_decode($reqJSON, associative:true);
-            if($reqJSON){
-                $response = $model->searchUser($reqJSON);
+              $reqJSON = json_decode($reqJSON, associative:true);
+              if($reqJSON){
+                  $response = $model->searchUser($reqJSON);
 
-                $this->returnJSON([
-                    $response['result'],
-                ]);
-            die();
-            }
-            else $this->returnJSON([
-                'error'=>'Error Parsing JSON'
-            ]);
+                  $this->returnJSON([
+                      $response['result'],
+                  ]);
+              die();
+              }
+              else $this->returnJSON([
+                  'error'=>'Error Parsing JSON'
+              ]);
+          }
         }
 
-        $this->view('LibraryStaff/index', styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+
+        $this->view('LibraryStaff/index','Chilaw Pradeshiya Sabha', styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
     }
 
     public function analytics()
@@ -99,51 +111,51 @@ class LibraryStaff extends Controller
                 $model->getBookbyID($_GET['accession_no']) : false,
                 'lost_error' => $error,
                 'Books' => $model->getBooks(),
-            ], ['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table', 'posts', 'Components/modal']);
+            ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         } else {
-            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
         }
 
-        // $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue',['Books' =>$model->getBooks()],styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table','posts','Components/modal']);
+        // $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue',['Books' =>$model->getBooks()],styles:['LibraryStaff/index', 'Components/table','posts','Components/modal']);
     }
 
     public function bookrequest()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Bookrequest', styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table']);
+        $this->view('LibraryStaff/Bookrequest', styles:['LibraryStaff/index', 'Components/table']);
     }
 
     public function lostbooks()
     {
         $model = $this->model('BookModel');
 
-        $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4])], styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table', 'posts', 'Components/modal']);
+        $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4])], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
     }
 
     public function delistedbooks()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Delistedbooks', styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table']);
+        $this->view('LibraryStaff/Delistedbooks', styles:['LibraryStaff/index', 'Components/table']);
     }
 
     public function damagedbooks()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Damagedbooks', styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table']);
+        $this->view('LibraryStaff/Damagedbooks', styles:['LibraryStaff/index', 'Components/table']);
     }
 
     public function users()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Users', styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table']);
+        $this->view('LibraryStaff/Users', styles:['LibraryStaff/index', 'Components/table']);
     }
 
     public function disabledusers()
     {
         // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Disabledusers', styles:['LibraryStaff/index', 'LibraryStaff/catalogue', 'Components/table']);
+        $this->view('LibraryStaff/Disabledusers', styles:['LibraryStaff/index', 'Components/table']);
     }
 
     public function addusers()
@@ -205,7 +217,6 @@ class LibraryStaff extends Controller
                         'isbn|l[:50]',
                         'recieved_method|l[:255]',
             ], 'Edit');
-            $data['errors'] = $err;
 
             $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
             'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
@@ -219,5 +230,23 @@ class LibraryStaff extends Controller
     {
         // TODO: REDO USING COMPONENTS
         $this->view('LibraryStaff/Editusers', styles:['LibraryStaff/index', 'Components/form']);
+    }
+        
+    public function booktransactions()
+    {
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Booktransactions', styles:['LibraryStaff/index']);
+    }
+        
+    public function finance()
+    {
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Finance', styles:['LibraryStaff/index']);
+    }
+        
+    public function userreport()
+    {
+        // TODO: REDO USING COMPONENTS
+        $this->view('LibraryStaff/Userreport', styles:['LibraryStaff/index']);
     }
 }

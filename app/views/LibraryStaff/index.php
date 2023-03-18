@@ -1,10 +1,11 @@
 <div class="content">
+  <?php $userStat = $data['userStat']['result'][0] ?? ''?>
     <div class="page">
         <div class="lend-book">
             <div class="usr-search">
                 <form action="<?=URLROOT . '/LibraryStaff/index' ?>" method="post" id="user-search-form">
-                    <input type="text" name="search" placeholder=" Search User" id="search" onkeyup="send()">
-                    <button>
+                    <input type="text" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="send()">
+                    <button name='search-btn'>
                         <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
                     </button>
                 </form>
@@ -36,23 +37,23 @@
                     <div class="status-content">
                         <div>
                             <h4>User Name : </h4>
-                            <div class="green"> Nimal Perera</div>
+                            <div class="green"><?=$userStat['name'] ?? 'No User'?></div>
                         </div>
                         <div>
                             <h4>Lend Status : </h4>
                             <div class="status-dot bg-green"></div>
                         </div>
                         <div>
-                            <h4 >Fine Status : </h4>
-                            <div class="green"> Rs. 00 00</div> 
+                            <h4 >Fine : </h4>
+                            <div class="green"> Rs. <?=$userStat['fine_amount'] ?? '0.00'?></div>
                         </div>
                         <div>
                             <h4 >Books Lost : </h4>
-                            <div class="red"> 2</div>
+                            <div class="red"><?=$userStat['no_of_books_lost'] ?? '-'?></div>
                         </div>
                         <div>
                             <h4>Books Damaged : </h4>
-                            <div class="red"> 3</div>
+                            <div class="red"><?=$userStat['no_of_books_damaged'] ?? '-'?></div>
                         </div>
                     </div>
                 </div>
@@ -137,7 +138,7 @@ function send(){
         headers: {
             "Content-type":"application/json"
         },
-        body: JSON.stringify(user.value)    
+        body: JSON.stringify(user.value)
     })
     .then(response => response.json())
     .then(response => {
