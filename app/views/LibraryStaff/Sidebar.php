@@ -17,7 +17,13 @@
             <a href="<?=URLROOT . '/LibraryStaff/disabledusers' ?>">Disabled User List</a>
         </div>
     </div>
-    <div class="items"><a href="<?=URLROOT . '/LibraryStaff/analytics' ?>" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/analytics.png'?>" alt="sidebar-image" class="sidebar-img"><span> Analytics </span></a></div>
+    <div class="items"><a href="#" class="sidebar-drop"><img src="<?=URLROOT . '/public/assets/analytics.png'?>" alt="sidebar-image" class="sidebar-img"><span onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/analytics'?>'"> Analytics </span><span class="see-more" onclick='expandSideBar("sub-items-analytics")'>	&#43;</span></a>
+        <div class="sub-items" id="sub-items-analytics">
+            <a href="<?=URLROOT . '/LibraryStaff/booktransactions' ?>">Book Transactions</a>
+            <a href="<?=URLROOT . '/LibraryStaff/finance' ?>">Finance</a>
+            <a href="<?=URLROOT . '/LibraryStaff/userreport' ?>">User Report</a>
+        </div>
+    </div>
 
 </div>
 
