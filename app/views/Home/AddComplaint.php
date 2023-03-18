@@ -17,7 +17,7 @@
               <!-- for now simply hardcoded types (to do - get categories from DB) -->
               <?php $complaintCategory = ['Garbage disposal','Land issues','Unauthorized construction','Street lamp','Roads require repair','Damaged public infrastructure','Other'] ?>
               <?php Group::select('Complaint Category', 'complaintCateory', $complaintCategory); ?>
-              <?php Text::textarea('Briefly Describe Your Incident', 'message', 'message',placeholder:'Enter Description'); ?>
+              <?php Text::textarea('Briefly Describe Your Incident', 'message', 'message',placeholder:'Enter Description',required:true); ?>
               <?php Files::images('Photos', 'photos', 'photos', required:false); ?>
               <?php Files::any('Attachments', 'attachments', 'attachments', required:false);?>
               <?php Other::submit('Add','add',value:'Add');?>

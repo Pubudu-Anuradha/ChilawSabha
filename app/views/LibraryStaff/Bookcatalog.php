@@ -91,6 +91,7 @@
             modal.style.display = "none";
         }
         function openModal(id){
+            event.preventDefault();
             input.value = id;
             modal.style.display = "block";
         }
