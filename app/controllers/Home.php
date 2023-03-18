@@ -14,12 +14,12 @@ class Home extends Controller
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],
             styles:['Home/index','Components/slideshow']);
     }
-    
+
     public function downloads()
     {
         $this->view('Home/downloads',styles:['Home/downloads']);
     }
-    
+
     public function emergency()
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];
@@ -40,8 +40,8 @@ class Home extends Controller
 
     public function bookCatalogue()
     {
-        // TODO: Use table component and Pagination components
-        $this->view('Home/bookCatalogue', 'Book Catalogue', [], ['LibraryStaff/catalogue','LibraryStaff/index','Home/portal','Components/table']);
+        $model = $this->model('BookModel');
+        $this->view('Home/bookCatalogue', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'Home/portal', 'Components/table', 'posts']);
     }
     public function addComplaint()
     {

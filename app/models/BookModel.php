@@ -20,7 +20,7 @@ class BookModel extends Model
             for ($i = 0; $i < count($search_fields); ++$i) {
                 $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
             }
-            
+
             array_push($condidions, '(' . implode(' || ', $search_fields) . ')');
         }
 
@@ -106,5 +106,16 @@ class BookModel extends Model
             'l.membership_id,u.name',
             "u.name LIKE '%$search_term%' || l.membership_id LIKE '%$search_term%'"
         );
+    }
+
+    public function getUserDetails($user){
+      $search_term = mysqli_real_escape_string($this->conn, $user);
+
+      //need to add returning borrowed book details as well
+      return $this->select(
+          'users u join library_member l on u.user_id=l.user_id ',
+          'l.membership_id,u.name,l.fine_amount,l.no_of_books_damaged,l.no_of_books_lost',
+          "u.name = '$search_term' || l.membership_id = '$search_term'"
+      );
     }
 }
