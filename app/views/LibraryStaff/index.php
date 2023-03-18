@@ -1,10 +1,10 @@
 <div class="content">
-  <?php $userStat = $data['userStat']['result'][0] ?? ''?>
+  <?php $userStat = $data['userStat']['result'] ?? '';?>
     <div class="page">
         <div class="lend-book">
             <div class="usr-search">
                 <form action="<?=URLROOT . '/LibraryStaff/index' ?>" method="post" id="user-search-form">
-                    <input type="text" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="send()">
+                    <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="send()">
                     <button name='search-btn'>
                         <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
                     </button>
@@ -37,23 +37,22 @@
                     <div class="status-content">
                         <div>
                             <h4>User Name : </h4>
-                            <div class="green"><?=$userStat['name'] ?? 'No User'?></div>
-                        </div>
-                        <div>
-                            <h4>Lend Status : </h4>
-                            <div class="status-dot bg-green"></div>
+                            <div class="green"><?=$userStat[0]['name'] ?? 'No User'?></div>
                         </div>
                         <div>
                             <h4 >Fine : </h4>
-                            <div class="green"> Rs. <?=$userStat['fine_amount'] ?? '0.00'?></div>
+                            <div class="<?php echo (isset($userStat[0]['fine_amount']) && ($userStat[0]['fine_amount'] > 0)) ?
+                            'red':'green'?>"> Rs. <?=$userStat[0]['fine_amount'] ?? '0.00'?></div>
                         </div>
                         <div>
                             <h4 >Books Lost : </h4>
-                            <div class="red"><?=$userStat['no_of_books_lost'] ?? '-'?></div>
+                            <div class="<?php echo (isset($userStat[0]['no_of_books_lost']) && ($userStat[0]['no_of_books_lost'] > 0)) ?
+                            'red':'green'?>"><?=$userStat[0]['no_of_books_lost'] ?? '0'?></div>
                         </div>
                         <div>
                             <h4>Books Damaged : </h4>
-                            <div class="red"><?=$userStat['no_of_books_damaged'] ?? '-'?></div>
+                            <div class="<?php echo (isset($userStat[0]['no_of_books_damaged']) && ($userStat[0]['no_of_books_damaged'] > 0)) ?
+                            'red':'green'?>"><?=$userStat[0]['no_of_books_damaged'] ?? '0'?></div>
                         </div>
                     </div>
                 </div>
@@ -75,37 +74,38 @@
                                 <th>Title</th>
                                 <th>Author</th>
                                 <th>Publisher</th>
+                                <th>Book Category</th>
                                 <th>Due Date</th>
                                 <th>Damaged</th>
                                 <th>Recieved</th>
                             </tr>
                         </thead>
-
+                        <?php if(isset($userStat[0]['due_date'])):
+                            foreach ($userStat as $borrowData):?>
                         <tr>
-                            <td>P305</td>
-                            <td>Harry Poter</td>
-                            <td>J.K. Rowling</td>
-                            <td>Animus Kiado</td>
-                            <td>12/04/2023</td>
+                            <td><?=$borrowData['accession_no']?></td>
+                            <td><?=$borrowData['title']?></td>
+                            <td><?=$borrowData['author']?></td>
+                            <td><?=$borrowData['publisher']?></td>
+                            <td><?=$borrowData['category_name']?></td>
+                            <td><?=$borrowData['due_date']?></td>
                             <td class="check"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
                             <td class="check"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
                         </tr>
+                        <?php endforeach;else: ?>
                         <tr>
-                            <td>A45</td>
-                            <td>Atomic Habits</td>
-                            <td>James Clear</td>
-                            <td>Penguin Random</td>
-                            <td>21/05/2023</td>
-                            <td class="check"><input type="checkbox" name="damagedcheck" id="damagedcheck"></td>
-                            <td class="check"><input type="checkbox" name="recievedcheck" id="recievedcheck" checked></td>
+                            <td colspan="8" style="text-align:center">Borrow Data Not Found</td>
                         </tr>
+                      <?php endif; ?>
                     </table>
                 </div>
+                <?php  if(isset($userStat[0]['due_date'])): ?>
                 <div class="recieve-submition">
                     <div class="recieve-confirm">
                         <input type="submit" name="Submit" value="Confirm" class="btn bg-green white">
                     </div>
                 </div>
+              <?php endif; ?>
 
             </div>
         </div>

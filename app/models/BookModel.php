@@ -113,9 +113,9 @@ class BookModel extends Model
 
       //need to add returning borrowed book details as well
       return $this->select(
-          'users u join library_member l on u.user_id=l.user_id ',
-          'l.membership_id,u.name,l.fine_amount,l.no_of_books_damaged,l.no_of_books_lost',
-          "u.name = '$search_term' || l.membership_id = '$search_term'"
+          'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join category_codes c on b.category_code=c.category_id ',
+          'l.membership_id,u.name,l.fine_amount,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, b.accession_no, b.title,b.author,b.publisher,c.category_name',
+          "(u.name = '$search_term' || l.membership_id = '$search_term') and r.recieved_date IS NULL"
       );
     }
 }
