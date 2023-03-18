@@ -24,7 +24,7 @@
 
       <div class="button-container">
         <img src="<?= URLROOT . '/public/assets/call.png' ?>" class="portal-button-icons" alt="book">
-        <a href="<?= URLROOT . '/ContactUs/' ?>"><button class="portal-button">Contact Librarian</button></a>
+        <a href="<?= URLROOT . '/ContactUs/#lib-contact' ?>"><button class="portal-button">Contact Librarian</button></a>
       </div>
 
       <div class="button-container">
@@ -38,10 +38,11 @@
   <div class="reference-lib">
     <a href="<?= URLROOT . '/Home/bookRequest' ?>"><button class="portal-button-req">Request a book</button></a>
     <div class="portal-otherButtons">
+      <!-- TO DO - add real documents which will force download when clicked -->
       <a href="#"><button class="portal-otherButton">Membership Application form</button></a>
       <a href="#"><button class="portal-otherButton">Membership Renewal Form</button></a>
       <a href="#"><button class="portal-otherButton">Rules & Regulations</button></a>
-      <a href="#"><button class="portal-otherButton">Location</button></a>
+      <a href="<?= URLROOT . '/ContactUs/#lib-contact' ?>"><button class="portal-otherButton">Location</button></a>
     </div>
 
   </div>
