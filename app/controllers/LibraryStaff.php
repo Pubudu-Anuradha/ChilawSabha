@@ -10,37 +10,46 @@ class LibraryStaff extends Controller
     public function index()
     {
         $model = $this->model('BookModel');
-        // var_dump($_POST);
 
         if(isset($_POST['search-btn'])){
           $search = $_POST['search'];
           preg_match('/\d+/',$search,$match);
-          // var_dump($match);
           $searchKey = $match[0] ?? null;
           if($searchKey == null){
             $searchKey = $search;
           }
-          // var_dump($searchKey);
           $this->view('LibraryStaff/index','Chilaw Pradeshiya Sabha',['userStat' => $model->getUserDetails($searchKey)], styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+        }
 
-        }else{
-          $reqJSON = file_get_contents('php://input');
-          if($reqJSON){
-              // var_dump($reqJSON);
+        else{
+            $reqJSON = file_get_contents('php://input');
+            if($reqJSON){
+                $reqJSON = json_decode($reqJSON, associative:true);
 
-              $reqJSON = json_decode($reqJSON, associative:true);
-              if($reqJSON){
-                  $response = $model->searchUser($reqJSON);
-
-                  $this->returnJSON([
-                      $response['result'],
-                  ]);
-              die();
-              }
-              else $this->returnJSON([
-                  'error'=>'Error Parsing JSON'
-              ]);
-          }
+                if($reqJSON && ($reqJSON['searchID'] == 'bookSearch')){
+                    $response = $model->getBookbyID($reqJSON['value']);
+                    if(isset($response['result'][0])){
+                        $this->returnJSON([
+                            $response['result'][0]['title'],
+                        ]);
+                    }else{
+                        $this->returnJSON([
+                            'error' => 'No Data Found',
+                        ]);
+                    }
+                    die();
+                }
+                else if($reqJSON && ($reqJSON['searchID'] == 'userSearch')){
+                    $response = $model->searchUser($reqJSON['value']);
+                    $this->returnJSON([
+                        $response['result'],
+                    ]);
+                    die();
+                }
+                else $this->returnJSON([
+                    'error'=>'Error Parsing JSON'
+                ]);
+            }
         }
 
 
@@ -54,12 +63,9 @@ class LibraryStaff extends Controller
         $reqJSON = file_get_contents('php://input');
 
         if ($reqJSON) {
-
             $reqJSON = json_decode($reqJSON, associative:true);
-
             if ($reqJSON) {
                 $response = $model->getBorrowStat($reqJSON);
-
                 $this->returnJSON([
                     $response['result'],
                 ]);
@@ -116,8 +122,6 @@ class LibraryStaff extends Controller
             $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
         }
-
-        // $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue',['Books' =>$model->getBooks()],styles:['LibraryStaff/index', 'Components/table','posts','Components/modal']);
     }
 
     public function bookrequest()

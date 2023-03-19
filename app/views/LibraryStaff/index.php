@@ -4,7 +4,7 @@
         <div class="lend-book">
             <div class="usr-search">
                 <form action="<?=URLROOT . '/LibraryStaff/index' ?>" method="post" id="user-search-form">
-                    <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="send()">
+                    <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="searchUser()">
                     <button name='search-btn'>
                         <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
                     </button>
@@ -19,11 +19,11 @@
                     </div>
                     <div class="field">
                         <label for="acc1">Book Accession No 01</label>
-                        <input type="text" name="acc1" id="acc1">
+                        <input type="search" placeholder="Enter Book Accession No" name="acc1" id="acc1"  onblur="searchBook('acc1')" required>
                     </div>
                     <div class="field">
                         <label for="acc2">Book Accession No 02</label>
-                        <input type="text" name="acc2" id="acc2">
+                        <input type="search" placeholder="Enter Book Accession No" name="acc2" id="acc2"  onblur="searchBook('acc2')" required>
                     </div>
                     <div class="lend-confirm">
                         <button type="button" class="btn white bg-blue" onclick="openModal()">Lend</button>
@@ -129,16 +129,20 @@ window.onclick = function(event) {
   }
 }
 
-function send(){
+function searchUser(){
     var user = document.getElementById('search');
     var searchDiv = document.getElementById('usr-search-list');
+    var userVal = {
+      'value':user.value,
+      'searchID':'userSearch'
+    }
 
     fetch("<?=URLROOT . '/LibraryStaff/index'?>",{
         method:"POST",
         headers: {
             "Content-type":"application/json"
         },
-        body: JSON.stringify(user.value)
+        body: JSON.stringify(userVal)
     })
     .then(response => response.json())
     .then(response => {
@@ -166,6 +170,43 @@ function send(){
     .catch(err => {
         searchDiv.innerHTML = '';
     });
+}
+
+function searchBook(id){
+    var book = document.getElementById(id);
+    var value = book.value;
+    var bookVal = {
+        'value':book.value,
+        'searchID':'bookSearch'
+    }
+    book.onfocus = function() {
+        book.style.color = 'black';
+        book.value = value;
+    }
+    if(book.value != ''){
+        fetch("<?=URLROOT . '/LibraryStaff/index'?>",{
+            method:"POST",
+            headers: {
+                "Content-type":"application/json"
+            },
+            body: JSON.stringify(bookVal)
+        })
+        .then(response => response.json())
+        .then(response => {
+            if(response.length > 0){
+                book.style.color = 'green';
+                book.value = bookVal['value'] + "  "  + response;
+            }
+            else{
+                book.style.color = 'red';
+                book.value = bookVal['value'] + "  " + 'Invalid Accession No';
+            }
+        })
+        .catch(err => {
+            book.style.color = 'red';
+            book.value = bookVal['value'] + "  " + 'Invalid Accession No';
+        });
+    }
 }
 
 </script>
