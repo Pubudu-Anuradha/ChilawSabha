@@ -308,12 +308,51 @@ class Admin extends Controller
                 $this->view('Admin/Services/index', 'Manage Announcements', ['services' => []], ['Components/table', 'posts']);
         }
     }
-    public function Projects($page = 'index')
+    public function Projects($page = 'index',$id = null)
     {
         $model = $this->model('ProjectModel');
         switch ($page) {
+            case 'Add': 
+                if(isset($_POST['Add'])) {
+                    [$valid,$err] = $this->validateInputs($_POST,[
+                        'title|u[post]|l[:255]',
+                        'short_description|l[:1000]',
+                        'content',
+                        'pinned|?',
+                        'status|i[:]',
+                        'start_date|dt[:]|?',
+                        'expected_end_date|dt[:]|?',
+                        'budget|d[:]|?',
+                        'other_parties|?',
+                        'attachments|?',
+                        'photos|?',
+                    ],'Add');
+
+                    $valid['pinned'] = boolval($valid['pinned'] ?? false) ? 1 : 0;
+
+
+                    if(count($err) == 0) {
+                        $putProject = $model->putProject($valid);
+                        if($putProject !== false) {
+                            header('Location: '.URLROOT.'/Admin/Projects/View/'.$putProject[0]);
+                            die();
+                        }
+                    }
+                    $this->view('Admin/Projects/Add','Add a new Project',
+                                ['errors' => $err,
+                                'status' => $model->getStatus()],['Components/form']);
+                } else {
+                    $this->view('Admin/Projects/Add','Add a new Project',['status'=> $model->getStatus()],['Components/form']);
+                }
+                break;
+            case 'View':
+                $this->view('Admin/Projects/View','Project',[
+                    'project' => $model->getProject($id,true),
+                    'status' => $model->getStatus()
+                ],['Admin/post','Components/table','Admin/index']);
+                break;
             default:
-                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => []], ['Components/table', 'posts']);
+                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => $model->getProjects(true) ], ['Components/table', 'posts']);
         }
     }
     public function Events($page = 'index')

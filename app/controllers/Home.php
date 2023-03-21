@@ -1,5 +1,6 @@
 <?php
 require_once 'app/models/AnnouncementModel.php';
+require_once 'app/models/ProjectModel.php';
 
 class Home extends Controller
 {
@@ -8,7 +9,7 @@ class Home extends Controller
         $posts = [
             (new AnnouncementModel)->getFrontPage(),
             [], //TODO: Services
-            [], //TODO: Projects
+            (new ProjectModel)->getFrontPage(),
             []  //TODO: Events
         ];
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],

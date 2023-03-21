@@ -169,6 +169,11 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
+            <pre>
+                <?php
+                    var_dump($projects);
+                ?>
+            </pre>
             <!-- TODO: GET FROM MODEL -->
         </div>
 
