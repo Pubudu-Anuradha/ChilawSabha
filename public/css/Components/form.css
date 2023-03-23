@@ -43,7 +43,7 @@ textarea {
 .reset-input-field{
   display: grid;
   grid-template-columns: 1fr;
-
+  margin: auto 1rem;
 }
 
 .input-wrapper {
@@ -52,7 +52,6 @@ textarea {
 }
 
 #reset-code{
-  margin: auto 1rem;
   border-radius: 1rem 1rem 0 0;
   outline: none;
 }
@@ -61,15 +60,11 @@ textarea {
 #authenticate-code,
 #authenticated-code {
   border-radius: 0 0 1rem 1rem;
-  margin-top: 0;
 }
 
 .input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
-.input-wrapper textarea,
-#reset-code-btn,
-#authenticate-code, 
-#authenticated-code {
+.input-wrapper textarea{
   width: calc(100% - 2rem);
 }
 
@@ -148,6 +143,14 @@ input[type="submit"] {
   width: max-content;
 }
 
+#reset-code-btn,
+#authenticate-code, 
+#authenticated-code,
+#reset-code{
+  width: calc(100% - 0.5rem);
+  box-sizing: border-box;
+}
+
 #authenticated-code{
   background-color: var(--green);
   color: var(--bgcolor);
@@ -162,12 +165,13 @@ input+span {
   display: flex;
   position: relative;
   justify-content: center;
+  align-items: center;
   padding: 0.2rem;
 }
 
 .input-wrapper {
   display: grid;
-  grid-template-columns: auto fit-content(5%);
+  grid-template-columns: 1fr;
   box-sizing: border-box;
 }
 
@@ -179,6 +183,10 @@ input+span {
 input:invalid {
   border-bottom: 2px solid var(--red);
   box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+input:valid {
+  box-shadow: 4px 4px 5px 0px var(--grey);
 }
 
 input:invalid+span::after {
