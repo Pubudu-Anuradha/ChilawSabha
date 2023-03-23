@@ -108,16 +108,18 @@
   align-items: center;
 }
 
-.err-msg {
-  color: red;
+.err-msg,
+.success-msg {
   font-size: small;
   padding-left:1rem;
 }
 
+.err-msg {
+  color: red;
+}
+
 .success-msg {
   color: green;
-  font-size: small;
-  padding-left:2rem;
 }
 
 @media screen and (max-width: 767px) {
