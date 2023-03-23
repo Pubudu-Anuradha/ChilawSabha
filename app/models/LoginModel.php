@@ -47,7 +47,7 @@ class LoginModel extends Model
 
     public function removeResetDetails($email){
         $email = mysqli_real_escape_string($this->conn,$email);
-        $resetPassword = $this->update('users', [
+        $removeReset = $this->update('users', [
             'password_reset_code' => null,
             'reset_code_time' => null,
         ], "email='$email'");
