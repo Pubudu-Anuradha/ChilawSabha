@@ -41,6 +41,7 @@
 
 .page-content a {
   text-decoration: none;
+  font-weight: 600;
   color: var(--black);
 }
 
@@ -196,6 +197,7 @@
 .title-row {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px dashed var(--lightblue);
 }
 
 .category {
