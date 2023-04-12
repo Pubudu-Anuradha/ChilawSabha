@@ -10,15 +10,15 @@ class Other{
             <?= $title ?>    
         </label>
         <input type="number" 
-            name="<?=$name?>"
-            <?=$id ? "id=\"$id\"" : ''?>
-            <?=$class ? "class=\"$class\"" : ''?>
-            <?=$placeholder ? "placeholder=\"$placeholder\"" : ''?>
-            <?=$value ? "value=\"$value\"" : ''?>
-            <?=$step ? "step=\"$step\"" : ''?>
+            name="<?= $name ?>"
+            <?= $id ? "id=\"$id\"" : '' ?>
+            <?= $class ? "class=\"$class\"" : '' ?>
+            <?= $placeholder ? "placeholder=\"$placeholder\"" : '' ?>
+            <?= $value ? "value=\"$value\"" : '' ?>
+            <?= $step ? "step=\"$step\"" : '' ?>
             <?=($min || ($min == 0)) ? "min=\"$min\"" : ''?>
-            <?=$max ? "max=\"$max\"" : ''?>
-            <?=$required ? 'required' : ''?>
+            <?= $max ? "max=\"$max\"" : '' ?>
+            <?= $required ? 'required' : '' ?>
         />
         <span></span>
     </div>
