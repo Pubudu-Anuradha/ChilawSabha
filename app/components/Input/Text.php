@@ -3,7 +3,7 @@
 class Text
 {
     public static function text(
-        $title,$name, $id , $class = null,$required=true,$value=NULL,$placeholder,$type=NULL, 
+        $title,$name, $id , $class = null,$required=true,$value=NULL,$placeholder=NULL,$type=NULL, 
         $maxlength=NULL, $minlength=NULL, $pattern=NULL, $readonly=NULL, $spellcheck=NULL, $autocomplete=false, $disabled=NULL, $msg=NULL
     ) { 
     ?>
@@ -42,13 +42,13 @@ class Text
     }
 
     public static function password(
-        $title,$name, $id , $class = null,$required,$placeholder,$pattern=NULL, $autocomplete=false , $disabled=false, $msg=NULL
+        $title,$name, $id , $class = null,$required=True,$placeholder=NULL,$pattern=NULL, $autocomplete=false , $disabled=false, $msg=NULL,$value=NULL
     ) { 
-        Text::text($title,$name,$id,$class,$required,NULL,$placeholder,'password',15,8,$pattern,NULL,NULL,$autocomplete,$disabled, $msg);
+        Text::text($title,$name,$id,$class,$required,$value,$placeholder,'password',15,8,$pattern,NULL,NULL,$autocomplete,$disabled, $msg);
     }
 
     public static function email(
-        $title,$name, $id, $class = null,$required = NULL, $value= null,$placeholder,$pattern=NULL,$readonly=NULL,$disabled=false,$msg=NULL
+        $title,$name, $id, $class = null,$required = NULL, $value= null,$placeholder=NULL,$pattern=NULL,$readonly=NULL,$disabled=false,$msg=NULL
     ) { 
         Text::text($title,$name,$id,$class,$required,$value, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL, $disabled,$msg);
     }
