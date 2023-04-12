@@ -352,7 +352,8 @@ class Admin extends Controller
                 ],['Admin/post','Components/table','Admin/index']);
                 break;
             default:
-                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => $model->getProjects(true) ], ['Components/table', 'posts']);
+                $this->view('Admin/Projects/index', 'Manage Projects', ['projects' => $model->getProjects(true),
+            'status' => $model->getStatus() ], ['Components/table', 'posts']);
         }
     }
     public function Events($page = 'index')

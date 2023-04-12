@@ -94,8 +94,8 @@ class ProjectModel extends PostModel{
         $images = [];
         $conditions = ['p.post_type=3'];
 
-        if(!$get_hidden) {
-            if(isset($_POST['hidden'])) {
+        if($get_hidden) {
+            if(isset($_POST['hidden']) && $_POST['hidden'] != 2) {
                 $hidden = mysqli_real_escape_string($this->conn, $_POST['hidden']);
                 $conditions[] = "p.hidden='$hidden'";
             }
@@ -103,12 +103,12 @@ class ProjectModel extends PostModel{
             $conditions[] = "p.hidden=0";
         }
 
-        if(isset($_GET['pinned'])) {
+        if(isset($_GET['pinned']) && $_GET['pinned'] != 2) {
             $pinned = mysqli_real_escape_string($this->conn, $_GET['pinned']);
             $conditions[] = "p.pinned='$pinned'";
         }
 
-        if(isset($_GET['status'])) {
+        if(isset($_GET['status']) && $_GET['status'] != 0) {
             $status = mysqli_real_escape_string($this->conn, $_GET['status']);
             $conditions[] = "a.status='$status'";
         }
@@ -136,14 +136,15 @@ class ProjectModel extends PostModel{
         }
 
         $conditions = implode(' && ', $conditions);
-        $projects = $this->select(
-            'post p join projects a join users u
-             on p.post_id=a.post_id and u.user_id=p.posted_by',
+        $projects = $this->selectPaginated(
+            'post p join projects a join project_status ps join users u on 
+            p.post_id=a.post_id and u.user_id=p.posted_by and ps.status_id=a.status',
             'p.post_id as post_id,
              p.title as title,
              p.short_description as short_description,
              p.content as content,
-             a.status as status,
+             a.status as status_id,
+             ps.project_status as status,
              p.pinned as pinned,
              p.hidden as hidden,
              p.views as views,
@@ -155,19 +156,16 @@ class ProjectModel extends PostModel{
              a.other_parties as other_parties',
             "$conditions ORDER BY p.posted_time $sort" );
         if (!($projects['error'] ?? true)) {
-            echo "<pre>";
-            var_dump($projects);
-            echo "</pre>";
             foreach ($projects['result'] as $project) {
-                $images = $this->select(
+                $images_tmp = $this->select(
                     'post_images pi JOIN file_original_names orn ON pi.image_file_name=orn.name',
                     'orn.name as name,
                      orn.orig as orig',
                     "pi.post_id='{$project['post_id']}'")['result'] ?? [];
-                $images[$project['post_id']] = $images;
+                $images[$project['post_id']] = $images_tmp;
             }
         }
-        return [$projects['result'],$images] ?? [];
+        return [$projects,$images] ?? [];
     }
 
     public function editProject($id,$post_data,$project_data) {

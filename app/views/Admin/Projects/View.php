@@ -1,5 +1,5 @@
 <div class="content">
-    <pre><?php var_dump($data); ?></pre>
+    <!-- <pre><?php var_dump($data); ?></pre> -->
 <?php [$project,$images,$attachments] = $data['project'] !== false ? $data['project'] : [false,false,false];
 $formatter = new IntlDateFormatter(
     'en_US',
@@ -49,7 +49,7 @@ $dates = new IntlDateFormatter(
             <?=$project['short_description'] ?? 'Not found'?>
         </div>
         <div class="field">
-            Project Content
+            Project Description
         </div>
         <div class="detail">
             <?=$project['content'] ?? 'Not found'?>
