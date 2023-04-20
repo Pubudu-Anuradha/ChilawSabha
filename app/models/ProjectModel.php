@@ -78,16 +78,42 @@ class ProjectModel extends PostModel{
                 'orn.name as name,
                  orn.orig as orig',
                 "pa.post_id='$id'")['result'] ?? [];
-            // $post_edit_history = $this->select(
-            //     'post_edit_history e join users u
-            //      on e.edited_by=u.user_id',
-            //     'u.name as edited_by,
-            //     e.edited_time as edited_time',
-            //     "e.post_id='$id'")['result'] ?? [];
-            // $project['result'][0]['post_edit_history'] = $post_edit_history;
-            return [$project['result'][0], $images, $attachments];
+            $proj_edit_history = $this->select(
+                'projects_edit e join project_status ps join users u
+                 on e.edited_by=u.user_id and e.status=ps.status_id',
+                'ps.project_status as status,
+                 e.start_date as start_date,
+                 e.expected_end_date as expected_end_date,
+                 e.budget as budget,
+                 e.other_parties as other_parties,
+                 u.name as edited_by,
+                 e.edited_time as edited_time',
+                "e.post_id='$id'")['result'] ?? [];
+            $post_edit_history = $this->select(
+                'post_edit e join users u
+                 on e.edited_by=u.user_id',
+                'e.post_type as post_type,
+                 e.title as title,
+                 e.short_description as short_description,
+                 e.content as content,
+                 e.pinned as pinned,
+                 e.hidden as hidden,
+                 u.name as edited_by,
+                 e.edited_time as edited_time',
+                "e.post_id='$id'")['result'] ?? [];
+            $edits = array_merge(
+                $proj_edit_history,
+                $post_edit_history
+            );
+
+            usort($edits, function($a, $b) {
+                return 
+                IntlCalendar::fromDateTime($a['edited_time'], null)
+                    ->before(IntlCalendar::fromDateTime($b['edited_time'], null));
+            });
+            return [$project['result'][0], $images, $attachments,$edits];
         }
-        return $project['result'][0] ?? [];
+        return false;
     }
 
     public function getProjects($get_hidden = false) {
@@ -95,8 +121,8 @@ class ProjectModel extends PostModel{
         $conditions = ['p.post_type=3'];
 
         if($get_hidden) {
-            if(isset($_POST['hidden']) && $_POST['hidden'] != 2) {
-                $hidden = mysqli_real_escape_string($this->conn, $_POST['hidden']);
+            if(isset($_GET['hidden']) && $_GET['hidden'] != 2) {
+                $hidden = mysqli_real_escape_string($this->conn, $_GET['hidden']);
                 $conditions[] = "p.hidden='$hidden'";
             }
         } else {

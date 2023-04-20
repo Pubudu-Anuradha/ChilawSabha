@@ -17,6 +17,7 @@ class Time
                 <?= $max ? "max=\"$max\"" : '' ?>
                 <?= $min ? "min=\"$min\"" : '' ?>
                 <?= $required ? "required" : '' ?>
+                <?= $value ? "value=\"$value\"" : '' ?>
             />
             <span></span>
         </div>

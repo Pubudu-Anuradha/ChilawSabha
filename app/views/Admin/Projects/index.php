@@ -2,8 +2,10 @@
     <h1>
         Manage Projects
     </h1>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Projects/Add'?>" class="btn add bg-green">Add a new Project</a>
+    </div>
     <hr>
-    <!-- <pre><?php var_dump($data); ?></pre> -->
 <?php
 $statuses_assoc = [];
 foreach ($data['status'] ?? [] as $status) {
@@ -28,7 +30,7 @@ Pagination::top('/Admin/Projects', form_id:'project-table-filter', select_filter
         ],
     ],
 ]);
-Table::Table(['title' => 'Project Title', 'posted_time' => 'Time posted', 'status' => 'Status'], $data['projects'][0]['result'] ?? [], actions:[
+Table::Table(['title' => 'Project Title','views'=>'Views', 'posted_time' => 'Time posted', 'status' => 'Status'], $data['projects'][0]['result'] ?? [], actions:[
     'View' => [[URLROOT . '/Admin/Projects/View/%s', 'post_id'], 'bg-blue view'],
     'Edit' => [[URLROOT . '/Admin/Projects/Edit/%s', 'post_id'], 'bg-yellow edit'],
 ], empty:!(count($data['projects'][0]['result']) > 0), empty_msg:'No projects available');

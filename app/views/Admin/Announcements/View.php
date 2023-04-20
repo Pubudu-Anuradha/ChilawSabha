@@ -11,11 +11,18 @@ if (empty($announcement)): ?>
         Announcement : <?=$announcement['title']?>
     </h1>
     <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Announcements'?>" class="btn view bg-blue">Go to Announcements</a>
         <a href="<?=URLROOT . '/Admin/Announcements/Edit/' . $announcement['post_id']?>" class="btn edit bg-yellow">Edit</a>
         <a href="<?=URLROOT . '/Posts/Announcement/' . $announcement['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
     </div>
     <hr>
     <div class="post-details">
+        <div class="field">
+            Views
+        </div>
+        <div class="detail">
+            <?=$announcement['views'] ?? 'Not found'?>
+        </div>
         <div class="field">
             Announcement type
         </div>

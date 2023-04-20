@@ -2,12 +2,12 @@
     <h1>
         Add New Project
     </h1>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Projects'?>" class="btn view bg-blue">Go to Projects</a>
+    </div>
     <hr>
     <div class="formContainer">
         <form class="fullForm" method="post" enctype="multipart/form-data">
-    <pre>
-    <?php var_dump($data); ?>
-    </pre>
     <?php
     $alias = [
         ['title', 'Title', 'Enter the title of the project'],
@@ -22,6 +22,12 @@
     $old = $_POST;
     $errors = $data['errors'] ?? [];
     Errors::validation_errors($errors, $alias);
+    if(isset($errors['end_before_start'])) {
+        Errors::generic($errors['end_before_start']);
+    }
+    if(isset($errors['end_no_start'])) {
+        Errors::generic($errors['end_no_start']);
+    }
     Text::text($alias[0][1], $alias[0][0], $alias[0][0], $alias[0][2], spellcheck:true,
         value:$old[$alias[0][0]] ?? null);
     $statuses_assoc = [];
@@ -34,9 +40,9 @@
         value:$old[$alias[2][0]] ?? null);
     Text::textarea($alias[3][1], $alias[3][0], $alias[3][0], $alias[3][2], spellcheck:true,
         value:$old[$alias[3][0]] ?? null);
-    Time::date($alias[4][1], $alias[4][0], $alias[4][0], $alias[4][2], required:false,
+    Time::date($alias[4][1], $alias[4][0], $alias[4][0], $alias[4][2],type:'date', required:false,
         value:$old[$alias[4][0]] ?? null);
-    Time::date($alias[5][1], $alias[5][0], $alias[5][0], $alias[5][2], required:false,
+    Time::date($alias[5][1], $alias[5][0], $alias[5][0], $alias[5][2],type:'date', required:false,
         value:$old[$alias[5][0]] ?? null);
     Other::number($alias[6][1], $alias[6][0], $alias[6][0], $alias[6][2], required:false,
         step:0.01, min:0,value:$old[$alias[6][0]] ?? null);

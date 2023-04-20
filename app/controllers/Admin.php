@@ -40,10 +40,10 @@ class Admin extends Controller
                         );
                     }
                     $this->view('Admin/User/Add', 'Add a new User', $data,
-                        ['Components/form']);
+                        ['Components/form','Admin/index', 'Components/table']);
                 } else {
                     $this->view('Admin/User/Add', 'Add a new User',
-                        $data, ['Components/form']);
+                        $data, ['Components/form','Admin/index', 'Components/table']);
                 }
                 break;
             case 'View':
@@ -206,14 +206,14 @@ class Admin extends Controller
                     if(count($err) == 0) {
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
                                     [$model->putAnnouncement($valid),$valid,$err,$_FILES,'types'=>$model->getTypes()],
-                                    ['Components/form']);
+                                    ['Components/form','Components/table']);
                     } else {
                         $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                    ['types'=>$model->getTypes(),'old'=>$_POST,'errors' => $err],['Components/form']);
+                                    ['types'=>$model->getTypes(),'old'=>$_POST,'errors' => $err],['Components/form', 'Components/table']);
                     }
                 } else {
                     $this->view('Admin/Announcements/Add','Add a new Announcement',
-                                ['types'=>$model->getTypes()],['Components/form']);
+                                ['types'=>$model->getTypes()],['Components/form', 'Components/table']);
                 }
                 break;
             case 'Edit':
@@ -330,6 +330,17 @@ class Admin extends Controller
 
                     $valid['pinned'] = boolval($valid['pinned'] ?? false) ? 1 : 0;
 
+                    if(isset($valid['start_date'])) {
+                        if(isset($valid['expected_end_date'])) {
+                            $start_date = IntlCalendar::fromDateTime($valid['start_date'],null);
+                            $expected_end_date = IntlCalendar::fromDateTime($valid['expected_end_date'],null);
+                            if($start_date->after($expected_end_date)) {
+                                $err['end_before_start'] = 'The expected end date cannot be before the start date';
+                            }
+                        }
+                    }else if(isset($valid['expected_end_date'])) {
+                        $err['end_no_start'] = 'You cannot set an expected end date without a start date';
+                    }
 
                     if(count($err) == 0) {
                         $putProject = $model->putProject($valid);
@@ -340,10 +351,99 @@ class Admin extends Controller
                     }
                     $this->view('Admin/Projects/Add','Add a new Project',
                                 ['errors' => $err,
-                                'status' => $model->getStatus()],['Components/form']);
+                                'status' => $model->getStatus()],['Components/form', 'Components/table']);
                 } else {
-                    $this->view('Admin/Projects/Add','Add a new Project',['status'=> $model->getStatus()],['Components/form']);
+                    $this->view('Admin/Projects/Add','Add a new Project',['status'=> $model->getStatus()],['Components/form', 'Components/table']);
                 }
+                break;
+            case 'Edit':
+                $data = [];
+                $post_changes = [];
+                $project_changes = [];
+                $current_post = $model->getProject($id,true);
+                if(isset($_POST['Edit'])) {
+                    $post_validator = [
+                        'title' => 'title|u[post]|l[:255]',
+                        'short_description' => 'short_description|l[:1000]',
+                        'content' => 'content',
+                        'pinned'=>'pinned|?|i[0:1]',
+                        'hidden'=>'hidden|?|i[0:1]',
+                    ];
+                    $proj_validator = [
+                        'status'=>'status|i[:]',
+                        'start_date'=>'start_date|dt[:]|?',
+                        'expected_end_date'=>'expected_end_date|dt[:]|?',
+                        'budget'=>'budget|d[0:]|?',
+                        'other_parties'=>'other_parties|?',
+                    ];
+
+                    $post_data = $_POST;
+                    $proj_data = $_POST;
+
+                    $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
+                    $post_data['hidden'] = boolval($post_data['hidden'] ?? false) ? 1 : 0;
+
+                    foreach($post_validator as $field => $_) {
+                        unset($proj_data[$field]);
+                    }
+
+                    foreach($proj_validator as $field => $_) {
+                        unset($post_data[$field]);
+                    }
+
+                    foreach ($current_post[0] as $field => $value) {
+                        if(isset($post_data[$field])) {
+                            if($post_data[$field] != $value) {
+                                $post_changes[] = $post_validator[$field];
+                            } else {
+                                unset($post_data[$field]);
+                            }
+                        }
+                        if(isset($proj_data[$field])) {
+                            if($proj_data[$field] != $value) {
+                                $project_changes[] = $proj_validator[$field];
+                            } else {
+                                unset($proj_data[$field]);
+                            }
+                        }
+                    }
+
+                    [$valid_post,$err_post] = $this->validateInputs($post_data,$post_changes,'Edit');
+                    [$valid_proj,$err_proj] = $this->validateInputs($proj_data,$project_changes,'Edit');
+
+                    if(isset($valid_proj['start_date'])) {
+                        if(isset($valid_proj['expected_end_date'])) {
+                            $start_date = IntlCalendar::fromDateTime($valid_proj['start_date'],null);
+                            $expected_end_date = IntlCalendar::fromDateTime($valid_proj['expected_end_date'],null);
+                            if($start_date->after($expected_end_date)) {
+                                $err_proj['end_before_start'] = 'The expected end date cannot be before the start date';
+                            }
+                        }
+                    }else if(isset($valid_proj['expected_end_date'])) {
+                        $err_proj['end_no_start'] = 'You cannot set an expected end date without a start date';
+                    }
+
+                    $err = array_merge($err_post,$err_proj);
+
+                    if(count($err) == 0) {
+                        if((count($valid_post) + count($valid_proj) > 0) && $model->editProject($id,$valid_post,$valid_proj)) {
+                            $data['edited'] = true;
+                        } else {
+                            $data['edited'] = false;
+                        }
+                    } else {
+                        $data['errors'] = $err;
+                        $data['edited'] = false;
+                    }
+                } else if(isset($_POST['AddPhotos'])) {
+                    $data['AddPhotos'] = $model->addPhotos($id,'photos');
+                } else if(isset($_POST['AddAttach'])) {
+                    $data['AddAttach'] = $model->addAttachments($id,'attachments');
+                }
+                $this->view('Admin/Projects/Edit','Edit Project',array_merge($data,[
+                    'project' => $model->getProject($id,true),
+                    'status' => $model->getStatus()
+                ]),['Components/form','Admin/post','Components/table','Admin/index']);
                 break;
             case 'View':
                 $this->view('Admin/Projects/View','Project',[

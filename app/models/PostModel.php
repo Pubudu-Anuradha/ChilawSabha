@@ -89,11 +89,11 @@
             "post_id='$id'")['result'][0]['count'];
     }
 
-    // public function getAttachCount($id) {
-    //     $id = mysqli_real_escape_string($this->conn,$id);
-    //     return $this->select('post_attachments','count(*) as count',
-    //         "post_id='$id'")['result'][0]['count'];
-    // }
+    public function getAttachCount($id) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        return $this->select('post_attachments','count(*) as count',
+            "post_id='$id'")['result'][0]['count'];
+    }
 
     public function addPhotos($id,$name = 'photos') {
         $id = mysqli_real_escape_string($this->conn,$id);
