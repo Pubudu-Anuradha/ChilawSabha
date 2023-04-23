@@ -7,7 +7,7 @@
     </h1>
     <div class="btn-column">
         <a href="<?=URLROOT . '/Admin/Projects'?>" class="btn view bg-blue">Go to Projects</a>
-        <a href="<?=URLROOT . '/Posts/Project' . $project['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <a href="<?=URLROOT . '/Posts/Project/' . $project['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
         <a href="<?= URLROOT. '/Admin/Projects/View/' . $project['post_id'] ?>" class="btn view bg-blue">Go to View Mode</a>
     </div>
     <hr>

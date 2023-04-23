@@ -420,7 +420,15 @@ class Admin extends Controller
                             }
                         }
                     }else if(isset($valid_proj['expected_end_date'])) {
-                        $err_proj['end_no_start'] = 'You cannot set an expected end date without a start date';
+                        if(isset($current_post[0]['start_date'])) {
+                            $start_date = IntlCalendar::fromDateTime($current_post[0]['start_date'],null);
+                            $expected_end_date = IntlCalendar::fromDateTime($valid_proj['expected_end_date'],null);
+                            if($start_date->after($expected_end_date)) {
+                                $err_proj['end_before_start'] = 'The expected end date cannot be before the start date';
+                            }
+                        } else {
+                            $err_proj['end_no_start'] = 'You cannot set an expected end date without a start date';
+                        }
                     }
 
                     $err = array_merge($err_post,$err_proj);

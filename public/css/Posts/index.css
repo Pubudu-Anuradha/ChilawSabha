@@ -42,7 +42,7 @@
 }
 
 .title {
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--black);
 }
 
@@ -132,7 +132,7 @@ h4 {
 }
 
 .attachments>a::before {
-  content: "🗎";
+  content: "📥";
 }
 
 .btn {
@@ -179,4 +179,76 @@ p {
 
 *::before {
   margin-right: .5rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.content-truncated-proj {
+  margin: 1.5rem 0;
+}
+
+.money {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.money::before {
+  content: "Rs.";
+}
+
+.budget::before {
+  content: "💵";
+}
+
+.Ongoing,.Completed,.Planned {
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--black);
+  border-radius: .5rem;
+  padding: .5rem;
+}
+
+.status {
+  border-radius: .5rem;
+  padding: .5rem;
+}
+
+.status::before {
+  content: "Status :";
+}
+
+.Ongoing {
+  background-color: var(--green);
+}
+
+.Completed {
+  background-color: var(--yellow);
+}
+
+.Planned {
+  background-color: var(--blue);
+}
+
+.centered {
+  justify-content: space-evenly;
+}
+
+.other {
+  margin: 1rem 4rem;
+  background-color: #eeeeee;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.other > p {
+  margin: 1rem 0;
+}
+
+@media screen and (max-width: 768px) {
+  summary {
+    margin: 1rem 0;
+  }
+  .other {
+    margin: 1rem 0;
+  }
 }

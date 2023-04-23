@@ -15,7 +15,7 @@ class Posts extends Controller{
     {
         $model = $this->model('AnnouncementModel');
         $announcement = $model->getAnnouncement($id);
-        $this->view('Posts/announcement',$announcement['title'] ?? 'Not found',[
+        $this->view('Posts/announcement',$announcement[0]['title'] ?? 'Not found',[
             'ann' => $announcement, 'types' => $model->getTypes()
         ],['posts','Posts/index','Components/slideshow']);
     }
@@ -29,9 +29,18 @@ class Posts extends Controller{
     // TODO: Projects
     public function Projects()
     {
+        $model = $this->model('ProjectModel');
+        $this->view('Posts/projects','Projects',[
+            'projects' => $model->getProjects(),'status' => $model->getStatus()
+        ],['posts','Posts/index']);
     }
     public function Project($id)
     {
+        $model = $this->model('ProjectModel');
+        $project = $model->getProject($id);
+        $this->view('Posts/project',$project[0]['title'] ?? 'Not found',[
+            'project' => $project, 'status' => $model->getStatus()
+        ],['posts','Posts/index','Components/slideshow']);
     }
     // TODO: Events
     public function Events()

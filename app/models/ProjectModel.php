@@ -50,13 +50,14 @@ class ProjectModel extends PostModel{
         $id = mysqli_real_escape_string($this->conn, $id);
         $project = $this->select(
             // 'post p join projects a on p.post_id=a.post_id',
-            'post p join projects a join users u
-             on p.post_id=a.post_id and u.user_id=p.posted_by',
+            'post p join projects a join project_status ps join users u
+             on p.post_id=a.post_id and ps.status_id=a.status and u.user_id=p.posted_by',
             'p.post_id as post_id,
              p.title as title,
              p.short_description as short_description,
              p.content as content,
-             a.status as status,
+             ps.project_status as status,
+             a.status as status_id,
              p.pinned as pinned,
              p.hidden as hidden,
              p.views as views,
