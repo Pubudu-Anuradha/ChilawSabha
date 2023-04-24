@@ -37,6 +37,17 @@ $warn = function($message,$err_name,$_field = false) use(&$errors) {
                 $warn("That user has been disabled",'disabled');
                 $warn("We unfortunately do not support the use of emails longer than 255 characters",
                     'max_len','email');
+
+                    
+                $msg = NULL;
+                if(!empty($data['change-success'])){
+                    $msg = $data['change-success'];
+            ?>
+                    <span class="success-msg" style="display: flex; justify-content: center">
+                        <?= $msg ?>
+                    </span>
+            <?php
+                }
             ?>
             <div class="field">
                 <label for="email">Email</label>

@@ -3,45 +3,54 @@
 class Text
 {
     public static function text(
-        $title, $name, $id, $placeholder, $class = null, $required = true, $value = null, $type = null,
-        $maxlength = null, $minlength = null, $pattern = null, $readonly = null, $spellcheck = null, $autocomplete = null, $disabled = null
-    ) {?>
+        $title,$name, $id , $class = null,$required=true,$value=NULL,$placeholder=NULL,$type=NULL, 
+        $maxlength=NULL, $minlength=NULL, $pattern=NULL, $readonly=NULL, $spellcheck=NULL, $autocomplete=false, $disabled=NULL, $msg=NULL
+    ) { 
+    ?>
     <div class="input-field">
         <label for="<?=$id?>">
             <?=$title?>
         </label>
         <div class="input-wrapper">
+    <?php
+        if($msg){
+    ?>
+            <span class="err-msg">
+                <?= $msg ?>
+            </span>
+        <?php
+        }
+        ?>
             <input type="<?=$type ? $type : 'text'?>"
-                name="<?=$name?>"
-                id="<?=$id?>"
-                <?=$class ? "class=\"$class\"" : ''?>
-                <?=$value ? "value=\"$value\"" : ''?>
-                <?="placeholder=\"$placeholder\""?>
-                <?=$maxlength ? "maxlength=\"$maxlength\"" : ''?>
-                <?=$minlength ? "minlength=\"$minlength\"" : ''?>
-                <?=$pattern ? "pattern=\"$pattern\"" : ''?>
-                <?=$readonly ? "readonly=\"$readonly\"" : ''?>
-                <?=$spellcheck ? "spellcheck=\"$spellcheck\"" : ''?>
-                <?=$autocomplete ? "autocomplete=\"$autocomplete\"" : ''?>
-                <?=$required ? "required" : ''?>
-                <?=$disabled ? "disabled" : ''?>
-            />
-            <span></span>
+                name="<?= $name ?>"
+                id="<?= $id ?>"
+                <?= $class ? "class=\"$class\"" : '' ?>
+                <?= $value ? "value=\"$value\"" : '' ?>
+                <?= $placeholder ? "placeholder=\"$placeholder\"" : '' ?>
+                <?= $maxlength ? "maxlength=\"$maxlength\"" : '' ?>
+                <?= $minlength ? "minlength=\"$minlength\"" : '' ?>
+                <?= $pattern ? "pattern=\"$pattern\"" : '' ?>
+                <?= $readonly ? "readonly=\"$readonly\"" : '' ?>
+                <?= $spellcheck ? "spellcheck=\"$spellcheck\"" : '' ?>
+                <?= $autocomplete ? "autocomplete=\"$autocomplete\"" : '' ?>
+                <?= $required ? "required" : '' ?>
+                <?= $disabled ? "disabled" : '' ?>
+            >
         </div>
     </div>
     <?php
     }
 
     public static function password(
-        $title, $name, $id, $placeholder,$value = null, $class = null, $pattern = null, $autocomplete = null
-    ) {
-        Text::text($title, $name, $id, $placeholder, $class, true, $value, 'password', 255, 5, $pattern, null, null, $autocomplete, null);
+        $title,$name, $id , $class = null,$required=True,$placeholder=NULL,$pattern=NULL, $autocomplete=false , $disabled=false, $msg=NULL,$value=NULL
+    ) { 
+        Text::text($title,$name,$id,$class,$required,$value,$placeholder,'password',15,8,$pattern,NULL,NULL,$autocomplete,$disabled, $msg);
     }
 
     public static function email(
-        $title, $name, $id, $placeholder,$value = null, $class = null, $readonly = null
-    ) {
-        Text::text($title, $name, $id, $placeholder, $class, true, $value, 'email', 255, 5, $readonly, null, null, null);
+        $title,$name, $id, $class = null,$required = NULL, $value= null,$placeholder=NULL,$pattern=NULL,$readonly=NULL,$disabled=false,$msg=NULL
+    ) { 
+        Text::text($title,$name,$id,$class,$required,$value, $placeholder,'email',100,5,$pattern, $readonly,NULL,NULL, $disabled,$msg);
     }
 
     public static function textarea(

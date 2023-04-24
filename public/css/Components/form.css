@@ -21,21 +21,50 @@ textarea {
   box-sizing: content-box;
 }
 
-.input-field label {
+.input-field label,
+.input-field-submit label {
   margin: auto 0;
   text-align: left;
+  vertical-align: middle;
 }
 
 .input-field {
   display: grid;
   grid-template-columns: 20fr 50fr 2fr;
-  margin: 0.5rem;
   padding: 0.5rem;
+}
+
+.input-field-submit {
+  display: grid;
+  grid-template-columns: 50fr 20fr 2fr;
+  padding: 0.5rem;
+}
+
+.reset-input-field{
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: auto 1rem;
+}
+
+.input-wrapper {
+  box-sizing: border-box;
+  margin: auto 1rem;
+}
+
+#reset-code{
+  border-radius: 1rem 1rem 0 0;
+  outline: none;
+}
+
+#reset-code-btn,
+#authenticate-code,
+#authenticated-code {
+  border-radius: 0 0 1rem 1rem;
 }
 
 .input-wrapper input:not([type="checkbox"]):not([type="submit"]):not([type="radio"]):not([type="file"]):not([type="date"]):not([type="datetime-local"]):not([type="number"]):not([type="tel"]):not([type="search"]):not([type="time"]),
 .input-wrapper select,
-.input-wrapper textarea {
+.input-wrapper textarea{
   width: calc(100% - 2rem);
 }
 
@@ -114,6 +143,19 @@ input[type="submit"] {
   width: max-content;
 }
 
+#reset-code-btn,
+#authenticate-code, 
+#authenticated-code,
+#reset-code{
+  width: calc(100% - 0.5rem);
+  box-sizing: border-box;
+}
+
+#authenticated-code{
+  background-color: var(--green);
+  color: var(--bgcolor);
+}
+
 .submitButton>input:hover {
   transform: scale(1.1);
   cursor: pointer;
@@ -123,12 +165,13 @@ input+span {
   display: flex;
   position: relative;
   justify-content: center;
+  align-items: center;
   padding: 0.2rem;
 }
 
 .input-wrapper {
   display: grid;
-  grid-template-columns: auto fit-content(5%);
+  grid-template-columns: 1fr;
   box-sizing: border-box;
 }
 
@@ -140,6 +183,10 @@ input+span {
 input:invalid {
   border-bottom: 2px solid var(--red);
   box-shadow: 4px 2px 5px 0px var(--grey);
+}
+
+input:valid {
+  box-shadow: 4px 4px 5px 0px var(--grey);
 }
 
 input:invalid+span::after {
@@ -219,8 +266,17 @@ textarea {
     font-size: 1rem;
   }
 
-  .input-field {
+  .input-field,
+  .input-field-submit {
     display: flex;
     flex-direction: column;
+  }
+
+  .pw-reset-title h1{
+    text-align: center;
+  }
+
+  #submit-btn-id{
+    margin: 1rem auto;
   }
 }
