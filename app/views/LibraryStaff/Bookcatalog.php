@@ -9,7 +9,7 @@
         <div class="title">
             <?php $page_title = "BOOK CATALOGUE";
             echo '<h2>' . $page_title . '</h2>';
-            ?>  
+            ?>
             <input type="button" onclick="generate('#bookCatalog','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
     </div>
@@ -28,13 +28,13 @@
             $table['result'],'bookCatalog',
             actions:[
                 'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white',['#']],
-                'Lost'=>[['#'],'btn lost bg-red white',['openModal(%s)','accession_no']],
-                'Delist'=>[[URLROOT.'/LibraryStaff/Delist/%s','accession_no'],'btn delist bg-orange white',['#']],
+                'Lost'=>[['#'],'btn lost bg-red white',["openModal(%s,'lost_description')",'accession_no']],
+                'Delist'=>[['#'],'btn delist bg-orange white',["openModal(%s,'delist_description')",'accession_no']],
             ],empty:$table['nodata']
-    
-        );?>
-        <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'accession_no');?>
 
+        );?>
+        <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'lost_accession_no');?>
+        <?php Modal::Modal(textarea:true, title:"Add Description",name:'delist_description',id:'delist_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'delist_accession_no');?>
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
 
@@ -44,8 +44,11 @@
 
 <script>
 
+    expandSideBar("sub-items-serv","see-more-bk");
+    var openedModal;
+
     function generate(id,title,num_of_cloumns) {
-        
+
         var doc = new jsPDF('p', 'pt', 'a4');
 
         var text = title;
@@ -84,22 +87,20 @@
         doc.save(title.concat('.pdf'));
     }
 
-        var modal = document.getElementById("myModal");
-        var input = document.getElementById("accession_no");
-
         function closeModal(){
-            modal.style.display = "none";
+            openedModal.style.display = "none";
         }
-        function openModal(id){
+        function openModal(id,modal){
             event.preventDefault();
-            input.value = id;
-            modal.style.display = "block";
-        }
+            openedModal = document.getElementById(modal);
+            openedModal.querySelector('input[type="number"]').value = id;
+            openedModal.style.display = "block";
 
-        window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+            window.onclick = function(event) {
+              if (event.target == openedModal) {
+                  openedModal.style.display = "none";
+              }
+            }
         }
 
 

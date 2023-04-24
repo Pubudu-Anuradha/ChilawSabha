@@ -1,6 +1,6 @@
 <div class="content">
     <div class="page">
-        <?php 
+        <?php
             $books = $data['books']['result'][0] ?? null;
             $errors = $data['errors'] ?? false;
         ?>
@@ -40,6 +40,12 @@
                     <?php Other::number('No of Pages','pages','pages',placeholder:'Insert No of Pages', min:1,value:$books['pages'] ?? null);?>
                     <?php Time::date('Recieved Date','recieved_date','recieved_date',max:Date("Y-m-d"),value:$books['recieved_date'] ?? null);?>
                     <?php Text::text('Recieved Method','recieved_method','recieved_method',placeholder:'Insert Recieved Method',maxlength:255,value:$books['recieved_method'] ?? null);?>
+                    <div class="input-field">
+                        <label for="mark_damaged">Mark Damaged</label>
+                        <div class="input-wrapper">
+                            <input type="checkbox" name="mark_damaged" id="mark_damaged" onclick="disablefields()" style="height:1.2rem;aspect-ratio:1/1;">
+                        </div>
+                    </div>
                     <?php Other::submit('Edit','edit',value:'Save Changes');?>
 
                 </form>
@@ -49,3 +55,22 @@
         <?php endif;?>
     </div>
 </div>
+
+<script>
+
+    //disable field when checkbox clicked
+    function disablefields(){
+        var checkbox = document.getElementById('mark_damaged');
+        var fields = document.getElementsByTagName('input');
+        for(var i=0 ; i<fields.length;i++){
+            if (fields[i].type == "text" || fields[i].type == "number" || fields[i].type == "date" ) {
+                if (checkbox.checked == true) {
+                    fields[i].disabled = true;
+                } else {
+                    fields[i].disabled = false;
+                }
+            }
+        }
+    }
+
+</script>

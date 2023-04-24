@@ -10,7 +10,6 @@ class LibraryStaff extends Controller
     public function index()
     {
         $model = $this->model('BookModel');
-
         if(isset($_POST['search-btn'])){
           $search = $_POST['search'];
           preg_match('/\d+/',$search,$match);
@@ -19,6 +18,126 @@ class LibraryStaff extends Controller
             $searchKey = $search;
           }
           $this->view('LibraryStaff/index','Chilaw Pradeshiya Sabha',['userStat' => $model->getUserDetails($searchKey)], styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+        }
+
+        else if(isset($_POST['confirm'])){
+            //to check if user searched before
+            $search = $_POST['search'];
+            preg_match('/\d+/', $search, $match);
+            $searchKey = $match[0] ?? null;
+            if ($searchKey == null) {
+                $searchKey = $search;
+            }
+
+            $userStat = $model->getUserDetails($searchKey);
+            // var_dump($_POST);
+
+            //for lending
+            if(!isset($userStat['result'][0]['due_date']) || isset($userStat['result'][0]['recieved_date'])){
+
+                //get member ID
+                $memberID = $userStat['result'][0]['member_id'];
+                $_POST['memberID'] = $memberID;
+                //to get bookIDs of books
+                preg_match('/\d+/', $_POST['acc1'], $matchacc1);
+                $acc1 = $matchacc1[0] ?? null;
+                if($acc1){
+                    $acc1BookId = $model->getBookbyID($acc1)['result'][0]['book_id'];
+                    $_POST['acc1BookId'] = $acc1BookId;
+                }
+
+                preg_match('/\d+/', $_POST['acc2'], $matchacc2);
+                $acc2 = $matchacc2[0] ?? null;
+                if($acc2){
+                    $acc2BookId = $model->getBookbyID($acc2)['result'][0]['book_id'];
+                    $_POST['acc2BookId'] = $acc2BookId;
+                }
+
+                $error = false;
+                [$valid, $err] = $this->validateInputs($_POST, [
+                        'memberID|i[0:]',
+                        'acc1BookId|i[0:]',
+                        'acc2BookId|i[0:]',
+                        'search-btn|?',
+                        'acc1|l[:150]',
+                        'acc2|l[:150]',
+                        'search|l[:150]|?',
+                    ], 'confirm');
+                    $data['errors'] = $err;
+                    if(count($err) == 0){
+                            $result = $model->lendBook($_POST['memberID'], $_POST['acc1BookId'], $_POST['acc2BookId']);
+                            if($result){
+                                if ($result[0]['error']==true || $result[1]['error']==true) {
+                                    $_POST['memberID'] = null;
+                                    $_POST['acc1BookId'] = null;
+                                    $_POST['acc2BookId'] = null;
+                                    $error = true;
+                                }
+                            }
+                    }
+                $this->view('LibraryStaff/index', 'Chilaw Pradeshiya Sabha', ['userStat' => $model->getUserDetails($searchKey), 'lend_error' => $error], styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+            }
+
+            //for extending and recieving
+            else if(isset($userStat['result'][0]['due_date']) && !isset($userStat['result'][0]['recieved_date'])){
+                //extend function
+
+                if(!isset($_POST['recieveFlag'])){
+                    $model->extendDueDate($userStat['result']);
+                }
+                //recieve related funtion
+                else if(isset($_POST['recieveFlag'])){
+                    $_POST['recievedcheck1'] = boolval($_POST['recievedcheck1'] ?? false) ? 1 : 0;
+                    $_POST['recievedcheck2'] = boolval($_POST['recievedcheck2'] ?? false) ? 1 : 0;
+                    $_POST['damagedcheck1'] = boolval($_POST['damagedcheck1'] ?? false) ? 1 : 0;
+                    $_POST['damagedcheck2'] = boolval($_POST['damagedcheck2'] ?? false) ? 1 : 0;
+                    $_POST['recieveFlag'] = intval($_POST['recieveFlag']);
+                    $_POST['memberID'] = $userStat['result'][0]['member_id'];
+
+                    $acc1BookId = $model->getBookbyID(intval($userStat['result'][0]['accession_no']))['result'][0]['book_id'];
+                    $_POST['acc1BookId'] = $acc1BookId;
+                    $acc2BookId = $model->getBookbyID(intval($userStat['result'][1]['accession_no']))['result'][0]['book_id'];
+                    $_POST['acc2BookId'] = $acc2BookId;
+
+
+                    $error = false;
+                    [$valid, $err] = $this->validateInputs($_POST, [
+                        'recievedcheck1|i[0:1]',
+                        'recievedcheck2|i[0:1]',
+                        'damagedcheck1|i[0:1]',
+                        'damagedcheck2|i[0:1]',
+                        'search-btn|?',
+                        'memberID|i[0:]',
+                        'acc1|?',
+                        'acc2|?',
+                        'acc1BookId|i[0:]',
+                        'acc2BookId|i[0:]',
+                        'recieveFlag|i[0:]',
+                        'search|l[:150]|?',
+                    ], 'confirm');
+                    $data['errors'] = $err;
+                    if(count($err) == 0){
+
+                        $result = $model->recieveBook($valid);
+                        if($result){
+                            if($result[0]['error']==true || $result[1]['error']==true){
+                                $_POST['memberID'] = null;
+                                $_POST['acc1BookId'] = null;
+                                $_POST['acc2BookId'] = null;
+                                $_POST['recieveFlag'] = null;
+                                $error=true;
+                            }
+                        }
+                        $this->view('LibraryStaff/index', 'Chilaw Pradeshiya Sabha',
+                        ['userStat' => $model->getUserDetails($searchKey),
+                        'recieveError' => $error],
+                        styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+                    }
+                }
+
+                $this->view('LibraryStaff/index', 'Chilaw Pradeshiya Sabha', ['userStat' => $model->getUserDetails($searchKey)], styles:['Components/table', 'Components/form', 'Components/modal', 'LibraryStaff/index']);
+
+            }
         }
 
         else{
@@ -31,6 +150,7 @@ class LibraryStaff extends Controller
                     if(isset($response['result'][0])){
                         $this->returnJSON([
                             $response['result'][0]['title'],
+                            $response['result'][0]['state'],
                         ]);
                     }else{
                         $this->returnJSON([
@@ -43,6 +163,28 @@ class LibraryStaff extends Controller
                     $response = $model->searchUser($reqJSON['value']);
                     $this->returnJSON([
                         $response['result'],
+                    ]);
+                    die();
+                }
+                else if($reqJSON && ($reqJSON['searchID'] == 'countPlanToRead')){
+                    $response = $model->countPlanToRead($reqJSON['value1'],$reqJSON['value2']);
+                    $this->returnJSON([
+                        $response,
+                    ]);
+                    die();
+                }
+                else if($reqJSON && ($reqJSON['searchID'] == 'extendedCount')){
+                    $response['extendCount'] = $model->getExtendedCount($reqJSON['value1'],$reqJSON['value2']);
+                    $response['planToReadCount']  = $model->countPlanToRead($reqJSON['value1'],$reqJSON['value2']);
+                    $this->returnJSON([
+                        $response,
+                    ]);
+                    die();
+                }
+                else if($reqJSON && ($reqJSON['searchID'] == 'fineInfo')){
+                    $response = $model->getFineDetails();
+                    $this->returnJSON([
+                        $response,
                     ]);
                     die();
                 }
@@ -65,7 +207,13 @@ class LibraryStaff extends Controller
         if ($reqJSON) {
             $reqJSON = json_decode($reqJSON, associative:true);
             if ($reqJSON) {
-                $response = $model->getBorrowStat($reqJSON);
+                if(isset($reqJSON['range'])){
+                    $response = $model->getBorrowStat($reqJSON);
+                }
+                else if(isset($reqJSON['fromDate']) && isset($reqJSON['toDate'])){
+                    $response = $model->getCustomBorrowStat($reqJSON);
+                }
+
                 $this->returnJSON([
                     $response['result'],
                 ]);
@@ -75,47 +223,70 @@ class LibraryStaff extends Controller
                     'error' => 'Error Parsing JSON',
                 ]);
             }
-
         }
 
-        $this->view('LibraryStaff/Analytics', styles:['LibraryStaff/index', 'LibraryStaff/analytics', 'Components/form']);
+        $this->view('LibraryStaff/Analytics', styles:['LibraryStaff/index', 'LibraryStaff/analytics','Components/modal','Components/table']);
     }
 
     public function bookcatalog()
     {
         $model = $this->model('BookModel');
 
-        if(isset($_GET['lost_description'])){
-        // var_dump($_GET);
-        }
-
         if (isset($_GET['confirm'])) {
             $error = false;
-            if ($_GET['lost_description'] != null && $_GET['accession_no'] != null) {
+            if ($_GET['lost_description'] != null && $_GET['lost_accession_no'] != null) {
+              $_GET['lost_accession_no'] = intval($_GET['lost_accession_no']);
                 [$valid, $err] = $this->validateInputs($_GET, [
-                    'accession_no|i[0:]',
+                    'lost_accession_no|i[0:]',
                     'lost_description|l[:255]',
                     'url',
                     'search|?',
                     'category_name',
                     'page|?',
-                    'size'
+                    'size',
+                    'delist_description|?',
+                    'delist_accession_no|?'
                 ], 'confirm');
-                // var_dump($err);
                 $data['errors'] = $err;
                 if(count($err) == 0){
-                    if ($model->changeState($_GET['accession_no'], 4, $valid) == false) {
-                        $_GET['accession_no'] = null;
+                    if ($model->changeState($_GET['lost_accession_no'], 4, $valid) == false) {
+                        $_GET['lost_accession_no'] = null;
                         $_GET['lost_description'] = null;
                         $error = true;
                     }
                 }
-
+            }
+            else if ($_GET['delist_description'] != null && $_GET['delist_accession_no'] != null) {
+              $_GET['delist_accession_no'] = intval($_GET['delist_accession_no']);
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'delist_accession_no|i[0:]',
+                    'delist_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'category_name',
+                    'page|?',
+                    'size',
+                    'lost_description|?',
+                    'lost_accession_no|?'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['delist_accession_no'], 3, $valid) == false) {
+                        $_GET['delist_accession_no'] = null;
+                        $_GET['delist_description'] = null;
+                        $error = true;
+                    }
+                }
             }
             $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', [
-                'Lost' => ($_GET['lost_description'] != null && $_GET['accession_no'] != null) ?
-                $model->getBookbyID($_GET['accession_no']) : false,
+                'Lost' => ($_GET['lost_description'] != null && $_GET['lost_accession_no'] != null) ?
+                $model->getBookbyID($_GET['lost_accession_no']) : false,
                 'lost_error' => $error,
+
+                'Delist' => ($_GET['delist_description'] != null && $_GET['delist_accession_no'] != null) ?
+                $model->getBookbyID($_GET['delist_accession_no']) : false,
+                'delist_error' => $error,
+
                 'Books' => $model->getBooks(),
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         } else {
@@ -126,28 +297,126 @@ class LibraryStaff extends Controller
 
     public function bookrequest()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Bookrequest', styles:['LibraryStaff/index', 'Components/table']);
+        $model = $this->model('BookModel');
+
+        //if rejected
+        if(isset($_GET['confirm'])){
+            $error = false;
+                $_GET['request_id'] = intval($_GET['confirm']);
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'request_id|i[0:]',
+                    'url',
+                    'search|?',
+                    'page|?',
+                    'size',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeBookRequestState($_GET['request_id'], 3) == false) {
+                        $_GET['request_id'] = null;
+                        $error = true;
+                    }
+                }
+
+            $this->view('LibraryStaff/Bookrequest', 'Book Requests', [
+                'book_request_error' => $error,
+                'BookRequest' => $model->getBookRequests(),
+            ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
+        else{
+            $this->view('LibraryStaff/Bookrequest','Book Requests',['BookRequest' => $model->getBookRequests()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
+
     }
 
     public function lostbooks()
     {
         $model = $this->model('BookModel');
 
-        $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4])], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        if(isset($_GET['confirm'])){
+            $error = false;
+            if ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) {
+                $_GET['type'] = 'found';
+                $_GET['found_accession_no'] = intval($_GET['found_accession_no']);
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'found_accession_no|i[0:]',
+                    'found_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'category_name',
+                    'page|?',
+                    'size',
+                    'type|l[5:5]'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['found_accession_no'], 1, $valid) == false) {
+                        $_GET['found_accession_no'] = null;
+                        $_GET['found_description'] = null;
+                        $error = true;
+                    }
+                }
+            }
 
+            $this->view('LibraryStaff/Lostbooks', 'Lost Books', [
+                'Lost' => ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) ?
+                $model->getBookbyID($_GET['found_accession_no']) : false,
+                'found_error' => $error,
+                'Books' => $model->getBooks([4]),
+            ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
+        else{
+            $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4])], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
     }
 
     public function delistedbooks()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Delistedbooks', styles:['LibraryStaff/index', 'Components/table']);
+        $model = $this->model('BookModel');
+
+        $this->view('LibraryStaff/Delistedbooks','De-Listed Books', ['Books' => $model->getBooks([3])], styles:['LibraryStaff/index', 'Components/table','posts']);
     }
 
     public function damagedbooks()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Damagedbooks', styles:['LibraryStaff/index', 'Components/table']);
+        $model = $this->model('BookModel');
+
+        if(isset($_GET['confirm'])){
+            $error = false;
+            if ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) {
+                $_GET['type'] = 'conditioned';
+                $_GET['recondition_accession_no'] = intval($_GET['recondition_accession_no']);
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'recondition_accession_no|i[0:]',
+                    'recondition_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'category_name',
+                    'page|?',
+                    'size',
+                    'type|l[11:11]'
+                ], 'confirm');
+                var_dump($err);
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['recondition_accession_no'], 1, $valid) == false) {
+                        $_GET['recondition_accession_no'] = null;
+                        $_GET['recondition_description'] = null;
+                        $error = true;
+                    }
+                }
+            }
+
+            $this->view('LibraryStaff/Damagedbooks', 'Damaged Books', [
+                'Lost' => ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) ?
+                $model->getBookbyID($_GET['recondition_accession_no']) : false,
+                'recondition_error' => $error,
+                'Books' => $model->getBooks([5]),
+            ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
+        else{
+          $this->view('LibraryStaff/Damagedbooks','Damaged Books', ['Books' => $model->getBooks([5])], styles:['LibraryStaff/index', 'Components/table','posts', 'Components/modal']);
+        }
     }
 
     public function users()
@@ -168,15 +437,30 @@ class LibraryStaff extends Controller
         $this->view('LibraryStaff/Addusers', styles:['LibraryStaff/index', 'Components/form']);
     }
 
-    public function addbooks()
+    public function addbooks($requestID=null)
     {
         $model = $this->model('BookModel');
 
         $data = ['categories' => $model->get_categories()['result'],'subcategories' => $model->get_sub_categories()['result']];
 
+        if($requestID){
+            $data['reqInfo'] =  $model->getBookRequestByID($requestID);
+            $reqEmail = $data['reqInfo']['result'][0]['email'];
+            $reqTitle = $data['reqInfo']['result'][0]['title'];
+        }
+
         if (isset($_POST['Add'])) {
-            //select only return subcategory id.
-            $_POST['category_code'] = $model->getCategoryCode($_POST['sub_category_code'])['result'][0]["category_id"];
+
+            //if sub catergory selected
+            if(is_numeric($_POST['category'])){
+              $_POST['category_code'] = $model->getCategoryCode($_POST['category'],'Sub')['result'][0]["category_id"];
+              $_POST['sub_category_code'] = $_POST['category'];
+              unset($_POST['category']);
+            }
+            else{
+              $_POST['category_code'] = $model->getCategoryCode($_POST['category'],'Main')['result'][0]["category_id"];
+              unset($_POST['category']);
+            }
 
             [$valid, $err] = $this->validateInputs($_POST, [
                     'title|l[:255]',
@@ -185,7 +469,7 @@ class LibraryStaff extends Controller
                     'place_of_publication|l[:255]',
                     'date_of_publication',
                     'category_code',
-                    'sub_category_code',
+                    'sub_category_code|?',
                     'accession_no|i[0:]',
                     'price|d[0:]',
                     'pages|i[1:]',
@@ -198,6 +482,12 @@ class LibraryStaff extends Controller
 
             $data['old'] = $_POST;
             $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addbook($valid)], $data);
+
+            //to send a mail if this is a book requested by an user
+            if($data['Add']['success'] == true && $reqEmail && $reqTitle){
+                $model->changeBookRequestState($requestID, 2);
+                Email::send($reqEmail,'Book Request Added',"Book Request for Book Titled $reqTitle has been added to the library.");
+            }
             $this->view('LibraryStaff/Addbooks', 'Add New Book', $data, ['LibraryStaff/index', 'Components/form']);
         } else {
             $this->view('LibraryStaff/Addbooks', 'Add New Book',$data, styles:['LibraryStaff/index', 'Components/form']);
@@ -209,6 +499,12 @@ class LibraryStaff extends Controller
         $model = $this->model('BookModel');
 
         if(isset($_POST['Edit'])){
+            //if mark damage ticked
+          if(isset($_POST['mark_damaged'])){
+            $model->changeState($id,5,["damaged_description" =>"Damged in Library"]);
+            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+          }
+          else{
             [$valid, $err] = $this->validateInputs($_POST, [
                         'title|l[:255]',
                         'author|l[:255]',
@@ -219,11 +515,12 @@ class LibraryStaff extends Controller
                         'pages|i[1:]',
                         'recieved_date',
                         'isbn|l[:50]',
-                        'recieved_method|l[:255]',
+                        'recieved_method|l[:255]'
             ], 'Edit');
+              $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
+              'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
+          }
 
-            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
-            'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
         }else{
             $this->view('LibraryStaff/Editbooks', 'Edit Book', ['books' => $id != null ? $model->getBookbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
         }
@@ -235,19 +532,20 @@ class LibraryStaff extends Controller
         // TODO: REDO USING COMPONENTS
         $this->view('LibraryStaff/Editusers', styles:['LibraryStaff/index', 'Components/form']);
     }
-        
+
     public function booktransactions()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Booktransactions', styles:['LibraryStaff/index']);
+        $model = $this->model('BookModel');
+        $this->view('LibraryStaff/Booktransactions', 'Book Transactions', ['Books' => $model->getBookTransactions()], styles:['LibraryStaff/index', 'Components/table','Components/modal','posts']);
+
     }
-        
+
     public function finance()
     {
         // TODO: REDO USING COMPONENTS
         $this->view('LibraryStaff/Finance', styles:['LibraryStaff/index']);
     }
-        
+
     public function userreport()
     {
         // TODO: REDO USING COMPONENTS

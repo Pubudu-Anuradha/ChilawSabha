@@ -66,12 +66,11 @@
   margin: 0.5rem;
 }
 
-.usr-search form{
+.search-bar{
   display: flex;
-  margin: 0;
 }
 
-.usr-search input{
+.search-bar input{
   width: 100%;
   padding: 0.5rem 2rem;
   border: none;
@@ -80,7 +79,7 @@
   box-shadow: none;
 }
 
-.usr-search button{
+.search-bar button{
   padding: 1rem;
   border-radius: 0 1rem 1rem 0;
   box-shadow: none;
@@ -88,24 +87,24 @@
   background-color: var(--lightblue);
 }
 
-.usr-search button:hover{
+.search-bar button:hover{
   background-color: var(--blue);
   cursor: pointer;
 }
 
-.usr-search input:focus{
+.search-bar input:focus{
   box-shadow: 0px 4px 5px 0px var(--grey);
   background-color: var(--fadedblue);
   border-radius: 0;
   transform: none;
 }
 
-.usr-search input:focus + button{ 
+.search-bar input:focus + button{ 
   box-shadow: 0px 4px 5px 0px var(--grey);
   border-radius: 0;
 }
 
-.usr-search img{
+.search-bar img{
   width: 1rem;
 }
 
