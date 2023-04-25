@@ -2,6 +2,11 @@
 
     <?php
         $table = $data['Books'];
+        $categories = $data['Category']['result'] ?? [];
+        $category_arr = ['All' => "All"];
+        foreach ($categories as $category){
+            $category_arr[$category['category_id']] = $category['category_name'];
+        }
     ?>
     <div class="page">
         <div class="title">
@@ -14,11 +19,7 @@
 
     <?php Pagination::Top('/LibraryStaff/damagedbooks', select_filters:[
         'category_name' => [
-            'Choose by Category', [
-                'All' => "All",
-                'Science' => 'Science',
-                'Geography' => 'Geography',
-            ],
+            'Choose by Category', $category_arr,
         ],
     ]);?>
 

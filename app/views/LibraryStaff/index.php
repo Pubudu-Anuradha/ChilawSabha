@@ -616,19 +616,19 @@ function searchBook(id){
                 }
                 else{
                     book.style.color = 'red';
-                    book . setCustomValidity('Currently Not Available');
-                    book.value = bookVal['value'] + "  " + 'Currently Not Available';
+                    book . setCustomValidity('Book Not Available');
+                    book.value = bookVal['value'] + "  " + 'Book Not Available';
                 }
             }
             else{
                 book.style.color = 'red';
-                book . setCustomValidity('Invalid Accession No');
-                book.value = bookVal['value'] + "  " + 'Invalid Accession No';
+                book . setCustomValidity('Book Not Found');
+                book.value = bookVal['value'] + "  " + 'Book Not Found';
             }
         })
         .catch(err => {
             book.style.color = 'red';
-            book.value = bookVal['value'] + "  " + 'Invalid Accession No';
+            book.value = bookVal['value'] + "  " + 'Book Not Found';
         });
     }
 }

@@ -2,6 +2,17 @@
 
     <?php
         $table = $data['Books'];
+        $transactions = $table['result'];
+        $transaction_num = 0;
+        if(isset($table['result'])):
+            foreach ($transactions as $transaction):
+                if($transaction['recieved_date'] == null && $transaction['recieved_by'] == null):
+                    $transactions[$transaction_num]['recieved_date'] = 'Not Recieved';
+                    $transactions[$transaction_num]['recieved_by'] = 'Not Recieved';
+                endif;
+            $transaction_num = $transaction_num + 1;
+            endforeach;
+        endif;
     ?>
 
     <div class="page">
@@ -16,7 +27,7 @@
         <?php Pagination::Top('/LibraryStaff/booktransactions', select_filters:[
             'type' =>[
               'Borrowed/Recieved', [
-                'borrow' => 'Borrowed',
+                'all' => 'All',
                 'recieve' => 'Recieved'
               ]
             ],
@@ -38,7 +49,7 @@
 
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','borrowed_by'=>'Borrowed By','lent_date'=>'Borrowed Date',
         'lent_by'=>'Lent By','due_date'=>'Due Date','recieved_date'=>'Recieved Date','recieved_by'=>'Recieved By'],
-            $table['result'],'bookTransactions',
+            $transactions,'bookTransactions',
             actions:[],empty:$table['nodata']
 
         );?>
@@ -61,6 +72,8 @@
 </div>
 
 <script>
+
+    expandSideBar("sub-items-analytics", "see-more-an");
 
     var timeframe = document.getElementById('timeframe');
     var getForm = document.getElementById('filter-form');
