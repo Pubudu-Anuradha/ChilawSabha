@@ -449,17 +449,17 @@ class LibraryStaff extends Controller
                         $error = true;
                     }
                 }
-                $this->view('LibraryStaff/Users', 'User Management', ['Disabled' => ($_GET['disable_description'] != null && $_GET['disabled_member_ID'] != null) ?
+                $this->view('LibraryStaff/Users', 'Library User Management', ['Disabled' => ($_GET['disable_description'] != null && $_GET['disabled_member_ID'] != null) ?
                     $model->getUserbyID($_GET['disabled_member_ID']) : false, 'disable_error' => $error, 'Users' => $model->getUsers()],
                     styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
             }
             else{
-                $this->view('LibraryStaff/Users', 'User Management', ['Users' => $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+                $this->view('LibraryStaff/Users', 'Library User Management', ['Users' => $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
             }
         }
         else{
-            $this->view('LibraryStaff/Users','User Management', ['Users'=> $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Users','Library User Management', ['Users'=> $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
     }
 
@@ -494,25 +494,47 @@ class LibraryStaff extends Controller
                     }
                 }
 
-                $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Enabled' => ($_GET['enable_description'] != null && $_GET['enabled_member_ID'] != null) ?
+                $this->view('LibraryStaff/Disabledusers', 'Disabled Library Users', ['Enabled' => ($_GET['enable_description'] != null && $_GET['enabled_member_ID'] != null) ?
                     $model->getUserbyID($_GET['enabled_member_ID']) : false, 'enable_error' => $error, 'Users' => $model->getUsers(2)],
                     styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
             }
             else{
-                $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+                $this->view('LibraryStaff/Disabledusers', 'Disabled Library Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
             }
         }
 
         else{
-            $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Disabledusers', 'Disabled Library Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
     }
 
     public function addusers()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Addusers', styles:['LibraryStaff/index', 'Components/form']);
+        $model = $this->model('LibraryUserManageModel');
+
+        if (isset($_POST['Add'])) {
+
+            $_POST['membership_id'] = intval($_POST['membership_id']);
+
+            [$valid, $err] = $this->validateInputs($_POST, [
+                    'membership_id|i[0:]',
+                    'email|l[:255]|e|u[users]',
+                    'name|l[:255]',
+                    'password|l[5:]',
+                    'address|l[:255]',
+                    'contact_no|l[10:12]',
+                    'nic|l[10:12]',
+                    ], 'Add');
+
+            $data['errors'] = $err;
+
+            $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addLibraryUser($valid)], $data);
+            $this->view('LibraryStaff/Addusers', 'Add New Library User', $data, ['LibraryStaff/index', 'Components/form']);
+        } 
+        else {
+            $this->view('LibraryStaff/Addusers', 'Add New Library User', styles:['LibraryStaff/index', 'Components/form']);
+        }
     }
 
     public function addbooks($requestID=null)
@@ -605,10 +627,27 @@ class LibraryStaff extends Controller
 
     }
 
-    public function editusers()
+    public function editusers($id = null)
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Editusers', styles:['LibraryStaff/index', 'Components/form']);
+        $model = $this->model('LibraryUserManageModel');
+
+        if(isset($_POST['Edit'])){
+
+            $_POST['user_id'] = $model->getUserbyID($id)['result'][0]['user_id'] ?? false;
+
+            [$valid, $err] = $this->validateInputs($_POST, [
+                    'user_id|i[0:]',
+                    'email|l[:255]|e',
+                    'name|l[:255]',
+                    'address|l[:255]',
+                    'contact_no|l[10:12]',
+            ], 'Edit');
+              $this->view('LibraryStaff/Editusers', 'Edit Library User', ['edit' =>  count($err) == 0 ? $model->editLibraryUser($_POST['user_id'], $valid) : null,
+              'Users' => $id != null ? $model->getUserbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
+
+        }else{
+            $this->view('LibraryStaff/Editusers', 'Edit Library User', ['Users' => $id != null ? $model->getUserbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
+        }
     }
 
     public function booktransactions()

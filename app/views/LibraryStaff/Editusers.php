@@ -8,9 +8,9 @@ $errors = $data['errors'] ?? false;
         <h2 class="topic">Edit Library Member</h2>
         <?php if(!is_null($users)): ?>
             <div class="formContainer">
-                <?php if ($data['Edit'] ?? false) {
-                    if (!$data['Edit']['success']) {
-                        echo "Failed To Edit User " . $data['Edit']['errmsg'];
+                <?php if ($data['edit'] ?? false) {
+                    if (!$data['edit']['success']) {
+                        echo "Failed To Edit User " . $data['edit']['errmsg'];
                     } else {
                         echo "Changes saved Successfully";
                     }
@@ -25,15 +25,13 @@ $errors = $data['errors'] ?? false;
                             'contact_no' => 'Contact number',
                         ]);
 
-                        Text::email('User Email', 'email', 'email',required:true,
+                        Text::text('User Name', 'name', 'name', value:$users['name'],
+                                    placeholder:'Enter new user\'s name', maxlength:255);                        
+                        Text::email('User Email', 'email', 'email',required:true, value:$users['email'],
                                     placeholder:'Enter new user\'s email');
-                        Text::text('User Name', 'name', 'name',
-                                    placeholder:'Enter new user\'s name', maxlength:255);
-                        Text::password('Password', 'password', 'password',
-                                    placeholder:'Enter a password');
-                        Text::text('Address', 'address', 'address',
+                        Text::text('Address', 'address', 'address', value:$users['address'],
                                     placeholder:'Enter new user\'s address', maxlength:255);
-                        Text::text('Contact number', 'contact_no', 'contact_no',
+                        Text::text('Contact number', 'contact_no', 'contact_no', value:$users['contact_no'],
                                     placeholder:'+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
                                     pattern:"(\+94\d{9})|0\d{9}");
                         Other::submit('Edit','edit',value:'Save Changes');

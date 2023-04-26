@@ -1,6 +1,5 @@
 <?php
 $errors = $data['errors'] ?? false;
-$old = $data['old'] ?? false;
 ?>
 
 <div class="content">
@@ -28,18 +27,18 @@ $old = $data['old'] ?? false;
 
                     Other::number('Membership ID', 'membership_id', 'membership_id',
                                 placeholder:'Enter new user\'s Membership ID', min:0);
-                    Text::email('User Email', 'email', 'email',required:true,
-                                placeholder:'Enter new user\'s email');
                     Text::text('User Name', 'name', 'name',
                                 placeholder:'Enter new user\'s name', maxlength:255);
-                    Text::password('Password', 'password', 'password',
+                    Text::email('User Email', 'email', 'email',required:true,
+                                placeholder:'Enter new user\'s email');
+                    Text::password('Password', 'password', 'password',autocomplete:'new-password',
                                 placeholder:'Enter a password');
                     Text::text('Address', 'address', 'address',
                                 placeholder:'Enter new user\'s address', maxlength:255);
                     Text::text('Contact number', 'contact_no', 'contact_no',
                                 placeholder:'+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
                                 pattern:"(\+94\d{9})|0\d{9}");
-                    Text::text('NIC', 'nic', 'nic', placeholder:'XXXXXXXXXXXX or XXXXXXXXXV',
+                    Text::text('NIC No', 'nic', 'nic', placeholder:'XXXXXXXXXXXX or XXXXXXXXXV',
                                 maxlength:12,pattern:"(\d{12})|(\d{10}(V|v))");
                     Other::submit('Add','add',value:'Add User');
 

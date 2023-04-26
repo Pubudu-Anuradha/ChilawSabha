@@ -81,4 +81,43 @@ class LibraryUserManageModel extends Model
             return false;  
         }
     }
+
+    public function addLibraryUser($user)
+    {
+        $pass_hash = password_hash($user['password'], PASSWORD_DEFAULT);
+        date_default_timezone_set('Asia/Colombo');
+
+        $res = $this->insert('users',[
+            'email' => $user['email'],
+            'user_type' => 2,
+            'state_id' => 1,
+            'name' => $user['name'],
+            'contact_no' => $user['contact_no'],
+            'address' => $user['address'],
+            'password_hash' => $pass_hash
+        ]);
+
+        if($res){
+            $user_id = $this->select('users','user_id',"email='".$user['email']."'")['result'][0]['user_id'];
+            if(isset($user_id) && !empty($user_id)){
+                return $this->insert('library_member',[
+                    'membership_id' => $user['membership_id'],
+                    'user_id' => $user_id,
+                    'nic' => $user['nic'],
+                    'added_by' => $_SESSION['user_id'],
+                    'added_time' => date("Y-m-d H:i:s")
+                ]);
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public function editLibraryUser($id,$user)
+    {
+        $user_id = mysqli_real_escape_string($this->conn, $id);
+        return $this->update('users',$user,"user_id=$user_id and user_type=2");
+    }
 }

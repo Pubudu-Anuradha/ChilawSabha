@@ -322,7 +322,7 @@ function openModal(id,modal,type,data=null){
                     case 'lend':
                         openedModal = document.getElementById(modal);
 
-                        if(data.length>0 && data[0]['recieved_date'] == null){
+                        if(data.length>0 && data[0]['recieved_date'] == null && data[0]['due_date'] != null){
                             modal = 'errorModal';
                             openedModal = document.getElementById(modal);
                             openedModal.querySelector('p').innerText = "User have Books to Return";
@@ -481,7 +481,7 @@ function openModal(id,modal,type,data=null){
                     case 'extend':
                         openedModal = document.getElementById(modal);
 
-                        if(data.length>0 && data[0]['recieved_date'] != null){
+                        if(data.length>0 && ((data[0]['recieved_date'] != null && data[0]['due_date'] != null) || data[0]['due_date'] == null)){
                             modal = 'errorModal';
                             openedModal = document.getElementById(modal);
                             openedModal.querySelector('p').innerText = "User haven't Borrowed Any Books";
