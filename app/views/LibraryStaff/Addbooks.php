@@ -9,9 +9,9 @@ $reqInfo = $data['reqInfo'] ?? false;
         <div class="formContainer">
             <?php if ($data['Add'] ?? false) {
                 if (!$data['Add']['success']) {
-                    echo "Failed to add book " . $data['Add']['errmsg'];
+                    echo "Failed To Add Book " . $data['Add']['errmsg'];
                 } else {
-                    echo "Added Successfully";
+                    echo "Book Added Successfully";
                 }
             }?>
 
@@ -61,7 +61,7 @@ $reqInfo = $data['reqInfo'] ?? false;
                 </div>
 
                 <?php Other::number('Accession No', 'accession_no', 'accession_no', placeholder:'Insert Accession No', min:0);?>
-                <?php Text::text('ISBN No','isbn','isbn',placeholder:'Insert ISBN No',maxlength:50, value:$reqInfo['result'][0]['isbn'] ?? false);?>
+                <?php Text::text('ISBN No','isbn','isbn',placeholder:'Insert ISBN No',pattern:"(\d{10}|\d{13})",maxlength:50, value:$reqInfo['result'][0]['isbn'] ?? false);?>
                 <?php Other::number('Price','price','price',placeholder:'Insert Book Price',step:0.01,min:0);?>
                 <?php Other::number('No of Pages','pages','pages',placeholder:'Insert No of Pages', min:1);?>
                 <?php Time::date('Recieved Date','recieved_date','recieved_date',max:Date("Y-m-d"));?>

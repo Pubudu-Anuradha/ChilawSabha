@@ -29,8 +29,6 @@
     );?>
 
     <?php Pagination::bottom('filter-form', $data['Books']['page'], $data['Books']['count']);?>
-
-    </div>
 </div>
 
 <script>

@@ -35,7 +35,7 @@
                     <?php Text::text('Publisher','publisher','publisher',placeholder:'Insert Book Publisher',maxlength:255,value:$books['publisher'] ?? null);?>
                     <?php Text::text('Place of Publication','place_of_publication','place_of_publication',placeholder:'Insert Place of Publication',maxlength:255,value:$books['place_of_publication'] ?? null);?>
                     <?php Time::date('Date of Publication','date_of_publication','date_of_publication',max:Date("Y-m-d"),value:$books['date_of_publication'] ?? null);?>
-                    <?php Text::text('ISBN No','isbn','isbn',placeholder:'Insert ISBN No',maxlength:50,value:$books['isbn'] ?? null);?>
+                    <?php Text::text('ISBN No','isbn','isbn',placeholder:'Insert ISBN No',pattern:"(\d{10}|\d{13})",maxlength:50,value:$books['isbn'] ?? null);?>
                     <?php Other::number('Price','price','price',placeholder:'Insert Book Price',step:0.01,min:"0",value:$books['price'] ?? null);?>
                     <?php Other::number('No of Pages','pages','pages',placeholder:'Insert No of Pages', min:1,value:$books['pages'] ?? null);?>
                     <?php Time::date('Recieved Date','recieved_date','recieved_date',max:Date("Y-m-d"),value:$books['recieved_date'] ?? null);?>
@@ -51,12 +51,14 @@
                 </form>
             </div>
         <?php else:?>
-            INVALID BOOK ACCESSION NO
+            ERROR RETRIEVING BOOK INFORMATION
         <?php endif;?>
     </div>
 </div>
 
 <script>
+
+    expandSideBar("sub-items-serv", "see-more-bk");
 
     //disable field when checkbox clicked
     function disablefields(){

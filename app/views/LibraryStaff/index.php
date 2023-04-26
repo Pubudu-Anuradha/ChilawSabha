@@ -330,10 +330,10 @@ function openModal(id,modal,type,data=null){
                         }
                         else{
                             if(acc1.value == ''){
-                                acc1 . setCustomValidity('Please provide Book Accession Number');
+                                acc1 . setCustomValidity('Please Provide Book Accession Number');
                             }
                             if(acc2.value == ''){
-                                acc2 . setCustomValidity('Please provide Book Accession Number');
+                                acc2 . setCustomValidity('Please Provide Book Accession Number');
                             }
                             if(acc1.value == acc2.value){
                                 acc2 . setCustomValidity('Book Accessions are same');

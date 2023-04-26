@@ -421,14 +421,92 @@ class LibraryStaff extends Controller
 
     public function users()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Users', styles:['LibraryStaff/index', 'Components/table']);
+        $model = $this->model('LibraryUserManageModel');
+
+        if (isset($_GET['confirm'])) {
+            $error = false;
+            if ($_GET['disable_description'] != null && $_GET['disabled_member_ID'] != null) {
+              $_GET['disabled_member_ID'] = intval($_GET['disabled_member_ID']);
+              $_GET['member_id'] = $model->getUserbyID($_GET['disabled_member_ID'])['result'][0]['member_id'] ?? false;
+              $_GET['user_id'] = $model->getUserbyID($_GET['disabled_member_ID'])['result'][0]['user_id'] ?? false;
+
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'disabled_member_ID|i[0:]',
+                    'member_id|i[0:]',
+                    'user_id|i[0:]',
+                    'disable_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'page|?',
+                    'size',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['member_id'], 2, $valid) == false) {
+                        $_GET['disabled_member_ID'] = null;
+                        $_GET['member_id'] = null;
+                        $_GET['disable_description'] = null;
+                        $error = true;
+                    }
+                }
+                $this->view('LibraryStaff/Users', 'User Management', ['Disabled' => ($_GET['disable_description'] != null && $_GET['disabled_member_ID'] != null) ?
+                    $model->getUserbyID($_GET['disabled_member_ID']) : false, 'disable_error' => $error, 'Users' => $model->getUsers()],
+                    styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+
+            }
+            else{
+                $this->view('LibraryStaff/Users', 'User Management', ['Users' => $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            }
+        }
+        else{
+            $this->view('LibraryStaff/Users','User Management', ['Users'=> $model->getUsers()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
     }
 
     public function disabledusers()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Disabledusers', styles:['LibraryStaff/index', 'Components/table']);
+        $model = $this->model('LibraryUserManageModel');
+
+        if (isset($_GET['confirm'])) {
+            $error = false;
+            if ($_GET['enable_description'] != null && $_GET['enabled_member_ID'] != null) {
+              $_GET['enabled_member_ID'] = intval($_GET['enabled_member_ID']);
+              $_GET['member_id'] = $model->getUserbyID($_GET['enabled_member_ID'])['result'][0]['member_id'] ?? false;
+              $_GET['user_id'] = $model->getUserbyID($_GET['enabled_member_ID'])['result'][0]['user_id'] ?? false;
+
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'enabled_member_ID|i[0:]',
+                    'member_id|i[0:]',
+                    'user_id|i[0:]',
+                    'enable_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'page|?',
+                    'size',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['member_id'], 1, $valid) == false) {
+                        $_GET['enabled_member_ID'] = null;
+                        $_GET['member_id'] = null;
+                        $_GET['enable_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Enabled' => ($_GET['enable_description'] != null && $_GET['enabled_member_ID'] != null) ?
+                    $model->getUserbyID($_GET['enabled_member_ID']) : false, 'enable_error' => $error, 'Users' => $model->getUsers(2)],
+                    styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+
+            }
+            else{
+                $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            }
+        }
+
+        else{
+            $this->view('LibraryStaff/Disabledusers', 'Disabled Users', ['Users' => $model->getUsers(2)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+        }
     }
 
     public function addusers()

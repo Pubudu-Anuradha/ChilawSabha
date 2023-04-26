@@ -37,9 +37,6 @@
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'delist_description',id:'delist_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'delist_accession_no');?>
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
-
-
-    </div>
 </div>
 
 <script>
