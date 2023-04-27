@@ -55,7 +55,7 @@ class BookModel extends Model
             $conditions);
 
     }
-    
+
     public function get_categories()
     {
         return $this->select('category_codes');
@@ -89,6 +89,11 @@ class BookModel extends Model
         return [
             'book' => $book,
         ];
+    }
+
+    public function checkLent($id)
+    {
+        return $this->select('books','state',"accession_no=$id");
     }
 
     public function getBookbyID($id)

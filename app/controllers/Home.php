@@ -61,6 +61,7 @@ class Home extends Controller
         $model = $this->model('BookModel');
         $this->view('Home/bookCatalogue', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'Home/portal', 'Components/table', 'posts']);
     }
+    
     public function addComplaint()
     {
         // TODO: Use Form Input components

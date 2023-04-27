@@ -610,20 +610,15 @@ class LibraryStaff extends Controller
                         'title|l[:255]',
                         'author|l[:255]',
                         'publisher|l[:255]',
-                        'place_of_publication|l[:255]',
-                        'date_of_publication',
                         'price|d[0:]',
                         'pages|i[1:]',
-                        'recieved_date',
-                        'isbn|l[:50]',
-                        'recieved_method|l[:255]'
             ], 'Edit');
               $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
-              'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
+              'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err, 'state' => $id != null ? $model->checkLent($id) : false], ['LibraryStaff/index', 'Components/form']);
           }
 
         }else{
-            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['books' => $id != null ? $model->getBookbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
+            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['books' => $id != null ? $model->getBookbyID($id) : false,'state' => $id != null ? $model->checkLent($id) : false], ['LibraryStaff/index', 'Components/form']);
         }
 
     }

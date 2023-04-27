@@ -162,7 +162,6 @@ window.onload = async function(){
 async function calculateFine(data){
     var damaged_fine,delay_after_fine,delay_month_fine,lost_fine;
 
-
     if(data != 0){
         try{
             const response = await fetch("<?=URLROOT . '/LibraryStaff/index'?>",{

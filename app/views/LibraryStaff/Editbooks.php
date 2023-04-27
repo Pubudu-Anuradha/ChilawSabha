@@ -2,6 +2,7 @@
     <div class="page">
         <?php
             $books = $data['books']['result'][0] ?? null;
+            $state = $data['state']['result'][0] ?? null;
             $errors = $data['errors'] ?? false;
         ?>
 
@@ -21,28 +22,18 @@
                         'title' => "Title",
                         'author' => 'Author',
                         'publisher' => 'Publisher',
-                        'place_of_publication' => "Place of Publication",
-                        'date_of_publication' => 'Date of Publication',
-                        'isbn' => 'ISBN No',
                         'price' => "Price",
                         'pages' => 'No of Pages',
-                        'recieved_date' => 'Recieved Date',
-                        'recieved_method' => 'Recieved Method',
                     ]);?>
 
                     <?php Text::text('Title','title','title',placeholder:'Insert Book Title',maxlength:255,value:$books['title'] ?? null);?>
                     <?php Text::text('Author','author','author',placeholder:'Insert Book Author',maxlength:255,value:$books['author'] ?? null);?>
                     <?php Text::text('Publisher','publisher','publisher',placeholder:'Insert Book Publisher',maxlength:255,value:$books['publisher'] ?? null);?>
-                    <?php Text::text('Place of Publication','place_of_publication','place_of_publication',placeholder:'Insert Place of Publication',maxlength:255,value:$books['place_of_publication'] ?? null);?>
-                    <?php Time::date('Date of Publication','date_of_publication','date_of_publication',max:Date("Y-m-d"),value:$books['date_of_publication'] ?? null);?>
-                    <?php Text::text('ISBN No','isbn','isbn',placeholder:'Insert ISBN No',pattern:"(\d{10}|\d{13})",maxlength:50,value:$books['isbn'] ?? null);?>
                     <?php Other::number('Price','price','price',placeholder:'Insert Book Price',step:0.01,min:"0",value:$books['price'] ?? null);?>
                     <?php Other::number('No of Pages','pages','pages',placeholder:'Insert No of Pages', min:1,value:$books['pages'] ?? null);?>
-                    <?php Time::date('Recieved Date','recieved_date','recieved_date',max:Date("Y-m-d"),value:$books['recieved_date'] ?? null);?>
-                    <?php Text::text('Recieved Method','recieved_method','recieved_method',placeholder:'Insert Recieved Method',maxlength:255,value:$books['recieved_method'] ?? null);?>
                     <div class="input-field">
                         <label for="mark_damaged">Mark Damaged</label>
-                        <div class="input-wrapper">
+                        <div class="input-wrapper" id="input-wrapper">
                             <input type="checkbox" name="mark_damaged" id="mark_damaged" onclick="disablefields()" style="height:1.2rem;aspect-ratio:1/1;">
                         </div>
                     </div>
@@ -60,9 +51,24 @@
 
     expandSideBar("sub-items-serv", "see-more-bk");
 
+    const checkbox = document.getElementById('mark_damaged');
+    const inputWrapper = document.getElementById('input-wrapper');
+
+    //if book lent mark as damage option disabled
+    window.onload = function(){
+        var state = <?php echo ((isset($state) && ($state['state'] == 2)) ? 2 : 1);?>;
+        if(state == 2){
+            checkbox.disabled = true;
+            inputWrapper.style.display = "flex";
+            inputWrapper.style.alignItems = "center";
+            inputWrapper.style.gap = "1rem";
+            inputWrapper.style.color = "red";
+            inputWrapper.append("The Book is Not Available");
+        }
+    }
+
     //disable field when checkbox clicked
     function disablefields(){
-        var checkbox = document.getElementById('mark_damaged');
         var fields = document.getElementsByTagName('input');
         for(var i=0 ; i<fields.length;i++){
             if (fields[i].type == "text" || fields[i].type == "number" || fields[i].type == "date" ) {
