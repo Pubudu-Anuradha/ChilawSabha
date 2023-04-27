@@ -35,7 +35,7 @@
         $table['result'],'disabledLibUser',
         actions:[
             'Enable'=>[['#'],'btn enable bg-green white',["openModal(%s,'enable_description')",'membership_id']]
-        ],empty:$table['nodata'],empty_msg:'No Disabled User Found'
+        ],empty:$table['nodata'],empty_msg:'No Disabled Users Found'
 
     );?>
 

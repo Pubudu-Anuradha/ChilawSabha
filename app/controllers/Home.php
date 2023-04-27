@@ -34,8 +34,26 @@ class Home extends Controller
 
     public function bookRequest()
     {
-        // TODO: Use Form Input components
-        $this->view('Home/bookRequest', 'Book Request', [], ['Components/form']);
+        $model = $this->model('BookRequestModel');
+
+        if (isset($_POST['Add'])) {
+
+            [$valid, $err] = $this->validateInputs($_POST, [
+                    'email|l[:255]|e',
+                    'title|l[:255]',
+                    'author|l[:255]',
+                    'isbn|l[10:13]',
+                    'reason|l[:255]',
+                    ], 'Add');
+
+            $data['errors'] = $err;
+
+            $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addBookRequest($valid)], $data);
+            $this->view('Home/bookRequest', 'Book Request', $data, ['Components/form']);
+        } 
+        else {
+            $this->view('Home/bookRequest', 'Book Request', styles:['Components/form']);
+        }
     }
 
     public function bookCatalogue()

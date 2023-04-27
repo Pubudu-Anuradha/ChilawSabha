@@ -297,7 +297,7 @@ class LibraryStaff extends Controller
 
     public function bookrequest()
     {
-        $model = $this->model('BookModel');
+        $model = $this->model('BookRequestModel');
 
         //if rejected
         if(isset($_GET['confirm'])){
@@ -540,11 +540,12 @@ class LibraryStaff extends Controller
     public function addbooks($requestID=null)
     {
         $model = $this->model('BookModel');
+        $Requestmodel = $this->model('BookRequestModel');
 
         $data = ['categories' => $model->get_categories()['result'],'subcategories' => $model->get_sub_categories()['result']];
 
         if($requestID){
-            $data['reqInfo'] =  $model->getBookRequestByID($requestID);
+            $data['reqInfo'] =  $Requestmodel->getBookRequestByID($requestID);
             $reqEmail = $data['reqInfo']['result'][0]['email'];
             $reqTitle = $data['reqInfo']['result'][0]['title'];
         }
@@ -574,7 +575,7 @@ class LibraryStaff extends Controller
                     'price|d[0:]',
                     'pages|i[1:]',
                     'recieved_date',
-                    'isbn|l[:50]',
+                    'isbn|l[10:13]',
                     'recieved_method|l[:255]',
                     ],
                 'Add');
@@ -585,7 +586,7 @@ class LibraryStaff extends Controller
 
             //to send a mail if this is a book requested by an user
             if($data['Add']['success'] == true && $reqEmail && $reqTitle){
-                $model->changeBookRequestState($requestID, 2);
+                $Requestmodel->changeBookRequestState($requestID, 2);
                 Email::send($reqEmail,'Book Request Added',"Book Request for Book Titled $reqTitle has been added to the library.");
             }
             $this->view('LibraryStaff/Addbooks', 'Add New Book', $data, ['LibraryStaff/index', 'Components/form']);

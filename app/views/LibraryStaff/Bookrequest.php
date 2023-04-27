@@ -18,10 +18,10 @@
         actions:[
             'Add Book' => [[URLROOT . '/LibraryStaff/Addbooks/%s','request_id'], 'btn add bg-lightblue white',['#']],
             'Reject' => [['#'], 'btn reject bg-red white',["openModal('%s','reject_request')",'request_id']]
-        ],empty:$table['nodata']
+        ],empty:$table['nodata'],empty_msg:'No Book Requests Recieved'
     );?>
 
-    <?php Modal::Modal(content:'Are You Sure to reject Request ID : ',  id:'reject_request',confirmBtn:true);?>
+    <?php Modal::Modal(content:'Are You Sure to reject Request ID : ', id:'reject_request',confirmBtn:true);?>
 
 
     <?php Pagination::bottom('filter-form', $data['BookRequest']['page'], $data['BookRequest']['count']);?>
