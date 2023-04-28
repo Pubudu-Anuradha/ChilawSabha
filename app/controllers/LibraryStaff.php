@@ -30,7 +30,6 @@ class LibraryStaff extends Controller
             }
 
             $userStat = $model->getUserDetails($searchKey);
-            // var_dump($_POST);
 
             //for lending
             if(!isset($userStat['result'][0]['due_date']) || isset($userStat['result'][0]['recieved_date'])){
@@ -81,9 +80,9 @@ class LibraryStaff extends Controller
             //for extending and recieving
             else if(isset($userStat['result'][0]['due_date']) && !isset($userStat['result'][0]['recieved_date'])){
                 //extend function
-
                 if(!isset($_POST['recieveFlag'])){
-                    $model->extendDueDate($userStat['result']);
+                    //only allow extending at the due date for 3 times max
+                    $model->extendDueDate($userStat['result']);               
                 }
                 //recieve related funtion
                 else if(isset($_POST['recieveFlag'])){

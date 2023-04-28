@@ -63,7 +63,7 @@
             inputWrapper.style.alignItems = "center";
             inputWrapper.style.gap = "1rem";
             inputWrapper.style.color = "red";
-            inputWrapper.append("The Book is Not Available");
+            inputWrapper.append("At The Moment, The Book Is Unavailable");
         }
     }
 

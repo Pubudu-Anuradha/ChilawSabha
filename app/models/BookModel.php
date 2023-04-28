@@ -195,7 +195,7 @@ class BookModel extends Model
 
         return $this->select(
             'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join category_codes c on b.category_code=c.category_id',
-            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, b.accession_no, b.title,b.author,b.publisher,c.category_name,r.extended_time,r.recieved_date',
+            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,c.category_name,r.extended_time,r.recieved_date',
             "(u.name = '$search_term' || l.membership_id = '$search_term') ORDER BY r.lent_date DESC"
         );
     }
@@ -391,12 +391,12 @@ class BookModel extends Model
     {
         $count1 = $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id',
             'l.extended_time',
-            "b.accession_no = $acc1"
+            "b.accession_no = $acc1 and l.recieved_date IS NULL and l.recieved_by IS NULL"
         );
 
         $count2 = $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id',
             'l.extended_time',
-            "b.accession_no = $acc2"
+            "b.accession_no = $acc2 and l.recieved_date IS NULL and l.recieved_by IS NULL"
         );
 
         return [$count1, $count2];
@@ -405,20 +405,29 @@ class BookModel extends Model
 
     public function extendDueDate($data)
     {
-        $book1 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
-            ['l.due_date' => date('Y-m-d', strtotime($data[0]['due_date'] . ' +2 weeks')),
-            'extended_time' => $data[0]['extended_time'] + 1],
-            "b.accession_no = " . $data[0]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
-        );
+        date_default_timezone_set('Asia/Colombo');
 
-        $book2 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
-            ['l.due_date' => date('Y-m-d', strtotime($data[1]['due_date'] . ' +2 weeks')),
-            'extended_time' => $data[1]['extended_time'] + 1],
-            "b.accession_no = " . $data[1]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
-        );
+        if($data[0]['extended_time'] <3 && $data[1]['extended_time']<3){
+            if((!isset($data[0]['extended_date']) && !isset($data[1]['extended_date']) && date("Y-m-d") == $data[0]['due_date']) || (date("Y-m-d") == date('Y-m-d', strtotime($data[0]['extended_date'] . ' +2 weeks')))){
+                $book1 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
+                    ['l.due_date' => date('Y-m-d', strtotime($data[0]['due_date'] . ' +2 weeks')),
+                    'l.extended_time' => $data[0]['extended_time'] + 1,
+                    'l.extended_date' => date("Y-m-d H:i:s")],
+                    "b.accession_no = " . $data[0]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
+                );
 
-        return [$book1, $book2];
+                $book2 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
+                    ['l.due_date' => date('Y-m-d', strtotime($data[1]['due_date'] . ' +2 weeks')),
+                    'l.extended_time' => $data[1]['extended_time'] + 1,
+                    'l.extended_date' => date("Y-m-d H:i:s")],
+                    "b.accession_no = " . $data[1]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
+                );
 
+                return [$book1, $book2];
+            }
+            return false;
+        }
+        return false;
     }
 
     public function getFineDetails()

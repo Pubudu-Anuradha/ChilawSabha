@@ -72,7 +72,7 @@ class BookRequestModel extends Model
         if(isset($max_req['result'][0]['request_id'])){
             $res = $this->select('book_requests','email,isbn',"request_id='".$max_req['result'][0]['request_id']."'");
 
-            if(isset($res['result']) && ($request['email'] != $res['result'][0]['email']) && ($request['isbn'] != $res['result'][0]['isbn'])){
+            if(isset($res['result']) && (($request['email'] != $res['result'][0]['email']) || ($request['isbn'] != $res['result'][0]['isbn']))){
                 return $this->insert('book_requests',[
                     'email' => $request['email'],
                     'title' => $request['title'],
@@ -85,5 +85,5 @@ class BookRequestModel extends Model
             }
         }
     }
-    
+
 }

@@ -131,7 +131,7 @@ var damageCheckSrow = document . getElementById('damagedcheck2');
 var recieveCheckSrow = document . getElementById('recievedcheck2');
 var fineCal = document . getElementById('fineCal');
 var openedModal;
-var fineAmont;
+var fineAmont, prevNum = 1;
 
 acc2.addEventListener('change',function(e){
     if(acc1.value == acc2.value){
@@ -187,14 +187,15 @@ async function calculateFine(data){
         };
 
         const today = new Date();
-        const due_date = new Date(data[0]['due_date']);
+        const dateString = data[0]['due_date'];
+        const dateParts = dateString.split('-');
+        const due_date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], 23, 60, 00);
+        const mili_sec_per_day = 1000 * 60 * 60 * 24;
+        const timeDiff = today.getTime() - due_date.getTime();
+        const diffInDays = Math.ceil(timeDiff / mili_sec_per_day);
 
         //due date comparison
-        if(today > due_date){
-            const mili_sec_per_day = 1000 * 60 * 60 * 24;
-
-            const timeDiff = today.getTime() - due_date.getTime();
-            const diffInDays = Math.ceil(timeDiff / mili_sec_per_day);
+        if(timeDiff > 0){
 
             //for less than or equal to 1month(30 days)
             if(diffInDays <= 30){
@@ -487,44 +488,67 @@ function openModal(id,modal,type,data=null){
                             openedModal.style.display = "block";
                         }
                         else{
-                            var accessions = {
-                                'value1':data[0]['accession_no'],
-                                'value2':data[1]['accession_no'],
-                                'searchID':'extendedCount'
-                            }
-
-                            fetch("<?=URLROOT . '/LibraryStaff/index'?>",{
-                                method:"POST",
-                                headers: {
-                                    "Content-type":"application/json"
-                                },
-                                body: JSON.stringify(accessions)
-                            })
-                            .then(response => response.json())
-                            .then(response => {
-                                if((response[0]['extendCount'].length == 2) && (response[0]['planToReadCount'].length == 2)){
-                                    extended_count_1 = response[0]['extendCount'][0]['result'][0]['extended_time'];
-                                    extended_count_2 = response[0]['extendCount'][1]['result'][0]['extended_time'];
-
-                                    if(extended_count_1<3 && extended_count_2<3 && (extended_count_1==extended_count_2)){
-                                        openedModal.querySelector('p').innerText = "The books \n" + data[0]['title'] +" : "+ response[0]['planToReadCount'][0]['result'][0]['acc1Count']
-                                        + " plan to read users \n" + data[1]['title'] +" : "+ response[0]['planToReadCount'][1]['result'][0]['acc2Count'] + " plan to read users \n" +
-                                        "Confirm Extending ?";
-                                    }
-                                    else if (extended_count_1 >= 3 || extended_count_2 >=3){
-                                        modal = 'errorModal';
-                                        openedModal = document.getElementById(modal);
-                                        openedModal.querySelector('p').innerText = "User Have Exceeded the Extend Count";
-                                    }
-                                    openedModal.style.display = "block";
+                            var today = new Date();
+                            const dateString = data[0]['due_date'];
+                            const dateParts = dateString.split('-');
+                            const due_date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2], 23, 60, 00);
+                            const mili_sec_per_day = 1000 * 60 * 60 * 24;
+                            const timeDiffer = today.getTime() - due_date.getTime();
+                            const differInDays = Math.ceil(timeDiffer / mili_sec_per_day);
+                            
+                            if(differInDays == 0){
+                                var accessions = {
+                                    'value1':data[0]['accession_no'],
+                                    'value2':data[1]['accession_no'],
+                                    'searchID':'extendedCount'
                                 }
-                            })
-                            .catch(err => {
+
+                                fetch("<?=URLROOT . '/LibraryStaff/index'?>",{
+                                    method:"POST",
+                                    headers: {
+                                        "Content-type":"application/json"
+                                    },
+                                    body: JSON.stringify(accessions)
+                                })
+                                .then(response => response.json())
+                                .then(response => {
+                                    if((response[0]['extendCount'].length == 2) && (response[0]['planToReadCount'].length == 2)){
+                                        extended_count_1 = response[0]['extendCount'][0]['result'][0]['extended_time'];
+                                        extended_count_2 = response[0]['extendCount'][1]['result'][0]['extended_time'];
+
+                                        if(extended_count_1<3 && extended_count_2<3 && (extended_count_1==extended_count_2)){
+                                            openedModal.querySelector('p').innerText = "The books \n" + data[0]['title'] +" : "+ response[0]['planToReadCount'][0]['result'][0]['acc1Count']
+                                            + " plan to read users \n" + data[1]['title'] +" : "+ response[0]['planToReadCount'][1]['result'][0]['acc2Count'] + " plan to read users \n" +
+                                            "Confirm Extending ?";
+                                        }
+                                        else if (extended_count_1 >= 3 || extended_count_2 >=3){
+                                            modal = 'errorModal';
+                                            openedModal = document.getElementById(modal);
+                                            openedModal.querySelector('p').innerText = "User Have Exceeded the Extend Count";
+                                        }
+                                        openedModal.style.display = "block";
+                                    }
+                                })
+                                .catch(err => {
+                                    modal = 'errorModal';
+                                    openedModal = document.getElementById(modal);
+                                    openedModal.querySelector('p').innerText = "Data Retrieving Error";
+                                    openedModal.style.display = "block";
+                                });
+                            }
+                            else if(differInDays <= -1){
                                 modal = 'errorModal';
                                 openedModal = document.getElementById(modal);
-                                openedModal.querySelector('p').innerText = "Data Retrieving Error";
+                                openedModal.querySelector('p').innerText = "Please Extend On Due Date";
                                 openedModal.style.display = "block";
-                            });
+                            }
+                            else if(timeDiffer > 0){
+                                modal = 'errorModal';
+                                openedModal = document.getElementById(modal);
+                                openedModal.querySelector('p').innerText = "Due Date Passed";
+                                openedModal.style.display = "block";
+                            }
+
                         }
                         break;
                     default:
