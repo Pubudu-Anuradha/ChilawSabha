@@ -13,7 +13,7 @@
 
     <?php Pagination::Top('/LibraryStaff/bookrequest', select_filters:[]);?>
 
-    <?php Table::Table(['request_id' => 'Request ID', 'email' => 'Email', 'title' => 'Title', 'author' => 'Author', 'isbn' => "ISBN", 'reason' => 'Reason','requested_time' => 'Requested On'],
+    <?php Table::Table(['email' => 'Email', 'title' => 'Title', 'author' => 'Author', 'isbn' => "ISBN", 'reason' => 'Reason','requested_time' => 'Requested On'],
         $table['result'], 'bookRequests',
         actions:[
             'Add Book' => [[URLROOT . '/LibraryStaff/Addbooks/%s','request_id'], 'btn add bg-lightblue white',['#']],
@@ -42,7 +42,7 @@
                   openedModal.querySelector('input[type="number"]').value = id;
               }
               else{
-                  openedModal.querySelector('p').innerText = "Are You Sure to reject Book Request with ID : " + id ;
+                  openedModal.querySelector('p').innerText = "Are You Sure To Reject The Book Request" ;
               }
             }
             openedModal.style.display = "block";

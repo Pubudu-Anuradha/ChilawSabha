@@ -48,6 +48,7 @@ class BookRequestModel extends Model
         array_push($conditions, ' b.request_state=1 ');
 
         $conditions = implode(' && ', $conditions);
+        $conditions = $conditions . "ORDER BY b.requested_time DESC";
 
         return $this->selectPaginated('book_requests b join book_request_state s on b.request_state=s.status_id',
             'b.request_id as request_id,b.email as email,b.title as title,b.author as author,b.isbn as isbn, b.reason as reason ,b.requested_time as requested_time',

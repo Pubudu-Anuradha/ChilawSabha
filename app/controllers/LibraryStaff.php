@@ -601,7 +601,7 @@ class LibraryStaff extends Controller
         if(isset($_POST['Edit'])){
             //if mark damage ticked
           if(isset($_POST['mark_damaged'])){
-            $model->changeState($id,5,["damaged_description" =>"Damged in Library"]);
+            $model->changeState($id,5,["damaged_description" =>"Damaged in Library"]);
             $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
           }
           else{
@@ -625,24 +625,64 @@ class LibraryStaff extends Controller
     public function editusers($id = null)
     {
         $model = $this->model('LibraryUserManageModel');
-
+        $data = [];
         if(isset($_POST['Edit'])){
+            $changes = [];
+            $current_user = $model->getUserbyID($id)['result'][0];
+            $_POST['user_id'] = $current_user['user_id'] ?? false;
+            $validator = [
+                'user_id' => 'user_id|i[0:]',
+                'email' => 'email|l[:255]|e',
+                'name' => 'name|l[:255]',
+                'address' => 'address|l[:255]',
+                'contact_no' => 'contact_no|l[10:12]',
+            ];
 
-            $_POST['user_id'] = $model->getUserbyID($id)['result'][0]['user_id'] ?? false;
+            foreach ($current_user as $field => $value){
+                if(isset($_POST[$field])){
+                    if($_POST[$field] !== $value){
+                        if ($validator[$field] ?? false) {
+                            $changes[] = $validator[$field];
+                        }
+                    }
+                    else{
+                        unset($_POST[$field]);
+                    }
+                }
+            }
 
-            [$valid, $err] = $this->validateInputs($_POST, [
-                    'user_id|i[0:]',
-                    'email|l[:255]|e',
-                    'name|l[:255]',
-                    'address|l[:255]',
-                    'contact_no|l[10:12]',
-            ], 'Edit');
-              $this->view('LibraryStaff/Editusers', 'Edit Library User', ['edit' =>  count($err) == 0 ? $model->editLibraryUser($_POST['user_id'], $valid) : null,
-              'Users' => $id != null ? $model->getUserbyID($id) : false, 'errors' => $err], ['LibraryStaff/index', 'Components/form']);
+            if(count($changes) > 0){
+                [$valid, $err] = $this->validateInputs($_POST, $changes, 'Edit');
+                $data['errors'] = $err;
 
-        }else{
-            $this->view('LibraryStaff/Editusers', 'Edit Library User', ['Users' => $id != null ? $model->getUserbyID($id) : false], ['LibraryStaff/index', 'Components/form']);
+                if (count($err) == 0) {
+                    $data = array_merge(['edit' => !is_null($id) ? $model->editLibraryUser($current_user['user_id'], $valid) : null], $data);
+
+                    if (($data['edit']['success'] ?? false) == true) {
+                        $edit_history = [];
+                        foreach ($valid as $field => $value) {
+                            $edit_history[$field] = $current_user[$field];
+                        }
+
+                        $edit_history = array_merge($edit_history, [
+                            'user_id' => $current_user['user_id'],
+                            'edited_by' => $_SESSION['user_id'],
+                        ]);
+                        if (isset($edit_history['Edit'])) {
+                            unset($edit_history['Edit']);
+                        }
+                        $model->putMemberEditHistory($edit_history);
+                    }
+                }
+            }
         }
+        if ($id != null) {
+            $res = $model->getMemberEditHistory($model->getUserbyID($id)['result'][0]['user_id'])['result'] ?? false;
+            if (!($res['nodata'] ?? false)) {
+                $data['edit_history'] = $res;
+            }
+        }
+        $this->view('LibraryStaff/Editusers', 'Edit Library User', array_merge(['Users' => $id != null ? $model->getUserbyID($id) : false], $data), ['LibraryStaff/index', 'Components/form','Admin/index']);
     }
 
     public function booktransactions()

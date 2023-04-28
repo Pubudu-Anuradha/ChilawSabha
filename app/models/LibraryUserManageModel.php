@@ -120,4 +120,19 @@ class LibraryUserManageModel extends Model
         $user_id = mysqli_real_escape_string($this->conn, $id);
         return $this->update('users',$user,"user_id=$user_id and user_type=2");
     }
+
+    public function putMemberEditHistory($history)
+    {
+        return $this->insert('edit_library_member', $history);
+    }
+
+    public function getMemberEditHistory($id)
+    {
+        $user_id = mysqli_real_escape_string($this->conn,$id);
+
+        return $this->select('edit_library_member e join users u on u.user_id=e.edited_by',
+        'e.name as name,e.email as email,e.address as address,e.contact_no as contact_no,u.name as changed_by,e.edited_time as time',
+        "e.user_id='$user_id' ORDER BY e.edited_time DESC");
+    }
+
 }
