@@ -10,9 +10,12 @@
         <?php if(!is_null($books)): ?>
             <div class="formContainer">
                 <?php if (isset($data['edit'])):
-                    if (!$data['edit']['book']['success']):
-                        echo "Failed to Edit book " . $data['edit']['book']['errmsg'];
-                    else:
+                    if (!$data['edit']['success']):
+                        if(!$data['edit']['errmsg']):
+                            echo "Already Updated The Book ";
+                        else:
+                            echo "Failed to Edit book " . $data['edit']['errmsg'];
+                        endif;else:
                         echo "Saved changes";
                     endif;
                 endif;
@@ -40,6 +43,37 @@
                     <?php Other::submit('Edit','edit',value:'Save Changes');?>
 
                 </form>
+                <?php
+                    $edit_history = $data['edit_history'] ?? false;
+                    $post = $books;
+                    $fields = [
+                        'title' => "Title",
+                        'author' => 'Author',
+                        'publisher' => 'Publisher',
+                        'price' => 'Price',
+                        'pages' => 'No of Pages',
+                    ];
+                    if($edit_history !== false && count($edit_history) !== 0): ?>
+                        <div class="edit-history card">
+                            <h2>Book Edit History</h2>
+                            <hr>
+                    <?php
+                        $i = 0;
+                        foreach($edit_history as $edit): 
+                            foreach($fields as $field => $name):
+                                if($edit[$field] !== null && $edit[$field] !== $post[$field]): ?>
+                                <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
+                                    on <span class="time"> <?= $edit['time'] ?> </span> :
+                                    <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from 
+                                    "<?= $edit[$field] ?>" to "<?=$post[$field]?>".
+                                </div>
+                                    <?php $post[$field] = $edit[$field];
+                                endif;
+                            endforeach;
+                        endforeach;
+                    endif;
+                ?>
+                        </div>
             </div>
         <?php else:?>
             ERROR RETRIEVING BOOK INFORMATION

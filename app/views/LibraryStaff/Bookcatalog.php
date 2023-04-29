@@ -27,6 +27,7 @@
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category'],
             $table['result'],'bookCatalog',
             actions:[
+                'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
                 'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white',['#']],
                 'Lost'=>[['#'],'btn lost bg-red white',["openModal(%s,'lost_description')",'accession_no']],
                 'Delist'=>[['#'],'btn delist bg-orange white',["openModal(%s,'delist_description')",'accession_no']],

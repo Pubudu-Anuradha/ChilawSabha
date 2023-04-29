@@ -26,6 +26,7 @@
     <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','damaged_description' => 'Description'],
         $table['result'], 'damagedBooks',
         actions:[
+            'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
             'Re-Conditioned' => [['#'], 'btn recondition bg-green white',["openModal(%s,'recondition_description')",'accession_no']],
         ],empty:$table['nodata']
     );?>

@@ -597,29 +597,70 @@ class LibraryStaff extends Controller
     public function editbooks($id = null)
     {
         $model = $this->model('BookModel');
-
+        $data = [];
         if(isset($_POST['Edit'])){
             //if mark damage ticked
-          if(isset($_POST['mark_damaged'])){
-            $model->changeState($id,5,["damaged_description" =>"Damaged in Library"]);
-            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
-          }
-          else{
-            [$valid, $err] = $this->validateInputs($_POST, [
-                        'title|l[:255]',
-                        'author|l[:255]',
-                        'publisher|l[:255]',
-                        'price|d[0:]',
-                        'pages|i[1:]',
-            ], 'Edit');
-              $this->view('LibraryStaff/Editbooks', 'Edit Book', ['edit' =>  count($err) == 0 ? $model->editBook($id, $valid) : null,
-              'books' => $id != null ? $model->getBookbyID($id) : false, 'errors' => $err, 'state' => $id != null ? $model->checkLent($id) : false], ['LibraryStaff/index', 'Components/form']);
-          }
+            if(isset($_POST['mark_damaged'])){
+                $model->changeState($id,5,["damaged_description" =>"Damaged in Library"]);
+                $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            }
+            else{
+                $changes = [];
+                $current_book = $model->getBookbyID($id)['result'][0];
+                $validator = [
+                    'title' => 'title|l[:255]',
+                    'author' => 'author|l[:255]',
+                    'publisher' => 'publisher|l[:255]',
+                    'price' => 'price|d[0:]',
+                    'pages' => 'pages|i[1:]',
+                ];
 
-        }else{
-            $this->view('LibraryStaff/Editbooks', 'Edit Book', ['books' => $id != null ? $model->getBookbyID($id) : false,'state' => $id != null ? $model->checkLent($id) : false], ['LibraryStaff/index', 'Components/form']);
+                foreach ($current_book as $field => $value){
+                    if(isset($_POST[$field])){
+                        if($_POST[$field] !== $value){
+                            if ($validator[$field] ?? false) {
+                                $changes[] = $validator[$field];
+                            }
+                        }
+                        else{
+                            unset($_POST[$field]);
+                        }
+                    }
+                }
+
+                if(count($changes) > 0){
+                    [$valid, $err] = $this->validateInputs($_POST, $changes, 'Edit');
+                    $data['errors'] = $err;
+
+                    if (count($err) == 0) {
+                        $data = array_merge(['edit' => !is_null($id) ? $model->editBook($id, $valid) : null], $data);
+
+                        if (($data['edit']['success'] ?? false) == true) {
+                            $edit_history = [];
+                            foreach ($valid as $field => $value) {
+                                $edit_history[$field] = $current_book[$field];
+                            }
+
+                            $edit_history = array_merge($edit_history, [
+                                'accession_no' => $current_book['accession_no'],
+                                'edited_by' => $_SESSION['user_id'],
+                            ]);
+                            if (isset($edit_history['Edit'])) {
+                                unset($edit_history['Edit']);
+                            }
+                            $model->putBookEditHistory($edit_history);
+                        }
+                    }
+                }
+            }
         }
-
+        if ($id != null) {
+            $res = $model->getBookEditHistory($id)['result'] ?? false;
+            if (!($res['nodata'] ?? false)) {
+                $data['edit_history'] = $res;
+            }
+        }
+        $this->view('LibraryStaff/Editbooks', 'Edit Book', array_merge(['books' => $id != null ? $model->getBookbyID($id) : false, 'state' => $id != null ? $model->checkLent($id) : false],$data), ['LibraryStaff/index', 'Components/form','Admin/index']);
     }
 
     public function editusers($id = null)

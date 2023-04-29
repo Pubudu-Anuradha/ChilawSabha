@@ -85,10 +85,7 @@ class BookModel extends Model
 
     public function editBook($id, $data)
     {
-        $book = $this->update('books', $data, "accession_no=$id");
-        return [
-            'book' => $book,
-        ];
+        return $this->update('books', $data, "accession_no=$id");
     }
 
     public function checkLent($id)
@@ -103,6 +100,20 @@ class BookModel extends Model
          b.accession_no as accession_no,b.isbn as isbn,b.price as price,b.pages as pages,b.recieved_date as recieved_date,
          b.recieved_method as recieved_method,b.state as state',
             "b.accession_no=$id");
+    }
+
+    public function putBookEditHistory($history)
+    {
+        return $this->insert('edit_book', $history);
+    }
+
+    public function getBookEditHistory($id)
+    {
+        $acc = mysqli_real_escape_string($this->conn,$id);
+
+        return $this->select('edit_book e join users u on u.user_id=e.edited_by',
+        'e.title as title,e.author as author,e.publisher as publisher,e.price as price,e.pages as pages,u.name as changed_by,e.edited_time as time',
+        "e.accession_no='$acc' ORDER BY e.edited_time DESC");
     }
 
     public function changeState($id, $state, $reason = [])

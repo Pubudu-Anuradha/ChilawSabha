@@ -25,7 +25,9 @@
 
     <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','delist_description' => 'Description'],
         $table['result'], 'delistedBooks',
-        actions:[],empty:$table['nodata']
+        actions:[
+            'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']]
+        ],empty:$table['nodata']
     );?>
 
     <?php Pagination::bottom('filter-form', $data['Books']['page'], $data['Books']['count']);?>

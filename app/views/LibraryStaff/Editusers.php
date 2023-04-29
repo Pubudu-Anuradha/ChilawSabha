@@ -10,7 +10,11 @@ $errors = $data['errors'] ?? false;
             <div class="formContainer">
                 <?php if ($data['edit'] ?? false) {
                     if (!$data['edit']['success']) {
-                        echo "Failed To Edit User " . $data['edit']['errmsg'];
+                        if(!$data['edit']['errmsg']):
+                            echo "Already Updated The User ";
+                        else:
+                            echo "Failed To Edit User " . $data['edit']['errmsg'];
+                        endif;
                     } else {
                         echo "Changes saved Successfully";
                     }

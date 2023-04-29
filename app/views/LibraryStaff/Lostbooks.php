@@ -26,6 +26,7 @@
     <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','lost_description' => 'Description'],
         $table['result'], 'lostBooks',
         actions:[
+            'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
             'Found' => [['#'], 'btn found bg-green white',["openModal(%s,'found_description')",'accession_no']],
         ],empty:$table['nodata']
     );?>
