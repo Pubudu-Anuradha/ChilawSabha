@@ -692,6 +692,92 @@ class LibraryStaff extends Controller
 
     }
 
+    public function viewusers($id=null)
+    {
+        $model = $this->model('LibraryUserManageModel');
+        $current_user = $model->getUserbyID($id)['result'][0];
+
+        if (isset($_POST['confirm'])) {
+            $error = false;
+            if (isset($_POST['enable_description']) && isset($_POST['enabled_member_ID']) && $_POST['enable_description'] != null && $_POST['enabled_member_ID'] != null) {
+
+              $_POST['enabled_member_ID'] = intval($_POST['enabled_member_ID']);
+              $_POST['member_id'] = $model->getUserbyID($_POST['enabled_member_ID'])['result'][0]['member_id'] ?? false;
+              $_POST['user_id'] = $model->getUserbyID($_POST['enabled_member_ID'])['result'][0]['user_id'] ?? false;
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'enabled_member_ID|i[0:]',
+                    'member_id|i[0:]',
+                    'user_id|i[0:]',
+                    'enable_description|l[:255]',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['member_id'], 1, $valid) == false) {
+                        $_POST['enabled_member_ID'] = null;
+                        $_POST['member_id'] = null;
+                        $_POST['enable_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewusers', 'View User', [
+                    'Enabled' => ($_POST['enable_description'] != null && $_POST['enabled_member_ID'] != null) ? $model->getUserbyID($_POST['enabled_member_ID']) : false, 
+                    'enable_error' => $error, 
+                    'user_id' => $id,
+                    'user' => ($id != null) ? ($model->getUserbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($model->getMemberStateHistory($current_user['user_id'])['result'] ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal','Components/table','Admin/index']);
+            }
+
+            else if (isset($_POST['disable_description']) && isset($_POST['disabled_member_ID']) &&$_POST['disable_description'] != null && $_POST['disabled_member_ID'] != null) {
+
+              $_POST['disabled_member_ID'] = intval($_POST['disabled_member_ID']);
+              $_POST['member_id'] = $model->getUserbyID($_POST['disabled_member_ID'])['result'][0]['member_id'] ?? false;
+              $_POST['user_id'] = $model->getUserbyID($_POST['disabled_member_ID'])['result'][0]['user_id'] ?? false;
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'disabled_member_ID|i[0:]',
+                    'member_id|i[0:]',
+                    'user_id|i[0:]',
+                    'disable_description|l[:255]',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['member_id'], 2, $valid) == false) {
+                        $_POST['disabled_member_ID'] = null;
+                        $_POST['member_id'] = null;
+                        $_POST['disable_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewusers', 'View User', [
+                    'Disabled' => ($_POST['disable_description'] != null && $_POST['disabled_member_ID'] != null) ? $model->getUserbyID($_POST['disabled_member_ID']) : false, 
+                    'disable_error' => $error, 
+                    'user_id' => $id,
+                    'user' => ($id != null) ? ($model->getUserbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($model->getMemberStateHistory($current_user['user_id'])['result'] ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal','Components/table','Admin/index']);
+            }
+        }
+        else{
+            $data = [
+                'user_id' => $id,
+                'user' => ($id != null) ?
+                ($model->getUserbyID($id)['result'][0] ?? false) : false,
+                'edit_history' => ($id != null) ?
+                ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
+                'state_history' => ($id != null) ?
+                ($model->getMemberStateHistory($current_user['user_id'])['result'] ?? false) : false,
+            ];
+
+            $this->view('LibraryStaff/Viewusers', 'View User', $data, styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+        }
+    }
+
     public function finance()
     {
         // TODO: REDO USING COMPONENTS

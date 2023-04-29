@@ -34,13 +34,14 @@
     Table::Table($aliases,
         $table['result'],'disabledLibUser',
         actions:[
+            'View'=>[[URLROOT.'/LibraryStaff/Viewusers/%s','membership_id'],'btn edit bg-lightblue white',['#']],
             'Enable'=>[['#'],'btn enable bg-green white',["openModal(%s,'enable_description')",'membership_id']]
         ],empty:$table['nodata'],empty_msg:'No Disabled Users Found'
 
     );?>
 
     <?php Modal::Modal(textarea:true, title:"Reason For Enabling",name:'enable_description',id:'enable_description', rows:10, cols:50,required:true,textTitle:'Membership ID',textId:'enabled_member_ID');?>
-        
+
     <?php Pagination::bottom('filter-form',$data['Users']['page'],$data['Users']['count']);?>
 
 </div>

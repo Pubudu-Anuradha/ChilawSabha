@@ -20,17 +20,17 @@ class LibraryUserManageModel extends Model
             }
             array_push($conditions,'('.implode(' || ',$search_fields).')');
         }
-        
+
         $conditions = implode(' && ',$conditions);
 
         if($state==2){
-            $conditions = $conditions . '&& m.re_enabled_desscription IS NULL && m.re_enabled_by IS NULL && m.re_enabled_time IS NULL';
+            $conditions = $conditions . '&& m.re_enabled_description IS NULL && m.re_enabled_by IS NULL && m.re_enabled_time IS NULL';
             return $this->selectPaginated(
                 'users u join library_member l on u.user_id=l.user_id join disabled_members m on m.user_id=l.member_id',
             'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,l.nic as nic,m.disable_description as disable_description',
             $conditions);
         }
-        
+
         return $this->selectPaginated(
             'users u join library_member l on u.user_id=l.user_id',
         'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,l.nic as nic',
@@ -39,8 +39,8 @@ class LibraryUserManageModel extends Model
 
     public function getUserbyID($id)
     {
-        return $this->select('users u join library_member l on u.user_id=l.user_id',
-            'u.user_id,u.name,u.email,u.contact_no,u.address,l.member_id,l.membership_id,l.nic',"u.user_type=2 && l.membership_id=$id");
+        return $this->select('users u join library_member l on u.user_id=l.user_id join user_state s on s.state_id=u.state_id',
+            'u.user_id,u.name,u.email,u.contact_no,u.address,l.member_id,l.membership_id,l.nic,s.state',"u.user_type=2 && l.membership_id=$id");
     }
 
     public function changeState($id,$state, $data =[])
@@ -48,7 +48,7 @@ class LibraryUserManageModel extends Model
         $id = mysqli_real_escape_string($this->conn,$id);
         date_default_timezone_set('Asia/Colombo');
         if($state == 2){
-            $count = $this->select('disabled_members','count(user_id) as count',"user_id=$id && re_enabled_desscription IS NULL");
+            $count = $this->select('disabled_members','count(user_id) as count',"user_id=$id && re_enabled_description IS NULL");
             if(isset($count['result']) && $count['result'][0]['count']==0){
                 $res = $this->insert('disabled_members', [
                     'user_id' => $id,
@@ -62,23 +62,23 @@ class LibraryUserManageModel extends Model
                         'state_id' => 2,
                     ], "user_id='".$data['user_id']."'");
                 }
-                return false; 
+                return false;
             }
-        
+
         }
         else if($state ==1){
             $res = $this->update('disabled_members', [
-                're_enabled_desscription' => $data['enable_description'],
+                're_enabled_description' => $data['enable_description'],
                 're_enabled_by' => $_SESSION['user_id'],
                 're_enabled_time' => date("Y-m-d H:i:s")
-            ],"user_id=$id && re_enabled_desscription IS NULL && re_enabled_by IS NULL && re_enabled_time IS NULL");
+            ],"user_id=$id && re_enabled_description IS NULL && re_enabled_by IS NULL && re_enabled_time IS NULL");
 
             if ($res) {
                 return $this->update('users', [
                     'state_id' => 1,
                 ], "user_id='".$data['user_id']."'");
             }
-            return false;  
+            return false;
         }
     }
 
@@ -135,4 +135,12 @@ class LibraryUserManageModel extends Model
         "e.user_id='$user_id' ORDER BY e.edited_time DESC");
     }
 
+    public function getMemberStateHistory($id) {
+
+        $user_id = mysqli_real_escape_string($this->conn,$id);
+
+        return $this->select('disabled_members dm join library_member l on l.member_id=dm.user_id join users u on u.user_id=l.user_id join users u2 on u2.user_id=dm.disabled_by LEFT JOIN users u3 on dm.re_enabled_by=u3.user_id',
+        'dm.disable_description as d_reason,u2.name as d_name,dm.disabled_time as d_time, dm.re_enabled_description as r_reason, u3.name as r_name, dm.re_enabled_time as r_time',
+        "l.user_id='$user_id' and u.user_type=2 ORDER BY dm.disabled_time DESC");
+    }
 }
