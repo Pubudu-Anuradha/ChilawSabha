@@ -10,7 +10,7 @@
     visiting and please feel free to contact us if you have any questions or suggestions.
 </p>
 <!-- add some additional navigation shortcuts here -->
-<?php Slideshow::Slideshow([URLROOT . "/public/assets/sabha1.jpg",URLROOT . "/public/assets/sabha2.jpg"]);?>
+<?php Slideshow::Slideshow([URLROOT . "/public/assets/sabha1.jpg", URLROOT . "/public/assets/sabha2.jpg"]);?>
 <!-- <h2>Links</h2>
     <a href="<?=URLROOT . "/References/"?>"> References </a> <br> -->
 <div class="page-content">
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="section">
-            <div class="library-portal">        
+            <div class="library-portal">
                 <a class="library-img" href="<?=URLROOT . "/Home/Portal"?>">
                     <span>
                         Chilaw Public Library Portal
@@ -105,12 +105,12 @@
     </style>
     <div class="main-content">
 <?php
-    [$announcements,$services,$projects,$events] = $data['posts'] ?? [[],[],[],[]];
-    $formatter = new IntlDateFormatter(
-        'en_US',
-        IntlDateFormatter::LONG,
-        IntlDateFormatter::SHORT,
-    );
+[$announcements, $services, $projects, $events] = $data['posts'] ?? [[], [], [], []];
+$formatter = new IntlDateFormatter(
+    'en_US',
+    IntlDateFormatter::LONG,
+    IntlDateFormatter::SHORT,
+);
 ?>
         <div class="posts bg-fd-blue">
             <div class="posts-header">
@@ -118,32 +118,30 @@
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
-            <?php foreach($announcements as $ann): ?>
-                <div class="post">
-                    <div class="sabha-img" onclick="window.location.href = '<?= URLROOT . 
-                    '/Posts/Announcement/' . ($ann['post_id'] ?? '0') ?>'"></div>
+            <?php foreach ($announcements as $ann): ?>
+                <div class="post shadow">
                     <div class="details">
                         <div class="title-row">
                             <a class="title"
-                            href="<?= URLROOT . '/Posts/Announcement/' . ($ann['post_id'] ?? '0')?>"
-                            > <?php if($ann['pinned']==1):?>
+                            href="<?=URLROOT . '/Posts/Announcement/' . ($ann['post_id'] ?? '0')?>"
+                            > <?php if ($ann['pinned'] == 1): ?>
                                 <span class="pinned">&#128204;</span>
-                            <?php endif; ?>
-                            <?= $ann['title'] ?? 'Not Found' ?>
+                            <?php endif;?>
+                            <?=$ann['title'] ?? 'Not Found'?> </a>
                             <a class="category"
-                            href="<?= URLROOT . '/Posts/Announcements?category=' . ($ann['t_id'] ?? '0')?>"
-                            > <?= $ann['ann_type'] ?? 'Not Found' ?>
+                            href="<?=URLROOT . '/Posts/Announcements?category=' . ($ann['t_id'] ?? '0')?>"
+                            > <?=$ann['ann_type'] ?? 'Not Found'?>
                         </a>
                         </div>
                         <div class="summary">
-                            <?= $ann['short_description'] ?? 'Not Found' ?>
+                            <?=$ann['short_description'] ?? 'Not Found'?>
                         </div>
                         <div class="date">
-                            <?= $formatter->format(IntlCalendar::fromDateTime($ann['posted_time'] ?? '2022-01-01',null)) ?>
+                            <?=$formatter->format(IntlCalendar::fromDateTime($ann['posted_time'] ?? '2022-01-01', null))?>
                         </div>
                     </div>
                 </div>
-            <?php endforeach ?>
+            <?php endforeach?>
         </div>
 
         <div class="posts bg-fd-blue">
@@ -165,28 +163,69 @@
 
         <div class="posts bg-fd-blue">
             <div class="posts-header">
-                <a href="#"><h2 class="announcement-txt">Projects</h2></a>
-                <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
+                <a href="<?=URLROOT . "/Posts/Projects"?>"><h2 class="announcement-txt">Projects</h2></a>
+                <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Projects"?>"'>More</button>
             </div>
             <hr>
-            <pre>
-                <?php
-                    var_dump($projects);
-                ?>
-            </pre>
-            <!-- TODO: GET FROM MODEL -->
+            <?php foreach ($projects as $project): ?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a href="<?=URLROOT . '/Posts/Project/' . ($project['post_id'] ?? '0')?>" class="title">
+                                <?php if ($project['pinned'] == 1): ?>
+                        <span class="pinned">&#128204;</span>
+                    <?php endif;?>
+                    <?=$project['title'] ?? 'Not Found'?>
+                            </a>
+<a class="status <?=$project['status'] ?? 'err'?>"
+                        href="<?=URLROOT . '/Posts/Projects?status=' . ($project['status_id'] ?? '0')?>"
+                        > <?=$project['status'] ?? 'Not Found'?>
+                    </a>
+                        </div>
+                        <div class="summary">
+                            <?=$project['short_description'] ?? 'Not Found'?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <?php
+$date_formatter = new IntlDateFormatter(
+    'en_US',
+    IntlDateFormatter::LONG,
+    IntlDateFormatter::NONE,
+);
+$start_date = $project['start_date'] ? $date_formatter->format(
+    IntlCalendar::fromDateTime($project['start_date'], null),
+) : 'TBA';
+$expected_end_date = $project['expected_end_date'] ? $date_formatter->format(
+    IntlCalendar::fromDateTime($project['expected_end_date'], null),
+) : 'TBA';
+?>
+                        <div class="date">
+                            Starting date : <?=$start_date?>
+                        </div>
+                        <div class="date">
+                            Expected end date : <?=$expected_end_date?>
+                        </div>
+                        <?php $budget = $project['budget'] ?
+'<span class="money">' . number_format($project['budget'], 2) . '</span>' : 'TBA'?>
+                        <div class="budget">
+                            Budget : <?=$budget?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach;?>
         </div>
 
         <div class="about-city">
             <h2>About Chilaw</h2>
             <hr>
             <p class="about-para">
-                Chilaw is located approximately 65km from the Bandaranaike International Airport, 
-                making it a great stop-over whether you’re just arriving or leaving the island. 
-                The coastal town is known for its culturally diverse background where you can visit 
+                Chilaw is located approximately 65km from the Bandaranaike International Airport,
+                making it a great stop-over whether you’re just arriving or leaving the island.
+                The coastal town is known for its culturally diverse background where you can visit
                 religious shrines and for its natural treasures, where you can embark on a bird-watching
-                excursion through the Muthurajawela Wetlands. Chilaw offers many things to do and places 
-                to visit if you’re spending your holiday here. 
+                excursion through the Muthurajawela Wetlands. Chilaw offers many things to do and places
+                to visit if you’re spending your holiday here.
             </p>
             <button class="more btn" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
         </div>

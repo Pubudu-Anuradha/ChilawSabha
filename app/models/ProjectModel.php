@@ -219,13 +219,14 @@ class ProjectModel extends PostModel{
     }
 
     public function getFrontPage() {
-        $table = 'post p join projects a join users u
-             on p.post_id=a.post_id and u.user_id=p.posted_by';
+        $table = 'post p join projects a join users u join project_status ps
+             on p.post_id=a.post_id and u.user_id=p.posted_by and ps.status_id=a.status';
         $columns = 'p.post_id as post_id,
              p.title as title,
              p.short_description as short_description,
              p.content as content,
-             a.status as status,
+             a.status as status_id,
+             ps.project_status as status,
              p.pinned as pinned,
              p.views as views,
              u.name as posted_by,
