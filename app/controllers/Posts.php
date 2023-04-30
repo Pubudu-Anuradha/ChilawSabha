@@ -45,9 +45,18 @@ class Posts extends Controller{
     // TODO: Events
     public function Events()
     {
+        $model = $this->model('EventModel');
+        $this->view('Posts/events','Events',[
+            'events' => $model->getEvents()
+        ],['posts','Posts/index']);
     }
     public function Event($id)
     {
+        $model = $this->model('EventModel');
+        $event = $model->getEvent($id);
+        $this->view('Posts/event',$event[0]['title'] ?? 'Not found',[
+            'event' => $event
+        ],['posts','Posts/index','Components/slideshow']);
     }
     public function Viewed($id) {
         $model = $this->model('PostModel');

@@ -1,73 +1,56 @@
 <script>
-    setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['project'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
+    setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['event'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
 </script>
 <div class="content">
 <?php
-[$project, $images, $attachments, $edits] = $data['project'] !== false ? $data['project'] : [false, false, false, false];
+[$event,$images,$attachments,$edits] = $data['event'] !== false ? $data['event'] : [false,false,false,false];
 $formatter = new IntlDateFormatter(
     'en_US',
     IntlDateFormatter::LONG,
     IntlDateFormatter::SHORT
 );
-if (empty($project)): ?>
+if (empty($event)): ?>
     <h1>
-        Project not found
+        Event not found
     </h1>
 <?php else: ?>
-    <h1 <?=(($project['pinned'] ?? 0) == 1) ? 'class="pinned"' : ''?>>
-        <?=$project['title']?>
+    <h1 <?=(($event['pinned'] ?? 0) == 1) ? 'class="pinned"' : ''?>>
+        <?=$event['title']?>
     </h1>
     <hr>
     <div class="row centered">
         <?php
-$date_formatter = new IntlDateFormatter(
-    'en_US',
-    IntlDateFormatter::LONG,
-    IntlDateFormatter::NONE,
-);
-$start_date = $project['start_date'] ? $date_formatter->format(
-    IntlCalendar::fromDateTime($project['start_date'], null),
+$start_time = $event['start_time'] ? $formatter->format(
+    IntlCalendar::fromDateTime($event['start_time'], null),
 ) : 'TBA';
-$expected_end_date = $project['expected_end_date'] ? $date_formatter->format(
-    IntlCalendar::fromDateTime($project['expected_end_date'], null),
+$end_time = $event['end_time'] ? $formatter->format(
+    IntlCalendar::fromDateTime($event['end_time'], null),
 ) : 'TBA';
 ?>
         <div class="date">
-            Starting date : <?=$start_date?>
+            Starting Time : <?=$start_time?>
         </div>
+        <?php if($end_time != 'TBA') : ?>
         <div class="date">
-            Expected end date : <?=$expected_end_date?>
+            End Time : <?=$end_time?>
         </div>
-        <?php $budget = $project['budget'] ?
-'<span class="money">' . number_format($project['budget'], 2) . '</span>' : 'TBA'?>
-        <div class="budget">
-            Budget : <?=$budget?>
-        </div>
-        <a class="status <?=$project['status'] ?? 'err'?>" href="<?=URLROOT . '/Posts/Projects?status=' . ($project['status_id'] ?? '0')?>"><?=$project['status']?></a>
+        <?php endif; ?>
     </div>
     <hr>
     <?php if (($_SESSION['role'] ?? 'visitor') == 'Admin'): ?>
     <div class="btn-column">
-        <a href="<?=URLROOT . '/Admin/Projects/View/' . $project['post_id']?>" class="btn views bg-blue">Go to Admin View Mode</a>
-        <a href="<?=URLROOT . '/Admin/Projects/Edit/' . $project['post_id']?>" class="btn edit bg-yellow">Edit</a>
+        <a href="<?=URLROOT . '/Admin/Events/View/' . $event['post_id']?>" class="btn views bg-blue">Go to Admin View Mode</a>
+        <a href="<?=URLROOT . '/Admin/Events/Edit/' . $event['post_id']?>" class="btn edit bg-yellow">Edit</a>
     </div>
     <?php endif;?>
     <div class="post-details">
         <summary class="shadow">
-            <?=$project['short_description'] ?? 'Not found'?>
+            <?=$event['short_description'] ?? 'Not found'?>
         </summary>
         <p>
-           &emsp;&emsp;&emsp;&emsp;<?=$project['content'] ?? 'Not found'?>
+           &emsp;&emsp;&emsp;&emsp;<?=$event['content'] ?? 'Not found'?>
         </p>
-        </div>
-        <?php if (!empty($project['other_parties'] ?? false)): ?>
-        <div class="other">
-            <h4>Other Parties involved in project</h4>
-            <p>
-                <?=$project['other_parties'] ?? 'Not found'?>
-            </p>
-        </div>
-        <?php endif;?>
+    </div>
 <?php if (!empty($attachments)): ?>
     <div class="attachments-container shadow">
         <h4>Attached Files</h4>
@@ -91,35 +74,30 @@ if (!empty($images)):
 endif;?>
     <div class="row">
         <div class="author">
-            <?=$project['posted_by'] ?? 'Not found'?>
+            <?=$event['posted_by'] ?? 'Not found'?>
         </div>
         <div class="date">
-            <?=$formatter->format(IntlCalendar::fromDateTime($project['posted_time'] ?? '2022-01-01', null))?>
+            <?=$formatter->format(IntlCalendar::fromDateTime($event['posted_time'] ?? '2022-01-01', null))?>
         </div>
-        <a class="category"
-        href="<?=URLROOT . '/Posts/projects?category=' . ($announcement['ann_type_id'] ?? '0')?>"
-        > <?=$project['ann_type'] ?? 'Not Found'?> </a>
         <div class="views">
-            <?=$project['views'] ?? 'Not found'?>
+            <?=$event['views'] ?? 'Not found'?>
         </div>
     </div>
-    <?php if (!empty($edits)): ?>
+<?php if (!empty($edits)): ?>
     <hr>
     <div class="edit-container">
         <h3>
             Edit History
         </h3>
 <?php
-$current = $project;
+$current = $event;
 $aliases = [
-    'title' => 'Title',
-    'short_description' => 'Short Description',
-    'content' => 'Content',
-    'other_parties' => 'Other Parties',
-    'start_date' => 'Starting Date',
-    'expected_end_date' => 'Expected End Date',
-    'budget' => 'Budget',
-    'status' => 'Status',
+    'title' => 'event title',
+    'short_description' => 'Summary',
+    'content' => 'event Description',
+    'status' => 'event Status',
+    'start_time' => 'Start Time',
+    'end_time' => 'End Time',
 ];
 $hide_pin = [
     'hidden' => [
@@ -146,13 +124,13 @@ foreach ($edits as $edit):
 	        </div>
 	        <ul>
 	<?php foreach ($edit as $field => $value):
-        if (!is_null($value) && $current[$field] != $value): ?>
-				                <?php if ($field != 'hidden' && $field != 'pinned'): ?>
+        if ((!is_null($value) || $field == 'start_time' || $field == 'end_time') && $current[$field] != $value): ?>
+				        <?php if ($field != 'hidden' && $field != 'pinned'): ?>
 				            <li>
 				                    changed
 				                    <b><?=$aliases[$field] ?? 'UNDEFINED'?></b>
 				                    from
-				                    "<?=$value?>"
+				                    "<?=is_null($value) ? 'TBA' : $value?>"
 				                    to
 				                    "<?=$current[$field]?>".
 				                <?php else: ?>
@@ -167,7 +145,7 @@ endforeach;?>
 
     <?php endforeach;?>
 <?php endif;?>
-<?php endif;?>
+<?php endif; ?>
 </div>
 </div>
 <script>
@@ -176,7 +154,7 @@ endforeach;?>
         container:document.createElement('div'),
         children:document.createElement('div')
     };
-    check.container.innerHTML = "This project's information has been edited. Click here to view the edit history."
+    check.container.innerHTML = "This event's information has been edited. Click here to view the edit history."
     check.container.classList.add('toggle');
     check.children.classList.add('invisible');
     edits[0].parentNode.insertBefore(check.children,edits[0]);
@@ -190,7 +168,7 @@ endforeach;?>
         if(!check.children.classList.contains('invisible')) {
             check.container.innerHTML = "See less";
         } else {
-            check.container.innerHTML = "This announcement has been edited. Click here to view the edit history.";
+            check.container.innerHTML = "This event has been edited. Click here to view the edit history.";
         }
     }
     check.container.addEventListener('click',changeVisibility)

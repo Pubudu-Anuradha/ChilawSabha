@@ -35,12 +35,7 @@
                         </ul>
                     <?php endif; ?>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Events</a>
-                <ul class="dropdown-content">
-                    <li>Christmas Celebration</li>
-                    <li>New Year Celebration</li>
-                    <li>Deepavali Celebration</li>
-                </ul>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Events' ?>" class="dropbtn">Events</a>
             </li>
             <li class="dropdown"><a href="#" class="dropbtn">Services</a>
                 <ul class="dropdown-content">
