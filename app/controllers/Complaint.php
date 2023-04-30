@@ -49,7 +49,7 @@ class Complaint extends Controller
 
         $this->view('Complaint/newComplaints', 'New Complaints', [
             'newComplaints' => $model->get_new_complaints()
-        ], styles: ['Complaint/complaint', 'main']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function allAcceptedComplaints()
@@ -57,7 +57,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints', [
             'allComplaints' => $model->get_all_accepted_complaints()
-        ], styles: ['Complaint/complaint', 'main']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function resolvedComplaints()
@@ -65,7 +65,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/resolvedComplaints', 'Resolved Complaints', [
             'resolvedComplaints' => $model->get_resolved_complaints()
-        ], styles: ['main', 'Complaint/complaint']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function myWorkingComplaints()
@@ -73,7 +73,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [
             'workingComplaints' => $model->get_working_complaints()
-        ], styles: ['main', 'Complaint/complaint']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function myProcessingClickedComplaint($complaint_id)
@@ -81,7 +81,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/myProcessingClickedComplaint', 'My Working Complaint', [
             'workingComplaint' => $model->get_complaint($complaint_id)
-        ], styles: ['main', 'Complaint/complaint']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function myResolvedClickedComplaint($complaint_id)
@@ -89,7 +89,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/myResolvedClickedComplaint', 'My Resolved Complaint', [
             'resolvedComplaint' => $model->get_complaint($complaint_id)
-        ], styles: ['main', 'Complaint/complaint']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function newClickedComplaint($complaint_id)
@@ -97,16 +97,16 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/newClickedComplaint', 'New Complaint', [
             'newComplaint' => $model->get_complaint($complaint_id)
-        ], styles: ['main', 'Complaint/complaint']);
+        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function otherHandlerProcessingClickedComplaint()
     {
-        $this->view('Complaint/otherHandlerProcessingClickedComplaint', 'Complaints', styles: ['main', 'Complaint/complaint']);
+        $this->view('Complaint/otherHandlerProcessingClickedComplaint', 'Complaints', styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
     public function otherHandlerResolvedClickedComplaint()
     {
-        $this->view('Complaint/otherHandlerResolvedClickedComplaint', 'Complaints', styles: ['main', 'Complaint/complaint']);
+        $this->view('Complaint/otherHandlerResolvedClickedComplaint', 'Complaints', styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 }
