@@ -3,41 +3,22 @@
 
     <?php
     $table = $data['allComplaints'];
+    // if($table['handle_by'])
+    // var_dump($_SESSION['user_id']);
     ?>
+
     <?php Table::Table(
         [
             'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
             'category_name' => "Category", 'complaint_time' => "Date", 'complaint_state' => "Status",
-            'complaint_state' => "Status", 'handle_by' => "Handler"
+            'complaint_state' => "Status", 'handler_name' => "Handler Name"
         ],
         $table['result'],
         'allComplaint',
         actions: [ //TODO
-            'View' => [[URLROOT . '/Complaint/newClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+            'View' => [[URLROOT . '/Complaint/myProcessingClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
-
     ); ?>
+
 </div>
-
-<script>
-    expandSideBar("sub-items-serv", "see-more-bk");
-    var openedModal;
-
-    function closeModal() {
-        openedModal.style.display = "none";
-    }
-
-    function openModal(id, modal) {
-        event.preventDefault();
-        openedModal = document.getElementById(modal);
-        openedModal.querySelector('input[type="number"]').value = id;
-        openedModal.style.display = "block";
-
-        window.onclick = function(event) {
-            if (event.target == openedModal) {
-                openedModal.style.display = "none";
-            }
-        }
-    }
-</script>

@@ -50,10 +50,10 @@ class ComplaintModel extends Model
     public function get_all_accepted_complaints()
     {
         return $this->selectPaginated(
-            'complaint b join complaint_categories c on b.complaint_category=c.category_id',
+            'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
             b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
-            c.category_name as category_name',
+            c.category_name as category_name, d.name as handler_name',
             "complaint_state =2 || complaint_state =3"
         );
     }
@@ -65,7 +65,7 @@ class ComplaintModel extends Model
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,
             b.complaint_time as complaint_time, 
             c.category_name as category_name',
-            "complaint_state =3 && handle_by= 1"
+            "complaint_state =3 && handle_by= 4"
         );
     }
 
@@ -76,7 +76,7 @@ class ComplaintModel extends Model
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,
             b.complaint_time as complaint_time, 
             c.category_name as category_name',
-            "complaint_state =2 && handle_by= 1"
+            "complaint_state =2 && handle_by= 4"
         );
     }
 }

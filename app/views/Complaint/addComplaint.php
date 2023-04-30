@@ -52,7 +52,7 @@ $old = $data['old'] ?? false;
                     'category',
                     selected: $old['complaint_categories'] ?? null
                 ); ?>
-                <?php Text::text('Complaint Description', 'description', 'description', placeholder: 'Enter description', maxlength: 255); ?>
+                <?php Text::textarea('Complaint Description', 'description', 'description', placeholder: 'Enter Description', required: true); ?>
                 <?php Other::submit('Add', 'add', value: 'Add'); ?>
             </form>
         </div>

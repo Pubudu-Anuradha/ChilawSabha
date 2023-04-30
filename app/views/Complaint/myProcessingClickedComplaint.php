@@ -11,9 +11,7 @@
         ],
         $table['result'],
         'working_Complaint',
-        actions: [
-            'Accept' => [['#'], 'btn accept bg-red white', ["openModal(%s,'lost_description')", 'complaint_id']], //TODO 
-        ],
+        actions: [],
         empty: $table['nodata']
 
     ); ?>

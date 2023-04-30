@@ -1,5 +1,5 @@
 <div class="content">
-    <h2 class="topic">Resolved Complaints</h2>
+    <h2 class="topic">My Resolved Complaints</h2>
 
     <?php
     $table = $data['resolvedComplaints'];
