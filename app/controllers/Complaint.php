@@ -11,7 +11,6 @@ class Complaint extends Controller
         $this->view('Complaint/index', 'Complaint', styles: ['Complaint/dashboard', 'main']);
     }
 
-
     public function addComplaint()
     {
         $model = $this->model('ComplaintModel');
@@ -41,7 +40,6 @@ class Complaint extends Controller
             $this->view('Complaint/addComplaint', 'Add New Complaint',  $data, styles: ['Components/form']);
         }
     }
-
 
     public function newComplaints()
     {
