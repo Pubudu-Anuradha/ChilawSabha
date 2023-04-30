@@ -61,7 +61,7 @@ if($users!==false):
                 case 'Active': ?>
                         <button onclick="openModal(<?=$id?>,'disable_description')" class="btn delist bg-red">
                             Disable
-                        </button> 
+                        </button>
                         <?php Modal::Modal(textarea:true, title:"Reason For Disabling", name:'disable_description', id:'disable_description', rows:10, cols:50, required:true, textTitle:'Membership ID', textId:'disabled_member_ID');?>
                     <?php
                         break;
@@ -70,11 +70,11 @@ if($users!==false):
                             Enable
                         </button>
                         <?php Modal::Modal(textarea:true, title:"Reason For Enabling", name:'enable_description', id:'enable_description', rows:10, cols:50, required:true, textTitle:'Membership ID', textId:'enabled_member_ID');?>
-                    <?php 
+                    <?php
                         break;
                 } ?>
         </div>
-        
+
         <?php if ($enable_error) {
             $message = "There was an error while enabling user";
             Errors::generic($message);
@@ -91,16 +91,16 @@ if($users!==false):
     <?php
     if($edit_history !== false && count($edit_history) !== 0): ?>
         <div class="edit-history card">
-            <h2>User Details Edit History</h2>
+            <h2>User Edit History</h2>
             <hr>
     <?php
         $i = 0;
-        foreach($edit_history as $edit): 
+        foreach($edit_history as $edit):
             foreach($fields as $field => $name):
                 if($edit[$field] !== null && $edit[$field] !== $post[$field]): ?>
                 <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
                     on <span class="time"> <?= $edit['time'] ?> </span> :
-                    <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from 
+                    <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from
                     "<?= $edit[$field] ?>" to "<?=$post[$field]?>".
                 </div>
                     <?php $post[$field] = $edit[$field];
@@ -113,7 +113,7 @@ if($users!==false):
     <?php
     if($state_history !== false && count($state_history) !== 0): ?>
         <div class="state-history card">
-            <h2>User's State Change History</h2>
+            <h2>User State Change History</h2>
             <hr>
     <?php
         $i = 0;
@@ -124,8 +124,8 @@ if($users!==false):
                   <?= $state_change['r_time'] ?? 'NO TIMESTAMP ERROR' ?>
               </span> :
                 <?= $state_change['r_name'] ?? 'NO RE-ENABLER ERROR' ?>
-                 Re-enabled this user citing the reason 
-                 "<b><?= $state_change['r_reason'] ?? 'NO REASON ERROR' ?></b>". 
+                 Re-enabled this user citing the reason
+                 "<b><?= $state_change['r_reason'] ?? 'NO REASON ERROR' ?></b>".
             </div>
           <?php endif; ?>
             <div class="record<?= ($i++%2==0) ? ' b':'' ?>">
@@ -133,8 +133,8 @@ if($users!==false):
                   <?= $state_change['d_time'] ?? 'NO TIMESTAMP ERROR' ?>
               </span> :
                 <?= $state_change['d_name'] ?? 'NO DISABLER ERROR' ?>
-                 Disabled this user citing the reason 
-                 "<b><?= $state_change['d_reason'] ?? 'NO REASON ERROR' ?></b>". 
+                 Disabled this user citing the reason
+                 "<b><?= $state_change['d_reason'] ?? 'NO REASON ERROR' ?></b>".
             </div>
     <?php
         endforeach;
@@ -144,7 +144,7 @@ if($users!==false):
 </div>
 <?php else: ?>
 <h1>
-  USER NOT FOUND
+  ERROR RETRIEVING LIBRARY MEMBER INFORMATION
 </h1>
 <?php endif; ?>
 </div>

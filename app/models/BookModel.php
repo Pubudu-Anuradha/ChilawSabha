@@ -88,17 +88,12 @@ class BookModel extends Model
         return $this->update('books', $data, "accession_no=$id");
     }
 
-    public function checkLent($id)
-    {
-        return $this->select('books','state',"accession_no=$id");
-    }
-
     public function getBookbyID($id)
     {
-        return $this->select('book_status s join books b on b.state=s.status_id',
+        return $this->select('book_status s join books b on b.state=s.status_id join category_codes c on b.category_code=c.category_id join sub_category_codes sb on b.sub_category_code=sb.sub_category_id',
             'b.book_id as book_id,b.title as title,b.author as author,b.publisher as publisher,b.place_of_publication as place_of_publication,b.date_of_publication as date_of_publication,
-         b.accession_no as accession_no,b.isbn as isbn,b.price as price,b.pages as pages,b.recieved_date as recieved_date,
-         b.recieved_method as recieved_method,b.state as state',
+         b.accession_no as accession_no,b.isbn as isbn,b.price as price,b.pages as pages,b.recieved_date as recieved_date, c.category_name as category_name,sb.sub_category_name as sub_category_name,
+         b.recieved_method as recieved_method,b.state as state,s.status as status',
             "b.accession_no=$id");
     }
 
@@ -114,6 +109,29 @@ class BookModel extends Model
         return $this->select('edit_book e join users u on u.user_id=e.edited_by',
         'e.title as title,e.author as author,e.publisher as publisher,e.price as price,e.pages as pages,u.name as changed_by,e.edited_time as time',
         "e.accession_no='$acc' ORDER BY e.edited_time DESC");
+    }
+
+    public function getBookStateHistory($id) {
+
+        $acc = mysqli_real_escape_string($this->conn,$id);
+
+        $damage = $this->select('damaged_books db join books b on b.accession_no=db.accession_no join users u1 on u1.user_id=db.damage_recorded_by LEFT JOIN users u2 on db.re_listed_recorded_by=u2.user_id',
+        'db.damaged_description as dm_reason,u1.name as dm_name,db.damaged_record_time as dm_time,db.re_list_description as rc_reason,u2.name as rc_name,db.re_list_record_time as rc_time',
+        "db.accession_no=$acc ORDER BY db.damaged_record_time DESC");
+
+        $lost = $this->select('lost_books lb join books b on b.accession_no=lb.accession_no join users u3 on u3.user_id=lb.lost_record_by LEFT JOIN users u4 on lb.found_record_by=u4.user_id',
+        'lb.lost_description as l_reason,u3.name as l_name,lb.lost_record_time as l_time, lb.found_description as f_reason,u4.name as f_name,lb.found_record_time as f_time',
+        "lb.accession_no=$acc ORDER BY lb.lost_record_time DESC");
+
+        $delist = $this->select('delisted_books deb join books b on b.accession_no=deb.accession_no join users u5 on u5.user_id=deb.delist_record_by',
+        'deb.delist_description as de_reason,u5.name as de_name, deb.delist_record_time as de_time',
+        "deb.accession_no=$acc ORDER BY deb.delist_record_time DESC");
+
+        if(isset($damage['result']) && isset($lost['result']) && isset($delist['result'])){
+            $res = array_merge($damage['result'], $lost['result'], $delist['result']);
+            return $res;
+        }
+        return false;
     }
 
     public function changeState($id, $state, $reason = [])
@@ -152,7 +170,7 @@ class BookModel extends Model
             $reason['damage_record_by'] = $_SESSION['user_id'];
             $res = $this->insert('damaged_books', [
                 'accession_no' => $reason['accession_no'],
-                'damaged_description' => $reason['damaged_description'],
+                'damaged_description' => $reason['damage_description'],
                 'damage_recorded_by' => $reason['damage_record_by'],
             ]);
             if ($res) {
@@ -369,13 +387,13 @@ class BookModel extends Model
             $conditions = implode(' && ', $conditions);
             $conditions = $conditions . ' ORDER BY l.lent_date DESC';
 
-            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join library_staff s on l.lent_by=s.user_id join users usr on usr.user_id=s.user_id LEFT join library_staff stf on l.recieved_by=stf.user_id LEFT join users usrrec on usrrec.user_id=stf.user_id',
+            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
                 'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
                 l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by',
                 $conditions);
         }
         else if (empty($conditions)){
-            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join library_staff s on l.lent_by=s.user_id join users usr on usr.user_id=s.user_id LEFT join library_staff stf on l.recieved_by=stf.user_id LEFT join users usrrec on usrrec.user_id=stf.user_id ORDER BY l.lent_date DESC',
+            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by ORDER BY l.lent_date DESC',
                 'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
                 l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by');
         }

@@ -2,6 +2,7 @@
 
     <?php
         $table = $data['Books'];
+        $found_error = $data['found_error'] ?? false;
         $categories = $data['Category']['result'] ?? [];
         $category_arr = ['All' => "All"];
         foreach ($categories as $category){
@@ -23,6 +24,12 @@
         ],
     ]);?>
 
+    <?php if ($found_error) {
+        $message = "There was an error while Marking as Found";
+        Errors::generic($message);
+    }
+    ?>
+    
     <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','lost_description' => 'Description'],
         $table['result'], 'lostBooks',
         actions:[

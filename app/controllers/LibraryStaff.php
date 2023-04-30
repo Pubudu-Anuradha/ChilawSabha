@@ -82,7 +82,7 @@ class LibraryStaff extends Controller
                 //extend function
                 if(!isset($_POST['recieveFlag'])){
                     //only allow extending at the due date for 3 times max
-                    $model->extendDueDate($userStat['result']);               
+                    $model->extendDueDate($userStat['result']);
                 }
                 //recieve related funtion
                 else if(isset($_POST['recieveFlag'])){
@@ -244,7 +244,9 @@ class LibraryStaff extends Controller
                     'page|?',
                     'size',
                     'delist_description|?',
-                    'delist_accession_no|?'
+                    'delist_accession_no|?',
+                    'damage_accession_no|?',
+                    'damage_description|?'
                 ], 'confirm');
                 $data['errors'] = $err;
                 if(count($err) == 0){
@@ -266,13 +268,39 @@ class LibraryStaff extends Controller
                     'page|?',
                     'size',
                     'lost_description|?',
-                    'lost_accession_no|?'
+                    'lost_accession_no|?',
+                    'damage_accession_no|?',
+                    'damage_description|?'
                 ], 'confirm');
                 $data['errors'] = $err;
                 if(count($err) == 0){
                     if ($model->changeState($_GET['delist_accession_no'], 3, $valid) == false) {
                         $_GET['delist_accession_no'] = null;
                         $_GET['delist_description'] = null;
+                        $error = true;
+                    }
+                }
+            }
+            else if ($_GET['damage_description'] != null && $_GET['damage_accession_no'] != null) {
+              $_GET['damage_accession_no'] = intval($_GET['damage_accession_no']);
+                [$valid, $err] = $this->validateInputs($_GET, [
+                    'damage_accession_no|i[0:]',
+                    'damage_description|l[:255]',
+                    'url',
+                    'search|?',
+                    'category_name',
+                    'page|?',
+                    'size',
+                    'lost_description|?',
+                    'lost_accession_no|?',
+                    'delist_description|?',
+                    'delist_accession_no|?',
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_GET['damage_accession_no'], 5, $valid) == false) {
+                        $_GET['damage_accession_no'] = null;
+                        $_GET['damage_description'] = null;
                         $error = true;
                     }
                 }
@@ -285,6 +313,10 @@ class LibraryStaff extends Controller
                 'Delist' => ($_GET['delist_description'] != null && $_GET['delist_accession_no'] != null) ?
                 $model->getBookbyID($_GET['delist_accession_no']) : false,
                 'delist_error' => $error,
+
+                'Damaged' => ($_GET['damage_description'] != null && $_GET['damage_accession_no'] != null) ?
+                $model->getBookbyID($_GET['damage_accession_no']) : false,
+                'damage_error' => $error,
 
                 'Books' => $model->getBooks(), 'Category' => $model->get_categories()
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
@@ -358,7 +390,7 @@ class LibraryStaff extends Controller
             }
 
             $this->view('LibraryStaff/Lostbooks', 'Lost Books', [
-                'Lost' => ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) ?
+                'Found' => ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) ?
                 $model->getBookbyID($_GET['found_accession_no']) : false,
                 'found_error' => $error,
                 'Books' => $model->getBooks([4]), 'Category' => $model->get_categories()
@@ -407,7 +439,7 @@ class LibraryStaff extends Controller
             }
 
             $this->view('LibraryStaff/Damagedbooks', 'Damaged Books', [
-                'Lost' => ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) ?
+                'Reconditioned' => ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) ?
                 $model->getBookbyID($_GET['recondition_accession_no']) : false,
                 'recondition_error' => $error,
                 'Books' => $model->getBooks([5]),'Category' => $model->get_categories()
@@ -530,7 +562,7 @@ class LibraryStaff extends Controller
 
             $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addLibraryUser($valid)], $data);
             $this->view('LibraryStaff/Addusers', 'Add New Library User', $data, ['LibraryStaff/index', 'Components/form']);
-        } 
+        }
         else {
             $this->view('LibraryStaff/Addusers', 'Add New Library User', styles:['LibraryStaff/index', 'Components/form']);
         }
@@ -599,12 +631,6 @@ class LibraryStaff extends Controller
         $model = $this->model('BookModel');
         $data = [];
         if(isset($_POST['Edit'])){
-            //if mark damage ticked
-            if(isset($_POST['mark_damaged'])){
-                $model->changeState($id,5,["damaged_description" =>"Damaged in Library"]);
-                $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks()], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
-            }
-            else{
                 $changes = [];
                 $current_book = $model->getBookbyID($id)['result'][0];
                 $validator = [
@@ -652,7 +678,6 @@ class LibraryStaff extends Controller
                         }
                     }
                 }
-            }
         }
         if ($id != null) {
             $res = $model->getBookEditHistory($id)['result'] ?? false;
@@ -660,7 +685,402 @@ class LibraryStaff extends Controller
                 $data['edit_history'] = $res;
             }
         }
-        $this->view('LibraryStaff/Editbooks', 'Edit Book', array_merge(['books' => $id != null ? $model->getBookbyID($id) : false, 'state' => $id != null ? $model->checkLent($id) : false],$data), ['LibraryStaff/index', 'Components/form','Admin/index']);
+        $this->view('LibraryStaff/Editbooks', 'Edit Book', array_merge(['books' => $id != null ? $model->getBookbyID($id) : false ],$data), ['LibraryStaff/index', 'Components/form','Admin/index']);
+    }
+
+    public function viewbooks($id=null)
+    {
+        $model = $this->model('BookModel');
+
+        if (isset($_POST['confirm'])) {
+            $error = false;
+
+            if (isset($_POST['lost_description']) && isset($_POST['lost_accession_no']) && $_POST['lost_description'] != null && $_POST['lost_accession_no'] != null) {
+
+              $_POST['lost_accession_no'] = intval($_POST['lost_accession_no']);
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'lost_accession_no|i[0:]',
+                    'lost_description|l[:255]',
+                    'delist_description|?',
+                    'delist_accession_no|?',
+                    'damage_accession_no|?',
+                    'damage_description|?'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['lost_accession_no'], 4, $valid) == false) {
+                        $_POST['lost_accession_no'] = null;
+                        $_POST['lost_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                //create the order of state changes
+                $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+                if($state_history){
+                    $date = [];
+                    foreach ($state_history as $value){
+                        if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                            if($value['dm_time'] ?? false){
+                                $date[] = $value['dm_time'];
+                            }
+                            else if($value['l_time'] ?? false){
+                                $date[] = $value['l_time'];
+                            }
+                            else if($value['de_time'] ?? false){
+                                $date[] = $value['de_time'];
+                            }
+                        }
+                    }
+                    if(rsort($date) ?? false){
+                        $state_order = [];
+                        foreach($date as $val){
+                            foreach ($state_history as $value){
+                                if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                    if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewbooks', 'View Book', [
+                    'Lost' => ($_POST['lost_description'] != null && $_POST['lost_accession_no'] != null) ? $model->getBookbyID($_POST['lost_accession_no']) : false,
+                    'lost_error' => $error,
+                    'acc' => $id,
+                    'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($state_order ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+            }
+
+            else if (isset($_POST['delist_description']) && isset($_POST['delist_accession_no']) && $_POST['delist_description'] != null && $_POST['delist_accession_no'] != null) {
+
+              $_POST['delist_accession_no'] = intval($_POST['delist_accession_no']);
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'delist_accession_no|i[0:]',
+                    'delist_description|l[:255]',
+                    'lost_description|?',
+                    'lost_accession_no|?',
+                    'damage_accession_no|?',
+                    'damage_description|?'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['delist_accession_no'], 3, $valid) == false) {
+                        $_POST['delist_accession_no'] = null;
+                        $_POST['delist_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                //create the order of state changes
+                $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+                if($state_history){
+                    $date = [];
+                    foreach ($state_history as $value){
+                        if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                            if($value['dm_time'] ?? false){
+                                $date[] = $value['dm_time'];
+                            }
+                            else if($value['l_time'] ?? false){
+                                $date[] = $value['l_time'];
+                            }
+                            else if($value['de_time'] ?? false){
+                                $date[] = $value['de_time'];
+                            }
+                        }
+                    }
+                    if(rsort($date) ?? false){
+                        $state_order = [];
+                        foreach($date as $val){
+                            foreach ($state_history as $value){
+                                if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                    if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                $this->view('LibraryStaff/Viewbooks', 'View Book', [
+                    'Delist' => ($_POST['delist_description'] != null && $_POST['delist_accession_no'] != null) ? $model->getBookbyID($_POST['delist_accession_no']) : false,
+                    'delist_error' => $error,
+                    'acc' => $id,
+                    'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($state_order ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+            }
+
+            else if (isset($_POST['found_description']) && isset($_POST['found_accession_no']) && $_POST['found_description'] != null && $_POST['found_accession_no'] != null) {
+
+              $_POST['found_accession_no'] = intval($_POST['found_accession_no']);
+              $_POST['type'] = 'found';
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'found_accession_no|i[0:]',
+                    'found_description|l[:255]',
+                    'type|l[5:5]'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['found_accession_no'], 1, $valid) == false) {
+                        $_POST['found_accession_no'] = null;
+                        $_POST['found_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                //create the order of state changes
+                $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+                if($state_history){
+                    $date = [];
+                    foreach ($state_history as $value){
+                        if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                            if($value['dm_time'] ?? false){
+                                $date[] = $value['dm_time'];
+                            }
+                            else if($value['l_time'] ?? false){
+                                $date[] = $value['l_time'];
+                            }
+                            else if($value['de_time'] ?? false){
+                                $date[] = $value['de_time'];
+                            }
+                        }
+                    }
+                    if(rsort($date) ?? false){
+                        $state_order = [];
+                        foreach($date as $val){
+                            foreach ($state_history as $value){
+                                if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                    if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewbooks', 'View Book', [
+                    'Found' => ($_POST['found_description'] != null && $_POST['found_accession_no'] != null) ? $model->getBookbyID($_POST['found_accession_no']) : false,
+                    'found_error' => $error,
+                    'acc' => $id,
+                    'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($state_order ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+            }
+
+            else if (isset($_POST['recondition_description']) && isset($_POST['recondition_accession_no']) && $_POST['recondition_description'] != null && $_POST['recondition_accession_no'] != null) {
+
+              $_POST['recondition_accession_no'] = intval($_POST['recondition_accession_no']);
+              $_POST['type'] = 'conditioned';
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'recondition_accession_no|i[0:]',
+                    'recondition_description|l[:255]',
+                    'type|l[11:11]'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['recondition_accession_no'], 1, $valid) == false) {
+                        $_POST['recondition_accession_no'] = null;
+                        $_POST['recondition_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                //create the order of state changes
+                $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+                if($state_history){
+                    $date = [];
+                    foreach ($state_history as $value){
+                        if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                            if($value['dm_time'] ?? false){
+                                $date[] = $value['dm_time'];
+                            }
+                            else if($value['l_time'] ?? false){
+                                $date[] = $value['l_time'];
+                            }
+                            else if($value['de_time'] ?? false){
+                                $date[] = $value['de_time'];
+                            }
+                        }
+                    }
+                    if(rsort($date) ?? false){
+                        $state_order = [];
+                        foreach($date as $val){
+                            foreach ($state_history as $value){
+                                if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                    if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewbooks', 'View Book', [
+                    'Reconditioned' => ($_POST['recondition_description'] != null && $_POST['recondition_accession_no'] != null) ? $model->getBookbyID($_POST['recondition_accession_no']) : false,
+                    'recondition_error' => $error,
+                    'acc' => $id,
+                    'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($state_order ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+            }
+
+            else if (isset($_POST['damage_description']) && isset($_POST['damage_accession_no']) && $_POST['damage_description'] != null && $_POST['damage_accession_no'] != null) {
+
+              $_POST['damage_accession_no'] = intval($_POST['damage_accession_no']);
+
+                [$valid, $err] = $this->validateInputs($_POST, [
+                    'damage_accession_no|i[0:]',
+                    'damage_description|l[:255]',
+                    'lost_description|?',
+                    'lost_accession_no|?',
+                    'delist_description|?',
+                    'delist_accession_no|?'
+                ], 'confirm');
+                $data['errors'] = $err;
+                if(count($err) == 0){
+                    if ($model->changeState($_POST['damage_accession_no'], 5, $valid) == false) {
+                        $_POST['damage_accession_no'] = null;
+                        $_POST['damage_description'] = null;
+                        $error = true;
+                    }
+                }
+
+                //create the order of state changes
+                $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+                if($state_history){
+                    $date = [];
+                    foreach ($state_history as $value){
+                        if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                            if($value['dm_time'] ?? false){
+                                $date[] = $value['dm_time'];
+                            }
+                            else if($value['l_time'] ?? false){
+                                $date[] = $value['l_time'];
+                            }
+                            else if($value['de_time'] ?? false){
+                                $date[] = $value['de_time'];
+                            }
+                        }
+                    }
+                    if(rsort($date) ?? false){
+                        $state_order = [];
+                        foreach($date as $val){
+                            foreach ($state_history as $value){
+                                if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                    if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                    else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                        $state_order[] = $value;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $this->view('LibraryStaff/Viewbooks', 'View Book', [
+                    'Damaged' => ($_POST['damage_description'] != null && $_POST['damage_accession_no'] != null) ? $model->getBookbyID($_POST['damage_accession_no']) : false,
+                    'damage_error' => $error,
+                    'acc' => $id,
+                    'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                    'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                    'state_history' => ($id != null) ? ($state_order ?? false) : false],
+                    styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+            }
+
+        }
+        else{
+
+            //create the order of state changes
+            $state_history = ($id != null) ? ($model->getBookStateHistory($id) ?? false) : false;
+            if($state_history){
+                $date = [];
+                foreach ($state_history as $value){
+                    if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                        if($value['dm_time'] ?? false){
+                            $date[] = $value['dm_time'];
+                        }
+                        else if($value['l_time'] ?? false){
+                            $date[] = $value['l_time'];
+                        }
+                        else if($value['de_time'] ?? false){
+                            $date[] = $value['de_time'];
+                        }
+                    }
+                }
+                if(rsort($date) ?? false){
+                    $state_order = [];
+                    foreach($date as $val){
+                        foreach ($state_history as $value){
+                            if(isset($value['dm_time']) || isset($value['l_time']) || isset($value['de_time'])){
+                                if(($value['dm_time'] ?? false) && $value['dm_time'] == $val){
+                                    $state_order[] = $value;
+                                }
+                                else if(($value['l_time'] ?? false) && $value['l_time'] == $val){
+                                    $state_order[] = $value;
+                                }
+                                else if(($value['de_time'] ?? false) && $value['de_time'] == $val){
+                                    $state_order[] = $value;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            $data = [
+                'acc' => $id,
+                'books' => ($id != null) ? ($model->getBookbyID($id)['result'][0] ?? false) : false,
+                'edit_history' => ($id != null) ? ($model->getBookEditHistory($id)['result'] ?? false) : false,
+                'state_history' => ($id != null) ? ($state_order ?? false) : false,
+            ];
+
+            $this->view('LibraryStaff/Viewbooks', 'View Book', $data, styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);
+        }
     }
 
     public function editusers($id = null)
@@ -763,8 +1183,8 @@ class LibraryStaff extends Controller
                 }
 
                 $this->view('LibraryStaff/Viewusers', 'View User', [
-                    'Enabled' => ($_POST['enable_description'] != null && $_POST['enabled_member_ID'] != null) ? $model->getUserbyID($_POST['enabled_member_ID']) : false, 
-                    'enable_error' => $error, 
+                    'Enabled' => ($_POST['enable_description'] != null && $_POST['enabled_member_ID'] != null) ? $model->getUserbyID($_POST['enabled_member_ID']) : false,
+                    'enable_error' => $error,
                     'user_id' => $id,
                     'user' => ($id != null) ? ($model->getUserbyID($id)['result'][0] ?? false) : false,
                     'edit_history' => ($id != null) ? ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
@@ -795,8 +1215,8 @@ class LibraryStaff extends Controller
                 }
 
                 $this->view('LibraryStaff/Viewusers', 'View User', [
-                    'Disabled' => ($_POST['disable_description'] != null && $_POST['disabled_member_ID'] != null) ? $model->getUserbyID($_POST['disabled_member_ID']) : false, 
-                    'disable_error' => $error, 
+                    'Disabled' => ($_POST['disable_description'] != null && $_POST['disabled_member_ID'] != null) ? $model->getUserbyID($_POST['disabled_member_ID']) : false,
+                    'disable_error' => $error,
                     'user_id' => $id,
                     'user' => ($id != null) ? ($model->getUserbyID($id)['result'][0] ?? false) : false,
                     'edit_history' => ($id != null) ? ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
@@ -807,12 +1227,9 @@ class LibraryStaff extends Controller
         else{
             $data = [
                 'user_id' => $id,
-                'user' => ($id != null) ?
-                ($model->getUserbyID($id)['result'][0] ?? false) : false,
-                'edit_history' => ($id != null) ?
-                ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
-                'state_history' => ($id != null) ?
-                ($model->getMemberStateHistory($current_user['user_id'])['result'] ?? false) : false,
+                'user' => ($id != null) ? ($model->getUserbyID($id)['result'][0] ?? false) : false,
+                'edit_history' => ($id != null) ? ($model->getMemberEditHistory($current_user['user_id'])['result'] ?? false) : false,
+                'state_history' => ($id != null) ? ($model->getMemberStateHistory($current_user['user_id'])['result'] ?? false) : false,
             ];
 
             $this->view('LibraryStaff/Viewusers', 'View User', $data, styles:['LibraryStaff/index', 'Components/modal', 'Components/table', 'Admin/index']);

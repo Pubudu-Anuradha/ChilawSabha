@@ -2,6 +2,9 @@
 
     <?php
         $table = $data['Books'];
+        $lost_error = $data['lost_error'] ?? false;
+        $delist_error = $data['delist_error'] ?? false;
+        $damage_error = $data['damage_error'] ?? false;
         $categories = $data['Category']['result'] ?? [];
         $category_arr = ['All' => "All"];
         foreach ($categories as $category){
@@ -24,11 +27,25 @@
             ]
         ]);?>
 
+        <?php if ($lost_error) {
+            $message = "There was an error while Marking as Lost";
+            Errors::generic($message);
+        }
+        if ($delist_error) {
+            $message = "There was an error while Marking as Delisted";
+            Errors::generic($message);
+        }
+        if ($damage_error) {
+            $message = "There was an error while Marking as Damaged";
+            Errors::generic($message);
+        }
+        ?>
+        
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category'],
             $table['result'],'bookCatalog',
             actions:[
                 'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
-                'Edit'=>[[URLROOT.'/LibraryStaff/Editbooks/%s','accession_no'],'btn edit bg-yellow white',['#']],
+                'Damaged'=>[['#'],'btn damage bg-yellow white',["openModal(%s,'damage_description')",'accession_no']],
                 'Lost'=>[['#'],'btn lost bg-red white',["openModal(%s,'lost_description')",'accession_no']],
                 'Delist'=>[['#'],'btn delist bg-orange white',["openModal(%s,'delist_description')",'accession_no']],
             ],empty:$table['nodata']
@@ -36,6 +53,7 @@
         );?>
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'lost_accession_no');?>
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'delist_description',id:'delist_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'delist_accession_no');?>
+        <?php Modal::Modal(textarea:true, title:"Add Description", name:'damage_description', id:'damage_description', rows:10, cols:50, required:true, textTitle:'Book Accession No', textId:'damage_accession_no');?>
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
 </div>

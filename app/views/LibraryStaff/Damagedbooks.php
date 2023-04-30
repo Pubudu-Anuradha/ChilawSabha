@@ -2,6 +2,7 @@
 
     <?php
         $table = $data['Books'];
+        $recondition_error = $data['recondition_error'] ?? false;
         $categories = $data['Category']['result'] ?? [];
         $category_arr = ['All' => "All"];
         foreach ($categories as $category){
@@ -22,6 +23,12 @@
             'Choose by Category', $category_arr,
         ],
     ]);?>
+
+    <?php if ($recondition_error) {
+        $message = "There was an error while Marking as Reconditioned";
+        Errors::generic($message);
+    }
+    ?>
 
     <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','damaged_description' => 'Description'],
         $table['result'], 'damagedBooks',
