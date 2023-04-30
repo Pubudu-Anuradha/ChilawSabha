@@ -389,13 +389,13 @@ class BookModel extends Model
 
             return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
                 'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
-                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by',
+                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost',
                 $conditions);
         }
         else if (empty($conditions)){
             return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by ORDER BY l.lent_date DESC',
                 'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
-                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by');
+                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost');
         }
 
 

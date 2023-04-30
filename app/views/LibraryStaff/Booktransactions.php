@@ -7,8 +7,15 @@
         if(isset($table['result'])):
             foreach ($transactions as $transaction):
                 if($transaction['recieved_date'] == null && $transaction['recieved_by'] == null):
-                    $transactions[$transaction_num]['recieved_date'] = 'Not Recieved';
-                    $transactions[$transaction_num]['recieved_by'] = 'Not Recieved';
+                    $transactions[$transaction_num]['state'] = 'Not Recieved';
+                    $transactions[$transaction_num]['recieved_date'] = 'Yet To Recieve';
+                    $transactions[$transaction_num]['recieved_by'] = 'Yet To Recieve';
+                elseif ($transaction['damage'] == 1):
+                    $transactions[$transaction_num]['state'] = 'Damaged';
+                elseif ($transaction['lost'] == 1):
+                    $transactions[$transaction_num]['state'] = 'Lost';
+                else:
+                    $transactions[$transaction_num]['state'] = 'Recieved';
                 endif;
             $transaction_num = $transaction_num + 1;
             endforeach;
@@ -48,7 +55,7 @@
         ]);?>
 
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','borrowed_by'=>'Borrowed By','lent_date'=>'Borrowed Date',
-        'lent_by'=>'Lent By','due_date'=>'Due Date','recieved_date'=>'Recieved Date','recieved_by'=>'Recieved By'],
+        'lent_by'=>'Lent By','due_date'=>'Due Date','state'=>'Status','recieved_date'=>'Recieved Date','recieved_by'=>'Recieved By'],
             $transactions,'bookTransactions',
             actions:[],empty:$table['nodata']
 
@@ -78,7 +85,30 @@
     var getForm = document.getElementById('filter-form');
     var fromDate = document.getElementById('fromDate');
     var toDate = document.getElementById('toDate');
+    var table = document.getElementById('bookTransactions');
     var openedModal;
+
+    for(var i=1; i < table.rows.length; i++){
+        table.rows[i].cells[7].style.textAlign = 'center';
+        table.rows[i].cells[7].style.cursor = 'pointer';
+
+        if (table.rows[i].cells[7].innerHTML. trim() == 'Recieved') {
+            table.rows[i].cells[7].innerHTML = '🟢';
+            table.rows[i].cells[7].title = 'Recieved';
+        }
+        if (table.rows[i].cells[7].innerHTML. trim() == 'Lost') {
+            table.rows[i].cells[7].innerHTML = '🔴';
+            table.rows[i].cells[7].title = 'Lost';
+        }
+        if (table.rows[i].cells[7].innerHTML. trim() == 'Damaged') {
+            table.rows[i].cells[7].innerHTML = '🟠';
+            table.rows[i].cells[7].title = 'Damaged';
+        }
+        if (table.rows[i].cells[7].innerHTML. trim() == 'Not Recieved') {
+            table.rows[i].cells[7].innerHTML = '⚪️';
+            table.rows[i].cells[7].title = 'Not Recieved';
+        }
+    }
 
     //removed default behaviour
     timeframe.removeAttribute('onchange');
