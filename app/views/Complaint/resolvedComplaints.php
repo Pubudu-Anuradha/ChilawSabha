@@ -1,47 +1,82 @@
 <div class="content">
-    <h2>
-        Resolved Complaints
-        <hr class="hr1">
-    </h2>
+    <h2 class="topic">Resolved Complaints</h2>
 
-    <!-- TODO -->
-    <div class="content-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Complaint ID</th>
-                    <th>Complainer Name</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>11</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.15</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn view" onclick='window.location.href="<?= URLROOT . "/Complaint/myResolvedClickedComplaint" ?>"'>View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php
+    $table = $data['resolvedComplaints'];
+    ?>
+    <?php Table::Table(
+        [
+            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+            'category_name' => "Category", 'complaint_time' => "Date"
+        ],
+        $table['result'],
+        'resolvedComplaint',
+        actions: [
+            'View' => [[URLROOT . '/Complaint/myResolvedClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+        ],
+        empty: $table['nodata']
 
-                <tr>
-                    <td>12</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.30</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+    ); ?>
 </div>
+
+<!-- <script>
+    expandSideBar("sub-items-serv", "see-more-bk");
+    var openedModal;
+
+    function generate(id, title, num_of_cloumns) {
+
+        var doc = new jsPDF('p', 'pt', 'a4');
+
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
+
+        var x = (doc.internal.pageSize.width - txtwidth) / 2;
+
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for (let i = 0; i < num_of_cloumns; i++) {
+            columns.push(i);
+        }
+
+
+        doc.autoTable({
+            html: id,
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
+
+    function closeModal() {
+        openedModal.style.display = "none";
+    }
+
+    function openModal(id, modal) {
+        event.preventDefault();
+        openedModal = document.getElementById(modal);
+        openedModal.querySelector('input[type="number"]').value = id;
+        openedModal.style.display = "block";
+
+        window.onclick = function(event) {
+            if (event.target == openedModal) {
+                openedModal.style.display = "none";
+            }
+        }
+    }
+</script> -->

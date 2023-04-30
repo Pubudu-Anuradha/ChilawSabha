@@ -1,46 +1,83 @@
 <div class="content">
-    <h2>
-        All Accepted Complaints
-    </h2>
+    <h2 class="topic">All Accepted Complaints</h2>
 
-    <!-- TODO-> -->
     <?php
-    $table = $data['complaints'];
+    $table = $data['allComplaints'];
     ?>
-    <div class="content-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Complaint ID</th>
-                    <th>Complainer Name</th>
-                    <th>Category</th>
-                    <th>Handler Name</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!$table['nodata'] && !$table['error']) :
-                    foreach ($table['result'] as $ann) : ?>
-                        <tr>
-                            <td><?= $ann['id'] ?></td>
-                            <td><?= $ann['name'] ?></td>
-                            <td><?= $ann['category'] ?></td>
-                            <td><?= $ann['author'] ?></td>
-                            <td><?= $ann['date'] ?></td>
-                            <td><?= $ann['category'] ?></td>
-                            <td>
-                                <div class="btn-column">
-                                    <!-- when click my processing complaint -->
-                                    <a class="btn bg-green  view" href="<?= URLROOT . '/Complaint/myProcessingClickedComplaint/' . $ann['id'] ?>">View</a>
-                                </div>
-                            </td>
-                        </tr>
-                <?php endforeach;
-                endif; ?>
-            </tbody>
-        </table>
-    </div>
+    <?php Table::Table(
+        [
+            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+            'category_name' => "Category", 'complaint_time' => "Date", 'complaint_state' => "Status",
+            'complaint_state' => "Status", 'handle_by' => "Handler"
+        ],
+        $table['result'],
+        'allComplaint',
+        actions: [ //TODO
+            'View' => [[URLROOT . '/Complaint/newClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+        ],
+        empty: $table['nodata']
 
+    ); ?>
 </div>
+
+<!-- <script>
+    expandSideBar("sub-items-serv", "see-more-bk");
+    var openedModal;
+
+    function generate(id, title, num_of_cloumns) {
+
+        var doc = new jsPDF('p', 'pt', 'a4');
+
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
+
+        var x = (doc.internal.pageSize.width - txtwidth) / 2;
+
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for (let i = 0; i < num_of_cloumns; i++) {
+            columns.push(i);
+        }
+
+
+        doc.autoTable({
+            html: id,
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
+
+    function closeModal() {
+        openedModal.style.display = "none";
+    }
+
+    function openModal(id, modal) {
+        event.preventDefault();
+        openedModal = document.getElementById(modal);
+        openedModal.querySelector('input[type="number"]').value = id;
+        openedModal.style.display = "block";
+
+        window.onclick = function(event) {
+            if (event.target == openedModal) {
+                openedModal.style.display = "none";
+            }
+        }
+    }
+</script> -->

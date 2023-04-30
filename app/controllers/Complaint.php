@@ -8,62 +8,105 @@ class Complaint extends Controller
     }
     public function index()
     {
-        $this->view('Complaint/index', 'Complaint', [], ['main', 'complaint']);
+        $this->view('Complaint/index', 'Complaint', styles: ['Complaint/dashboard', 'main']);
     }
-    
-    public function addComplaint($page = 'index', $id = null)
+
+
+    public function addComplaint()
     {
-        
-        
         $model = $this->model('ComplaintModel');
-        $this->view('Complaint/addComplaint', 'Add Complaint',
-        ['AddComplaint' => isset($_POST['submit']) ? $model->AddComplaint($this->validateInputs($_POST, [
-            'name', 'email', 'phone_number', 'address', 'category', 'message',
-        ], 'Submit')) : null], ['main', 'complaint']);
+        $data = ['complaint_categories' => $model->get_categories()['result']];
+
+        if (isset($_POST['Add'])) {
+
+            [$valid, $err] = $this->validateInputs(
+                $_POST,
+                [
+                    'name|l[:255]',
+                    'email|l[:255]|e',
+                    'contact_no|l[10:12]',
+                    'address|l[:255]',
+                    'category',
+                    'description|l[:255]',
+                    'date',
+                ],
+                'Add'
+            );
+            $data['errors'] = $err;
+
+            $data['old'] = $_POST;
+            $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addComplaint($valid)], $data);
+            $this->view('Complaint/addComplaint', 'Add New Complaint', $data, ['Components/form']);
+        } else {
+            $this->view('Complaint/addComplaint', 'Add New Complaint',  $data, styles: ['Components/form']);
+        }
     }
-   
+
+
     public function newComplaints()
     {
-        $this->view('Complaint/newComplaints', 'New Complaints', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+
+        $this->view('Complaint/newComplaints', 'New Complaints', [
+            'newComplaints' => $model->get_new_complaints()
+        ], styles: ['Complaint/complaint', 'main']);
     }
 
     public function allAcceptedComplaints()
     {
-        $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints', [
+            'allComplaints' => $model->get_all_accepted_complaints()
+        ], styles: ['Complaint/complaint', 'main']);
     }
 
     public function resolvedComplaints()
     {
-        $this->view('Complaint/resolvedComplaints', 'Resolved Complaints', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/resolvedComplaints', 'Resolved Complaints', [
+            'resolvedComplaints' => $model->get_resolved_complaints()
+        ], styles: ['main', 'Complaint/complaint']);
     }
 
     public function myWorkingComplaints()
     {
-        $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/myWorkingComplaints', 'My Working Complaints', [
+            'workingComplaints' => $model->get_working_complaints()
+        ], styles: ['main', 'Complaint/complaint']);
     }
 
-    public function myProcessingClickedComplaint()
+    public function myProcessingClickedComplaint($complaint_id)
     {
-        $this->view('Complaint/myProcessingClickedComplaint', 'My Working Complaint', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/myProcessingClickedComplaint', 'My Working Complaint', [
+            'workingComplaint' => $model->get_complaint($complaint_id)
+        ], styles: ['main', 'Complaint/complaint']);
     }
 
-    public function myResolvedClickedComplaint()
+    public function myResolvedClickedComplaint($complaint_id)
     {
-        $this->view('Complaint/myResolvedClickedComplaint', 'My Resolved Complaint', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/myResolvedClickedComplaint', 'My Resolved Complaint', [
+            'resolvedComplaint' => $model->get_complaint($complaint_id)
+        ], styles: ['main', 'Complaint/complaint']);
     }
 
-    public function newClickedComplaint()
+    public function newClickedComplaint($complaint_id)
     {
-        $this->view('Complaint/newClickedComplaint', 'New Complaint', [], ['main', 'complaint']);
+        $model = $this->model('ComplaintModel');
+        $this->view('Complaint/newClickedComplaint', 'New Complaint', [
+            'newComplaint' => $model->get_complaint($complaint_id)
+        ], styles: ['main', 'Complaint/complaint']);
     }
-    
+
     public function otherHandlerProcessingClickedComplaint()
     {
-        $this->view('Complaint/otherHandlerProcessingClickedComplaint', 'Complaints', [], ['main', 'complaint']);
+        $this->view('Complaint/otherHandlerProcessingClickedComplaint', 'Complaints', styles: ['main', 'Complaint/complaint']);
     }
 
     public function otherHandlerResolvedClickedComplaint()
     {
-        $this->view('Complaint/otherHandlerResolvedClickedComplaint', 'Complaints', [], ['main', 'complaint']);
+        $this->view('Complaint/otherHandlerResolvedClickedComplaint', 'Complaints', styles: ['main', 'Complaint/complaint']);
     }
 }

@@ -1,11 +1,28 @@
 <div class="content">
-    <h2>
-        My Working Complaints
-        <hr class="hr1">
-    </h2>
+    <h2 class="topic">My Working Complaints</h2>
 
-    <!-- TODO -->
-    <div class="content-table">
+    <?php
+    $table = $data['workingComplaints'];
+    ?>
+    <?php Table::Table(
+        [
+            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+            'category_name' => "Category", 'complaint_time' => "Date"
+        ],
+        $table['result'],
+        'resolvedComplaint',
+        actions: [
+            'View' => [[URLROOT . '/Complaint/myProcessingClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+        ],
+        empty: $table['nodata']
+
+    ); ?>
+</div>
+
+
+
+<!-- TODO -->
+<!-- <div class="content-table">
         <table>
             <thead>
                 <tr>
@@ -63,9 +80,9 @@
 
             </tbody>
         </table>
-    </div>
+    </div> -->
 
-    <div class="popup popup-confirm">
+<!-- <div class="popup popup-confirm">
         <div id="popupModal" class="popup-modal">
             <div class="popup-content">
                 <div class="close-section-popup"><span class="close-popup" onclick="closeModal()">&times;</span></div>
@@ -80,10 +97,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </div> -->
 
-<script>
+
+<!-- <script>
     var modal = document.getElementById("popupModal");
 
     function closeModal() {
@@ -99,4 +116,66 @@
             modal.style.display = "none";
         }
     }
-</script>
+</script> -->
+
+<!-- <script>
+    expandSideBar("sub-items-serv", "see-more-bk");
+    var openedModal;
+
+    function generate(id, title, num_of_cloumns) {
+
+        var doc = new jsPDF('p', 'pt', 'a4');
+
+        var text = title;
+        var txtwidth = doc.getTextWidth(text);
+
+        var x = (doc.internal.pageSize.width - txtwidth) / 2;
+
+        doc.text(x, 50, text);
+        //to define the number of columns to be converted
+        var columns = [];
+        for (let i = 0; i < num_of_cloumns; i++) {
+            columns.push(i);
+        }
+
+
+        doc.autoTable({
+            html: id,
+            startY: 70,
+            theme: 'striped',
+            columns: columns,
+            columnStyles: {
+                halign: 'left'
+            },
+            styles: {
+                minCellHeight: 30,
+                halign: 'center',
+                valign: 'middle'
+            },
+            margin: {
+                top: 150,
+                bottom: 60,
+                left: 10,
+                right: 10
+            }
+        })
+        doc.save(title.concat('.pdf'));
+    }
+
+    function closeModal() {
+        openedModal.style.display = "none";
+    }
+
+    function openModal(id, modal) {
+        event.preventDefault();
+        openedModal = document.getElementById(modal);
+        openedModal.querySelector('input[type="number"]').value = id;
+        openedModal.style.display = "block";
+
+        window.onclick = function(event) {
+            if (event.target == openedModal) {
+                openedModal.style.display = "none";
+            }
+        }
+    }
+</script> -->
