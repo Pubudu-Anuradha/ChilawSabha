@@ -464,12 +464,148 @@ class Admin extends Controller
             'status' => $model->getStatus() ], ['Components/table', 'posts']);
         }
     }
-    public function Events($page = 'index')
+    public function Events($page = 'index',$id=null)
     {
         $model = $this->model('EventModel');
         switch ($page) {
+            case 'Add':
+                if(isset($_POST['Add'])) {
+                    [$valid,$err] = $this->validateInputs($_POST,[
+                        'title|u[post]|l[:255]',
+                        'short_description|l[:1000]',
+                        'content',
+                        'pinned|?',
+                        'start_time|dt[:]|?',
+                        'end_time|dt[:]|?',
+                        'attachments|?',
+                        'photos|?',
+                    ],'Add');
+
+                    $valid['pinned'] = boolval($valid['pinned'] ?? false) ? 1 : 0;
+
+                    if(isset($valid['start_time'])) {
+                        if(isset($valid['end_time'])) {
+                            $start_time = IntlCalendar::fromDateTime($valid['start_time'],null);
+                            $end_time = IntlCalendar::fromDateTime($valid['end_time'],null);
+                            if($start_time->after($end_time)) {
+                                $err['end_before_start'] = 'The end time cannot be before the start time';
+                            }
+                        }
+                    }else if(isset($valid['end_time'])) {
+                        $err['end_no_start'] = 'You cannot set an end time without a start time';
+                    }
+
+                    if(count($err) == 0) {
+                        var_dump($valid);
+                        $putEvent = $model->putEvent($valid);
+                        if($putEvent !== false) {
+                            header('Location: '.URLROOT.'/Admin/Events/View/'.$putEvent[0]);
+                            die();
+                        }
+                    }
+                    $this->view('Admin/Events/Add','Add a new Event',
+                                ['errors' => $err],['Components/form', 'Components/table']);
+                } else {
+                    $this->view('Admin/Events/Add','Add a new Event',[],['Components/form', 'Components/table']);
+                }
+                break;
+            case 'Edit':
+                $data = [];
+                $post_changes = [];
+                $event_changes = [];
+                $current_post = $model->getEvent($id,true);
+                if(isset($_POST['Edit'])) {
+                    $post_validator = [
+                        'title' => 'title|u[post]|l[:255]',
+                        'short_description' => 'short_description|l[:1000]',
+                        'content' => 'content',
+                        'pinned'=>'pinned|?|i[0:1]',
+                        'hidden'=>'hidden|?|i[0:1]',
+                    ];
+                    $event_validator = [
+                        'start_time'=>'start_time|dt[:]|?',
+                        'end_time'=>'end_time|dt[:]|?',
+                    ];
+
+                    $post_data = $_POST;
+                    $event_data = $_POST;
+
+                    $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
+                    $post_data['hidden'] = boolval($post_data['hidden'] ?? false) ? 1 : 0;
+
+                    foreach($post_validator as $field => $_) {
+                        unset($event_data[$field]);
+                    }
+
+                    foreach($event_validator as $field => $_) {
+                        unset($post_data[$field]);
+                    }
+
+                    foreach ($current_post[0] as $field => $value) {
+                        if(isset($post_data[$field])) {
+                            if($post_data[$field] != $value) {
+                                $post_changes[] = $post_validator[$field];
+                            } else {
+                                unset($post_data[$field]);
+                            }
+                        }
+                        if(isset($event_data[$field])) {
+                            if($event_data[$field] != $value) {
+                                $event_changes[] = $event_validator[$field];
+                            } else {
+                                unset($event_data[$field]);
+                            }
+                        }
+                    }
+
+                    [$valid_post,$err_post] = $this->validateInputs($post_data,$post_changes,'Edit');
+                    [$valid_event,$err_event] = $this->validateInputs($event_data,$event_changes,'Edit');
+
+                    if(isset($valid_event['start_time'])) {
+                        if(isset($valid_event['end_time'])) {
+                            $start_time = IntlCalendar::fromDateTime($valid_event['start_time'],null);
+                            $end_time = IntlCalendar::fromDateTime($valid_event['end_time'],null);
+                            if($start_time->after($end_time)) {
+                                $err_proj['end_before_start'] = 'The end time cannot be before the start time';
+                            }
+                        }
+                    }else if(isset($valid_event['end_time'])) {
+                        if(isset($current_post[0]['start_time'])) {
+                            $start_time = IntlCalendar::fromDateTime($current_post[0]['start_time'],null);
+                            $end_time = IntlCalendar::fromDateTime($valid_event['end_time'],null);
+                            if($start_time->after($end_time)) {
+                                $err_event['end_before_start'] = 'The end time cannot be before the start time';
+                            }
+                        } else {
+                            $err_event['end_no_start'] = '';
+                        }
+                    }
+
+                    $err = array_merge($err_post,$err_event);
+
+                    if(count($err) == 0) {
+                        if((count($valid_post) + count($valid_event) > 0) && $model->editEvent($id,$valid_post,$valid_event)) {
+                            $data['edited'] = true;
+                        } else {
+                            $data['edited'] = false;
+                            var_dump($valid_event,$valid_post);
+                            var_dump(mysqli_error($model->conn));
+                        }
+                    } else {
+                        $data['errors'] = $err;
+                        $data['edited'] = false;
+                    }
+                } else if(isset($_POST['AddPhotos'])) {
+                    $data['AddPhotos'] = $model->addPhotos($id,'photos');
+                } else if(isset($_POST['AddAttach'])) {
+                    $data['AddAttach'] = $model->addAttachments($id,'attachments');
+                }
+                $this->view('Admin/Events/Edit','Edit Event',array_merge($data,[
+                    'event' => $model->getEvent($id,true)
+                ]),['Components/form','Admin/post','Components/table','Admin/index']);
+                break;
             default:
-                $this->view('Admin/Events/index', 'Manage Events', ['events' => []], ['Components/table', 'posts']);
+                $this->view('Admin/Events/index', 'Manage Events', ['events' => $model->getEvents(true)], ['Components/table', 'posts']);
         }
     }
 

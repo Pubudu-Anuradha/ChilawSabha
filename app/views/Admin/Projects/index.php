@@ -13,22 +13,28 @@ foreach ($data['status'] ?? [] as $status) {
 }
 Pagination::top('/Admin/Projects', form_id:'project-table-filter', select_filters:[
     'status' => [
-        'Filter by project status', array_merge(['0' => 'All'], $statuses_assoc),
+        'Filter Project Status', array_merge(['0' => 'All'], $statuses_assoc),
     ],
     'hidden' => [
-        'Filter by visibility', [
+        'Filter visible', [
             2 => 'All',
             0 => 'visible',
             1 => 'hidden',
         ],
     ],
     'pinned' => [
-        'Filter Pinned Projects', [
+        'Filter Pinned', [
             2 => 'All',
             0 => 'not pinned',
             1 => 'pinned',
         ],
     ],
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
 ]);
 Table::Table(['title' => 'Project Title','views'=>'Views', 'posted_time' => 'Time posted', 'status' => 'Status'], $data['projects'][0]['result'] ?? [], actions:[
     'View' => [[URLROOT . '/Admin/Projects/View/%s', 'post_id'], 'bg-blue view'],

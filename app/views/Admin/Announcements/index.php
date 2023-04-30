@@ -22,20 +22,25 @@ Pagination::top('/Admin/Announcements', form_id:'ann-table-filter', select_filte
         'Filter by announcement type', array_merge(['0' => 'All'], $types_assoc),
     ],
     'hidden' => [
-        'Filter by visibility', [
+        'Filter visible', [
             2 => 'All',
             0 => 'visible',
             1 => 'hidden',
         ],
     ],
     'pinned' => [
-        'Filter Pinned Announcements', [
+        'Filter Pinned', [
             2 => 'All',
             0 => 'not pinned',
             1 => 'pinned',
         ],
     ],
-
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
 ]);
 Table::Table(['title' => 'Announcement Title','views' => 'Views', 'posted_time' => 'Time posted', 'ann_type' => 'Type'], $data['announcements']['result'] ?? [], actions:[
     'View' => [[URLROOT . '/Admin/Announcements/View/%s', 'post_id'], 'bg-blue view'],

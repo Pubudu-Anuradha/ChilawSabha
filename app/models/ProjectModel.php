@@ -30,10 +30,6 @@ class ProjectModel extends PostModel{
             unset($data['other_parties']);
         }
 
-        echo "<pre>";
-        var_dump($project,$data);
-        echo "</pre>";
-
         $post_data = $data;
         $post = $this->putPost($post_data, 3);
         if ($post !== false) {
