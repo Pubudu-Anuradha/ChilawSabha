@@ -183,4 +183,22 @@ class EventModel extends PostModel{
         }
         return $post;
     }
+
+    public function getFrontPage() {
+        $table = 'post p join events a join users u
+             on p.post_id=a.post_id and u.user_id=p.posted_by';
+        $columns = 'p.post_id as post_id,
+             p.title as title,
+             p.short_description as short_description,
+             p.content as content,
+             p.pinned as pinned,
+             p.views as views,
+             u.name as posted_by,
+             p.posted_time as posted_time,
+             a.start_time as start_time,
+             a.end_time as end_time';
+        $pinned = $this->select($table,$columns,"p.pinned=1 ORDER BY p.posted_time DESC")['result'] ?? [];
+        $unpinned = $this->select($table,$columns,"p.pinned=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
+        return array_merge($pinned,$unpinned);
+    }
 }

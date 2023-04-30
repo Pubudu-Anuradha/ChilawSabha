@@ -1,6 +1,7 @@
 <?php
 require_once 'app/models/AnnouncementModel.php';
 require_once 'app/models/ProjectModel.php';
+require_once 'app/models/EventModel.php';
 
 class Home extends Controller
 {
@@ -10,17 +11,17 @@ class Home extends Controller
             (new AnnouncementModel)->getFrontPage(),
             [], //TODO: Services
             (new ProjectModel)->getFrontPage(),
-            []  //TODO: Events
+            (new EventModel)->getFrontpage()
         ];
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],
             styles:['Home/index','Components/slideshow']);
     }
-    
+
     public function downloads()
     {
         $this->view('Home/downloads',styles:['Home/downloads']);
     }
-    
+
     public function emergency()
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];

@@ -150,7 +150,40 @@ $formatter = new IntlDateFormatter(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <!-- TODO: GET FROM MODEL -->
+            <?php foreach($events as $event):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a href="<?= URLROOT . '/Posts/Event/' . ($event['post_id'] ?? '0')?>" class="title"><?php if ($event['pinned'] == 1): ?>
+                                <span class="pinned">&#128204;</span>
+                            <?php endif;?>
+                            <?=$event['title'] ?? 'Not Found'?> 
+                        </a>
+                        </div>
+                        <div class="summary">
+                            <?=$event['short_description'] ?? 'Not Found'?>
+                        </div>
+                        <div class="row">
+<?php
+$start_time = $event['start_time'] ? $formatter->format(
+    IntlCalendar::fromDateTime($event['start_time'], null),
+) : 'TBA';
+$end_time = $event['end_time'] ? $formatter->format(
+    IntlCalendar::fromDateTime($event['end_time'], null),
+) : 'TBA';
+?>
+                            <div class="date">
+                                Starting at : <?= $start_time ?>
+                            </div>
+                            <?php if($end_time != 'TBA'): ?>
+                            <div class="date">
+                                Ending at : <?= $end_time ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
         <div class="posts bg-fd-blue">
             <div class="posts-header">
