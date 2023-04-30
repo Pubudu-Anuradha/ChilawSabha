@@ -604,6 +604,11 @@ class Admin extends Controller
                     'event' => $model->getEvent($id,true)
                 ]),['Components/form','Admin/post','Components/table','Admin/index']);
                 break;
+            case 'View':
+                $this->view('Admin/Events/View','Event',[
+                    'event' => $model->getEvent($id,true),
+                ],['Admin/post','Components/table','Admin/index']);
+                break;
             default:
                 $this->view('Admin/Events/index', 'Manage Events', ['events' => $model->getEvents(true)], ['Components/table', 'posts']);
         }

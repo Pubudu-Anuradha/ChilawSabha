@@ -1,29 +1,22 @@
 <div class="content">
-<?php [$project, $images, $attachments, $edits] = $data['project'] !== false ? $data['project'] : [false, false, false, false];
+<?php [$event, $images, $attachments, $edits] = $data['event'] !== false ? $data['event'] : [false, false, false, false];
 $formatter = new IntlDateFormatter(
     'en_US',
     IntlDateFormatter::LONG,
     IntlDateFormatter::SHORT
 );
-
-$dates = new IntlDateFormatter(
-    'en_US',
-    IntlDateFormatter::LONG,
-    IntlDateFormatter::NONE
-);
-?>
-<?php if (empty($project)): ?>
+if (empty($event)): ?>
     <h1>
-        Project not found
+        Event not found
     </h1>
 <?php else: ?>
     <h1>
-        Project : <?=$project['title']?>
+        Event : <?= $event['title'] ?>
     </h1>
     <div class="btn-column">
-        <a href="<?=URLROOT . '/Admin/Projects'?>" class="btn view bg-blue">Go to Projects</a>
-        <a href="<?=URLROOT . '/Admin/Projects/Edit/' . $project['post_id']?>" class="btn edit bg-yellow">Edit</a>
-        <a href="<?=URLROOT . '/Posts/Project/' . $project['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <a href="<?=URLROOT . '/Admin/Events'?>" class="btn view bg-blue">Go to events</a>
+        <a href="<?=URLROOT . '/Admin/Events/Edit/' . $event['post_id']?>" class="btn edit bg-yellow">Edit</a>
+        <a href="<?=URLROOT . '/Posts/Event/' . $event['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
     </div>
     <hr>
     <div class="post-details">
@@ -31,77 +24,40 @@ $dates = new IntlDateFormatter(
             Views
         </div>
         <div class="detail">
-            <?=$project['views'] ?? 'Not found'?>
-        </div>
-        <div class="field">
-            Project Status
-        </div>
-        <div class="detail">
-            <?php
-$status = $project['status'] ?? 'Not found';
-foreach ($data['status'] ?? [] as $state) {
-    if ($state['status_id'] == $status) {
-        $status = $state['project_status'];
-        break;
-    }
-}
-echo $status;
-?>
+            <?=$event['views'] ?? 'Not found'?>
         </div>
         <div class="field">
             Short Description
         </div>
         <div class="detail">
-            <?=$project['short_description'] ?? 'Not found'?>
+            <?=$event['short_description'] ?? 'Not found'?>
         </div>
         <div class="field">
-            Project Description
+            event Description
         </div>
         <div class="detail">
-            <?=$project['content'] ?? 'Not found'?>
+            <?=$event['content'] ?? 'Not found'?>
         </div>
         <div class="field">
             Pinned to front page?
         </div>
         <div class="detail">
-            <?=(($project['pinned'] ?? 0) == 1) ? 'Yes' : 'No'?>
+            <?=(($event['pinned'] ?? 0) == 1) ? 'Yes' : 'No'?>
         </div>
         <div class="field">
             Hidden from public view
         </div>
         <div class="detail">
-            <?=(($project['hidden'] ?? 0) == 1) ? 'Yes' : 'No'?>
+            <?=(($event['hidden'] ?? 0) == 1) ? 'Yes' : 'No'?>
         </div>
         <div class="field">
-            Budget
-        </div>
-        <div class="detail">
-            <span class="rupees"><?php
-$budget = $project['budget'] ?? 'Not found';
-if ($budget != 'Not found') {
-    $budget = number_format($budget, 2);
-    echo $budget;
-} else {
-    echo 'TBA';
-}
-?></span>
-        </div>
-        <?php if ($project['other_parties']): ?>
-        <div class="field">
-            Other Parties involved
-        </div>
-        <div class="detail">
-            <?=$project['other_parties'] ?? 'Not found'?>
-        </div>
-        <?php endif;?>
-        <div class="field">
-            Start Date
+            Start time
         </div>
         <div class="detail">
             <?php
-$time = $project['start_date'] ?? 'Not found';
+$time = $event['start_time'] ?? 'Not found';
 if ($time != 'Not found') {
-    echo $dates->format(new DateTime($time));
+    echo $formatter->format(new DateTime($time));
 } else {
     echo 'TBA';
 }
@@ -112,9 +68,9 @@ if ($time != 'Not found') {
         </div>
         <div class="detail">
             <?php
-$time = $project['expected_end_date'] ?? 'Not found';
+$time = $event['end_time'] ?? 'Not found';
 if ($time != 'Not found') {
-    echo $dates->format(new DateTime($time));
+    echo $formatter->format(new DateTime($time));
 } else {
     echo 'TBA';
 }
@@ -125,7 +81,7 @@ if ($time != 'Not found') {
         </div>
         <div class="detail">
             <?php
-$time = $project['posted_time'] ?? 'Not found';
+$time = $event['posted_time'] ?? 'Not found';
 echo $formatter->format(new DateTime($time));
 ?>
         </div>
@@ -133,7 +89,7 @@ echo $formatter->format(new DateTime($time));
             Posted by
         </div>
         <div class="detail">
-            <?=$project['posted_by'] ?? 'Not found'?>
+            <?=$event['posted_by'] ?? 'Not found'?>
         </div>
     </div>
 <?php if (!empty($images)): ?>
@@ -169,17 +125,15 @@ if (!empty($attachments)): ?>
 <?php if (!empty($edits)): ?>
 <hr>
 <h3>Content Edit History</h3>
-<?php $current = $project;
+<?php $current = $event;
 $current['status'] = $status;
 $aliases = [
-    'title' => 'Project title',
+    'title' => 'event title',
     'short_description' => 'Summary',
-    'content' => 'Project Description',
-    'status' => 'Project Status',
-    'budget' => 'Budget',
-    'other_parties' => 'Other Parties involved',
-    'start_date' => 'Start Date',
-    'expected_end_date' => 'End Date',
+    'content' => 'event Description',
+    'status' => 'event Status',
+    'start_time' => 'Start Time',
+    'end_time' => 'End Time',
 ];
 $hide_pin = [
     'hidden' => [
@@ -231,5 +185,5 @@ endforeach;?>
     </div>
     <?php endforeach;?>
 <?php endif;?>
-<?php endif;?>
+<?php endif; ?>
 </div>
