@@ -78,15 +78,7 @@ class Complaint extends Controller
     {
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/viewComplaint', 'Complaint', [
-            'complaint' => $model->get_complaint($complaint_id)
-        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
-    }
-
-    public function newClickedComplaint($complaint_id)
-    {
-        $model = $this->model('ComplaintModel');
-        $this->view('Complaint/newClickedComplaint', 'New Complaint', [
-            'newComplaint' => $model->get_complaint($complaint_id)
+            'viewComplaint' => $model->get_complaint($complaint_id)
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 }

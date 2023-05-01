@@ -3,10 +3,6 @@
 
     <?php
     $table = $data['allComplaints'];
-    // if($table['handle_by'])
-    // var_dump($table);
-    // if ($table['handle_by'] == $_SESSION['user_id']) {
-    // }
     ?>
 
     <?php Table::Table(
@@ -18,7 +14,7 @@
         $table['result'],
         'allComplaint',
         actions: [ //TODO
-            'View' => [[URLROOT . '/Complaint/myProcessingClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
     ); ?>

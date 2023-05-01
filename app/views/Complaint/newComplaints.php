@@ -13,7 +13,7 @@
         'newComplaint',
         actions: [
             'Accept' => [['#'], 'btn accept bg-red white', ["openModal(%s,'lost_description')", 'complaint_id']], //TODO 
-            'View' => [[URLROOT . '/Complaint/newClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
 

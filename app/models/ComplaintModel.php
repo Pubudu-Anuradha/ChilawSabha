@@ -96,23 +96,43 @@ class ComplaintModel extends Model
 
     public function get_resolved_complaints()
     {
+        $user_id = $_SESSION['user_id'];
         return $this->selectPaginated(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,
             b.complaint_time as complaint_time, 
             c.category_name as category_name',
-            "complaint_state =3 && handle_by= 4"
+            "complaint_state =3 && handle_by= $user_id"
         );
     }
 
     public function get_working_complaints()
     {
+        $user_id = $_SESSION['user_id'];
         return $this->selectPaginated(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,
             b.complaint_time as complaint_time, 
             c.category_name as category_name',
-            "complaint_state =2 && handle_by= 4"
+            "complaint_state =2 && handle_by= $user_id"
         );
     }
+
+    //     public function acceptComplaint($id) {
+    //         $user_id = $_SESSION['user_id'];
+    //         $stmt = 'UPDATE complaint SET complaint_state=2, handle_by=?, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=?';
+    //         $stmt = $this->conn->prepare($stmt);
+    //         $stmt->bind_param('ii', $user_id, $id);
+    //         $res = $stmt->execute();
+    //         $accept = [
+    //             'success' => $res == true && $stmt->affected_rows != 0,
+    //             'error' => $res == false,
+    //             'rows' => $res ? $stmt->affected_rows : false,
+    //             'errmsg' => $res == false ? $stmt->error : false,
+    //         ];
+    //         if($accept['success']) {
+    //             header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
+    //         }
+    //     }
+
 }
