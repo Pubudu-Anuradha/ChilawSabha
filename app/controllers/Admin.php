@@ -304,6 +304,32 @@ class Admin extends Controller
     {
         $model = $this->model('ServiceModel');
         switch ($page) {
+            case 'Add':
+                if(isset($_POST['Add'])) {
+                    ?><pre><?php var_dump($_POST) ?></pre><?php
+                    // [$valid,$err] = $this->validateInputs($_POST,[
+                    //     'title|u[post]|l[:255]',
+                    //     'short_description|l[:1000]',
+                    //     'content',
+                    //     'pinned|?',
+                    //     'attachments|?',
+                    //     'photos|?',
+                    // ],'Add');
+                    // if(count($err) == 0) {
+                    //     $this->view('Admin/Services/Add','Add a new Service',
+                    //                 [$model->putService($valid),$valid,$err,$_FILES],
+                    //                 ['Components/form','Components/table']);
+                    // } else {
+                    //     $this->view('Admin/Services/Add','Add a new Service',
+                    //                 ['old'=>$_POST,'errors' => $err],['Components/form', 'Components/table']);
+                    // }
+                    $this->view('Admin/Services/Add','Add a new Service',
+                                [],['Components/form', 'Components/table']);
+                } else {
+                    $this->view('Admin/Services/Add','Add a new Service',
+                                [],['Components/form', 'Components/table']);
+                }
+                break;
             default:
                 $this->view('Admin/Services/index', 'Manage Announcements', ['services' => []], ['Components/table', 'posts']);
         }
