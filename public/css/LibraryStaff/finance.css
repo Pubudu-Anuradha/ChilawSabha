@@ -1,0 +1,124 @@
+.fine{
+    display: flex;
+    gap: 1rem;
+}
+
+.fine-amount{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    background-color: var(--fadedblue);
+}
+
+.fine-amount-options{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fine-value{
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.fine-form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    border-radius: 10px;
+    padding: 1rem 4rem;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    background-color: var(--fadedblue);
+}
+
+input[type="submit"] {
+  background-color: var(--blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: medium;
+  transition: 200ms ease-in-out;
+  width: max-content;
+}
+
+.submitButton>input:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.submitButtonContainer {
+  text-align: right;
+}
+
+.submitButton {
+  display: inline-block;
+}
+
+.fine-form .fullForm{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fine-form-input{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.tabs{
+    font-size: 0;
+}
+
+.tab-btn{
+    background-color: var(--lightblue);
+    border: none;
+    outline: none;
+    padding: 1rem 4rem;
+    font-size: medium;
+    text-align: center;
+    transition: 200ms ease-in-out;
+    cursor: pointer;
+    color: white;
+}
+
+.tab-btn:hover{
+    background-color: var(--blue);
+}
+
+.tab-btn.active {
+  background-color: var(--blue);
+}
+
+#payments{
+    border-radius: 5px 0 0 0;
+}
+
+#history{
+    border-radius: 0 5px 0 0;
+}
+
+.tab-content{
+    display: none;
+    animation: fadeEffect 1s;
+    background-color: var(--fadedblue);
+    padding: 1rem 4rem;
+}
+
+.history{
+    background-color: var(--bgcolor);
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

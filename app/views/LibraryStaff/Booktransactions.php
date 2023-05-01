@@ -82,7 +82,6 @@
     expandSideBar("sub-items-analytics", "see-more-an");
 
     var timeframe = document.getElementById('timeframe');
-    var getForm = document.getElementById('filter-form');
     var fromDate = document.getElementById('fromDate');
     var toDate = document.getElementById('toDate');
     var table = document.getElementById('bookTransactions');

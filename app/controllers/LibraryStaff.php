@@ -1238,8 +1238,86 @@ class LibraryStaff extends Controller
 
     public function finance()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Finance', styles:['LibraryStaff/index']);
+        $model = $this->model('LibraryStatModel');
+        $fineModel = $this->model('BookModel');
+
+        if (isset($_POST['Edit'])) {
+                $changes = [];
+                $current_fine = $fineModel->getFineDetails()['result'][0];
+                $validator = [
+                    'delay_month_fine' => 'delay_month_fine|d[0:]',
+                    'delay_after_fine' => 'delay_after_fine|d[0:]',
+                    'damaged_fine' => 'damaged_fine|d[0:]',
+                    'lost_fine' => 'lost_fine|d[0:]',
+                ];
+
+                foreach ($current_fine as $field => $value){
+                    if(isset($_POST[$field])){
+                        if($_POST[$field] !== $value){
+                            if ($validator[$field] ?? false) {
+                                $changes[] = $validator[$field];
+                            }
+                        }
+                        else{
+                            unset($_POST[$field]);
+                        }
+                    }
+                }
+
+                if(count($changes) > 0){
+                    [$valid, $err] = $this->validateInputs($_POST, $changes, 'Edit');
+                    $data['errors'] = $err;
+
+                    if (count($err) == 0) {
+                        $data = array_merge(['Edit' => $fineModel->editFineDetails($valid)], $data);
+
+                        if (($data['Edit']['success'] ?? false) == true) {
+                            $edit_history = [];
+                            foreach ($valid as $field => $value) {
+                                $edit_history[$field] = $current_fine[$field];
+                            }
+
+                            $edit_history = array_merge($edit_history, [
+                                'fine_id' => $current_fine['fine_id'],
+                                'edited_by' => $_SESSION['user_id'],
+                            ]);
+                            if (isset($edit_history['Edit'])) {
+                                unset($edit_history['Edit']);
+                            }
+                            $fineModel->putFineEditHistory($edit_history);
+                        }
+                    }
+                }
+        }
+        else if(file_get_contents('php://input')){
+            $reqJSON = file_get_contents('php://input');
+            if ($reqJSON) {
+                $reqJSON = json_decode($reqJSON, associative:true);
+                if ($reqJSON) {
+                    if (isset($reqJSON['range'])) {
+                        $response = $model->getFineStat($reqJSON);
+                    } else if (isset($reqJSON['fromDate']) && isset($reqJSON['toDate'])) {
+                        $response = $model->getCustomFineStat($reqJSON);
+                    }
+
+                    $this->returnJSON([
+                        $response['result'],
+                    ]);
+                    die();
+                } else {
+                    $this->returnJSON([
+                        'error' => 'Error Parsing JSON',
+                    ]);
+                }
+            }
+        }     
+
+        $res = $fineModel->getFineEditHistory()['result'] ?? false;
+        if (!($res['nodata'] ?? false)) {
+            $data['edit_history'] = $res;
+        }
+
+        $this->view('LibraryStaff/Finance', 'Finance', array_merge(['Fine' => $fineModel->getFineDetails(),'fine_details' => $fineModel->getFinePayments()],$data), styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal','LibraryStaff/finance','Admin/index']);
     }
 
     public function userreport()

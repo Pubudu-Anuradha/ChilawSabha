@@ -462,9 +462,93 @@ class BookModel extends Model
     public function getFineDetails()
     {
         return $this->select('fine_details',
-        'damaged_fine,lost_fine,delay_month_fine,delay_after_fine',
-        'date=(select MAX(date) from fine_details)'
+        'damaged_fine,lost_fine,delay_month_fine,delay_after_fine,fine_id',
+        'added_date=(select MAX(added_date) from fine_details)'
         );
+    }
+
+    public function editFineDetails($details)
+    {
+      return $this->update('fine_details', $details , 'fine_id=1');
+    }
+
+    public function putFineEditHistory($details)
+    {
+      return $this->insert('edit_fine_details', $details);
+    }
+
+    public function getFineEditHistory()
+    {
+      return $this->select('edit_fine_details e join users u on e.edited_by=u.user_id',
+      'e.damaged_fine as damaged_fine, e.lost_fine as lost_fine, e.delay_month_fine as delay_month_fine, e.delay_after_fine as delay_after_fine,e.edited_time as time,u.name as changed_by',
+      'e.fine_id=1 ORDER BY e.edited_time DESC');
+    }
+
+    public function getFinePayments()
+    {
+        $conditions = [];
+
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $search_term = mysqli_real_escape_string($this->conn, $_GET['search']);
+            $search_fields = [
+                'u.name',
+            ];
+            for ($i = 0; $i < count($search_fields); ++$i) {
+                $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
+            }
+
+            array_push($conditions, '(' . implode(' || ', $search_fields) . ')');
+        }
+
+        if (isset($_GET['timeframe']) && !empty($_GET['timeframe']) && $_GET['timeframe'] != 'all') {
+            $timeframe = mysqli_real_escape_string($this->conn, $_GET['timeframe']);
+
+            if($timeframe == 'custom' && !empty($_GET['fromDate']) && !empty($_GET['toDate']) && isset($_GET['fromDate']) && isset($_GET['toDate'])){
+                array_push($conditions, "l.recieved_date >= '{$_GET['fromDate']}' && l.recieved_date <= '{$_GET['toDate']}'");
+                unset($_GET['fromDate']);
+                unset($_GET['toDate']);
+            }
+            else if($timeframe == 'today'){
+                array_push($conditions, "DATE(l.recieved_date)=Date(NOW())");
+            }
+            else if($timeframe == 'yesterday'){
+                array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
+            }
+            else if($timeframe == 'last_7_days'){
+                array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
+            }
+            else if($timeframe == 'last_30_days'){
+                array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
+            }
+            else if($timeframe == 'this_month'){
+                array_push($conditions, "MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())");
+            }
+            else if($timeframe == 'last_month'){
+                array_push($conditions, "MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))");
+            }
+            else if($timeframe == 'this_year'){
+                array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW())");
+            }
+            else if($timeframe == 'last_year'){
+                array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
+            }
+        }
+
+        if(isset($conditions) && !empty($conditions)){
+
+            $conditions = implode(' && ', $conditions);
+            $conditions = $conditions . ' && l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC';
+
+            return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+            'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+            $conditions);
+        }
+        else if (empty($conditions)){
+            return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+            'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+            "l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC");
+        }
+
     }
 
     public function recieveBook($data)

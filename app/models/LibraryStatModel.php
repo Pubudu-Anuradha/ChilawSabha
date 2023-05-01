@@ -50,6 +50,54 @@ class LibraryStatModel extends Model
           "l.lent_date >='".$custom["fromDate"]."' and l.lent_date <='".$custom["toDate"]."' GROUP by c.category_name ORDER BY borrow_count DESC LIMIT 5"
       );
     }
-}
 
-//TODO:get book transactions functions in here
+    public function getFineStat($timeframe)
+    {
+
+        if($timeframe['range'] == 'all'){
+            return $this->select(
+                'lend_recieve_books l',
+                'ROUND(sum(l.fine_amount)/2,2) as fine_amount'
+            );
+        }
+        else if($timeframe['range'] == 'this month'){
+            return $this->select(
+                'lend_recieve_books l',
+                'ROUND(sum(l.fine_amount)/2,2) as fine_amount',
+                'MONTH(l.recieved_date) = MONTH(NOW()) AND YEAR(l.recieved_date) = YEAR(NOW())'
+            );
+        }
+        else if($timeframe['range'] == 'last month'){
+            return $this->select(
+                'lend_recieve_books l',
+                'ROUND(sum(l.fine_amount)/2,2) as fine_amount',
+                'MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))'
+            );
+        }
+        else if($timeframe['range'] == 'this year'){
+            return $this->select(
+                'lend_recieve_books l',
+                'ROUND(sum(l.fine_amount)/2,2) as fine_amount',
+                'YEAR(l.recieved_date) = YEAR(NOW())'
+            );
+        }
+        else if($timeframe['range'] == 'last year'){
+            return $this->select(
+                'lend_recieve_books l',
+                'ROUND(sum(l.fine_amount)/2,2) as fine_amount',
+                'YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))'
+            );
+        }
+
+    }
+
+    public function getCustomFineStat($custom)
+    {
+      return $this->select(
+            'lend_recieve_books l',
+            'ROUND(sum(l.fine_amount)/2,2) as fine_amount',
+            "l.recieved_date >='".$custom["fromDate"]."' and l.recieved_date <='".$custom["toDate"]."'"
+      );
+    }
+
+}
