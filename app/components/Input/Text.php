@@ -37,6 +37,7 @@ class Text
                 <?= $disabled ? "disabled" : '' ?>
             >
         </div>
+    </div>
     <?php
     }
 

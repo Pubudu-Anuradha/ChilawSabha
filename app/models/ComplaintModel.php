@@ -3,7 +3,7 @@ class ComplaintModel extends Model
 {
     public function addComplaint($complaint)
     {
-        return $this->insert('complaint', [
+        $insert_complaint = $this->insert('complaint', [
             'complainer_name' => $complaint['name'],
             'email' => $complaint['email'],
             'contact_no' => $complaint['contact_no'],
@@ -13,6 +13,42 @@ class ComplaintModel extends Model
             'complaint_time' => $complaint['date'],
             'complaint_state' => 1,
         ]);
+
+        if($insert_complaint['success'] ?? false) {
+            // Handle images
+            $id = $this->conn->query('SELECT LAST_INSERT_ID() AS id');
+            $id = $id ? ($id->fetch_all(MYSQLI_ASSOC)[0]['id'] ?? false) : false;
+            if($id !== false) {
+                //Store Images
+                $images = Upload::storeUploadedImages('confidential/Complaint','photos', true);
+                $image_errors = [];
+                if($images !== false)
+                    for($i=0;$i < count($images); ++$i) {
+                        $image_errors[] = [
+                            $images[$i]['error'],
+                            $images[$i]['orig']
+                        ];
+                        if($images[$i]['error'] === false) {
+                            $this->insert('complaint_images',[
+                                'complaint_id' => $id,
+                                'image_file_name' => $images[$i]['name']
+                            ]);
+                        }
+                    }
+                $insert_complaint['id'] = $id;
+                $insert_complaint['image_errors'] = $image_errors;
+                if(count(array_filter($image_errors,function($i){
+                    return $i[0] !== false;
+                })) > 0){
+                    $insert_complaint['success'] = false;
+                    $this->delete('complaint',conditions:"complaint_id='$id'");
+                } else {
+                    header('Location: ' . URLROOT . '/Complaint/newClickedComplaint/' . $id);
+                    die();
+                }
+            }
+        }
+        return $insert_complaint;
     }
 
     public function get_categories()
@@ -38,13 +74,13 @@ class ComplaintModel extends Model
 
     public function get_complaint($id)
     {
-        return $this->selectPaginated(
+        return [$this->select(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id join complaint_status d on d.status_id = b.complaint_state',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.email as email, b.contact_no as contact_no,b.handle_by as handle_by,
             b.complaint_time as complaint_time,b.complaint_state as complaint_state, b.address as address,b.description as description,
             c.category_name as category_name,d.complaint_status as complaint_status',
             "complaint_id=$id"
-        );
+        )['result'] ?? [], $this->select('complaint_images ci join file_original_names orn on orn.name=ci.image_file_name', 'orn.name as name,orn.orig as orig', "complaint_id=$id")['result'] ?? []];
     }
 
     public function get_all_accepted_complaints()

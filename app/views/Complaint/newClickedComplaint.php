@@ -2,39 +2,13 @@
     <h2 class="topic">New Complaints</h2>
 
     <?php
-    $table = $data['newComplaint'];
+    [$complaint,$images] = $data['newComplaint'] ?? [false,false];
     ?>
-    <?php Table::Table(
-        [
-            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name', 'email' => 'Email', 'address' => 'Address',
-            'contact_no' => "Mobile No", 'category_name' => "Complaint Category", 'complaint_time' => "Date", 'description' => "Description", 'complaint_status' => "Status"
-        ],
-        $table['result'],
-        'new_Complaint',
-        actions: [],
-        empty: $table['nodata']
-
-    ); ?>
+    <!-- Delete the below and style the data !! DONT USE A TABLE -->
+    <pre><?php var_dump($complaint); ?></pre>
+    <pre><?php var_dump($images); ?></pre>
+    <?php foreach($images as $image): ?>
+        <!-- path is important -->
+        <img src="<?= URLROOT . '/Access/confidential/Complaint/' . $image['name'] ?>" alt="<?= $image['orig'] ?>" width="200px">
+    <?php endforeach; ?>
 </div>
-
-<script>
-    expandSideBar("sub-items-serv", "see-more-bk");
-    var openedModal;
-
-    function closeModal() {
-        openedModal.style.display = "none";
-    }
-
-    function openModal(id, modal) {
-        event.preventDefault();
-        openedModal = document.getElementById(modal);
-        openedModal.querySelector('input[type="number"]').value = id;
-        openedModal.style.display = "block";
-
-        window.onclick = function(event) {
-            if (event.target == openedModal) {
-                openedModal.style.display = "none";
-            }
-        }
-    }
-</script>
