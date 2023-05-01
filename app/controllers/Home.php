@@ -1,17 +1,27 @@
 <?php
+require_once 'app/models/AnnouncementModel.php';
+require_once 'app/models/ProjectModel.php';
+require_once 'app/models/EventModel.php';
 
 class Home extends Controller
 {
     public function index()
     {
-        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',styles:['Home/index','Components/slideshow']);
+        $posts = [
+            (new AnnouncementModel)->getFrontPage(),
+            [], //TODO: Services
+            (new ProjectModel)->getFrontPage(),
+            (new EventModel)->getFrontpage()
+        ];
+        $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],
+            styles:['Home/index','Components/slideshow']);
     }
-    
+
     public function downloads()
     {
         $this->view('Home/downloads',styles:['Home/downloads']);
     }
-    
+
     public function emergency()
     {
         $data = ['emergency_details' => $this->model('EmergencyModel')->getAllEmergencyDetails()];

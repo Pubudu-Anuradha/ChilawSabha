@@ -291,7 +291,7 @@ class Model
         $result = $res ? $stmt->get_result() : false;
         $result = $result ? $result->fetch_all(MYSQLI_ASSOC) : false;
 
-        return $result !== false && (($result[0]['count'] ?? 0 ) !== 0);
+        return ($result !== false) && (($result[0]['count'] ?? 0 ) !== 0);
     }
 
     public function __destruct()

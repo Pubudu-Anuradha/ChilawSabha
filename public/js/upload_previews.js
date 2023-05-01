@@ -26,7 +26,7 @@ document.querySelectorAll(".file-upload").forEach((upload_div) => {
         " : " +
         bytes_to_readable(upload_button.files[i].size);
       const remove_button = document.createElement("button");
-      remove_button.textContent = "X";
+      remove_button.textContent = "remove";
       file_name.prepend(remove_button);
       new_previews[i].appendChild(file_name);
 
@@ -65,6 +65,15 @@ document.querySelectorAll(".file-upload").forEach((upload_div) => {
       e.target.files = new DataTransfer().files;
       alert("Cannot upload more than 10 files");
     }
+    const dt = new DataTransfer();
+    for (let i=0; i<e.target.files.length; ++i) {
+      if(e.target.files[i].size > 5000000) {
+        alert(e.target.files[i].name + " is too large");
+      } else {
+        dt.items.add(e.target.files[i]);
+      }
+    }
+    e.target.files = dt.files
     setup_previews();
   });
 });
