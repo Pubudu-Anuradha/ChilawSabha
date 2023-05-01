@@ -14,22 +14,22 @@ class ComplaintModel extends Model
             'complaint_state' => 1,
         ]);
 
-        if($insert_complaint['success'] ?? false) {
+        if ($insert_complaint['success'] ?? false) {
             // Handle images
             $id = $this->conn->query('SELECT LAST_INSERT_ID() AS id');
             $id = $id ? ($id->fetch_all(MYSQLI_ASSOC)[0]['id'] ?? false) : false;
-            if($id !== false) {
+            if ($id !== false) {
                 //Store Images
-                $images = Upload::storeUploadedImages('confidential/Complaint','photos', true);
+                $images = Upload::storeUploadedImages('confidential/Complaint', 'photos', true);
                 $image_errors = [];
-                if($images !== false)
-                    for($i=0;$i < count($images); ++$i) {
+                if ($images !== false)
+                    for ($i = 0; $i < count($images); ++$i) {
                         $image_errors[] = [
                             $images[$i]['error'],
                             $images[$i]['orig']
                         ];
-                        if($images[$i]['error'] === false) {
-                            $this->insert('complaint_images',[
+                        if ($images[$i]['error'] === false) {
+                            $this->insert('complaint_images', [
                                 'complaint_id' => $id,
                                 'image_file_name' => $images[$i]['name']
                             ]);
@@ -37,11 +37,11 @@ class ComplaintModel extends Model
                     }
                 $insert_complaint['id'] = $id;
                 $insert_complaint['image_errors'] = $image_errors;
-                if(count(array_filter($image_errors,function($i){
+                if (count(array_filter($image_errors, function ($i) {
                     return $i[0] !== false;
-                })) > 0){
+                })) > 0) {
                     $insert_complaint['success'] = false;
-                    $this->delete('complaint',conditions:"complaint_id='$id'");
+                    $this->delete('complaint', conditions: "complaint_id='$id'");
                 } else {
                     header('Location: ' . URLROOT . '/Complaint/newClickedComplaint/' . $id);
                     die();

@@ -12,7 +12,7 @@
         $table['result'],
         'resolvedComplaint',
         actions: [
-            'View' => [[URLROOT . '/Complaint/myProcessingClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
 

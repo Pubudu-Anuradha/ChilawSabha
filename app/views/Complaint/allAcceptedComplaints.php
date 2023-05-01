@@ -4,7 +4,9 @@
     <?php
     $table = $data['allComplaints'];
     // if($table['handle_by'])
-    // var_dump($_SESSION['user_id']);
+    // var_dump($table);
+    // if ($table['handle_by'] == $_SESSION['user_id']) {
+    // }
     ?>
 
     <?php Table::Table(

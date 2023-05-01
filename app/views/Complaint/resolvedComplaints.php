@@ -12,31 +12,9 @@
         $table['result'],
         'resolvedComplaint',
         actions: [
-            'View' => [[URLROOT . '/Complaint/myResolvedClickedComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
 
     ); ?>
 </div>
-
-<script>
-    expandSideBar("sub-items-serv", "see-more-bk");
-    var openedModal;
-
-    function closeModal() {
-        openedModal.style.display = "none";
-    }
-
-    function openModal(id, modal) {
-        event.preventDefault();
-        openedModal = document.getElementById(modal);
-        openedModal.querySelector('input[type="number"]').value = id;
-        openedModal.style.display = "block";
-
-        window.onclick = function(event) {
-            if (event.target == openedModal) {
-                openedModal.style.display = "none";
-            }
-        }
-    }
-</script>
