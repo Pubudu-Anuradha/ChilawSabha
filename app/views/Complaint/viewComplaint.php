@@ -4,6 +4,7 @@
     <?php
     [$complaint, $images] = $data['viewComplaint'] ?? [false, false];
     $notes = $data['notes']['result'] ?? [];
+    $id = $notes[0]['complaint_id'];
     ?>
     <?php
     if (is_array($complaint) && count($complaint) > 0) {
@@ -53,8 +54,9 @@
                 <h2 class="topic">Notes</h2>
                 <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] && $complaintData['complaint_state'] !== 3 || $complaintData['complaint_state'] == 1) : ?>
                     <!-- <a href="#" class="btn btn accept bg-green white">Add Note</a> -->
-                    <a href="#" class="btn btn-accept bg-green white" onclick="openModal('42', 'add_note')">Add Note</a>
+                    <button onclick="openModal(<?= $id ?>,'add_note')" class="btn btn-accept bg-green white">Add Note</button>
                     <?php Modal::Modal(textarea: true, title: "Add Note", name: 'add_note', id: 'add_note', rows: 10, cols: 50, required: true); ?>
+
                 <?php endif; ?>
             </div>
             <?php if (is_array($notes) && count($notes) > 0) { ?>
