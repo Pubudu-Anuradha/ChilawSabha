@@ -134,21 +134,21 @@ class ComplaintModel extends Model
         );
     }
 
-    //     public function acceptComplaint($id) {
-    //         $user_id = $_SESSION['user_id'];
-    //         $stmt = 'UPDATE complaint SET complaint_state=2, handle_by=?, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=?';
-    //         $stmt = $this->conn->prepare($stmt);
-    //         $stmt->bind_param('ii', $user_id, $id);
-    //         $res = $stmt->execute();
-    //         $accept = [
-    //             'success' => $res == true && $stmt->affected_rows != 0,
-    //             'error' => $res == false,
-    //             'rows' => $res ? $stmt->affected_rows : false,
-    //             'errmsg' => $res == false ? $stmt->error : false,
-    //         ];
-    //         if($accept['success']) {
-    //             header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
-    //         }
-    //     }
-
+    public function acceptComplaint($id)
+    {
+        $user_id = $_SESSION['user_id'];
+        $stmt = "UPDATE complaint SET complaint_state=2, handle_by= $user_id, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=$id";
+        $stmt = $this->conn->prepare($stmt);
+        $stmt->bind_param('ii', $user_id, $id);
+        $res = $stmt->execute();
+        $accept = [
+            'success' => $res == true && $stmt->affected_rows != 0,
+            'error' => $res == false,
+            'rows' => $res ? $stmt->affected_rows : false,
+            'errmsg' => $res == false ? $stmt->error : false,
+        ];
+        if ($accept['success']) {
+            header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
+        }
+    }
 }
