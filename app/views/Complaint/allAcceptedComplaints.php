@@ -13,11 +13,12 @@
         </div>
 
         <div class="tab-content" id="working-complaint">
+            <?php Pagination::Top('/Complaint/allAcceptedComplaints', select_filters: []); ?>
             <?php Table::Table(
                 [
                     'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
-                    'category_name' => "Category", 'complaint_time' => "Date", 'complaint_state' => "Status",
-                    'complaint_state' => "Status", 'handler_name' => "Handler Name"
+                    'category_name' => "Category", 'complaint_time' => "Date",
+                    'handler_name' => "Handler Name"
                 ],
                 $table1['result'],
                 'allComplaint',
@@ -30,11 +31,12 @@
         </div>
 
         <div class="tab-content resolved" id="resolved-complaint">
+            <?php Pagination::Top('/Complaint/allAcceptedComplaints', select_filters: []); ?>
             <?php Table::Table(
                 [
                     'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
-                    'category_name' => "Category", 'complaint_time' => "Date", 'complaint_state' => "Status",
-                    'complaint_state' => "Status", 'handler_name' => "Handler Name"
+                    'category_name' => "Category", 'complaint_time' => "Date",
+                    'handler_name' => "Handler Name"
                 ],
                 $table2['result'],
                 'allComplaint',

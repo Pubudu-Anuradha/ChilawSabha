@@ -4,6 +4,8 @@
     <?php
     $table = $data['resolvedComplaints'];
     ?>
+
+    <?php Pagination::Top('/Complaint/resolvedComplaints', select_filters: []); ?>
     <?php Table::Table(
         [
             'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
