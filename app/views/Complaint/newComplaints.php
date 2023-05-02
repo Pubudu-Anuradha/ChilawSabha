@@ -3,7 +3,18 @@
 
     <?php
     $table = $data['newComplaints'];
+    $categories = $data['Category']['result'] ?? [];
+    $category_arr = ['All' => "All"];
+    foreach ($categories as $category) {
+        $category_arr[$category['category_id']] = $category['category_name'];
+    }
     ?>
+
+    <?php Pagination::Top('/Complaint/newComplaints', select_filters: [
+        'category_name' => [
+            'Choose by Category', $category_arr
+        ]
+    ]); ?>
     <?php Table::Table(
         [
             'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
@@ -18,6 +29,8 @@
         empty: $table['nodata']
 
     ); ?>
+    <?php Pagination::bottom('filter-form', $data['newComplaints']['page'], $data['newComplaints']['count']); ?>
+
 </div>
 
 <script>

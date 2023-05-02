@@ -46,7 +46,7 @@ class Complaint extends Controller
         $model = $this->model('ComplaintModel');
 
         $this->view('Complaint/newComplaints', 'New Complaints', [
-            'newComplaints' => $model->get_new_complaints()
+            'newComplaints' => $model->get_new_complaints(), 'Category' => $model->get_categories(),
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
@@ -78,7 +78,7 @@ class Complaint extends Controller
     {
         $model = $this->model('ComplaintModel');
         $this->view('Complaint/viewComplaint', 'Complaint', [
-            'viewComplaint' => $model->get_complaint($complaint_id)
+            'viewComplaint' => $model->get_complaint($complaint_id), 'notes' => $model->get_notes($complaint_id)
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 }

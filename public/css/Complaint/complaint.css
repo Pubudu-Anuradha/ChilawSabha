@@ -249,9 +249,19 @@ markasresolved: green
   width: 200px;
   height: 200px;
   background-color: var(--fadedblue);
+  padding: 10px;
 }
 
 .complaint-state{
   display: flex;
   align-items: center;
+}
+
+.topic-note{
+  display: flex;
+  align-items: center;
+}
+
+.topic{
+  margin-right: 10px;
 }

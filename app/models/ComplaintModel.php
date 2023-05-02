@@ -43,7 +43,7 @@ class ComplaintModel extends Model
                     $insert_complaint['success'] = false;
                     $this->delete('complaint', conditions: "complaint_id='$id'");
                 } else {
-                    header('Location: ' . URLROOT . '/Complaint/newClickedComplaint/' . $id);
+                    header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
                     die();
                 }
             }
@@ -77,10 +77,15 @@ class ComplaintModel extends Model
         return [$this->select(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id join complaint_status d on d.status_id = b.complaint_state',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.email as email, b.contact_no as contact_no,b.handle_by as handle_by,
-            b.complaint_time as complaint_time,b.complaint_state as complaint_state, b.address as address,b.description as description,
+            b.complaint_time as complaint_time,b.complaint_state as complaint_state, b.address as address, b.description as description,
             c.category_name as category_name,d.complaint_status as complaint_status',
             "complaint_id=$id"
         )['result'] ?? [], $this->select('complaint_images ci join file_original_names orn on orn.name=ci.image_file_name', 'orn.name as name,orn.orig as orig', "complaint_id=$id")['result'] ?? []];
+    }
+
+    public function get_notes($id)
+    {
+        return $this->select("complaint_notes where complaint_id=$id");
     }
 
     public function get_all_accepted_complaints()

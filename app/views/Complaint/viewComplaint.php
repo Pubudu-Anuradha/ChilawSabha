@@ -3,6 +3,7 @@
 
     <?php
     [$complaint, $images] = $data['viewComplaint'] ?? [false, false];
+    $notes = $data['notes']['result'] ?? [];
     ?>
     <?php
     if (is_array($complaint) && count($complaint) > 0) {
@@ -31,23 +32,46 @@
         echo "No complaints found.";
     }
     ?>
-    <div class="topic-img">
-        <h2 class="topic">Photos</h2>
-    </div>
-    <div class="complaint-photos">
-        <?php foreach ($images as $image) : ?>
-            <!-- image path -->
-            <img src="<?= URLROOT . '/Access/confidential/Complaint/' . $image['name'] ?>" alt="<?= $image['orig'] ?>" width="200px">
-        <?php endforeach; ?>
+
+    <div class="complaint-photo-group">
+        <div>
+            <h2 class="topic">Photos</h2>
+        </div>
+        <?php if (is_array($images) && count($images) > 0) : ?>
+            <div class="complaint-photos">
+                <?php foreach ($images as $image) : ?>
+                    <!-- image path -->
+                    <img src="<?= URLROOT . '/Access/confidential/Complaint/' . $image['name'] ?>" alt="<?= $image['orig'] ?>" width="200px">
+                <?php endforeach; ?>
+            </div>
+        <?php else : ?>
+            <div>No photos found.</div>
+        <?php endif; ?>
     </div>
 
+
     <div class="notes">
-        <div class="topic-note" style="display: <?php echo ($complaintData['handle_by'] == $_SESSION['user_id'] || $complaintData['complaint_state'] == '1') ? 'flex' : 'none'; ?>; align-items: center;">
-            <h2 class="topic" style="margin-right: 10px;">Notes</h2>
-            <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] || $complaintData['complaint_state'] == 1) : ?>
-                <a href="#" class="btn btn accept bg-green white">Add Note</a>
-            <?php endif; ?>
-        </div>
+        <?php if (is_array($complaint) && count($complaint) > 0) {
+            $complaintData = $complaint[0]; ?>
+
+            <div class="topic-note">
+                <h2 class="topic">Notes</h2>
+                <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] || $complaintData['complaint_state'] == 1) : ?>
+                    <a href="#" class="btn btn accept bg-green white">Add Note</a>
+                <?php endif; ?>
+            </div>
+            <?php if (is_array($notes) && count($notes) > 0) { ?>
+                <div>
+                    <textarea readonly class="complaint-data des" rows="5" cols="10"><?php echo $notes[0]['note']; ?></textarea>
+                </div>
+        <?php
+            } else {
+                echo "No Notes found.";
+            }
+        } else {
+            echo "No Notes found.";
+        }
+        ?>
     </div>
 
 
