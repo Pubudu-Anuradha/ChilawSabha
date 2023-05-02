@@ -88,6 +88,17 @@ class ComplaintModel extends Model
         return $this->select("complaint_notes where complaint_id=$id");
     }
 
+    // public function add_notes($note)
+    // {
+    //     $insert_note = $this->insert('complaint_notes', [
+    //         'complaint_id' => $note['name'],
+    //         'handler_id' => $note['email'],
+    //         'note' => $note['contact_no'],
+    //     ]);
+
+    //     return $insert_note;
+    // }
+
     public function get_all_accepted_complaints()
     {
         return $this->selectPaginated(

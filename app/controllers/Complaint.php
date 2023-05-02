@@ -81,4 +81,26 @@ class Complaint extends Controller
             'viewComplaint' => $model->get_complaint($complaint_id), 'notes' => $model->get_notes($complaint_id)
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
+
+    // public function addNote()
+    // {
+    //     $model = $this->model('ComplaintModel');
+    //     if (isset($_POST['Add'])) {
+
+    //         [$valid, $err] = $this->validateInputs(
+    //             $_POST,
+    //             [
+    //                 'note|l[:255]'
+    //             ],
+    //             'Add'
+    //         );
+    //         $data['errors'] = $err;
+
+    //         $data['old'] = $_POST;
+    //         $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->add_notes($valid)], $data);
+    //         $this->view('Complaint/addComplaint', 'Add New Complaint',  ['Components/form']);
+    //     } else {
+    //         $this->view('Complaint/addComplaint', 'Add New Complaint',  styles: ['Components/form']);
+    //     }
+    // }
 }

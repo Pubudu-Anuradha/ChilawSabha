@@ -57,12 +57,16 @@
             <div class="topic-note">
                 <h2 class="topic">Notes</h2>
                 <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] || $complaintData['complaint_state'] == 1) : ?>
-                    <a href="#" class="btn btn accept bg-green white">Add Note</a>
+                    <!-- <a href="#" class="btn btn accept bg-green white">Add Note</a> -->
+                    <a href="#" class="btn btn-accept bg-green white" onclick="openModal('42', 'add_note')">Add Note</a>
+                    <?php Modal::Modal(textarea: true, title: "Add Note", name: 'add_note', id: 'add_note', rows: 10, cols: 50, required: true); ?>
                 <?php endif; ?>
             </div>
             <?php if (is_array($notes) && count($notes) > 0) { ?>
                 <div>
-                    <textarea readonly class="complaint-data des" rows="5" cols="10"><?php echo $notes[0]['note']; ?></textarea>
+                    <textarea readonly class="complaint-data des" rows="5" cols="10"><?php foreach ($notes as $key => $note) {
+                                                                                            echo $note['note'] . "\n";
+                                                                                        } ?></textarea>
                 </div>
         <?php
             } else {
@@ -74,7 +78,7 @@
         ?>
     </div>
 </div>
-<!-- <script>
+<script>
     expandSideBar("sub-items-serv", "see-more-bk");
     var openedModal;
 
@@ -94,4 +98,4 @@
             }
         }
     }
-</script> -->
+</script>
