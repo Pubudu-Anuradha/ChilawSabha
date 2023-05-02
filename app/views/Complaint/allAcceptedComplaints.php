@@ -18,5 +18,6 @@
         ],
         empty: $table['nodata']
     ); ?>
+    <?php Pagination::bottom('filter-form', $data['allComplaints']['page'], $data['allComplaints']['count']); ?>
 
 </div>
