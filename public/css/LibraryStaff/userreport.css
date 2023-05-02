@@ -1,0 +1,27 @@
+.record{
+    width: 100%;
+}
+
+input[type="search"]{
+    background-color: var(--fadedblue);
+    outline: none;
+}
+
+.stat{
+    height: 10rem;
+    max-height: 100%;
+    font-size: larger;
+    overflow-y: scroll;
+}
+
+.b{
+    background-color: var(--bgcolor);
+}
+
+.empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+}

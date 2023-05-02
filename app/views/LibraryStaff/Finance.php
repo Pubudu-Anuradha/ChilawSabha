@@ -36,7 +36,7 @@ $table = $data['fine_details'] ?? false;
                         }
                     }?>
 
-                    <form  class="fullForm" method="post">  
+                    <form  class="fullForm" method="post">
 
                         <?php Errors::validation_errors($errors, [
                             'delay_month_fine' => "Fine For First Month",
@@ -129,12 +129,12 @@ $table = $data['fine_details'] ?? false;
                         <div class="edit-history card">
                     <?php
                         $i = 0;
-                        foreach($edit_history as $edit): 
+                        foreach($edit_history as $edit):
                             foreach($fields as $field => $name):
                                 if($edit[$field] !== null && $edit[$field] !== $post[$field]): ?>
                                 <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
                                     on <span class="time"> <?= $edit['time'] ?> </span> :
-                                    <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from 
+                                    <?= $edit['changed_by'] ?> changed the field <b><?= $name ?></b> from
                                     "<?= $edit[$field] ?>" to "<?=$post[$field]?>".
                                 </div>
                                     <?php $post[$field] = $edit[$field];
@@ -218,10 +218,10 @@ $table = $data['fine_details'] ?? false;
         }
         toDateTable.reportValidity();
         fromDateTable.reportValidity();
-        
+
         if(toDateTable.validity.valid && fromDateTable.validity.valid){
             filter_form_send();
-            // closeModal();
+            closeModal();
         }
     }
 
@@ -276,7 +276,7 @@ $table = $data['fine_details'] ?? false;
       .catch(err => {
           fineValue.innerHTML = "No Fine Data Found";
       });
-      
+
     });
 
     function changeFine(arr=null){

@@ -224,7 +224,8 @@ class BookModel extends Model
 
         return $this->select(
             'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join category_codes c on b.category_code=c.category_id',
-            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,c.category_name,r.extended_time,r.recieved_date',
+            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,c.category_name,r.extended_time,r.recieved_date,
+            u.email,u.contact_no,u.address',
             "(u.name = '$search_term' || l.membership_id = '$search_term') ORDER BY r.lent_date DESC"
         );
     }
@@ -276,7 +277,7 @@ class BookModel extends Model
         }
     }
 
-    public function getBookTransactions()
+    public function getBookTransactions($id=null)
     {
         $conditions = [];
         if (isset($_GET['search']) && !empty($_GET['search'])) {
@@ -322,7 +323,7 @@ class BookModel extends Model
                     array_push($conditions, "DATE(l.recieved_date)=Date(NOW())");
                 }
                 else{
-                    array_push($conditions, "DATE(l.lent_date)=Date(NOW()) || DATE(l.recieved_date)=Date(NOW())");
+                    array_push($conditions, "(DATE(l.lent_date)=Date(NOW()) || DATE(l.recieved_date)=Date(NOW()))");
                 }
             }
             else if($timeframe == 'yesterday'){
@@ -330,7 +331,7 @@ class BookModel extends Model
                     array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
                 }
                 else{
-                    array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY)) || DATE(l.lent_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
+                    array_push($conditions, "(DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY)) || DATE(l.lent_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY)))");
                 }
             }
             else if($timeframe == 'last_7_days'){
@@ -338,7 +339,7 @@ class BookModel extends Model
                     array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
                 }
                 else{
-                    array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY)) || DATE(l.lent_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
+                    array_push($conditions, "(DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY)) || DATE(l.lent_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY)))");
                 }
             }
             else if($timeframe == 'last_30_days'){
@@ -346,7 +347,7 @@ class BookModel extends Model
                     array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
                 }
                 else{
-                    array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY)) || DATE(l.lent_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
+                    array_push($conditions, "(DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY)) || DATE(l.lent_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY)))");
                 }
             }
             else if($timeframe == 'this_month'){
@@ -354,7 +355,7 @@ class BookModel extends Model
                     array_push($conditions, "MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())");
                 }
                 else{
-                    array_push($conditions, "(MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())) || (MONTH(l.lent_date)=MONTH(NOW()) && YEAR(l.lent_date)=YEAR(NOW()))");
+                    array_push($conditions, "((MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())) || (MONTH(l.lent_date)=MONTH(NOW()) && YEAR(l.lent_date)=YEAR(NOW())))");
                 }
             }
             else if($timeframe == 'last_month'){
@@ -362,7 +363,7 @@ class BookModel extends Model
                     array_push($conditions, "MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))");
                 }
                 else{
-                    array_push($conditions, "(MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))) || (MONTH(l.lent_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.lent_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH)))");
+                    array_push($conditions, "((MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))) || (MONTH(l.lent_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.lent_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))))");
                 }
             }
             else if($timeframe == 'this_year'){
@@ -370,7 +371,7 @@ class BookModel extends Model
                     array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW())");
                 }
                 else{
-                    array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW()) || YEAR(l.lent_date)=YEAR(NOW())");
+                    array_push($conditions, "(YEAR(l.recieved_date)=YEAR(NOW()) || YEAR(l.lent_date)=YEAR(NOW()))");
                 }
             }
             else if($timeframe == 'last_year'){
@@ -378,25 +379,47 @@ class BookModel extends Model
                     array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
                 }
                 else{
-                    array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR)) || YEAR(l.lent_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
+                    array_push($conditions, "(YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR)) || YEAR(l.lent_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR)))");
                 }
             }
         }
-        if(isset($conditions) && !empty($conditions)){
 
-            $conditions = implode(' && ', $conditions);
-            $conditions = $conditions . ' ORDER BY l.lent_date DESC';
+        if($id == null){
+          if(isset($conditions) && !empty($conditions)){
 
-            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
-                'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
-                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost',
-                $conditions);
+              $conditions = implode(' && ', $conditions);
+              $conditions = $conditions . ' ORDER BY l.lent_date DESC';
+
+              return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
+                  'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
+                  l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost',
+                  $conditions);
+          }
+          else if (empty($conditions)){
+              return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by ORDER BY l.lent_date DESC',
+                  'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
+                  l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost');
+          }
         }
-        else if (empty($conditions)){
-            return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by ORDER BY l.lent_date DESC',
-                'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
-                l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost');
+        else if ($id != null){
+          if(isset($conditions) && !empty($conditions)){
+
+              $conditions = implode(' && ', $conditions);
+              $conditions = $conditions . " && l.membership_id=$id ORDER BY l.lent_date DESC";
+
+              return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
+                  'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
+                  l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost',
+                  $conditions);
+          }
+          else if (empty($conditions)){
+              return $this->selectPaginated('users u join library_member m  on u.user_id=m.user_id join lend_recieve_books l on m.member_id=l.membership_id join books b on l.accession_no=b.book_id join users usr on usr.user_id=l.lent_by LEFT join users usrrec on usrrec.user_id=l.recieved_by',
+                  'b.accession_no as accession_no,b.title as title,b.author as author,l.lent_date,l.due_date,u.name as borrowed_by,
+                  l.recieved_date,usrrec.name as recieved_by,usr.name as lent_by,l.damaged as damage,l.lost as lost',
+                  "l.membership_id=$id ORDER BY l.lent_date DESC");
+          }
         }
+
 
 
     }
@@ -484,71 +507,144 @@ class BookModel extends Model
       'e.fine_id=1 ORDER BY e.edited_time DESC');
     }
 
-    public function getFinePayments()
+    public function getFinebyId($id)
+    {
+      return $this->select('lend_recieve_books','ROUND(sum(fine_amount)/2,2) as fine_amount',"membership_id=$id");
+    }
+
+    public function getDamagebyId($id)
+    {
+      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,l.recieved_date',"membership_id=$id and l.damaged=1 ORDER BY l.recieved_date DESC");
+    }
+
+    public function getLostbyId($id)
+    {
+      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,l.recieved_date',"membership_id=$id and l.lost=1 ORDER BY l.recieved_date DESC");
+    }
+
+    public function getFinePayments($id=null)
     {
         $conditions = [];
 
-        if (isset($_GET['search']) && !empty($_GET['search'])) {
-            $search_term = mysqli_real_escape_string($this->conn, $_GET['search']);
-            $search_fields = [
-                'u.name',
-            ];
-            for ($i = 0; $i < count($search_fields); ++$i) {
-                $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
-            }
+        if(isset($_GET['timeframe'])){
+          if (isset($_GET['search']) && !empty($_GET['search'])) {
+              $search_term = mysqli_real_escape_string($this->conn, $_GET['search']);
+              $search_fields = [
+                  'u.name',
+              ];
+              for ($i = 0; $i < count($search_fields); ++$i) {
+                  $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
+              }
 
-            array_push($conditions, '(' . implode(' || ', $search_fields) . ')');
+              array_push($conditions, '(' . implode(' || ', $search_fields) . ')');
+          }
+
+
+          if (isset($_GET['timeframe']) && !empty($_GET['timeframe']) && $_GET['timeframe'] != 'all') {
+              $timeframe = mysqli_real_escape_string($this->conn, $_GET['timeframe']);
+
+              if($timeframe == 'custom' && !empty($_GET['fromDate']) && !empty($_GET['toDate']) && isset($_GET['fromDate']) && isset($_GET['toDate'])){
+                  array_push($conditions, "l.recieved_date >= '{$_GET['fromDate']}' && l.recieved_date <= '{$_GET['toDate']}'");
+                  unset($_GET['fromDate']);
+                  unset($_GET['toDate']);
+              }
+              else if($timeframe == 'today'){
+                  array_push($conditions, "DATE(l.recieved_date)=Date(NOW())");
+              }
+              else if($timeframe == 'yesterday'){
+                  array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
+              }
+              else if($timeframe == 'last_7_days'){
+                  array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
+              }
+              else if($timeframe == 'last_30_days'){
+                  array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
+              }
+              else if($timeframe == 'this_month'){
+                  array_push($conditions, "MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())");
+              }
+              else if($timeframe == 'last_month'){
+                  array_push($conditions, "MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))");
+              }
+              else if($timeframe == 'this_year'){
+                  array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW())");
+              }
+              else if($timeframe == 'last_year'){
+                  array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
+              }
+          }
+
         }
 
-        if (isset($_GET['timeframe']) && !empty($_GET['timeframe']) && $_GET['timeframe'] != 'all') {
-            $timeframe = mysqli_real_escape_string($this->conn, $_GET['timeframe']);
+        else if(isset($_GET['timeframefine'])){
+          if (isset($_GET['timeframefine']) && !empty($_GET['timeframefine']) && $_GET['timeframefine'] != 'all') {
+              $timeframefine = mysqli_real_escape_string($this->conn, $_GET['timeframefine']);
 
-            if($timeframe == 'custom' && !empty($_GET['fromDate']) && !empty($_GET['toDate']) && isset($_GET['fromDate']) && isset($_GET['toDate'])){
-                array_push($conditions, "l.recieved_date >= '{$_GET['fromDate']}' && l.recieved_date <= '{$_GET['toDate']}'");
-                unset($_GET['fromDate']);
-                unset($_GET['toDate']);
-            }
-            else if($timeframe == 'today'){
-                array_push($conditions, "DATE(l.recieved_date)=Date(NOW())");
-            }
-            else if($timeframe == 'yesterday'){
-                array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
-            }
-            else if($timeframe == 'last_7_days'){
-                array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
-            }
-            else if($timeframe == 'last_30_days'){
-                array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
-            }
-            else if($timeframe == 'this_month'){
-                array_push($conditions, "MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())");
-            }
-            else if($timeframe == 'last_month'){
-                array_push($conditions, "MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))");
-            }
-            else if($timeframe == 'this_year'){
-                array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW())");
-            }
-            else if($timeframe == 'last_year'){
-                array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
-            }
+              if($timeframefine == 'custom' && !empty($_GET['fromDate']) && !empty($_GET['toDate']) && isset($_GET['fromDate']) && isset($_GET['toDate'])){
+                  array_push($conditions, "l.recieved_date >= '{$_GET['fromDate']}' && l.recieved_date <= '{$_GET['toDate']}'");
+                  unset($_GET['fromDate']);
+                  unset($_GET['toDate']);
+              }
+              else if($timeframefine == 'today'){
+                  array_push($conditions, "DATE(l.recieved_date)=Date(NOW())");
+              }
+              else if($timeframefine == 'yesterday'){
+                  array_push($conditions, "DATE(l.recieved_date)=Date(DATE_SUB(NOW(), INTERVAL 1 DAY))");
+              }
+              else if($timeframefine == 'last_7_days'){
+                  array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 7 DAY))");
+              }
+              else if($timeframefine == 'last_30_days'){
+                  array_push($conditions, "DATE(l.recieved_date) >= Date(DATE_SUB(NOW(), INTERVAL 30 DAY))");
+              }
+              else if($timeframefine == 'this_month'){
+                  array_push($conditions, "MONTH(l.recieved_date)=MONTH(NOW()) && YEAR(l.recieved_date)=YEAR(NOW())");
+              }
+              else if($timeframefine == 'last_month'){
+                  array_push($conditions, "MONTH(l.recieved_date) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH)) AND  YEAR(l.recieved_date) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))");
+              }
+              else if($timeframefine == 'this_year'){
+                  array_push($conditions, "YEAR(l.recieved_date)=YEAR(NOW())");
+              }
+              else if($timeframefine == 'last_year'){
+                  array_push($conditions, "YEAR(l.recieved_date)=YEAR(DATE_SUB(NOW(), INTERVAL 1 YEAR))");
+              }
+          }
         }
 
-        if(isset($conditions) && !empty($conditions)){
+        if($id==null){
+          if(isset($conditions) && !empty($conditions)){
 
-            $conditions = implode(' && ', $conditions);
-            $conditions = $conditions . ' && l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC';
+              $conditions = implode(' && ', $conditions);
+              $conditions = $conditions . ' && l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC';
 
-            return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
-            'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
-            $conditions);
+              return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+              'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+              $conditions);
+          }
+          else if (empty($conditions)){
+              return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+              'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+              "l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC");
+          }
         }
-        else if (empty($conditions)){
-            return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
-            'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
-            "l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC");
-        }
 
+        else if($id != null){
+          if(isset($conditions) && !empty($conditions)){
+
+              $conditions = implode(' && ', $conditions);
+              $conditions = $conditions . " && l.membership_id=$id && l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC";
+
+              return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+              'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+              $conditions);
+          }
+          else if (empty($conditions)){
+              return $this->selectPaginated('lend_recieve_books l join library_member m on l.membership_id=m.member_id join users u on m.user_id=u.user_id join users usr on usr.user_id=l.recieved_by',
+              'u.name as name,l.fine_amount as fine_amount,l.recieved_date as recieved_date,usr.name as recieved_by',
+              "l.membership_id=$id && l.fine_amount > 0 && l.transaction_id%2=1 ORDER BY l.recieved_date DESC");
+          }
+        }
     }
 
     public function recieveBook($data)

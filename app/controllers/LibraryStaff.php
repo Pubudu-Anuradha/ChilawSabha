@@ -1310,7 +1310,7 @@ class LibraryStaff extends Controller
                     ]);
                 }
             }
-        }     
+        }
 
         $res = $fineModel->getFineEditHistory()['result'] ?? false;
         if (!($res['nodata'] ?? false)) {
@@ -1322,7 +1322,64 @@ class LibraryStaff extends Controller
 
     public function userreport()
     {
-        // TODO: REDO USING COMPONENTS
-        $this->view('LibraryStaff/Userreport', styles:['LibraryStaff/index']);
+
+        $model = $this->model('BookModel');
+        $data = [];
+
+        if(isset($_POST['search-btn'])){
+            $search = $_POST['search'];
+            preg_match('/\d+/',$search,$match);
+            $searchKey = $match[0] ?? null;
+            if($searchKey == null){
+                $searchKey = $search;
+            }
+            $_SESSION['searchKey'] = $searchKey;
+            $_SESSION['clicked'] = 'transactions';
+
+            $user = $model->getUserDetails($searchKey)['result'][0]['member_id'] ?? false;
+            if($user){
+                $data = ['UserFine' => $model->getFinebyId($user) ?? false, 'Damage' => $model->getDamagebyId($user) ?? false, 'Lost' => $model->getLostbyId($user) ?? false, 'transaction' => $model->getBookTransactions($user) ?? false, 'fine_details' => $model->getFinePayments($user) ?? false];
+            }
+
+            $this->view('LibraryStaff/Userreport', 'User Report', array_merge(['userStat' => ($searchKey != null) ? $model->getUserDetails($searchKey) : false],$data), styles:['Components/table', 'posts',  'LibraryStaff/index', 'LibraryStaff/userreport', 'LibraryStaff/finance','Components/modal']);
+
+        }
+
+        else if(isset($_GET['search']) || isset($_GET['type']) ||isset($_GET['timeframe']) ||isset($_GET['fromDate']) ||isset($_GET['toDate']) ||isset($_GET['page']) ||isset($_GET['size']) || isset($_GET['timeframefine']) ){
+            if(isset($_SESSION['searchKey']) && !empty($_SESSION['searchKey'])){
+                $searchKey = $_SESSION['searchKey'];
+                if(isset($_GET['timeframe'])){
+                    $_SESSION['clicked'] = 'transactions';
+                }
+                else if(isset($_GET['timeframefine'])){
+                    $_SESSION['clicked'] = 'finepayments';
+                }
+                $user = $model->getUserDetails($searchKey)['result'][0]['member_id'] ?? false;
+                $data = ['UserFine' => $model->getFinebyId($user) ?? false, 'Damage' => $model->getDamagebyId($user) ?? false, 'Lost' => $model->getLostbyId($user) ?? false, 'transaction' => $model->getBookTransactions($user) ?? false, 'fine_details' => $model->getFinePayments($user) ?? false];
+                $this->view('LibraryStaff/Userreport', 'User Report', array_merge(['userStat' => ($searchKey != null) ? $model->getUserDetails($searchKey) : false], $data), styles:['Components/table', 'posts', 'LibraryStaff/index', 'LibraryStaff/userreport', 'LibraryStaff/finance', 'Components/modal']);
+            }
+
+        }
+
+        else{
+            $reqJSON = file_get_contents('php://input');
+
+            if($reqJSON){
+                $reqJSON = json_decode($reqJSON, associative:true);
+
+                if($reqJSON && ($reqJSON['searchID'] == 'userSearch')){
+                    $response = $model->searchUser($reqJSON['value']);
+                    $this->returnJSON([
+                        $response['result'],
+                    ]);
+                    die();
+                }  
+                else $this->returnJSON([
+                    'error'=>'Error Parsing JSON'
+                ]);       
+            }     
+        }
+
+        $this->view('LibraryStaff/Userreport','User Report',[], styles:['Components/table', 'posts','LibraryStaff/index','LibraryStaff/userreport','LibraryStaff/finance','Components/modal']);
     }
 }

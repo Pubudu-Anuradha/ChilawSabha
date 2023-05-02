@@ -99,11 +99,11 @@ input[type="submit"] {
   background-color: var(--blue);
 }
 
-#payments{
+#payments,#transactions{
     border-radius: 5px 0 0 0;
 }
 
-#history{
+#history,#finepayments{
     border-radius: 0 5px 0 0;
 }
 
@@ -112,6 +112,7 @@ input[type="submit"] {
     animation: fadeEffect 1s;
     background-color: var(--fadedblue);
     padding: 1rem 4rem;
+    min-height: 5rem;
 }
 
 .history{

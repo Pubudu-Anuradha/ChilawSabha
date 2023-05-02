@@ -46,20 +46,21 @@
   background-color: var(--lightblue);
 }
 
-.lend-book{
+.lend-book,.find-user{
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   margin-top: 1rem;
 }
 
-.recieve-book {
+.recieve-book ,.user-fine-transaction{
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   background-color: var(--fadedblue);
   border-radius: 10px;
   padding: 1rem 2rem;
+  min-height: 15rem;
 }
 
 .usr-search {
@@ -114,7 +115,7 @@
   gap: 2rem;
 }
 
-.lend-book-content{
+.lend-book-content,.usr-stat-content{
   display: flex;
   justify-content: space-between;
   gap: 2rem;
@@ -147,13 +148,12 @@
   cursor: pointer;
 }
 
-.lend-form {
+.lend-form ,.stat-form{
   flex-grow: 1;
   background-color: var(--fadedblue);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-self: center;
   gap: 1rem;
   padding: 1rem 2rem;
 }

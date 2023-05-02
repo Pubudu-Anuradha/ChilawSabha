@@ -87,27 +87,30 @@
     var table = document.getElementById('bookTransactions');
     var openedModal;
 
-    for(var i=1; i < table.rows.length; i++){
-        table.rows[i].cells[7].style.textAlign = 'center';
-        table.rows[i].cells[7].style.cursor = 'pointer';
+    if(table != null && table.rows[1] != null && table.rows[1].cells.length != 1){
+      for(var i=1; i < table.rows.length; i++){
+          table.rows[i].cells[7].style.textAlign = 'center';
+          table.rows[i].cells[7].style.cursor = 'pointer';
 
-        if (table.rows[i].cells[7].innerHTML. trim() == 'Recieved') {
-            table.rows[i].cells[7].innerHTML = '🟢';
-            table.rows[i].cells[7].title = 'Recieved';
-        }
-        if (table.rows[i].cells[7].innerHTML. trim() == 'Lost') {
-            table.rows[i].cells[7].innerHTML = '🔴';
-            table.rows[i].cells[7].title = 'Lost';
-        }
-        if (table.rows[i].cells[7].innerHTML. trim() == 'Damaged') {
-            table.rows[i].cells[7].innerHTML = '🟠';
-            table.rows[i].cells[7].title = 'Damaged';
-        }
-        if (table.rows[i].cells[7].innerHTML. trim() == 'Not Recieved') {
-            table.rows[i].cells[7].innerHTML = '⚪️';
-            table.rows[i].cells[7].title = 'Not Recieved';
-        }
+          if (table.rows[i].cells[7].innerHTML. trim() == 'Recieved') {
+              table.rows[i].cells[7].innerHTML = '🟢';
+              table.rows[i].cells[7].title = 'Recieved';
+          }
+          if (table.rows[i].cells[7].innerHTML. trim() == 'Lost') {
+              table.rows[i].cells[7].innerHTML = '🔴';
+              table.rows[i].cells[7].title = 'Lost';
+          }
+          if (table.rows[i].cells[7].innerHTML. trim() == 'Damaged') {
+              table.rows[i].cells[7].innerHTML = '🟠';
+              table.rows[i].cells[7].title = 'Damaged';
+          }
+          if (table.rows[i].cells[7].innerHTML. trim() == 'Not Recieved') {
+              table.rows[i].cells[7].innerHTML = '⚪️';
+              table.rows[i].cells[7].title = 'Not Recieved';
+          }
+      }
     }
+
 
     //removed default behaviour
     timeframe.removeAttribute('onchange');
