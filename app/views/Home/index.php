@@ -191,7 +191,35 @@ $end_time = $event['end_time'] ? $formatter->format(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <!-- TODO: GET FROM MODEL -->
+            <?php foreach($services as $service):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a href="<?= URLROOT . '/Posts/Service/' . ($service['post_id'] ?? '0')?>" class="title"><?php if ($service['pinned'] == 1): ?>
+                                <span class="pinned">&#128204;</span>
+                            <?php endif;?>
+                            <?=$service['title'] ?? 'Not Found'?> </a>
+                            <a class="category"
+                            href="<?=URLROOT . '/Posts/Services?category=' . ($service['category_id'] ?? '0')?>"
+                            > <?=$service['service_category'] ?? 'Not Found'?>
+                        </a>
+                        </div>
+                        <div class="summary">
+                            <?=$service['short_description'] ?? 'Not Found'?>
+                        </div>
+                        <div class="row">
+                            <?php if($service['contact_no'] ?? false):?>
+                            <div class="contact">
+                                For more Information, call : <?= $service['contact_no'] ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="date">
+                            <?=$formatter->format(IntlCalendar::fromDateTime($service['posted_time'] ?? '2022-01-01', null))?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div class="posts bg-fd-blue">

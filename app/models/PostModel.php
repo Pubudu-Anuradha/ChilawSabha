@@ -15,6 +15,7 @@
         // Put common post data in post_table
         unset($post_data['attachments']);
         unset($post_data['photos']);
+        $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
         $post_data['post_type'] = $post_type;
         $post_data['posted_by'] = $_SESSION['user_id'];
         $post_data['views'] = 0;
