@@ -16,16 +16,13 @@
                     <a href="#" class="btn btn accept bg-red white">Accept</a>
                 <?php endif; ?>
             </div>
-            <div><?php echo "<p class='complaint_label'>Complainer Name: <span class='complaint-data'>" . $complaintData['complainer_name'] . "</p>"; ?></div>
-            <div><?php echo "<p class='complaint_label'>Email: <span class='complaint-data'>" . $complaintData['email'] . "</p>"; ?></div>
-            <div><?php echo "<p class='complaint_label'>Mobile No: <span class='complaint-data'>" . $complaintData['contact_no'] . "</p>"; ?></div>
-            <div><?php echo "<p class='complaint_label'>Address: <span class='complaint-data'>" . $complaintData['address'] . "</p>"; ?></div>
-            <div><?php echo "<p class='complaint_label'>Date: <span class='complaint-data'>" . $complaintData['complaint_time'] . "</p>"; ?></div>
-            <div><?php echo "<p class='complaint_label'>Category: <span class='complaint-data'>" . $complaintData['category_name'] . "</p>"; ?></div>
-            <div>
-                <p class="complaint_label">Description:</p><textarea readonly class="complaint-data des" name="description" rows="5" cols="10"><?php echo  $complaintData['description']; ?></textarea>
-            </div>
-
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Complainer Name:</p><span class='complaint-data'>" . $complaintData['complainer_name'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Email: </p><span class='complaint-data'>" . $complaintData['email'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Mobile No: </p><span class='complaint-data'>" . $complaintData['contact_no'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Address: </p><span class='complaint-data'>" . $complaintData['address'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Date: </p><span class='complaint-data'>" . $complaintData['complaint_time'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Category: </p><span class='complaint-data'>" . $complaintData['category_name'] . ""; ?></div>
+            <div class="complaint-group"><?php echo "<p class='complaint_label'>Description: </p><span class='complaint-data'>" . $complaintData['description'] . ""; ?></div>
         </div>
     <?php
     } else {
@@ -44,8 +41,6 @@
                     <img src="<?= URLROOT . '/Access/confidential/Complaint/' . $image['name'] ?>" alt="<?= $image['orig'] ?>" width="200px">
                 <?php endforeach; ?>
             </div>
-        <?php else : ?>
-            <div>No photos found.</div>
         <?php endif; ?>
     </div>
 
@@ -56,7 +51,7 @@
 
             <div class="topic-note">
                 <h2 class="topic">Notes</h2>
-                <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] || $complaintData['complaint_state'] == 1) : ?>
+                <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] && $complaintData['complaint_state'] !== 3 || $complaintData['complaint_state'] == 1) : ?>
                     <!-- <a href="#" class="btn btn accept bg-green white">Add Note</a> -->
                     <a href="#" class="btn btn-accept bg-green white" onclick="openModal('42', 'add_note')">Add Note</a>
                     <?php Modal::Modal(textarea: true, title: "Add Note", name: 'add_note', id: 'add_note', rows: 10, cols: 50, required: true); ?>
@@ -64,16 +59,12 @@
             </div>
             <?php if (is_array($notes) && count($notes) > 0) { ?>
                 <div>
-                    <textarea readonly class="complaint-data des" rows="5" cols="10"><?php foreach ($notes as $key => $note) {
-                                                                                            echo $note['note'] . "\n";
-                                                                                        } ?></textarea>
+                    <?php foreach ($notes as $key => $note) { ?>
+                        <div class="complaint-group"><?php echo "<span class='complaint-data'>" . $note['note_time'] . "  " . $note['note'] . "  Added By  " . $note['user_name'] . "\n" . ""; ?></div>
+                    <?php } ?>
                 </div>
         <?php
-            } else {
-                echo "No Notes found.";
             }
-        } else {
-            echo "No Notes found.";
         }
         ?>
     </div>

@@ -24,15 +24,17 @@ class ComplaintModel extends Model
                 $image_errors = [];
                 if ($images !== false)
                     for ($i = 0; $i < count($images); ++$i) {
-                        $image_errors[] = [
-                            $images[$i]['error'],
-                            $images[$i]['orig']
-                        ];
-                        if ($images[$i]['error'] === false) {
-                            $this->insert('complaint_images', [
-                                'complaint_id' => $id,
-                                'image_file_name' => $images[$i]['name']
-                            ]);
+                        if (!empty($images[$i]['orig'])) {
+                            $image_errors[] = [
+                                $images[$i]['error'],
+                                $images[$i]['orig']
+                            ];
+                            if ($images[$i]['error'] === false) {
+                                $this->insert('complaint_images', [
+                                    'complaint_id' => $id,
+                                    'image_file_name' => $images[$i]['name']
+                                ]);
+                            }
                         }
                     }
                 $insert_complaint['id'] = $id;
@@ -63,12 +65,18 @@ class ComplaintModel extends Model
 
     public function get_new_complaints()
     {
+        $condtions = ['complaint_state =1'];
+        if (isset($_GET['category']) && $_GET['category'] != 0) {
+            $category = mysqli_real_escape_string($this->conn, $_GET['category']);
+            $condtions[] = "b.complaint_category='$category'";
+        }
+        $condtions = implode(' && ', $condtions);
         return $this->selectPaginated(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name, 
             b.complaint_time as complaint_time,b.complaint_state as complaint_state,
             c.category_name as category_name',
-            'complaint_state =1'
+            $condtions
         );
     }
 
@@ -85,28 +93,46 @@ class ComplaintModel extends Model
 
     public function get_notes($id)
     {
-        return $this->select("complaint_notes where complaint_id=$id");
+        // return $this->select("complaint_notes where complaint_id=$id");
+        return $this->selectPaginated(
+            'complaint_notes b join users c on b.handler_id=c.user_id',
+            'b.complaint_id as complaint_id,b.note as note,
+            b.note_time as note_time, 
+            c.name as user_name',
+            "complaint_id=$id"
+        );
     }
 
-    // public function add_notes($note)
+    // public function get_all_accepted_complaints()
     // {
-    //     $insert_note = $this->insert('complaint_notes', [
-    //         'complaint_id' => $note['name'],
-    //         'handler_id' => $note['email'],
-    //         'note' => $note['contact_no'],
-    //     ]);
-
-    //     return $insert_note;
+    //     return $this->selectPaginated(
+    //         'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
+    //         'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
+    //         b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
+    //         c.category_name as category_name, d.name as handler_name',
+    //         "complaint_state =2 || complaint_state =3"
+    //     );
     // }
 
-    public function get_all_accepted_complaints()
+    public function get_accepted_resolved_complaints()
     {
         return $this->selectPaginated(
             'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
             'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
             b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
             c.category_name as category_name, d.name as handler_name',
-            "complaint_state =2 || complaint_state =3"
+            "complaint_state =3"
+        );
+    }
+
+    public function get_accepted_working_complaints()
+    {
+        return $this->selectPaginated(
+            'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
+            'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
+            b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
+            c.category_name as category_name, d.name as handler_name',
+            "complaint_state =2"
         );
     }
 
@@ -151,4 +177,10 @@ class ComplaintModel extends Model
             header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
         }
     }
+
+    // public function add_notes($note)
+    // {
+    //     $note['handler_id'] = $_SESSION['user_id'];
+    //     return $this->insert('complaint_notes', $note);
+    // }
 }

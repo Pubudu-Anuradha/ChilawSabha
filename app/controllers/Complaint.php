@@ -53,8 +53,9 @@ class Complaint extends Controller
     public function allAcceptedComplaints()
     {
         $model = $this->model('ComplaintModel');
-        $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints', [
-            'allComplaints' => $model->get_all_accepted_complaints()
+        $this->view('Complaint/allAcceptedComplaints', 'All Accepted Complaints',  [
+            'allResolved' => $model->get_accepted_resolved_complaints(), 'allWorking' => $model->get_accepted_working_complaints()
+            // 'allComplaints' => $model->get_all_accepted_complaints()
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 

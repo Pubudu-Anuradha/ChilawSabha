@@ -38,7 +38,7 @@ $old = $data['old'] ?? false;
                 value: $old['contact_no'] ?? null
             ); ?>
             <?php Text::text('Address', 'address', 'address', placeholder: 'Enter address', maxlength: 255); ?>
-            <?php Time::date('Date', 'date', 'date',type:'date', max: Date("Y-m-d"),value:$old['date'] ?? date('Y-m-d')); ?>
+            <?php Time::date('Date', 'date', 'date', type: 'date', max: Date("Y-m-d"), value: $old['date'] ?? date('Y-m-d')); ?>
             <?php $categories = [];
             foreach ($data['complaint_categories'] as $category) {
                 $categories[$category['category_id']] = $category['category_name'];
@@ -51,13 +51,13 @@ $old = $data['old'] ?? false;
                 selected: $old['complaint_categories'] ?? null
             ); ?>
             <?php Text::textarea('Complaint Description', 'description', 'description', placeholder: 'Enter Description', required: true); ?>
-            <?php if ($data['Add']['image_errors'] ?? false):
-                foreach ($data['Add']['image_errors'] as [$_,$photo]):
+            <?php if ($data['Add']['image_errors'] ?? false) :
+                foreach ($data['Add']['image_errors'] as [$_, $photo]) :
                     $message = "There was an error while uploading $photo. Please try again.";
                     Errors::generic($message);
                 endforeach;
             endif; ?>
-            <?php Files::images('Complaint Images', 'photos', 'photos',required:false); ?>
+            <?php Files::images('Complaint Images', 'photos', 'photos', required: false); ?>
             <?php Other::submit('Add', 'add', value: 'Add'); ?>
         </form>
     </div>

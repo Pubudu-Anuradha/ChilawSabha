@@ -195,14 +195,13 @@ markasresolved: green
 
 .complaint-status {
   margin-left: 2rem;
-  margin-right: 30px;
   color: white;
   padding: 10px;
   border-radius: 5px;
-  width: 150px;
+  width: 100px;
   display: inline-block;
   text-align: center;
-  margin-bottom: 10px;
+  align-items: center;
 }
 .complaint-status.new {
   background-color: var(--red);
@@ -219,21 +218,16 @@ markasresolved: green
 .complaint-data {
   display: flex;
   width: 50%;
-  margin: 0 15rem;
+  margin: 0;
   background-color: var(--fadedblue);
   color: rgb(0, 0, 0);
-  padding: 10px;
+  padding: 5px;
   border-radius: 5px;
+  align-items: center;
 } 
 
 .complaint_label{
-  margin: 1rem 0rem;
-}
-
-.des{
-  font-size: 1.2rem;
-  border: none;
-  outline: none;
+  flex: 0 0 15rem;
 }
 
 .complaint-photos {
@@ -264,4 +258,42 @@ markasresolved: green
 
 .topic{
   margin-right: 10px;
+}
+
+.tabs{
+  font-size: 0;
+}
+
+.tab-btn{
+  background-color: var(--lightblue);
+  border: none;
+  outline: none;
+  padding: 1rem 4rem;
+  font-size: medium;
+  text-align: center;
+  transition: 200ms ease-in-out;
+  cursor: pointer;
+  color: white;
+}
+
+.tab-btn:hover{
+  background-color: var(--blue);
+}
+
+.tab-btn.active {
+  background-color: var(--blue);
+}
+
+.tab-content{
+  display: none;
+  animation: fadeEffect 1s;
+  background-color: var(--fadedblue);
+  padding: 1rem 4rem;
+}
+.resolved{
+  background-color: var(--bgcolor);
+}
+.complaint-group{
+  display: flex;
+  margin-bottom: 20px;
 }

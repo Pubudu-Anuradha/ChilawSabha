@@ -4,14 +4,14 @@
     <?php
     $table = $data['newComplaints'];
     $categories = $data['Category']['result'] ?? [];
-    $category_arr = ['All' => "All"];
+    $category_arr = ['0' => "All"];
     foreach ($categories as $category) {
         $category_arr[$category['category_id']] = $category['category_name'];
     }
     ?>
 
     <?php Pagination::Top('/Complaint/newComplaints', select_filters: [
-        'category_name' => [
+        'category' => [
             'Choose by Category', $category_arr
         ]
     ]); ?>
