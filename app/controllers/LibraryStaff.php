@@ -150,6 +150,8 @@ class LibraryStaff extends Controller
                         $this->returnJSON([
                             $response['result'][0]['title'],
                             $response['result'][0]['state'],
+                            $response['result'][0]['author'],
+                            $response['result'][0]['accession_no'],
                         ]);
                     }else{
                         $this->returnJSON([
@@ -552,10 +554,9 @@ class LibraryStaff extends Controller
                     'membership_id|i[0:]',
                     'email|l[:255]|e|u[users]',
                     'name|l[:255]',
-                    'password|l[5:]',
+                    'password|l[8:15]',
                     'address|l[:255]',
-                    'contact_no|l[10:12]',
-                    'nic|l[10:12]',
+                    'contact_no|l[10:12]'
                     ], 'Add');
 
             $data['errors'] = $err;
@@ -1256,8 +1257,6 @@ class LibraryStaff extends Controller
                 $validator = [
                     'delay_month_fine' => 'delay_month_fine|d[0:]',
                     'delay_after_fine' => 'delay_after_fine|d[0:]',
-                    'damaged_fine' => 'damaged_fine|d[0:]',
-                    'lost_fine' => 'lost_fine|d[0:]',
                 ];
 
                 foreach ($current_fine as $field => $value){

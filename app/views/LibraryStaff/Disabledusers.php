@@ -21,9 +21,7 @@
         'email' => 'Email',
         'name' => 'Name',
         'address' => 'Address',
-        'contact_no' => 'Contact number',
-        'nic' => 'NIC number',
-        'disable_description' => 'Disable Reason'
+        'contact_no' => 'Contact number'
     ];
 
     if($enable_error) {

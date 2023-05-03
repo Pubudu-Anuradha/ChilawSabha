@@ -31,20 +31,21 @@ class BookModel extends Model
         $conditions = implode(' && ', $conditions);
 
         if ($state[0] == 4) {
-            $conditions = $conditions . ' && l.found_description IS NULL && l.found_record_time IS NULL && l.found_record_by IS NULL';
+            $conditions = $conditions . ' && l.found_description IS NULL && l.found_record_time IS NULL && l.found_record_by IS NULL ORDER BY l.lost_record_time DESC';
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join lost_books l on b.accession_no=l.accession_no',
                 'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, l.lost_description as lost_description',
                 $conditions);
         }
 
         if ($state[0] == 5) {
-            $conditions = $conditions . ' && d.re_list_description IS NULL && d.re_list_record_time IS NULL && d.re_listed_recorded_by IS NULL';
+            $conditions = $conditions . ' && d.re_list_description IS NULL && d.re_list_record_time IS NULL && d.re_listed_recorded_by IS NULL ORDER BY d.damaged_record_time DESC';
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join damaged_books d on b.accession_no=d.accession_no',
                 'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, d.damaged_description as damaged_description',
                 $conditions);
         }
 
         if ($state[0] == 3) {
+            $conditions = $conditions . " ORDER BY d.delist_record_time DESC";
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join delisted_books d on b.accession_no=d.accession_no',
                 'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, d.delist_description as delist_description',
                 $conditions);
@@ -52,7 +53,7 @@ class BookModel extends Model
 
         return $this->selectPaginated('books b join category_codes c on b.category_code=c.category_id',
             'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name',
-            $conditions);
+            $conditions . ' ORDER BY b.title');
 
     }
 
@@ -94,7 +95,7 @@ class BookModel extends Model
             'b.book_id as book_id,b.title as title,b.author as author,b.publisher as publisher,b.place_of_publication as place_of_publication,b.date_of_publication as date_of_publication,
          b.accession_no as accession_no,b.isbn as isbn,b.price as price,b.pages as pages,b.recieved_date as recieved_date, c.category_name as category_name,sb.sub_category_name as sub_category_name,
          b.recieved_method as recieved_method,b.state as state,s.status as status',
-            "b.accession_no=$id");
+            "b.accession_no LIKE '$id' || b.title LIKE '$id'");
     }
 
     public function putBookEditHistory($history)
@@ -138,17 +139,20 @@ class BookModel extends Model
     {
         $accession_no = mysqli_real_escape_string($this->conn, $id);
         if ($state == 4) {
-            $reason['accession_no'] = $accession_no;
-            $reason['lost_record_by'] = $_SESSION['user_id'];
-            $res = $this->insert('lost_books', [
-                'accession_no' => $reason['accession_no'],
-                'lost_description' => $reason['lost_description'],
-                'lost_record_by' => $reason['lost_record_by'],
-            ]);
-            if ($res) {
-                return $this->update('books', [
-                    'state' => 4,
-                ], "accession_no='$accession_no'");
+            $check = $this->select('lost_books','count(lost_id) as count',"accession_no=$accession_no and found_description IS NULL and found_record_by IS NULL")['result'][0];
+            if($check['count'] == 0){
+              $reason['accession_no'] = $accession_no;
+              $reason['lost_record_by'] = $_SESSION['user_id'];
+              $res = $this->insert('lost_books', [
+                  'accession_no' => $reason['accession_no'],
+                  'lost_description' => $reason['lost_description'],
+                  'lost_record_by' => $reason['lost_record_by'],
+              ]);
+              if ($res) {
+                  return $this->update('books', [
+                      'state' => 4,
+                  ], "accession_no='$accession_no'");
+              }
             }
             return false;
         } else if ($state == 3) {
@@ -166,17 +170,20 @@ class BookModel extends Model
             }
             return false;
         } else if ($state == 5) {
-            $reason['accession_no'] = $accession_no;
-            $reason['damage_record_by'] = $_SESSION['user_id'];
-            $res = $this->insert('damaged_books', [
-                'accession_no' => $reason['accession_no'],
-                'damaged_description' => $reason['damage_description'],
-                'damage_recorded_by' => $reason['damage_record_by'],
-            ]);
-            if ($res) {
-                return $this->update('books', [
-                    'state' => 5,
-                ], "accession_no='$accession_no'");
+            $check = $this->select('damaged_books','count(damaged_id) as count',"accession_no=$accession_no and re_list_description IS NULL and re_listed_recorded_by IS NULL")['result'][0];
+            if($check['count'] == 0){
+              $reason['accession_no'] = $accession_no;
+              $reason['damage_record_by'] = $_SESSION['user_id'];
+              $res = $this->insert('damaged_books', [
+                  'accession_no' => $reason['accession_no'],
+                  'damaged_description' => $reason['damage_description'],
+                  'damage_recorded_by' => $reason['damage_record_by'],
+              ]);
+              if ($res) {
+                  return $this->update('books', [
+                      'state' => 5,
+                  ], "accession_no='$accession_no'");
+              }
             }
             return false;
         } else if ($state == 1) {
@@ -224,7 +231,7 @@ class BookModel extends Model
 
         return $this->select(
             'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join category_codes c on b.category_code=c.category_id',
-            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,c.category_name,r.extended_time,r.recieved_date,
+            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,r.extended_time,r.recieved_date,
             u.email,u.contact_no,u.address',
             "(u.name = '$search_term' || l.membership_id = '$search_term') ORDER BY r.lent_date DESC"
         );
@@ -257,6 +264,7 @@ class BookModel extends Model
                 ['state'=>2],
                 "book_id=$acc1"
             );
+            $this->delete('plan_to_read_books',"membership_id=$memberID and accession_no=$acc1");
         }
 
         if($availability_2['result'][0]['state'] == 1){
@@ -270,6 +278,7 @@ class BookModel extends Model
                 ['state' => 2],
                 "book_id=$acc2"
             );
+            $this->delete('plan_to_read_books',"membership_id=$memberID and accession_no=$acc2");
 
         }
         if(isset($book_one) && isset($book_two)){
@@ -459,33 +468,37 @@ class BookModel extends Model
     {
         date_default_timezone_set('Asia/Colombo');
 
-        if($data[0]['extended_time'] <3 && $data[1]['extended_time']<3){
-            if((!isset($data[0]['extended_date']) && !isset($data[1]['extended_date']) && date("Y-m-d") == $data[0]['due_date']) || (date("Y-m-d") == date('Y-m-d', strtotime($data[0]['extended_date'] . ' +2 weeks')))){
-                $book1 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
-                    ['l.due_date' => date('Y-m-d', strtotime($data[0]['due_date'] . ' +2 weeks')),
-                    'l.extended_time' => $data[0]['extended_time'] + 1,
-                    'l.extended_date' => date("Y-m-d H:i:s")],
-                    "b.accession_no = " . $data[0]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
-                );
+        if(date("Y-m-d") <= $data[0]['due_date']){
+            if($data[0]['extended_time'] <3 && $data[1]['extended_time']<3){
+                if((!isset($data[0]['extended_date']) && !isset($data[1]['extended_date']) && date("Y-m-d") >= date('Y-m-d',strtotime($data[0]['due_date']. ' -1 weeks'))) || (isset($data[0]['extended_date']) && isset($data[1]['extended_date']) && date("Y-m-d") >= date('Y-m-d', strtotime($data[0]['due_date'] . ' -1 weeks')))){
+                    $book1 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
+                        ['l.due_date' => date('Y-m-d', strtotime($data[0]['due_date'] . ' +2 weeks')),
+                        'l.extended_time' => $data[0]['extended_time'] + 1,
+                        'l.extended_date' => date("Y-m-d H:i:s")],
+                        "b.accession_no = " . $data[0]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
+                    );
 
-                $book2 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
-                    ['l.due_date' => date('Y-m-d', strtotime($data[1]['due_date'] . ' +2 weeks')),
-                    'l.extended_time' => $data[1]['extended_time'] + 1,
-                    'l.extended_date' => date("Y-m-d H:i:s")],
-                    "b.accession_no = " . $data[1]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
-                );
+                    $book2 = $this->update('lend_recieve_books l join books b on l.accession_no=b.book_id',
+                        ['l.due_date' => date('Y-m-d', strtotime($data[1]['due_date'] . ' +2 weeks')),
+                        'l.extended_time' => $data[1]['extended_time'] + 1,
+                        'l.extended_date' => date("Y-m-d H:i:s")],
+                        "b.accession_no = " . $data[1]['accession_no'] . " and l.recieved_date IS NULL and l.recieved_by IS NULL"
+                    );
 
-                return [$book1, $book2];
+                    return [$book1, $book2];
+                }
+                return false;
             }
             return false;
         }
         return false;
+
     }
 
     public function getFineDetails()
     {
         return $this->select('fine_details',
-        'damaged_fine,lost_fine,delay_month_fine,delay_after_fine,fine_id',
+        'delay_month_fine,delay_after_fine,fine_id',
         'added_date=(select MAX(added_date) from fine_details)'
         );
     }
@@ -503,7 +516,7 @@ class BookModel extends Model
     public function getFineEditHistory()
     {
       return $this->select('edit_fine_details e join users u on e.edited_by=u.user_id',
-      'e.damaged_fine as damaged_fine, e.lost_fine as lost_fine, e.delay_month_fine as delay_month_fine, e.delay_after_fine as delay_after_fine,e.edited_time as time,u.name as changed_by',
+      'e.delay_month_fine as delay_month_fine, e.delay_after_fine as delay_after_fine,e.edited_time as time,u.name as changed_by',
       'e.fine_id=1 ORDER BY e.edited_time DESC');
     }
 
@@ -658,10 +671,13 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc1BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $result1 = $this->update('books',[
-            'state'=> 1
-          ],"book_id=".$data['acc1BookId']."");
+        if($recieveRecord['success']){
+          $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc1BookId']]);
+          if($res){
+            $result1 = $this->update('books',[
+              'state'=> 1
+            ],"book_id=".$data['acc1BookId']."");
+          }
         }
       }
 
@@ -672,10 +688,13 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc2BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $result2 = $this->update('books',[
-            'state'=> 1
-          ],"book_id=".$data['acc2BookId']."");
+        if($recieveRecord['success']){
+          $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc2BookId']]);
+          if($res){
+            $result2 = $this->update('books',[
+              'state'=> 1
+            ],"book_id=".$data['acc2BookId']."");
+          }
         }
       }
 
@@ -687,16 +706,24 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc1BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $stateChange = $this->update('books',[
-            'state'=> 5
-          ],"book_id=".$data['acc1BookId']."");
+        if($recieveRecord['success']){
+          $acc = $this->select('books',"accession_no","book_id=".$data['acc1BookId']."")['result'][0]['accession_no'];
+          $damage = $this->insert('damaged_books',['accession_no' =>$acc ,'damaged_description'=>"Damaged By User",'damage_recorded_by'=>$_SESSION['user_id']]);
 
-          if($stateChange){
-            $getDamageCount = $this->select('library_member','no_of_books_damaged',"member_id=".$data['memberID']."");
-            $result1 = $this->update('library_member',[
-              'no_of_books_damaged' => $getDamageCount['result'][0]['no_of_books_damaged'] + 1
-            ],"member_id=".$data['memberID']."");
+          if($damage){
+            $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc1BookId']]);
+            if($res){
+              $stateChange = $this->update('books',[
+                'state'=> 5
+              ],"book_id=".$data['acc1BookId']."");
+
+              if($stateChange){
+                $getDamageCount = $this->select('library_member','no_of_books_damaged',"member_id=".$data['memberID']."");
+                $result1 = $this->update('library_member',[
+                  'no_of_books_damaged' => $getDamageCount['result'][0]['no_of_books_damaged'] + 1
+                ],"member_id=".$data['memberID']."");
+              }
+            }
           }
         }
       }
@@ -709,16 +736,24 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc2BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $stateChange = $this->update('books',[
-            'state'=> 5
-          ],"book_id=".$data['acc2BookId']."");
+        if($recieveRecord['success']){
+          $acc = $this->select('books',"accession_no","book_id=".$data['acc2BookId']."")['result'][0]['accession_no'];
+          $damage = $this->insert('damaged_books',['accession_no' =>$acc ,'damaged_description'=>"Damaged By User",'damage_recorded_by'=>$_SESSION['user_id']]);
 
-          if($stateChange){
-            $getDamageCount = $this->select('library_member','no_of_books_damaged',"member_id=".$data['memberID']."");
-            $result2 = $this->update('library_member',[
-              'no_of_books_damaged' => $getDamageCount['result'][0]['no_of_books_damaged'] + 1
-            ],"member_id=".$data['memberID']."");
+          if($damage){
+            $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc2BookId']]);
+            if($res){
+              $stateChange = $this->update('books',[
+                'state'=> 5
+              ],"book_id=".$data['acc2BookId']."");
+
+              if($stateChange){
+                $getDamageCount = $this->select('library_member','no_of_books_damaged',"member_id=".$data['memberID']."");
+                $result2 = $this->update('library_member',[
+                  'no_of_books_damaged' => $getDamageCount['result'][0]['no_of_books_damaged'] + 1
+                ],"member_id=".$data['memberID']."");
+              }
+            }
           }
         }
       }
@@ -731,16 +766,24 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc1BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $stateChange = $this->update('books',[
-            'state'=> 4
-          ],"book_id=".$data['acc1BookId']."");
+        if($recieveRecord['success']){
+          $acc = $this->select('books',"accession_no","book_id=".$data['acc1BookId']."")['result'][0]['accession_no'];
+          $lost = $this->insert('lost_books',['accession_no' =>$acc ,'lost_description'=>"Lost By User",'lost_record_by'=>$_SESSION['user_id']]);
 
-          if($stateChange){
-            $getLostCount = $this->select('library_member','no_of_books_lost',"member_id=".$data['memberID']."");
-            $result1 = $this->update('library_member',[
-              'no_of_books_lost' => $getLostCount['result'][0]['no_of_books_lost'] + 1
-            ],"member_id=".$data['memberID']."");
+          if($lost){
+            $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc1BookId']]);
+            if($res){
+              $stateChange = $this->update('books',[
+                'state'=> 4
+              ],"book_id=".$data['acc1BookId']."");
+
+              if($stateChange){
+                $getLostCount = $this->select('library_member','no_of_books_lost',"member_id=".$data['memberID']."");
+                $result1 = $this->update('library_member',[
+                  'no_of_books_lost' => $getLostCount['result'][0]['no_of_books_lost'] + 1
+                ],"member_id=".$data['memberID']."");
+              }
+            }
           }
         }
       }
@@ -753,16 +796,24 @@ class BookModel extends Model
           'fine_amount' => $data['recieveFlag']
         ],"membership_id=".$data['memberID']." and accession_no=".$data['acc2BookId']." and recieved_date IS NULL and recieved_by IS NULL");
 
-        if($recieveRecord){
-          $stateChange = $this->update('books',[
-            'state'=> 4
-          ],"book_id=".$data['acc2BookId']."");
+        if($recieveRecord['success']){
+          $acc = $this->select('books',"accession_no","book_id=".$data['acc2BookId']."")['result'][0]['accession_no'];
+          $lost = $this->insert('lost_books',['accession_no' =>$acc ,'lost_description'=>"Lost By User",'lost_record_by'=>$_SESSION['user_id']]);
 
-          if($stateChange){
-            $getLostCount = $this->select('library_member','no_of_books_lost',"member_id=".$data['memberID']."");
-            $result2 = $this->update('library_member',[
-              'no_of_books_lost' => $getLostCount['result'][0]['no_of_books_lost'] + 1
-            ],"member_id=".$data['memberID']."");
+          if($lost){
+            $res = $this->insert('completed_books',['membership_id' => $data['memberID'],'accession_no' => $data['acc2BookId']]);
+            if($res){
+              $stateChange = $this->update('books',[
+                'state'=> 4
+              ],"book_id=".$data['acc2BookId']."");
+
+              if($stateChange){
+                $getLostCount = $this->select('library_member','no_of_books_lost',"member_id=".$data['memberID']."");
+                $result2 = $this->update('library_member',[
+                  'no_of_books_lost' => $getLostCount['result'][0]['no_of_books_lost'] + 1
+                ],"member_id=".$data['memberID']."");
+              }
+            }
           }
         }
       }

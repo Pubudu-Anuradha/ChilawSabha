@@ -43,10 +43,6 @@ if($users!==false):
             <span class="address"> Address </span>
             <span> <?= $users['address'] ?? 'NO ADDRESS ERROR' ?> </span>
         </div>
-        <div class="detail">
-            <span class="nic"> NIC number </span>
-            <span> <?= $users['nic'] ?? 'NO NIC ERROR' ?> </span>
-        </div>
 
         <div class="detail">
             <span class="state"> Current State </span>

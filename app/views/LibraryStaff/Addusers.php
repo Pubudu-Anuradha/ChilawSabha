@@ -22,7 +22,6 @@ $errors = $data['errors'] ?? false;
                         'name' => 'User Name',
                         'address' => 'Address',
                         'contact_no' => 'Contact number',
-                        'nic' => 'NIC Number',
                     ]);
 
                     Other::number('Membership ID', 'membership_id', 'membership_id',
@@ -38,8 +37,6 @@ $errors = $data['errors'] ?? false;
                     Text::text('Contact number', 'contact_no', 'contact_no',
                                 placeholder:'+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
                                 pattern:"(\+94\d{9})|0\d{9}");
-                    Text::text('NIC No', 'nic', 'nic', placeholder:'XXXXXXXXXXXX or XXXXXXXXXV',
-                                maxlength:12,pattern:"(\d{12})|(\d{10}(V|v))");
                     Other::submit('Add','add',value:'Add User');
 
                     ?>

@@ -21,7 +21,6 @@
             'name' => 'Name',
             'address' => 'Address',
             'contact_no' => 'Contact number',
-            'nic' => 'NIC number',
         ];
 
         if($disable_error) {

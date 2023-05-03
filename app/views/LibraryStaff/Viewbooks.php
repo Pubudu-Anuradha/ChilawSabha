@@ -113,7 +113,7 @@ if($books!==false):
                         break;
                 case 'Damaged': ?>
                         <button onclick="openModal(<?=$id?>,'recondition_description')" class="btn recondition bg-green white">
-                            Re-Conditioned
+                            Repaired
                         </button>
                         <?php Modal::Modal(textarea:true, title:"Add Description", name:'recondition_description', id:'recondition_description', rows:10, cols:50, required:true, textTitle:'Book Accession No', textId:'recondition_accession_no');?>   
                     <?php

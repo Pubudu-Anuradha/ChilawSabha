@@ -5,7 +5,7 @@
             <form action="<?=URLROOT . '/LibraryStaff/index' ?>" method="post" id="Form">
             <div class="usr-search">
                 <div class="search-bar">
-                    <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="searchUser()">
+                    <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? '' ?>" onkeyup="searchUser()" onfocus="selectText(event)">
                     <button name='search-btn' id='searchBtn'>
                         <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
                     </button>
@@ -159,8 +159,12 @@ window.onload = async function(){
     }
 }
 
+function selectText(event){
+    event.target.select();
+}
+
 async function calculateFine(data){
-    var damaged_fine,delay_after_fine,delay_month_fine,lost_fine;
+    var delay_after_fine,delay_month_fine;
 
     if(data != 0){
         try{
@@ -173,17 +177,13 @@ async function calculateFine(data){
             });
             const fineData = await response.json();
             if(fineData.length > 0){
-                damaged_fine = parseFloat(fineData[0]['result'][0]['damaged_fine']);
                 delay_after_fine = parseFloat(fineData[0]['result'][0]['delay_after_fine']);
                 delay_month_fine = parseFloat(fineData[0]['result'][0]['delay_month_fine']);
-                lost_fine = parseFloat(fineData[0]['result'][0]['lost_fine']);
             }
         }
         catch(err) {
-            damaged_fine = 0;
             delay_after_fine = 0;
             delay_month_fine = 0;
-            lost_fine = 0;
         };
 
         const today = new Date();
@@ -193,6 +193,10 @@ async function calculateFine(data){
         const mili_sec_per_day = 1000 * 60 * 60 * 24;
         const timeDiff = today.getTime() - due_date.getTime();
         const diffInDays = Math.ceil(timeDiff / mili_sec_per_day);
+        var lost_fine_frow = parseFloat(data[0]['price']);
+        var lost_fine_srow = parseFloat(data[1]['price']);
+        var damage_fine_frow = parseFloat(data[0]['price']);
+        var damage_fine_srow = parseFloat(data[1]['price']);
 
         //due date comparison
         if(timeDiff > 0){
@@ -206,31 +210,31 @@ async function calculateFine(data){
                 fineAmont = (30 * delay_month_fine) + ((diffInDays-30)*delay_after_fine);
             }
             if(!recieveCheckFrow.checked ){
-                fineAmont = fineAmont + lost_fine;
+                fineAmont = fineAmont + lost_fine_frow;
             }
             if(!recieveCheckSrow.checked ){
-                fineAmont = fineAmont + lost_fine;
+                fineAmont = fineAmont + lost_fine_srow;
             }
             if(damageCheckFrow.checked && recieveCheckFrow.checked){
-                fineAmont = fineAmont + damaged_fine;
+                fineAmont = fineAmont + damage_fine_frow;
             }
             if(damageCheckSrow.checked && recieveCheckSrow.checked){
-                fineAmont = fineAmont + damaged_fine;
+                fineAmont = fineAmont + damage_fine_srow;
             }
         }
         else{
             fineAmont = 0;
             if(!recieveCheckFrow.checked ){
-                fineAmont = fineAmont + lost_fine;
+                fineAmont = fineAmont + lost_fine_frow;
             }
             if(!recieveCheckSrow.checked ){
-                fineAmont = fineAmont + lost_fine;
+                fineAmont = fineAmont + lost_fine_srow;
             }
             if(damageCheckFrow.checked && recieveCheckFrow.checked){
-                fineAmont = fineAmont + damaged_fine;
+                fineAmont = fineAmont + damage_fine_frow;
             }
             if(damageCheckSrow.checked && recieveCheckSrow.checked){
-                fineAmont = fineAmont + damaged_fine;
+                fineAmont = fineAmont + damage_fine_srow;
             }
         }
 
@@ -495,8 +499,8 @@ function openModal(id,modal,type,data=null){
                             const mili_sec_per_day = 1000 * 60 * 60 * 24;
                             const timeDiffer = today.getTime() - due_date.getTime();
                             const differInDays = Math.ceil(timeDiffer / mili_sec_per_day);
-                            
-                            if(differInDays == 0){
+
+                            if(differInDays >= -7 && differInDays <=0){
                                 var accessions = {
                                     'value1':data[0]['accession_no'],
                                     'value2':data[1]['accession_no'],
@@ -536,10 +540,10 @@ function openModal(id,modal,type,data=null){
                                     openedModal.style.display = "block";
                                 });
                             }
-                            else if(differInDays <= -1){
+                            else if(differInDays < -7){
                                 modal = 'errorModal';
                                 openedModal = document.getElementById(modal);
-                                openedModal.querySelector('p').innerText = "Please Extend On Due Date";
+                                openedModal.querySelector('p').innerText = "Extension available after 1 week from lending date";
                                 openedModal.style.display = "block";
                             }
                             else if(timeDiffer > 0){
@@ -632,15 +636,55 @@ function searchBook(id){
         .then(response => response.json())
         .then(response => {
             if(response.length > 0){
-                if(response.length == 2 && response[1] == 1){
+                if(response.length == 4 && response[1] == 1){
                     book.style.color = 'green';
                     book . setCustomValidity('');
-                    book.value = bookVal['value'] + "  "  + response[0];
+                    if(book.value.match(/\d+/g) != null){
+                      book.value = bookVal['value'] + "  "  + response[0] + ' by ' + response[2];
+                    }
+                    else{
+                      book.value = response[3] + "  "  + response[0] + ' by ' + response[2];
+                    }
                 }
-                else{
+                else if(response.length == 4 && response[1] == 2){
                     book.style.color = 'red';
-                    book . setCustomValidity('Book Not Available');
-                    book.value = bookVal['value'] + "  " + 'Book Not Available';
+                    book . setCustomValidity('Book Lent');
+                    if(book.value.match(/\d+/g) != null){
+                      book.value = bookVal['value'] + "  " + response[0] + ' by ' + response[2] +' (Book Lent)';
+                    }
+                    else{
+                      book.value = response[3] + "  " + response[0] + ' by ' + response[2] +' (Book Lent)';
+                    }
+                }
+                else if(response.length == 4 && response[1] == 3){
+                    book.style.color = 'red';
+                    book . setCustomValidity('Book De-Listed');
+                    if(book.value.match(/\d+/g) != null){
+                      book.value = bookVal['value'] + "  " + response[0] + ' by ' + response[2] +' (Book De-Listed)';
+                    }
+                    else{
+                      book.value = response[3] + "  " + response[0] + ' by ' + response[2] +' (Book De-Listed)';
+                    }
+                }
+                else if(response.length == 4 && response[1] == 4){
+                    book.style.color = 'red';
+                    book . setCustomValidity('Book Lost');
+                    if(book.value.match(/\d+/g) != null){
+                      book.value = bookVal['value'] + "  " + response[0] + ' by ' + response[2] +' (Book Lost)';
+                    }
+                    else{
+                      book.value = response[3] + "  " + response[0] + ' by ' + response[2] +' (Book Lost)';
+                    }
+                }
+                else if(response.length == 4 && response[1] == 5){
+                    book.style.color = 'red';
+                    book . setCustomValidity('Book Damaged');
+                    if(book.value.match(/\d+/g) != null){
+                      book.value = bookVal['value'] + "  " + response[0] + ' by ' + response[2] +' (Book Damaged)';
+                    }
+                    else{
+                      book.value = response[3] + "  " + response[0] + ' by ' + response[2] +' (Book Damaged)';
+                    }
                 }
             }
             else{

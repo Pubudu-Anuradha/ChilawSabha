@@ -28,7 +28,7 @@
             <form action="<?=URLROOT . '/LibraryStaff/userreport' ?>" method="post" id="Form">
                 <div class="usr-search">
                     <div class="search-bar">
-                        <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? ((isset($userStat[0]['membership_id']) && isset($userStat[0]['name'])) ? $userStat[0]['membership_id'] ." ". $userStat[0]['name'] : '') ?>" onkeyup="searchUser()">
+                        <input type="search" name="search" placeholder=" Search User" id="search" value="<?= $_POST['search'] ?? ((isset($userStat[0]['membership_id']) && isset($userStat[0]['name'])) ? $userStat[0]['membership_id'] ." ". $userStat[0]['name'] : '') ?>" onkeyup="searchUser()" onfocus="selectText(event)">
                         <button name='search-btn' id='searchBtn'>
                             <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
                         </button>
@@ -297,6 +297,10 @@
     if(table != null && fineTable != null){
         var filter = document.querySelectorAll('.filter')[3];
         filter.parentNode.removeChild(filter);
+    }
+
+    function selectText(event){
+        event.target.select();
     }
 
     function openTab(event, tab){

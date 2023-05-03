@@ -12,8 +12,7 @@ class LibraryUserManageModel extends Model
                 'u.email',
                 'u.name',
                 'u.address',
-                'u.contact_no',
-                'l.nic',
+                'u.contact_no'
             ];
             for($i = 0;$i<count($search_fields);++$i){
                 $search_fields[$i] = $search_fields[$i] . " LIKE '%$search_term%'";
@@ -27,20 +26,20 @@ class LibraryUserManageModel extends Model
             $conditions = $conditions . '&& m.re_enabled_description IS NULL && m.re_enabled_by IS NULL && m.re_enabled_time IS NULL';
             return $this->selectPaginated(
                 'users u join library_member l on u.user_id=l.user_id join disabled_members m on m.user_id=l.member_id',
-            'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,l.nic as nic,m.disable_description as disable_description',
+            'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,m.disable_description as disable_description',
             $conditions);
         }
 
         return $this->selectPaginated(
             'users u join library_member l on u.user_id=l.user_id',
-        'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,l.nic as nic',
+        'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no',
         $conditions);
     }
 
     public function getUserbyID($id)
     {
         return $this->select('users u join library_member l on u.user_id=l.user_id join user_state s on s.state_id=u.state_id',
-            'u.user_id,u.name,u.email,u.contact_no,u.address,l.member_id,l.membership_id,l.nic,s.state',"u.user_type=2 && l.membership_id=$id");
+            'u.user_id,u.name,u.email,u.contact_no,u.address,l.member_id,l.membership_id,s.state',"u.user_type=2 && l.membership_id=$id");
     }
 
     public function changeState($id,$state, $data =[])
@@ -103,7 +102,6 @@ class LibraryUserManageModel extends Model
                 return $this->insert('library_member',[
                     'membership_id' => $user['membership_id'],
                     'user_id' => $user_id,
-                    'nic' => $user['nic'],
                     'added_by' => $_SESSION['user_id'],
                     'added_time' => date("Y-m-d H:i:s")
                 ]);

@@ -41,14 +41,10 @@ $table = $data['fine_details'] ?? false;
                         <?php Errors::validation_errors($errors, [
                             'delay_month_fine' => "Fine For First Month",
                             'delay_after_fine' => 'Fine From Second Month',
-                            'damaged_fine' => 'Fine For Damaging',
-                            'lost_fine' => 'Fine For Lost',
                         ]);?>
 
                         <?php Other::number('Fine For First Month (Per Day)','delay_month_fine','delay_month_fine',placeholder:'Insert Amount',step:0.01,min:0,required:false,value:$fine['delay_month_fine'] ?? '');?>
                         <?php Other::number('Fine From Second Month (Per Day)','delay_after_fine','delay_after_fine',placeholder:'Insert Amount',step:0.01,min:0,required:false,value:$fine['delay_after_fine'] ?? '');?>
-                        <?php Other::number('Fine For Damaging','damaged_fine','damaged_fine',placeholder:'Insert Amount',step:0.01,min:0.00,required:false,value:$fine['damaged_fine'] ?? '');?>
-                        <?php Other::number('Fine For Lost','lost_fine','lost_fine',placeholder:'Insert Amount',step:0.01,min:0,required:false,value:$fine['lost_fine'] ?? '');?>
                         <?php Other::submit('Edit','edit',value:'Save Changes');?>
                     </form>
                     <?php endif;?>
@@ -121,9 +117,7 @@ $table = $data['fine_details'] ?? false;
                     $post = $fine;
                     $fields = [
                         'delay_month_fine' => "Fine For First Month",
-                        'delay_after_fine' => 'Fine From Second Month',
-                        'damaged_fine' => 'Fine For Damaging',
-                        'lost_fine' => 'Fine For Lost',
+                        'delay_after_fine' => 'Fine From Second Month'
                     ];
                     if($edit_history !== false && count($edit_history) !== 0): ?>
                         <div class="edit-history card">
