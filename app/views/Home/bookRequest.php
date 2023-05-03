@@ -4,7 +4,7 @@ $errors = $data['errors'] ?? false;
 
 
 <div class="head-area">
-    <h1>New Book Request</h1>
+    <h1>Request a Book</h1>
     <hr>
 </div>
 <div class="formContainer">

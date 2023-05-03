@@ -388,7 +388,7 @@ function openModal(id,modal,type,data=null){
                         if(recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckFrow.checked && !damageCheckSrow.checked){
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
@@ -398,7 +398,7 @@ function openModal(id,modal,type,data=null){
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckFrow.checked && !damageCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
@@ -408,7 +408,7 @@ function openModal(id,modal,type,data=null){
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckFrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
@@ -418,7 +418,7 @@ function openModal(id,modal,type,data=null){
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckFrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
@@ -428,7 +428,7 @@ function openModal(id,modal,type,data=null){
                         else if (!recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
@@ -438,7 +438,7 @@ function openModal(id,modal,type,data=null){
                         else if (!recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
@@ -448,7 +448,7 @@ function openModal(id,modal,type,data=null){
                         else if (recieveCheckFrow.checked && !recieveCheckSrow.checked && !damageCheckFrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
@@ -458,7 +458,7 @@ function openModal(id,modal,type,data=null){
                         else if (recieveCheckFrow.checked && !recieveCheckSrow.checked && damageCheckFrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
@@ -468,7 +468,7 @@ function openModal(id,modal,type,data=null){
                         else if (!recieveCheckFrow.checked && !recieveCheckSrow.checked) {
                             if(fineAmont != 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Make Sure User Settled the Fines?";
+                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
                                 openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"

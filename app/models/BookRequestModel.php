@@ -9,8 +9,8 @@ class BookRequestModel extends Model
       date_default_timezone_set('Asia/Colombo');
       if ($state == 3) {
           return $this->update('book_requests', [
-              '`accepted/rejected_by`' => $_SESSION['user_id'],
-              '`accepted/rejected_time`' => date("Y-m-d H:i:s"),
+              '`accepted_rejected_by`' => $_SESSION['user_id'],
+              '`accepted_rejected_time`' => date("Y-m-d H:i:s"),
               'request_state' => 3],
               "request_id='$request_id'"
           );
@@ -18,8 +18,8 @@ class BookRequestModel extends Model
       }
       else if ($state == 2) {
           return $this->update('book_requests', [
-              '`accepted/rejected_by`' => $_SESSION['user_id'],
-              '`accepted/rejected_time`' => date("Y-m-d H:i:s"),
+              '`accepted_rejected_by`' => $_SESSION['user_id'],
+              '`accepted_rejected_time`' => date("Y-m-d H:i:s"),
               'request_state' => 2,],
               "request_id=$request_id"
           );
@@ -45,15 +45,36 @@ class BookRequestModel extends Model
             array_push($conditions, '(' . implode(' || ', $search_fields) . ')');
         }
 
-        array_push($conditions, ' b.request_state=1 ');
+        if (isset($_GET['type']) && !empty($_GET['type']) && $_GET['type'] != 'new') {
+            $type = mysqli_real_escape_string($this->conn, $_GET['type']);
+            if($type == 'added'){
+              array_push($conditions,' b.request_state=2 ');
+            }
+            else if($type == 'rejected'){
+              array_push($conditions,' b.request_state=3 ');
+            }
+        }
+        else{
+            array_push($conditions, ' b.request_state=1 ');
+        }
 
         $conditions = implode(' && ', $conditions);
-        $conditions = $conditions . "ORDER BY b.requested_time DESC";
 
-        return $this->selectPaginated('book_requests b join book_request_state s on b.request_state=s.status_id',
-            'b.request_id as request_id,b.email as email,b.title as title,b.author as author,b.isbn as isbn, b.reason as reason ,b.requested_time as requested_time',
-            $conditions
-        );
+        if(isset($_GET['type']) && !empty($_GET['type']) && ($_GET['type'] == 'added' || $_GET['type'] == 'rejected')){
+          $conditions = $conditions . "ORDER BY b.accepted_rejected_time DESC";
+          return $this->selectPaginated('book_requests b join book_request_state s on b.request_state=s.status_id',
+              'b.request_id as request_id,b.email as email,b.title as title,b.author as author,b.isbn as isbn, b.reason as reason ,b.accepted_rejected_time as time',
+              $conditions
+          );
+        }
+        else{
+          $conditions = $conditions . "ORDER BY b.requested_time DESC";
+          return $this->selectPaginated('book_requests b join book_request_state s on b.request_state=s.status_id',
+              'b.request_id as request_id,b.email as email,b.title as title,b.author as author,b.isbn as isbn, b.reason as reason ,b.requested_time as time',
+              $conditions
+          );
+        }
+
     }
 
     public function getBookRequestByID($id)

@@ -618,7 +618,16 @@ class LibraryStaff extends Controller
             //to send a mail if this is a book requested by an user
             if($data['Add']['success'] == true && $reqEmail && $reqTitle){
                 $Requestmodel->changeBookRequestState($requestID, 2);
-                Email::send($reqEmail,'Book Request Added',"Book Request for Book Titled $reqTitle has been added to the library.");
+                $emailContent = "<div class=\"main-container\" style=\"margin: 0; padding: 0; box-sizing: border-box; font-family: poppins; background-color: #ffffff;\">";
+                $emailContent .= "<div class='reset-content-div' style=\"margin: 5rem auto; padding: 2rem 2rem; width: 40rem; display:block; justify-content: center; align-items: center; border: 1px solid #93B4F2; background-color: #F0F5FE; border-radius: 1rem;\">";
+                $emailContent .= "<h1 style=\"font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 2rem;\">Book Request Status</h1><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
+                 Your request for the book titled $reqTitle has been successfully added to the library’s collection.</p><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
+                 You are welcome to visit the library and read the book at your convenience.</p>
+                 <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">Thanks You,<br/>
+                 Chilaw Pradeshiya Sabha </p>";
+                $emailContent .= "</div></div>";
+
+                Email::send($reqEmail,'Book Request Added',$emailContent);
             }
             $this->view('LibraryStaff/Addbooks', 'Add New Book', $data, ['LibraryStaff/index', 'Components/form']);
         } else {
@@ -1373,11 +1382,11 @@ class LibraryStaff extends Controller
                         $response['result'],
                     ]);
                     die();
-                }  
+                }
                 else $this->returnJSON([
                     'error'=>'Error Parsing JSON'
-                ]);       
-            }     
+                ]);
+            }
         }
 
         $this->view('LibraryStaff/Userreport','User Report',[], styles:['Components/table', 'posts','LibraryStaff/index','LibraryStaff/userreport','LibraryStaff/finance','Components/modal']);

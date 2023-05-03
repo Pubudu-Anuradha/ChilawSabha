@@ -11,9 +11,17 @@
         </div>
     </div>
 
-    <?php Pagination::Top('/LibraryStaff/bookrequest', select_filters:[]);?>
+    <?php Pagination::Top('/LibraryStaff/bookrequest', select_filters:[
+            'type'=>[
+                'Filter By Type',[
+                    'new'=>'New',
+                    'added'=> 'Added',
+                    'rejected'=>'Rejected',
+                ]
+            ]
+    ]);?>
 
-    <?php Table::Table(['email' => 'Email', 'title' => 'Title', 'author' => 'Author', 'isbn' => "ISBN", 'reason' => 'Reason','requested_time' => 'Requested On'],
+    <?php Table::Table(['email' => 'Email', 'title' => 'Title', 'author' => 'Author', 'isbn' => "ISBN", 'reason' => 'Reason','time' => 'Requested On'],
         $table['result'], 'bookRequests',
         actions:[
             'Add Book' => [[URLROOT . '/LibraryStaff/Addbooks/%s','request_id'], 'btn add bg-lightblue white',['#']],
@@ -30,7 +38,38 @@
 <script>
 
         var openedModal;
+        var type = document.getElementById('type');
+        var table = document.getElementById('bookRequests');
 
+        if(type.value == 'added'){
+            table.rows[0].cells[5].innerHTML = 'Added On';
+            table.rows[0].deleteCell(4);
+            table.rows[0].deleteCell(5);
+            for(let i=1;i<table.rows.length;i++){
+                if(table.rows[1].cells.length != 1){
+                    table.rows[i].deleteCell(4);
+                    table.rows[i].deleteCell(5);
+                }  
+                else{
+                    break;
+                }     
+            }
+        }
+        else if(type.value == 'rejected'){
+            table.rows[0].cells[5].innerHTML = 'Rejected On';
+            table.rows[0].deleteCell(4);
+            table.rows[0].deleteCell(5);
+            for(let i=1;i<table.rows.length;i++){
+                if(table.rows[1].cells.length != 1){
+                    table.rows[i].deleteCell(4);
+                    table.rows[i].deleteCell(5);
+                } 
+                else{
+                    break;
+                }  
+            }
+        }
+    
         function closeModal(){
             openedModal.style.display = "none";
         }
