@@ -54,6 +54,7 @@
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'lost_accession_no');?>
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'delist_description',id:'delist_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'delist_accession_no');?>
         <?php Modal::Modal(textarea:true, title:"Add Description", name:'damage_description', id:'damage_description', rows:10, cols:50, required:true, textTitle:'Book Accession No', textId:'damage_accession_no');?>
+        <?php Modal::Modal(content:'The Book You Requested in Currently Lent',name:'errorModal', id:'errorModal'); ?>
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
 </div>
@@ -108,9 +109,27 @@
         }
         function openModal(id,modal){
             event.preventDefault();
-            openedModal = document.getElementById(modal);
-            openedModal.querySelector('input[type="number"]').value = id;
-            openedModal.style.display = "block";
+            var data = <?php echo ((isset($table['result'])) && (!empty($table['result']))) ? json_encode($table['result']) : false?>;
+            if(data){
+                for(let i = 0;i<data.length;i++){
+                    if(id == data[i]['accession_no']){
+                        var state = data[i]['state'];
+                        break;
+                    }
+                }
+            }
+
+            if(state == 2){
+                modal = "errorModal";
+                openedModal = document.getElementById(modal);
+                openedModal.style.display = "block";
+            }
+            else{
+                openedModal = document.getElementById(modal);
+                openedModal.querySelector('input[type="number"]').value = id;
+                openedModal.style.display = "block";
+            }
+
 
             window.onclick = function(event) {
               if (event.target == openedModal) {

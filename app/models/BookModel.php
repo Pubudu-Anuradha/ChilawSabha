@@ -33,26 +33,26 @@ class BookModel extends Model
         if ($state[0] == 4) {
             $conditions = $conditions . ' && l.found_description IS NULL && l.found_record_time IS NULL && l.found_record_by IS NULL ORDER BY l.lost_record_time DESC';
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join lost_books l on b.accession_no=l.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, l.lost_description as lost_description',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, l.lost_description as lost_description',
                 $conditions);
         }
 
         if ($state[0] == 5) {
             $conditions = $conditions . ' && d.re_list_description IS NULL && d.re_list_record_time IS NULL && d.re_listed_recorded_by IS NULL ORDER BY d.damaged_record_time DESC';
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join damaged_books d on b.accession_no=d.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, d.damaged_description as damaged_description',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, d.damaged_description as damaged_description',
                 $conditions);
         }
 
         if ($state[0] == 3) {
             $conditions = $conditions . " ORDER BY d.delist_record_time DESC";
             return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join delisted_books d on b.accession_no=d.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name, d.delist_description as delist_description',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, d.delist_description as delist_description',
                 $conditions);
         }
 
         return $this->selectPaginated('books b join category_codes c on b.category_code=c.category_id',
-            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, c.category_name as category_name',
+            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name',
             $conditions . ' ORDER BY b.title');
 
     }
