@@ -23,8 +23,8 @@ $reqInfo = $data['reqInfo'] ?? false;
                         'publisher' => 'Publisher',
                         'place_of_publication' => "Place of Publication",
                         'date_of_publication' => 'Date of Publication',
-                        'category_code' => 'Category Code',
-                        'sub_category_code' => 'Sub Category Code',
+                        'category' => 'Book Category',
+                        'subcategory' => 'Book Sub Category',
                         'accession_no' => 'Accession No',
                         'isbn' => 'ISBN No',
                         'price' => "Price",
@@ -38,25 +38,26 @@ $reqInfo = $data['reqInfo'] ?? false;
                 <?php Text::text('Publisher','publisher','publisher',placeholder:'Insert Book Publisher',maxlength:255);?>
                 <?php Text::text('Place of Publication','place_of_publication','place_of_publication',placeholder:'Insert Place of Publication',maxlength:255);?>
                 <?php Time::date('Date of Publication','date_of_publication','date_of_publication',max:Date("Y-m-d"));?>
-                <?php $categories = [];
+
+                <?php $categories = []; $type = [];
                     foreach ($data['categories'] as $category) {
-                        $categories[$category['category_id']] = $category['category_name'];
+                        foreach($data['subcategories'] as $subcategory){
+                            if($subcategory['category_id'] == $category['category_id'] ){
+                                $type[$category['category_name']][]  = $subcategory['sub_category_name'];
+                            }
+                        }
                     }
                 ?>
+
                 <div class="input-field">
-                    <label for="sub_category_code">Book Category</label>
+                    <label for="book_category">Book Category</label>
                     <select name="category" id="category" required>
-                        <?php  foreach($categories as $value=>$name): ?>
-                            <option label="<?=$name?>">
-                              <?=$name?>
-                                <?php foreach($data['subcategories'] as $subcategory):
-                                    if($subcategory['category_id'] == $value): ?>
-                                        <option value="<?=$subcategory['sub_category_id']?>">
-                                            <?php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp' . $subcategory['sub_category_name']?>
-                                        </option>
-                                <?php endif; endforeach;?>
-                            </option>
-                        <?php endforeach; ?>
+                        <option value="0">Choose a book category</option>
+                    </select>               
+                </div>
+                <div class="input-field">
+                    <label for="book_category"  id="subCategorylabel" style="display:none">Book Sub Category</label>
+                    <select name="subcategory" id="subcategory" style="display:none">
                     </select>
                 </div>
 
@@ -82,6 +83,58 @@ $reqInfo = $data['reqInfo'] ?? false;
     var pubdate = document.getElementById('date_of_publication');
     var recdate = document.getElementById('recieved_date');
 
+    const select = document.getElementById('category');
+    const subSelect = document.getElementById('subcategory');
+    const subCategorylabel = document.getElementById('subCategorylabel');
+
+    const bookTypes = <?php echo (isset($type) ? json_encode($type) : false) ?>;
+
+    if(bookTypes){
+        for(bookType in bookTypes){
+            const option = document.createElement('option');
+            option.value = bookType;
+            option.textContent = bookType;
+            select.appendChild(option);
+        }
+    
+
+        select.addEventListener('change', function(e){
+            const selectedCategory = event.target.value;
+            subSelect.innerHTML = "";
+            
+            if(selectedCategory != 0){
+                select.setCustomValidity('');
+                const option = document.createElement('option');
+                option.value = '0';
+                option.textContent = 'Choose a book sub category';
+                subSelect.appendChild(option);
+
+                for(const subType of bookTypes[selectedCategory]){
+                    const option = document.createElement('option');
+                    option.value = subType;
+                    option.textContent = subType;
+                    subSelect.appendChild(option);
+                }
+                subSelect.style.display = "block";
+                subCategorylabel.style.display = "block";
+            }else{
+                select.setCustomValidity('Please Select A Book Category');
+                subSelect.style.display = "none";
+                subCategorylabel.style.display = "none";
+            }
+        });
+    }
+
+    subSelect.addEventListener('change',function(e){
+        const subSelectedCategory = event.target.value;
+        if(subSelectedCategory != 0){
+            subSelect.setCustomValidity('');
+        }
+        else{
+            subSelect.setCustomValidity('Please Select A Book Sub Category');
+        }
+    });
+
     recdate.addEventListener('focus',function(){
         this.showPicker();
     });
@@ -101,9 +154,31 @@ $reqInfo = $data['reqInfo'] ?? false;
     });
 
     form.addEventListener('submit', function(event){
+
+        if(select.value == 0){
+            select.setCustomValidity('Please Select A Book Category');
+            select . reportValidity();
+        }
+
+        if(subSelect.value == 0){
+            subSelect.setCustomValidity('Please Select A Book Sub Category');
+            subSelect . reportValidity();
+        }
+
         if (!recdate . validity . valid) {
             event . preventDefault();
             recdate . reportValidity();
         }
+        if (!select.validity.valid || !subSelect.validity.valid){
+            event.preventDefault();
+            if(!subSelect.validity.valid){
+                subSelect.reportValidity();
+            }
+            else if (!select.validity.valid){
+                select.reportValidity();
+            }
+        }
     });
+
+
 </script>

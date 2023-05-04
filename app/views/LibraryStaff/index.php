@@ -77,6 +77,7 @@
                                 <th>Author</th>
                                 <th>Publisher</th>
                                 <th>Book Category</th>
+                                <th>Book Sub Category</th>
                                 <th>Due Date</th>
                                 <th>Damaged</th>
                                 <th>Recieved</th>
@@ -93,6 +94,7 @@
                             <td><?=$borrowData['author']?></td>
                             <td><?=$borrowData['publisher']?></td>
                             <td><?=$borrowData['category_name']?></td>
+                            <td><?=$borrowData['sub_category_name']?></td>
                             <td><?=$borrowData['due_date']?></td>
                             <td class="check"><input type="checkbox" name="<?= "damagedcheck$count"?>" id="<?= "damagedcheck$count"?>"></td>
                             <td class="check"><input type="checkbox" name="<?= "recievedcheck$count"?>" id="<?= "recievedcheck$count"?>" checked></td>

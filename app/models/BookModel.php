@@ -28,38 +28,43 @@ class BookModel extends Model
             array_push($conditions, "c.category_id = '$category'");
         }
 
+        if (isset($_GET['sub_category_name']) && !empty($_GET['sub_category_name']) && $_GET['sub_category_name'] != 'All') {
+            $subcategory = mysqli_real_escape_string($this->conn, $_GET['sub_category_name']);
+            array_push($conditions, "sb.sub_category_id = '$subcategory'");
+        }
+
         $conditions = implode(' && ', $conditions);
 
         if ($state[0] == 4) {
             $conditions = $conditions . ' && l.found_description IS NULL && l.found_record_time IS NULL && l.found_record_by IS NULL ORDER BY l.lost_record_time DESC';
-            return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join lost_books l on b.accession_no=l.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, l.lost_description as lost_description',
+            return $this->selectPaginated('category_codes c join sub_category_codes sb on sb.category_id=c.category_id join books b on b.category_code=sb.sub_category_id join lost_books l on b.accession_no=l.accession_no',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name, l.lost_description as lost_description',
                 $conditions);
         }
 
         if ($state[0] == 5) {
             $conditions = $conditions . ' && d.re_list_description IS NULL && d.re_list_record_time IS NULL && d.re_listed_recorded_by IS NULL ORDER BY d.damaged_record_time DESC';
-            return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join damaged_books d on b.accession_no=d.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, d.damaged_description as damaged_description',
+            return $this->selectPaginated('category_codes c join sub_category_codes sb on sb.category_id=c.category_id join books b on b.category_code=sb.sub_category_id join damaged_books d on b.accession_no=d.accession_no',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name, d.damaged_description as damaged_description',
                 $conditions);
         }
 
         if ($state[0] == 3) {
             $conditions = $conditions . " ORDER BY d.delist_record_time DESC";
-            return $this->selectPaginated('category_codes c join books b on b.category_code=c.category_id join delisted_books d on b.accession_no=d.accession_no',
-                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name, d.delist_description as delist_description',
+            return $this->selectPaginated('category_codes c join sub_category_codes sb on sb.category_id=c.category_id join books b on b.category_code=sb.sub_category_id join delisted_books d on b.accession_no=d.accession_no',
+                'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name, d.delist_description as delist_description',
                 $conditions);
         }
 
-        return $this->selectPaginated('books b join category_codes c on b.category_code=c.category_id',
-            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name',
+        return $this->selectPaginated('books b join sub_category_codes sb on b.category_code=sb.sub_category_id join category_codes c on sb.category_id=c.category_id',
+            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name',
             $conditions . ' ORDER BY b.title');
 
     }
 
     public function get_categories()
     {
-        return $this->select('category_codes');
+        return $this->select('category_codes' );
     }
 
     public function get_sub_categories()
@@ -74,14 +79,9 @@ class BookModel extends Model
         return $this->insert('books', $book);
     }
 
-    public function getCategoryCode($Category,$type)
+    public function getCategoryCode($Category)
     {
-        if($type == 'Sub'){
-            return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_id=$Category");
-        }
-        else if($type == 'Main'){
-            return $this->select('category_codes', 'category_id', "category_name='$Category'");
-        }
+        return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_name='".$Category."'");
     }
 
     public function editBook($id, $data)
@@ -91,7 +91,7 @@ class BookModel extends Model
 
     public function getBookbyID($id)
     {
-        return $this->select('book_status s join books b on b.state=s.status_id join category_codes c on b.category_code=c.category_id join sub_category_codes sb on b.sub_category_code=sb.sub_category_id',
+        return $this->select('book_status s join books b on b.state=s.status_id join sub_category_codes sb on b.category_code=sb.sub_category_id join category_codes c on sb.category_id=c.category_id',
             'b.book_id as book_id,b.title as title,b.author as author,b.publisher as publisher,b.place_of_publication as place_of_publication,b.date_of_publication as date_of_publication,
          b.accession_no as accession_no,b.isbn as isbn,b.price as price,b.pages as pages,b.recieved_date as recieved_date, c.category_name as category_name,sb.sub_category_name as sub_category_name,
          b.recieved_method as recieved_method,b.state as state,s.status as status',
@@ -230,8 +230,8 @@ class BookModel extends Model
         $search_term = mysqli_real_escape_string($this->conn, $user);
 
         return $this->select(
-            'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join category_codes c on b.category_code=c.category_id',
-            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,r.extended_time,r.recieved_date,
+            'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join sub_category_codes sb on b.category_code=sb.sub_category_id LEFT join category_codes c on sb.category_id=c.category_id',
+            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,sb.sub_category_name,r.extended_time,r.recieved_date,
             u.email,u.contact_no,u.address',
             "(u.name = '$search_term' || l.membership_id = '$search_term') ORDER BY r.lent_date DESC"
         );

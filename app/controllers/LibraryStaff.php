@@ -320,10 +320,10 @@ class LibraryStaff extends Controller
                 $model->getBookbyID($_GET['damage_accession_no']) : false,
                 'damage_error' => $error,
 
-                'Books' => $model->getBooks(), 'Category' => $model->get_categories()
+                'Books' => $model->getBooks(), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         } else {
-            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
         }
     }
@@ -395,11 +395,11 @@ class LibraryStaff extends Controller
                 'Found' => ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) ?
                 $model->getBookbyID($_GET['found_accession_no']) : false,
                 'found_error' => $error,
-                'Books' => $model->getBooks([4]), 'Category' => $model->get_categories()
+                'Books' => $model->getBooks([4]), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
         else{
-            $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4]),'Category' => $model->get_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
     }
 
@@ -407,7 +407,7 @@ class LibraryStaff extends Controller
     {
         $model = $this->model('BookModel');
 
-        $this->view('LibraryStaff/Delistedbooks','De-Listed Books', ['Books' => $model->getBooks([3]),'Category' => $model->get_categories()], styles:['LibraryStaff/index', 'Components/table','posts']);
+        $this->view('LibraryStaff/Delistedbooks','De-Listed Books', ['Books' => $model->getBooks([3]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table','posts']);
     }
 
     public function damagedbooks()
@@ -444,11 +444,11 @@ class LibraryStaff extends Controller
                 'Reconditioned' => ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) ?
                 $model->getBookbyID($_GET['recondition_accession_no']) : false,
                 'recondition_error' => $error,
-                'Books' => $model->getBooks([5]),'Category' => $model->get_categories()
+                'Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
         else{
-          $this->view('LibraryStaff/Damagedbooks','Damaged Books', ['Books' => $model->getBooks([5]),'Category' => $model->get_categories()], styles:['LibraryStaff/index', 'Components/table','posts', 'Components/modal']);
+          $this->view('LibraryStaff/Damagedbooks','Damaged Books', ['Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table','posts', 'Components/modal']);
         }
     }
 
@@ -583,17 +583,10 @@ class LibraryStaff extends Controller
         }
 
         if (isset($_POST['Add'])) {
-
-            //if sub catergory selected
-            if(is_numeric($_POST['category'])){
-              $_POST['category_code'] = $model->getCategoryCode($_POST['category'],'Sub')['result'][0]["category_id"];
-              $_POST['sub_category_code'] = $_POST['category'];
-              unset($_POST['category']);
-            }
-            else{
-              $_POST['category_code'] = $model->getCategoryCode($_POST['category'],'Main')['result'][0]["category_id"];
-              unset($_POST['category']);
-            }
+var_dump($_POST);
+            $_POST['sub_category_code'] = $model->getCategoryCode($_POST['subcategory'])['result'][0]["sub_category_code"];
+            unset($_POST['subcategory']);
+            unset($_POST['category']);
 
             [$valid, $err] = $this->validateInputs($_POST, [
                     'title|l[:255]',
@@ -601,8 +594,7 @@ class LibraryStaff extends Controller
                     'publisher|l[:255]',
                     'place_of_publication|l[:255]',
                     'date_of_publication',
-                    'category_code',
-                    'sub_category_code|?',
+                    'sub_category_code|i[0:]',
                     'accession_no|i[0:]',
                     'price|d[0:]',
                     'pages|i[1:]',

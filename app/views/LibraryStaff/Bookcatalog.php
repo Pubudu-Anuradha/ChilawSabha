@@ -6,9 +6,14 @@
         $delist_error = $data['delist_error'] ?? false;
         $damage_error = $data['damage_error'] ?? false;
         $categories = $data['Category']['result'] ?? [];
+        $subcategories = $data['SubCategory']['result'] ?? [];
         $category_arr = ['All' => "All"];
         foreach ($categories as $category){
             $category_arr[$category['category_id']] = $category['category_name'];
+        }
+        $sub_category_arr = ['All' => "All"];
+        foreach ($subcategories as $subcategory){
+            $sub_category_arr[$subcategory['sub_category_id']] = $subcategory['sub_category_name'];
         }
     ?>
 
@@ -24,6 +29,9 @@
         <?php Pagination::Top('/LibraryStaff/bookcatalog', select_filters:[
             'category_name' =>[
                 'Choose by Category' ,$category_arr
+            ],
+            'sub_category_name' =>[
+                'Choose by Sub Category' ,$sub_category_arr
             ]
         ]);?>
 
@@ -41,7 +49,7 @@
         }
         ?>
         
-        <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category'],
+        <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category','sub_category_name' => 'Book Sub Category'],
             $table['result'],'bookCatalog',
             actions:[
                 'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
