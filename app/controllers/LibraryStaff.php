@@ -209,14 +209,35 @@ class LibraryStaff extends Controller
             $reqJSON = json_decode($reqJSON, associative:true);
             if ($reqJSON) {
                 if(isset($reqJSON['range'])){
-                    $response = $model->getBorrowStat($reqJSON);
+                  if(isset($reqJSON['type']) && $reqJSON['type'] == 'load'){
+                    $response['borrow'] = $model->getBorrowStat($reqJSON);
+                    $response['fav'] = $model->getFavouriteStat($reqJSON);
+                    $response['plr'] = $model->getPlrStat($reqJSON);
+                  }
+                  else if(isset($reqJSON['type']) && $reqJSON['type'] == 'pie'){
+                    $response['borrow'] = $model->getBorrowStat($reqJSON);
+                  }
+                  else if(isset($reqJSON['type']) && $reqJSON['type'] == 'fbar'){
+                    $response['fav'] = $model->getFavouriteStat($reqJSON);
+                  }
+                  else if(isset($reqJSON['type']) && $reqJSON['type'] == 'sbar'){
+                    $response['plr'] = $model->getPlrStat($reqJSON);
+                  }
                 }
                 else if(isset($reqJSON['fromDate']) && isset($reqJSON['toDate'])){
-                    $response = $model->getCustomBorrowStat($reqJSON);
+                    if(isset($reqJSON['type']) && $reqJSON['type'] == 'pie'){
+                      $response['borrow'] = $model->getCustomBorrowStat($reqJSON);
+                    }
+                    else if(isset($reqJSON['type']) && $reqJSON['type'] == 'fbar'){
+                      $response['fav'] = $model->getCustomFavouriteStat($reqJSON);
+                    }
+                    else if(isset($reqJSON['type']) && $reqJSON['type'] == 'sbar'){
+                      $response['plr'] = $model->getCustomPlrStat($reqJSON);
+                    }
                 }
 
                 $this->returnJSON([
-                    $response['result'],
+                    $response,
                 ]);
                 die();
             } else {

@@ -13,6 +13,10 @@ $table = $data['fine_details'] ?? false;
                     <h2>Total Fines Collected</h2>
                     <select name="range" id="range" onchange="handleFine()">
                       <option value="all">All</option>
+                      <option value="today">Today</option>
+                      <option value="yesterday">Yesterday</option>
+                      <option value="last_7_days">Last 7 Days</option>
+                      <option value="last_30_days">Last 30 Days</option>
                       <option value="this month">This Month</option>
                       <option value="last month">Last Month</option>
                       <option value="this year">This Year</option>

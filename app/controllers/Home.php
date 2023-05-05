@@ -59,7 +59,7 @@ class Home extends Controller
     public function bookCatalogue()
     {
         $model = $this->model('BookModel');
-        $this->view('Home/bookCatalogue', 'Book Catalogue', ['Books' => $model->getBooks()], styles:['LibraryStaff/index', 'Home/portal', 'Components/table', 'posts']);
+        $this->view('Home/bookCatalogue', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Home/portal', 'Components/table', 'posts']);
     }
     
     public function addComplaint()
