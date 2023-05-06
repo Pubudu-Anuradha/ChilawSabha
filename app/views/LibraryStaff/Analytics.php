@@ -1,6 +1,9 @@
 <div class="content">
     <div class="page">
-        <h2 class="topic"><?php $page_title = 'ANALYTICS'; echo $page_title;?></h2>
+      <div class="analytics-topic topic">
+        <h2><?php $page_title = 'ANALYTICS'; echo $page_title;?></h2>
+        <button class='btn bg-lightblue' onclick="genReport('chart-area')">Export To PDF</button>
+      </div>
         <div class="chart-area" id="chart-area">
             <div class="pie-chart bg-fd-blue">
                 <div class="pie-chart-options">
@@ -122,6 +125,27 @@
     var toDateFbar = document.getElementById('toDateFbar');
     var fromDateSbar = document.getElementById('fromDateSbar');
     var toDateSbar = document.getElementById('toDateSbar');
+
+    function genReport(id){
+      var img;
+      html2canvas(document.getElementById(id)).then(
+        function (canvas){
+          img=canvas.toDataURL("image/png");
+          var doc =new jsPDF('landscape', 'mm', 'a4');
+          var pageWidth = doc.internal.pageSize.getWidth();
+          var imageWidth = 300;
+          var title = '<?php echo($page_title)?>';
+          var barchartShadow = document.querySelector('.bar-chart');
+          barchartShadow.style.boxShadow = '';
+          var titleFontSize = 16;
+          doc.setFontSize(titleFontSize);
+          var titleWidth = doc.getTextWidth(title);
+          var titleX = (pageWidth - titleWidth) / 2;
+          doc.text(titleX, 20, title);
+          doc.addImage(img,'PNG', 15, 30, imageWidth, 0);
+          doc.save('<?=$page_title?>'.concat('.pdf'));
+      });    
+    }
 
     function closeModal(){
       openedModal.style.display = "none";
