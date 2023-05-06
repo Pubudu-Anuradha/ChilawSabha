@@ -229,12 +229,22 @@ class BookModel extends Model
     {
         $search_term = mysqli_real_escape_string($this->conn, $user);
 
-        return $this->select(
-            'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join sub_category_codes sb on b.category_code=sb.sub_category_id LEFT join category_codes c on sb.category_id=c.category_id',
-            'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,sb.sub_category_name,r.extended_time,r.recieved_date,
-            u.email,u.contact_no,u.address',
-            "(u.name = '$search_term' || l.membership_id = '$search_term') ORDER BY r.lent_date DESC"
-        );
+        if(is_numeric($user)){
+            return $this->select(
+                'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join sub_category_codes sb on b.category_code=sb.sub_category_id LEFT join category_codes c on sb.category_id=c.category_id',
+                'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,sb.sub_category_name,r.extended_time,r.recieved_date,
+                u.email,u.contact_no,u.address',
+                "l.membership_id = $search_term ORDER BY r.lent_date DESC"
+            );
+        }
+        else{
+            return $this->select(
+                'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join sub_category_codes sb on b.category_code=sb.sub_category_id LEFT join category_codes c on sb.category_id=c.category_id',
+                'l.member_id,l.membership_id,u.name,l.no_of_books_damaged,l.no_of_books_lost,r.due_date, r.extended_time,b.accession_no, b.title,b.author,b.publisher,b.price,c.category_name,sb.sub_category_name,r.extended_time,r.recieved_date,
+                u.email,u.contact_no,u.address',
+                "u.name = '$search_term' ORDER BY r.lent_date DESC"
+            );
+        }
     }
 
     public function lendBook($memberID, $acc1, $acc2){

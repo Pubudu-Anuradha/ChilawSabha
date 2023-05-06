@@ -363,9 +363,10 @@ function openModal(id,modal,type,data=null){
                                 .then(response => response.json())
                                 .then(response => {
                                     if(response[0].length == 2){
-                                        openedModal.querySelector('p').innerText = "The books \n" + acc1.value +" : "+ response[0][0]['result'][0]['acc1Count']
-                                        + " plan to read users \n" + acc2.value +" : "+ response[0][1]['result'][0]['acc2Count'] + " plan to read users \n" +
-                                        "Confirm Lending ?";
+                                        openedModal.querySelector('p').style.fontSize = "large";
+                                        openedModal.querySelector('p').innerText = "Book List: \n\n - " + acc1.value +" : "+ response[0][0]['result'][0]['acc1Count']
+                                        + " plan to read users \n - " + acc2.value +" : "+ response[0][1]['result'][0]['acc2Count'] + " plan to read users \n" +
+                                        "\nConfirm Lending ?";
                                     }
                                     openedModal.style.display = "block";
                                 })
@@ -393,91 +394,109 @@ function openModal(id,modal,type,data=null){
                         var fineData = ((data[0]['due_date'] != null) && (data[0]['recieved_date'] == null)) ? data : 0;
                         if(recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckFrow.checked && !damageCheckSrow.checked){
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Recieved\n" + "\nPlease Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Recieved\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Recieved\n\n";
                             }
                         }
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckFrow.checked && !damageCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Recieved\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Recieved\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Recieved\n\n";
                             }
                         }
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckFrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Damaged\n" + "\nPlease Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Damaged\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Damaged\n\n";
                             }
                         }
                         else if (recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckFrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Damaged\n" + "\nPlease Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Damaged\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Damaged\n\n";
                             }
                         }
                         else if (!recieveCheckFrow.checked && recieveCheckSrow.checked && !damageCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Recieved\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
+                                + data[1]['title'] + " : Recieved\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Recieved\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
+                                + data[1]['title'] + " : Recieved\n\n";
                             }
                         }
                         else if (!recieveCheckFrow.checked && recieveCheckSrow.checked && damageCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Damaged\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
+                                + data[1]['title'] + " : Damaged\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Damaged\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
+                                + data[1]['title'] + " : Damaged\n\n";
                             }
                         }
                         else if (recieveCheckFrow.checked && !recieveCheckSrow.checked && !damageCheckFrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Lost\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Recieved\n"
-                                + data[1]['title'] + " : Lost\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Recieved\n - "
+                                + data[1]['title'] + " : Lost\n\n";
                             }
                         }
                         else if (recieveCheckFrow.checked && !recieveCheckSrow.checked && damageCheckFrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Lost\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Damaged\n"
-                                + data[1]['title'] + " : Lost\n";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Damaged\n - "
+                                + data[1]['title'] + " : Lost\n\n";
                             }
                         }
                         else if (!recieveCheckFrow.checked && !recieveCheckSrow.checked) {
                             if(fineAmont != 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
-                                + data[1]['title'] + " : Lost\n" + "Please Charge Fines";
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
+                                + data[1]['title'] + " : Lost\n\n" + "Please Charge Fines";
                             }
                             else if(fineAmont == 0){
-                                openedModal.querySelector('p').innerText = "The Books \n" + data[0]['title'] + " : Lost\n"
+                                openedModal.querySelector('p').style.fontSize = "large";
+                                openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] + " : Lost\n - "
                                 + data[1]['title'] + " : Lost\n";
                             }
                         }
@@ -523,9 +542,10 @@ function openModal(id,modal,type,data=null){
                                         extended_count_2 = response[0]['extendCount'][1]['result'][0]['extended_time'];
 
                                         if(extended_count_1<3 && extended_count_2<3 && (extended_count_1==extended_count_2)){
-                                            openedModal.querySelector('p').innerText = "The books \n" + data[0]['title'] +" : "+ response[0]['planToReadCount'][0]['result'][0]['acc1Count']
-                                            + " plan to read users \n" + data[1]['title'] +" : "+ response[0]['planToReadCount'][1]['result'][0]['acc2Count'] + " plan to read users \n" +
-                                            "Confirm Extending ?";
+                                            openedModal.querySelector('p').style.fontSize = "large";
+                                            openedModal.querySelector('p').innerText = "Book List: \n\n - " + data[0]['title'] +" : "+ response[0]['planToReadCount'][0]['result'][0]['acc1Count']
+                                            + " plan to read users \n - " + data[1]['title'] +" : "+ response[0]['planToReadCount'][1]['result'][0]['acc2Count'] + " plan to read users \n" +
+                                            "\nConfirm Extending ?";
                                         }
                                         else if (extended_count_1 >= 3 || extended_count_2 >=3){
                                             modal = 'errorModal';

@@ -134,9 +134,7 @@
           var doc =new jsPDF('landscape', 'mm', 'a4');
           var pageWidth = doc.internal.pageSize.getWidth();
           var imageWidth = 300;
-          var title = '<?php echo($page_title)?>';
-          var barchartShadow = document.querySelector('.bar-chart');
-          barchartShadow.style.boxShadow = '';
+          var title = '<?php echo($page_title)?>'.concat(' REPORT');
           var titleFontSize = 16;
           doc.setFontSize(titleFontSize);
           var titleWidth = doc.getTextWidth(title);
