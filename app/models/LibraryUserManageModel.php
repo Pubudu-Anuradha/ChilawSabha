@@ -23,13 +23,14 @@ class LibraryUserManageModel extends Model
         $conditions = implode(' && ',$conditions);
 
         if($state==2){
-            $conditions = $conditions . '&& m.re_enabled_description IS NULL && m.re_enabled_by IS NULL && m.re_enabled_time IS NULL';
+            $conditions = $conditions . '&& m.re_enabled_description IS NULL && m.re_enabled_by IS NULL && m.re_enabled_time IS NULL ORDER BY l.membership_id';
             return $this->selectPaginated(
                 'users u join library_member l on u.user_id=l.user_id join disabled_members m on m.user_id=l.member_id',
             'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no,m.disable_description as disable_description',
             $conditions);
         }
 
+        $conditions = $conditions . ' ORDER BY l.membership_id';
         return $this->selectPaginated(
             'users u join library_member l on u.user_id=l.user_id',
         'l.membership_id as membership_id,u.email as email,u.name as name,u.address as address,u.contact_no as contact_no',

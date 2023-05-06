@@ -22,7 +22,7 @@
             <?php $page_title = "BOOK CATALOGUE";
             echo '<h2>' . $page_title . '</h2>';
             ?>
-            <input type="button" onclick="generate('#bookCatalog','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
+            <input type="button" onclick="generate('#bookCatalog','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
     </div>
 
@@ -62,7 +62,7 @@
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'lost_description',id:'lost_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'lost_accession_no');?>
         <?php Modal::Modal(textarea:true, title:"Add Description",name:'delist_description',id:'delist_description', rows:10, cols:50,required:true,textTitle:'Book Accession No',textId:'delist_accession_no');?>
         <?php Modal::Modal(textarea:true, title:"Add Description", name:'damage_description', id:'damage_description', rows:10, cols:50, required:true, textTitle:'Book Accession No', textId:'damage_accession_no');?>
-        <?php Modal::Modal(content:'The Book You Requested in Currently Lent',name:'errorModal', id:'errorModal'); ?>
+        <?php Modal::Modal(content:'The Book You Requested is Currently Lent',name:'errorModal', id:'errorModal'); ?>
 
         <?php Pagination::bottom('filter-form',$data['Books']['page'],$data['Books']['count']);?>
 </div>

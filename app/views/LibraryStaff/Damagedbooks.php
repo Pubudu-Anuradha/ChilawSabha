@@ -19,7 +19,7 @@
             <?php $page_title = "DAMAGED BOOKS";
             echo '<h2>' . $page_title . '</h2>';
             ?>
-            <input type="button" onclick="generate('#damagedBooks','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
+            <input type="button" onclick="generate('#damagedBooks','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
         $table['result'], 'damagedBooks',
         actions:[
             'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
-            'Repaired' => [['#'], 'btn recondition bg-green white',["openModal(%s,'recondition_description')",'accession_no']],
+            'Repaired' => [['#'], 'btn damage bg-green white',["openModal(%s,'recondition_description')",'accession_no']],
         ],empty:$table['nodata']
     );?>
 

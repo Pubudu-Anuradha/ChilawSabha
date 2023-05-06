@@ -25,7 +25,7 @@
         $table['result'], 'bookRequests',
         actions:[
             'Add Book' => [[URLROOT . '/LibraryStaff/Addbooks/%s','request_id'], 'btn add bg-lightblue white',['#']],
-            'Reject' => [['#'], 'btn reject bg-red white',["openModal('%s','reject_request')",'request_id']]
+            'Reject' => [['#'], 'btn delist bg-red white',["openModal('%s','reject_request')",'request_id']]
         ],empty:$table['nodata'],empty_msg:'No Book Requests Recieved'
     );?>
 

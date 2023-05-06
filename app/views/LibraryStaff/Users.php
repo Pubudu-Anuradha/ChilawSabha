@@ -33,7 +33,7 @@
             actions:[
                 'View'=>[[URLROOT.'/LibraryStaff/Viewusers/%s','membership_id'],'btn edit bg-lightblue white',['#']],
                 'Edit'=>[[URLROOT.'/LibraryStaff/Editusers/%s','membership_id'],'btn edit bg-yellow white',['#']],
-                'Disable'=>[['#'],'btn disable bg-red white',["openModal(%s,'disable_description')",'membership_id']]
+                'Disable'=>[['#'],'btn delist bg-red white',["openModal(%s,'disable_description')",'membership_id']]
             ],empty:$table['nodata'],empty_msg:'No User Found'
 
         );?>

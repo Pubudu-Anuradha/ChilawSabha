@@ -221,7 +221,7 @@ class BookModel extends Model
         return $this->select(
             'users u join library_member l on u.user_id=l.user_id',
             'l.membership_id,u.name',
-            "u.name LIKE '%$search_term%' || l.membership_id LIKE '%$search_term%'"
+            "u.name LIKE '%$search_term%' || l.membership_id LIKE '%$search_term%' ORDER BY l.membership_id"
         );
     }
 
@@ -527,12 +527,12 @@ class BookModel extends Model
 
     public function getDamagebyId($id)
     {
-      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,l.recieved_date',"membership_id=$id and l.damaged=1 ORDER BY l.recieved_date DESC");
+      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,b.accession_no,l.recieved_date',"membership_id=$id and l.damaged=1 ORDER BY l.recieved_date DESC");
     }
 
     public function getLostbyId($id)
     {
-      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,l.recieved_date',"membership_id=$id and l.lost=1 ORDER BY l.recieved_date DESC");
+      return $this->select('lend_recieve_books l join books b on l.accession_no=b.book_id','b.title,b.author,b.accession_no,l.recieved_date',"membership_id=$id and l.lost=1 ORDER BY l.recieved_date DESC");
     }
 
     public function getFinePayments($id=null)

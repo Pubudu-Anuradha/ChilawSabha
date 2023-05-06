@@ -109,6 +109,14 @@ tbody>tr:last-child {
   content: "✓";
 }
 
+.damage::before {
+  content: "🛠️";
+}
+
+.found::before {
+  content: "🔍";
+}
+
 .waiting {
   background-color: var(--grey);
 }

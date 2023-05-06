@@ -18,7 +18,7 @@
             <?php $page_title = "DE-LISTED BOOKS";
             echo '<h2>' . $page_title . '</h2>';
             ?>
-            <input type="button" onclick="generate('#delistedBooks','<?php echo $page_title ?>',5)" value="Export To PDF" class="btn bg-lightblue white"/>
+            <input type="button" onclick="generate('#delistedBooks','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
     </div>
 

@@ -127,7 +127,7 @@
                                         $i=0;
                                         foreach($damaged_books as $field => $value): ?>
                                             <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
-                                                <?= $value['title'] ?> by <?= $value['author'] ?>
+                                                <a href="<?=URLROOT.'/LibraryStaff/Viewbooks/'.$value['accession_no'] ?>"><?= $value['title'] ?> by <?= $value['author'] ?></a>
                                             </div>
                                         <?php endforeach;else:?>
                                         <span class="empty" >No Books Damaged</span>
@@ -147,7 +147,7 @@
                                         $i=0;
                                         foreach($lost_books as $field => $value): ?>
                                             <div class="record b<?= ($i++%2==1) ? '-alt':'' ?>">
-                                                <?= $value['title'] ?> by <?= $value['author'] ?>
+                                                <a href="<?=URLROOT.'/LibraryStaff/Viewbooks/'.$value['accession_no'] ?>"><?= $value['title'] ?> by <?= $value['author'] ?></a>
                                             </div>
                                         <?php endforeach;else:?>
                                         <span class="empty">No Books Lost</span>
