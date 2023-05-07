@@ -16,7 +16,7 @@
 <div class="page-content">
     <div class="left-content">
         <div class="contacts">
-            <a href="<?=URLROOT . "/Home/emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
+            <a href="<?=URLROOT . "/Emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
             <div class="contact">
                 <a href="#" class="name tel">
                     Hospital/Ambulance hotline
