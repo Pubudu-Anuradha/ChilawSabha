@@ -20,7 +20,7 @@ class Home extends Controller
 
     public function downloads()
     {
-        $this->view('Home/downloads',styles:['Home/downloads']);
+        header('Location: ' . URLROOT .'/Downloads');
     }
 
     public function emergency()

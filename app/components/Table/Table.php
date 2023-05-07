@@ -61,11 +61,10 @@ class Table{
                 // Embedding the intended value to the href string
                 $href = call_user_func_array('sprintf',$func[0]);
               ?>
-                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $func[2] ?>"><?= $name ?></a>
+                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $func[2] ?? '' ?>"><?= $name ?></a>
             <?php endforeach;?>
                 </div>
               </td>
-              
             <?php endif; ?>
           </tr>
         <?php endforeach;
