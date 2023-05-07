@@ -48,13 +48,13 @@
             Errors::generic($message);
         }
         ?>
-        
+
         <?php Table::Table(['accession_no'=>'Accession No','title'=>'Title','author'=>'Author','publisher'=>"Publisher",'category_name'=>'Book Category','sub_category_name' => 'Book Sub Category'],
             $table['result'],'bookCatalog',
             actions:[
                 'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
                 'Damaged'=>[['#'],'btn damage bg-yellow white',["openModal(%s,'damage_description')",'accession_no']],
-                'Lost'=>[['#'],'btn lost bg-red white',["openModal(%s,'lost_description')",'accession_no']],
+                'Lost'=>[['#'],'btn lost bg-red white',''],
                 'Delist'=>[['#'],'btn delist bg-orange white',["openModal(%s,'delist_description')",'accession_no']],
             ],empty:$table['nodata']
 

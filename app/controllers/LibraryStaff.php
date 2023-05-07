@@ -264,6 +264,7 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'category_name',
+                    'sub_category_name',
                     'page|?',
                     'size',
                     'delist_description|?',
@@ -288,6 +289,7 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'category_name',
+                    'sub_category_name',
                     'page|?',
                     'size',
                     'lost_description|?',
@@ -312,6 +314,7 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'category_name',
+                    'sub_category_name',
                     'page|?',
                     'size',
                     'lost_description|?',
@@ -362,6 +365,7 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'page|?',
+                    'type',
                     'size',
                 ], 'confirm');
                 $data['errors'] = $err;
@@ -398,6 +402,7 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'category_name',
+                    'sub_category_name',
                     'page|?',
                     'size',
                     'type|l[5:5]'
@@ -446,11 +451,12 @@ class LibraryStaff extends Controller
                     'url',
                     'search|?',
                     'category_name',
+                    'sub_category_name',
                     'page|?',
                     'size',
                     'type|l[11:11]'
                 ], 'confirm');
-                var_dump($err);
+
                 $data['errors'] = $err;
                 if(count($err) == 0){
                     if ($model->changeState($_GET['recondition_accession_no'], 1, $valid) == false) {
