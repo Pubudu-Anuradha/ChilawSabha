@@ -49,6 +49,7 @@
             </li>
             <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
+            <li class="dropdown"><a href="<?=URLROOT . "/Emergency"?>" class="dropbtn">Emergency</a></li>
         </ul>
         <ul class="login-list">
             <li>

@@ -19,16 +19,14 @@
   display: flex;
   gap: 2rem;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .lib-data,.sabha-data{
   padding: 2rem;
-  width: 20rem;
+  min-width: 15rem;
   background-color: var(--fadedblue);
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
   justify-content: center;
 }
 
@@ -46,4 +44,15 @@
   border-radius: 10px;
   width: 100%;
   height: 20rem;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  min-width: 15rem;
 }
