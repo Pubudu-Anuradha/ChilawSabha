@@ -1,31 +1,19 @@
+.head-area{
+    margin-bottom: 1rem;
+  }
+
   .sub-head-area{
     display: flex;
     justify-content: space-between;
   }
 
+  .sub-head-area h1{
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--black);
+    margin: 0.5rem;
+  }
 
-
-  .bookcatalog{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 90%;
-  }
-  .bookcatalog h2{
-    margin: 0;
-  }
-  .bookcatalog-title{
-    border-bottom: 1px solid var(--black);
-    line-height: 2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .catalog-sub-title{
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-  }
   .content-title-category select{
     padding: 6px 16px;
     border: 1px solid var(--grey);
@@ -36,9 +24,13 @@
   .content-title-category select > option{
     color: var(--black);
   }
-  .book-catalog-table{
+
+  /* Styles of Book catalog page*/
+  
+  .book-table{
     display: flex;
     justify-content: center;
+    overflow-x: scroll;
   }
   .book-catalog-table table{
     width: 90%;
@@ -74,9 +66,12 @@
   }
   .extend{
     font-size: 1.1rem;
-    border-radius: 1rem;
-    background-color: var(--green);
+    padding: 0.25rem 0.5rem;
+    border:none;
+    border-radius: 0.7rem;
+    background-color: var(--blue);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+    color: var(--bgcolor);
   }
   .request{
     font-size: 1.1rem;
@@ -84,10 +79,7 @@
     background-color: var(--lightblue);
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
   }
-  .remove{
-    background-color: var(--red);
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 2%), 0 2px 10px 0 rgb(0 0 0 / 10%);
-  }
+  
   .favourite:hover, .planToRead:hover, .completed:hover, .remove:hover, .extend:hover{
     transform: scale(1.1);
   }
@@ -149,55 +141,7 @@
     width: 10px;
   }
 
-  .dashboard-mid-area{
-    margin-top: 5rem;
-    padding-left: 5rem;
-    display: flex;
-    justify-content: left;
-    gap: 10rem;
-  }
-
-  .fine-sub{
-    display: flex;
-    padding-right: 2rem;
-  }
-
-  .fine-sub img{
-    width:3rem;
-    border: 1px solid var(--grey);
-    border-radius: 0.5rem 0 0 0.5rem;
-  }
-
-  .fine-container h2, .request-container h2, .dashboard-bottom-sub h2{
-    margin: 0;
-  }
-
-  .fine-container hr, .request-container hr, .dashboard-bottom-area hr{
-    margin-bottom: 1.5rem;
-  }
-
-  .dashboard-bottom-area{
-    margin-top: 5rem;
-  }
-
-  .dashboard-bottom-sub{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-    padding-right: 2rem;
-  }
-
-  #fine-holder {
-    padding-left: 2rem;
-    border: 1px solid var(--grey);
-    border-radius: 0 0.5rem 0.5rem 0;
-    color: var(--black);
-    font-size: 1.1rem;
-  }
-
-  #fine-holder:focus{
-    outline: none;
-  }
+  
 
   .changeOrder-bar button{
     cursor: move;
@@ -218,4 +162,37 @@
     opacity: 0.5;
   }
 
-  
+  .filter .searchbox {
+    display: flex;
+}
+
+  .status-Available{
+    color: var(--green);
+  }
+
+  .status-Lent{
+    color: var(--yellow);
+  }
+
+  .status-Damaged,
+  .status-Lost,
+  .status-De-Listed{
+    color: var(--red);
+  }
+
+  .status-Available,
+  .status-Lent,
+  .status-Damaged,
+  .status-Lost,
+  .status-De-Listed{
+    font-weight: 900;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px){
+    .sub-head-area h1{
+      font-size: 1.6rem;
+      margin: 0;
+    }
+  }
+
