@@ -43,7 +43,7 @@ class Controller
         }
     }
 
-    protected function validateInputs($data, $fields, $submitMethod = 'Submit')
+    public function validateInputs($data, $fields, $submitMethod = 'Submit')
     {
         // Rules can be set in fields separated by '|' to do some basic validation here itself.
         // Available rules are
@@ -140,11 +140,16 @@ class Controller
                     try {
                         $done = false;
                         foreach($number_range_rule as $_ => $rule){
+                            if(!is_numeric($data[$field])) {
+                                $set_error('number',$field);
+                                $done = true;
+                                continue;
+                            }
                             $val = $rule[0] ?? 'i' == 'i' ? intval($data[$field]) : doubleval($data[$field]);
                             $split = explode(':', ltrim(rtrim($rule, ']'), 'id['));
                             $min = $split[0] ?? '';
                             $max = $split[1] ?? '';
-                            if (!empty($min)) {
+                            if (!empty($min)||is_numeric($min)) {
                                 $min = $rule[0] == 'i' ? intval($min) : doubleval($min);
                                 if ($val < $min) {
                                     $set_error('min', [$field,$min]);
@@ -152,7 +157,7 @@ class Controller
                                     continue;
                                 }
                             }
-                            if (!empty($max)) {
+                            if (!empty($max)||is_numeric($max)) {
                                 $max = $rule[0] == 'i' ? intval($max) : doubleval($max);
                                 if ($val > $max) {
                                     $set_error('max', [$field,$max]);
@@ -217,7 +222,7 @@ class Controller
                     continue;
                 }
 
-                $date_range_rule = preg_grep('/^dt\[(\d*-\d*\d*)?:(\d*-\d*-\d*)?\]$/', $rules);
+                $date_range_rule = preg_grep('/^dt\[(\d*-\d*-\d*)?:(\d*-\d*-\d*)?\]$/', $rules);
                 if ($date_range_rule !==false && count($date_range_rule) > 1) {
                     throw new Exception("Too Many Date Range rules. Use only one", 1);
                 } else if (count($date_range_rule) == 1) {
@@ -228,7 +233,6 @@ class Controller
                             $start = $split[0] ?? '';
                             $end = $split[1] ?? '';
                             $val = IntlCalendar::fromDateTime($data[$field],null);
-                            // ? Return time?
                             if (!empty($start)) {
                                 $start = IntlCalendar::fromDateTime($start,null);
                                 if($val->before($start) && !$val->equals($start)) {

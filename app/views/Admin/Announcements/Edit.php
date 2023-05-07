@@ -10,6 +10,7 @@ $errors = $data['errors'] ?? [];?>
         Edit Announcement : <?=$old['title'] ?? 'Not Found'?>
     </h1>
         <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Announcements'?>" class="btn view bg-blue">Go to Announcements</a>
             <a href="<?=URLROOT . '/Admin/Announcements/View/' . $old['post_id']?>" class="btn view bg-blue">Go to View Mode</a>
             <a href="<?=URLROOT . '/Posts/Announcement/' . $old['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
         </div>

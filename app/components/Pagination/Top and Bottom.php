@@ -152,7 +152,7 @@
       <?php endif;?>
       <div class="page-size">
           <label for="<?= $page_size_name ?>-id">
-              No.of Posts per page
+              Posts per page
           </label>
           <select name="<?= $page_size_name ?>"
                   onchange="<?= $sender ?>()"
@@ -161,6 +161,7 @@
               foreach ($page_sizes as $page_size) : ?>
                   <option value="<?= $page_size ?>" <?= $page_size == $size?'selected':''?>><?= $page_size ?></option>
               <?php endforeach; ?>
+                  <option value="<?= $count ?>" <?= $count == $size?'selected':''?>>All</option>
           </select>
       </div>
   </div>

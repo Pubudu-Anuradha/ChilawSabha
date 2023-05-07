@@ -12,7 +12,7 @@ class Model
         }
     }
 
-    protected function insert($table, $data)
+    public function insert($table, $data)
     {
         // Concatenate column name with commas
         $keys = array_keys($data);
@@ -63,7 +63,7 @@ class Model
         }
     }
 
-    protected function select($table, $columns = '*', $conditions = '', $offsetlimt = false)
+    public function select($table, $columns = '*', $conditions = '', $offsetlimt = false)
     {
         try {
             if ($offsetlimt) {
@@ -106,7 +106,7 @@ class Model
         }
     }
 
-    protected function selectPaginated($table, $columns = '*', $conditions = '', $page_name = 'page', $page_size_name = 'size')
+    public function selectPaginated($table, $columns = '*', $conditions = '', $page_name = 'page', $page_size_name = 'size')
     {
         $row_count = $this->select($table, 'COUNT(*) as recordCount', $conditions);
         $row_count = !$row_count['error'] && !$row_count['nodata'] ? (int) $row_count['result'][0]['recordCount'] : 0;
@@ -135,7 +135,7 @@ class Model
         );
     }
 
-    protected function update($table, $data, $conditions)
+    public function update($table, $data, $conditions)
     {
         $column = [];
         $vals = [];
@@ -182,7 +182,7 @@ class Model
         }
     }
 
-    protected function delete($table, $conditions)
+    public function delete($table, $conditions)
     {
         try {
             // Prepare statement

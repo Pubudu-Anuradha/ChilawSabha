@@ -37,7 +37,6 @@
   width: 100%;
   padding: 1rem 1rem;
   background-color: var(--fadedblue);
-  display: none;
 }
 
 .panel ul {
@@ -50,7 +49,22 @@
   padding: 0.4rem;
 }
 
-.download-page a {
+.norm {
+  background-color: azure;
+}
+
+.alt {
+  background-color: white;
+}
+
+.panel li>a::before {
+  all: unset;
   text-decoration: none;
-  color: var(--black);
+  color: black;
+  content: "📥";
+  margin-right: 1rem;
+}
+
+.panel ul>li {
+  margin: .2rem 0;
 }

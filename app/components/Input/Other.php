@@ -16,7 +16,7 @@ class Other{
             <?= $placeholder ? "placeholder=\"$placeholder\"" : '' ?>
             <?= $value ? "value=\"$value\"" : '' ?>
             <?= $step ? "step=\"$step\"" : '' ?>
-            <?= $min ? "min=\"$min\"" : '' ?>
+            <?=($min || ($min == 0)) ? "min=\"$min\"" : ''?>
             <?= $max ? "max=\"$max\"" : '' ?>
             <?= $required ? 'required' : '' ?>
         />
