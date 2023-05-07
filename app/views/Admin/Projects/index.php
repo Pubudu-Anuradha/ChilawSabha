@@ -2,106 +2,134 @@
     <h1>
         Manage Projects
     </h1>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Projects/Add'?>" class="btn add bg-green">Add a new Project</a>
+    </div>
     <hr>
-<div class="filters">
-    <form method="get" id="filterform">
-        <div class="filter">
-            <label for="search">
-                Search
-            </label>
-            <input class="search" type="search" name="search" id="search" value="<?= isset($_GET['search']) ? $_GET['search']:''?>">
-            <span onclick="send()"></span>
-        </div>
-        <div class="filter">
-            <label for="category">
-                Filter by Category
-            </label>
-            <select onchange="send()" name="category" id="category">
-                <?php foreach (['All','Financial','Government','Tender'] as $cat):?>
-                    <option value="<?=$cat?>" <?php if(isset($_GET['category']) && $_GET['category']==$cat) {echo 'selected';} ?>>
-                        <?=$cat?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="filter">
-            <label for="sort">
-                Sort by date
-            </label>
-            <select onchange="send()" name="sort" id="sort">
-                <?php foreach(['DESC'=>'Newest to Oldest','ASC'=>'Oldest to Newest'] as $val=>$desc):?>
-                    <option value="<?= $val ?>" <?php if(isset($_GET['sort']) && $_GET['sort']==$val) {echo 'selected';} ?>>
-                        <?=$desc?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-</div>
+<?php
+$statuses_assoc = [];
+foreach ($data['status'] ?? [] as $status) {
+    $statuses_assoc[$status['status_id']] = $status['project_status'];
+}
+Pagination::top('/Admin/Projects', form_id:'project-table-filter', select_filters:[
+    'status' => [
+        'Filter Project Status', array_merge(['0' => 'All'], $statuses_assoc),
+    ],
+    'hidden' => [
+        'Filter visible', [
+            2 => 'All',
+            0 => 'visible',
+            1 => 'hidden',
+        ],
+    ],
+    'pinned' => [
+        'Filter Pinned', [
+            2 => 'All',
+            0 => 'not pinned',
+            1 => 'pinned',
+        ],
+    ],
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
+]);
+Table::Table(['title' => 'Project Title','views'=>'Views', 'posted_time' => 'Time posted', 'status' => 'Status'], $data['projects'][0]['result'] ?? [], actions:[
+    'View' => [[URLROOT . '/Admin/Projects/View/%s', 'post_id'], 'bg-blue view'],
+    'Edit' => [[URLROOT . '/Admin/Projects/Edit/%s', 'post_id'], 'bg-yellow edit'],
+], empty:!(count($data['projects'][0]['result']) > 0), empty_msg:'No projects available');
 
-<div class="content-table">
-    <table>
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>title</th>
-                <th>start</th>
-                <th>end</th>
-                <th>contact</th>
-                <th>action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php for($i=0;$i<=25;++$i): ?>
-            <tr>
-                <td><?= $i ?></td>
-                <td>Event <?= $i ?></td>
-                <td>2020-12-13</td>
-                <td>2020-13-13</td>
-                <td>0325681285</td>
-                <td>
-                    <div  class="btn-column">
-                        <a class="btn bg-green  view"href="">View</a>
-                        <a class="btn bg-red delist"href="">Delete</a>
-                    </div>
-                </td>
-            </tr>
-            <?php endfor;?>
-        </tbody>
-    </table>
+Pagination::bottom(
+    form_id:'project-table-filter',
+    page_data:$data['projects'][0]['page'],
+    count:$data['projects'][0]['count'],
+);
+?>
 </div>
+<script>
+    const projects = <?=json_encode($data['projects'][0]['result'] ?? []);?>;
+    if(projects.length != 0) {
+        const table = document.querySelector('table');
+        const headerRow = table.querySelector('thead > tr');
+        const hiddenColumnHeader = document.createElement('th');
+        hiddenColumnHeader.innerHTML = "Hidden"
+        const pinnedColumnHeader = document.createElement('th');
+        pinnedColumnHeader.innerHTML = "Pinned"
+        headerRow.insertBefore(hiddenColumnHeader,headerRow.children[2]);
+        headerRow.insertBefore(pinnedColumnHeader,hiddenColumnHeader);
 
-<div class="page-nav">
-    <?php
-    $page = [0,10];
-    $size = $page[1];
-    $max = 100;
-    $page_count = ceil($max / $size);
-    $current = $page[0] / $size;
-    ?>
-    <div class="page-nos">
-        <?php if($current!=0):?>
-            <a href="#" class="page-btn">&lt;&lt;</a>
-            <a href="#" class="page-btn">&lt;</a>
-        <?php endif; ?>
-        <select name="page" onchange="send()" id="page">
-            <?php
-            $i = 0;
-            for (; $i * $size < $max; $i++) : ?>
-                <option value="<?= $i ?>" <?= $i==$current?'selected' : ''?>><?= $i + 1 ?></option>
-            <?php endfor ?>
-        </select>
-        <?php if($current<$page_count-1):?>
-            <a href="#" class="page-btn">&gt;</a>
-            <a href="#" class="page-btn">&gt;&gt;</a>
-        <?php endif; ?>
-    </div>
-    <div class="page-size">
-        No.of Posts per page : <select name="size" onchange="send()" id="size">
-            <?php foreach ([10, 25, 50, 100] as $page_size) : ?>
-                <option value="<?= $page_size ?>" <?= $page_size == $size?'selected':''?>><?= $page_size ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-</div>
-</form>
-</div>
+        let i=0;
+        table.querySelectorAll('tbody > tr').forEach(row => {
+            let result = projects[i++];
+
+            const hidden = {
+                cell:document.createElement('td'),
+                box:document.createElement('input'),
+            };
+            hidden.box.type = 'checkbox';
+            hidden.box.id = 'hide-unhide-' + result.post_id;
+            hidden.box.checked = result.hidden == 1 ? true : false;
+            hidden.box.style.height = '1.5rem';
+            hidden.box.style.width  = '1.5rem';
+            hidden.box.ariaLabel = 'hide or unhide post';
+            hidden.cell.appendChild(hidden.box);
+            hidden.cell.style.textAlign = 'center';
+
+            const pinned = {
+                cell:document.createElement('td'),
+                box:document.createElement('input'),
+            };
+            pinned.box.type = 'checkbox';
+            pinned.box.id = 'pin-unpin-' + result.post_id;
+            pinned.box.checked = result.pinned == 1 ? true : false;
+            pinned.box.style.height = '1.5rem';
+            pinned.box.style.width  = '1.5rem';
+            pinned.box.ariaLabel = 'pin or unpin post';
+            pinned.cell.appendChild(pinned.box);
+            pinned.cell.style.textAlign = 'center';
+
+            row.insertBefore(hidden.cell,row.children[2]);
+            row.insertBefore(pinned.cell,hidden.cell);
+
+            hidden.box.addEventListener('change', (e) => {
+                hidden.box.disabled = true;
+                const hide = {
+                    hidden:e.target.checked ? 1 : 0
+                };
+                fetch('<?=URLROOT . '/Admin/postsApi/Hide/'?>' + result.post_id, {
+                    method:'POST',
+                    headers: {
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(hide)
+                }).then(res => res.json()).then(response => {
+                    if(response.success !== true) {
+                        e.target.checked = e.target.checked ? false : true;
+                    }
+                    hidden.box.disabled = false;
+                }).catch(console.log);
+            });
+
+            pinned.box.addEventListener('change', (e) => {
+                pinned.box.disabled = true;
+                const pin = {
+                    pinned:e.target.checked ? 1 : 0
+                };
+                fetch('<?=URLROOT . '/Admin/postsApi/Pin/'?>' + result.post_id, {
+                    method:'POST',
+                    headers: {
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(pin)
+                }).then(res => res.json()).then(response => {
+                    if(response.success !== true) {
+                        e.target.checked = e.target.checked ? false : true;
+                    }
+                    pinned.box.disabled = false;
+                }).catch(console.log);
+            });
+        });
+    }
+</script>

@@ -1,5 +1,8 @@
 <?php
 require_once 'app/models/AnnouncementModel.php';
+require_once 'app/models/ProjectModel.php';
+require_once 'app/models/EventModel.php';
+require_once 'app/models/ServiceModel.php';
 
 class Home extends Controller
 {
@@ -7,9 +10,9 @@ class Home extends Controller
     {
         $posts = [
             (new AnnouncementModel)->getFrontPage(),
-            [], //TODO: Services
-            [], //TODO: Projects
-            []  //TODO: Events
+            (new ServiceModel)->getFrontPage(),
+            (new ProjectModel)->getFrontPage(),
+            (new EventModel)->getFrontpage()
         ];
         $this->view('Home/index', 'Chilaw Pradeshiya Sabha',['posts' => $posts],
             styles:['Home/index','Components/slideshow']);
@@ -17,7 +20,7 @@ class Home extends Controller
 
     public function downloads()
     {
-        $this->view('Home/downloads',styles:['Home/downloads']);
+        header('Location: ' . URLROOT .'/Downloads');
     }
 
     public function emergency()

@@ -6,6 +6,9 @@ require_once 'common.php';
     <h1>
         Manage Announcements
     </h1>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Announcements/Add'?>" class="btn add bg-green">Add new Announcement</a>
+    </div>
     <hr>
     <?php
 $types_assoc = [];
@@ -13,29 +16,33 @@ foreach ($data['types'] ?? [] as $type) {
     if ($type['ann_type'] !== 'All') {
         $types_assoc[$type['ann_type_id']] = $type['ann_type'];
     }
-
 }
 Pagination::top('/Admin/Announcements', form_id:'ann-table-filter', select_filters:[
     'category' => [
         'Filter by announcement type', array_merge(['0' => 'All'], $types_assoc),
     ],
     'hidden' => [
-        'Filter by visibility', [
+        'Filter visible', [
             2 => 'All',
             0 => 'visible',
             1 => 'hidden',
         ],
     ],
     'pinned' => [
-        'Filter Pinned Announcements', [
+        'Filter Pinned', [
             2 => 'All',
             0 => 'not pinned',
             1 => 'pinned',
         ],
     ],
-
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
 ]);
-Table::Table(['title' => 'Announcement Title', 'posted_time' => 'Time posted', 'ann_type' => 'Type'], $data['announcements']['result'] ?? [], actions:[
+Table::Table(['title' => 'Announcement Title','views' => 'Views', 'posted_time' => 'Time posted', 'ann_type' => 'Type'], $data['announcements']['result'] ?? [], actions:[
     'View' => [[URLROOT . '/Admin/Announcements/View/%s', 'post_id'], 'bg-blue view'],
     'Edit' => [[URLROOT . '/Admin/Announcements/Edit/%s', 'post_id'], 'bg-yellow edit'],
 ], empty:!(count($data['announcements']['result']) > 0), empty_msg:'No announcements available');

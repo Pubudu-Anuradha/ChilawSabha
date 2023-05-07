@@ -11,34 +11,45 @@
             <li class="dropdown"><a href="<?= URLROOT . '/Home/'?>" class="dropbtn">Home</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/Posts/Announcements'?>" class="dropbtn">Announcements</a>
                 <ul class="dropdown-content">
-                    <?php foreach(['Financial','Government','Tender'] as $category):?>
-                        <li onclick='window.location.href="<?=URLROOT . "/Posts/Announcements?category=$category"?>"'><?= $category ?></li>
-                    <?php endforeach; ?>
+                    <?php
+                    require_once 'app/models/AnnouncementModel.php';
+                    $model = new AnnouncementModel;
+                    $types = $model->getTypes();
+                    if($types):
+                        foreach($types as $type):
+                            if($type['ann_type'] !== 'All'):
+                                $type_id = $type['ann_type_id'];?>
+                        <li onclick='window.location.href="<?=URLROOT . "/Posts/Announcements?category=$type_id"?>"'><?= $type['ann_type'] ?></li>
+                    <?php endif; endforeach; endif; ?>
                 </ul>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Events</a>
-                <ul class="dropdown-content">
-                    <li>Christmas Celebration</li>
-                    <li>New Year Celebration</li>
-                    <li>Deepavali Celebration</li>
-                </ul>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Projects' ?>" class="dropbtn">Projects</a>
+                <?php require_once 'app/models/ProjectModel.php';
+                    $model = new ProjectModel;
+                    $status = $model->getStatus();
+                    if($status):?>
+                        <ul class="dropdown-content">
+                            <?php foreach($status as $stat):?>
+                                <li onclick='window.location.href="<?=URLROOT . "/Posts/Projects?status=$stat[status_id]"?>"'><?= $stat['project_status'] ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Projects</a>
-                <ul class="dropdown-content">
-                    <li>UNICEF Project</li>
-                    <li>Worldbank Project</li>
-                    <li>Water Waste Management Project</li>
-                </ul>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Events' ?>" class="dropbtn">Events</a>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Services</a>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Services' ?>" class="dropbtn">Services</a>
+                <?php require_once 'app/models/ServiceModel.php';
+                $categories = (new ServiceModel)->getCategories(true);
+                ?>
                 <ul class="dropdown-content">
-                    <li>Health</li>
-                    <li>Playgrounds</li>
-                    <li>Kindergardens</li>
+                <?php foreach($categories as $cat_id => $cat): ?>
+                    <li onclick='window.location.href="<?=URLROOT . "/Posts/Services?category=$cat_id"?>"'><?= $cat ?></li>
+                <?php endforeach; ?>
                 </ul>
             </li>
             <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
+            <li class="dropdown"><a href="<?=URLROOT . "/Emergency"?>" class="dropbtn">Emergency</a></li>
         </ul>
         <ul class="login-list">
             <li>

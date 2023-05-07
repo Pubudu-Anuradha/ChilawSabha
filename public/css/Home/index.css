@@ -9,13 +9,11 @@
   transition: all 200ms ease-in-out;
 }
 
-@media screen and (max-width: 767px) {
-  .page-content {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    flex-direction: column;
-  }
+.page-content {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
 }
 
 .left-content {
@@ -41,6 +39,7 @@
 
 .page-content a {
   text-decoration: none;
+  font-weight: 600;
   color: var(--black);
 }
 
@@ -162,11 +161,14 @@
 }
 
 .post {
-  display: grid;
-  grid-template-areas: ".sabha-img .details";
-  grid-template-columns: 1fr 9fr;
-  gap: 1rem;
-  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: #ffffff80;
+  padding: .75rem;
+  border-radius: .5rem;
+}
+
+.summary {
+  margin: 1rem 0;
 }
 
 .post:not(:last-child) {
@@ -254,4 +256,35 @@
 .about-para {
   text-align: justify;
   line-height: 2;
+}
+
+.status {
+  display: inline;
+  word-wrap: none;
+  border-radius: .2rem;
+  padding: .2rem;
+}
+
+.status::before {
+  content: "status : ";
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.money::before {
+  content: "Rs.";
+}
+
+.budget::before {
+  content: "💵";
+}
+
+.date::before {
+  content: "🗓";
 }

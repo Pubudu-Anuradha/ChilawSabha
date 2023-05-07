@@ -6,6 +6,9 @@ $old = $data['old'] ?? false;
     <h1>
         Add New Announcement
     </h1>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Announcements'?>" class="btn view bg-blue">Go to Announcements</a>
+    </div>
     <hr>
     <div class="formContainer">
         <form class="fullForm" method="post" enctype="multipart/form-data">

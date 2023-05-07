@@ -21,6 +21,47 @@
         exit();
     }
     public function index(){
-        $this->view('Home/downloads',styles:['Home/downloads']);
+        $model = $this->model('DownloadsModel');
+        $data = [];
+        if(isset($_POST['AddCategory']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
+            [$valid,$err] = $this->validateInputs($_POST,[
+                'category|l[1:255]|u[download_categories]'
+            ],'AddCategory');
+            if(count($err) == 0) {
+                $data['AddCategory'] = $model->addCategory($valid);
+            } else {
+                $data['AddCatErrors'] = $err;
+            }
+        }
+
+        if(isset($_POST['AddFiles']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
+            [$valid,$err] = $this->validateInputs($_POST,[
+                'cat_id|i[:]'
+            ],'AddFiles');
+            if(count($err) == 0) {
+                $data['AddFiles'] = $model->addFiles($valid['cat_id']);
+            } else {
+                $data['AddFilesErr'] = $err;
+            }
+
+        }
+
+        if(isset($_POST['DeleteFile']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
+            [$valid,$err] = $this->validateInputs( $_POST,[
+                'cat_id|i[:]',
+                'file_name'
+            ],'DeleteFile');
+            if(count($err) == 0) {
+                $cat_id = $valid['cat_id'];
+                $file_name = $valid['file_name'];
+                $data['DeleteFile'] = $model->deleteFile($cat_id,$file_name);
+            } else {
+                $data['DeleteFileErr'] = $err;
+            }
+        }
+
+        $data['categories'] = $model->getCategories();
+        $data['cat_files'] = $model->getFilesByCategory();
+        $this->view('Home/downloads','Downloads',$data,styles:['Home/downloads','Components/form','Components/table']);
     }
 }

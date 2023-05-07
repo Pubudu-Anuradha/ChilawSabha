@@ -68,12 +68,11 @@ class Table{
                 $jsfunc = call_user_func_array('sprintf', $func[2]);
 
               ?>
-
                   <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $jsfunc ?? ''  ?>"><?= $name ?></a>
+
             <?php endforeach;?>
                 </div>
               </td>
-              
             <?php endif; ?>
           </tr>
         <?php endforeach;
