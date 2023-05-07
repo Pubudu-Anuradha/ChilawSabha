@@ -69,7 +69,7 @@ class Table{
 
               ?>
 
-                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $jsfunc ?>"><?= $name ?></a>
+                  <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $jsfunc ?? ''  ?>"><?= $name ?></a>
             <?php endforeach;?>
                 </div>
               </td>

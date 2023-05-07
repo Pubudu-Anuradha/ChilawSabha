@@ -54,7 +54,7 @@
             actions:[
                 'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']],
                 'Damaged'=>[['#'],'btn damage bg-yellow white',["openModal(%s,'damage_description')",'accession_no']],
-                'Lost'=>[['#'],'btn lost bg-red white',''],
+                'Lost'=>[['#'],'btn lost bg-red white',["openModal(%s,'lost_description')",'accession_no']],
                 'Delist'=>[['#'],'btn delist bg-orange white',["openModal(%s,'delist_description')",'accession_no']],
             ],empty:$table['nodata']
 
