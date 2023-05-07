@@ -183,7 +183,7 @@
                 excursion through the Muthurajawela Wetlands. Chilaw offers many things to do and places 
                 to visit if you’re spending your holiday here. 
             </p>
-            <button class="more btn" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
+            <button class="more btn bg-blue" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
         </div>
         <div class="ward-map">
             <h3 class="ward-map-txt">WARD MAP</h3>

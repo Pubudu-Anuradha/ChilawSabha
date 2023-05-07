@@ -281,6 +281,11 @@ body {
   color: var(--black);
 }
 
+.city{
+  text-align: justify;
+  line-height: 2;
+}
+
 .user-login-image {
   cursor: pointer;
   margin-left: auto;
