@@ -59,13 +59,15 @@ class Table{
                 for($i = 1;$i < count($func[0]);++$i){
                   $func[0][$i] = $row[$func[0][$i]];
                 }
-                for($i = 1;$i < count($func[2]);++$i){
+                for($i = 1;$i < count($func[2] ?? []);++$i){
                   $func[2][$i] = $row[$func[2][$i]];
                 }
                 // Embedding the intended value to the href string
                 $href = call_user_func_array('sprintf',$func[0]);
                 // Embedding the intended value to the js function
-                $jsfunc = call_user_func_array('sprintf', $func[2]);
+                if(isset($func[2])) {
+                  $jsfunc = call_user_func_array('sprintf', $func[2]);
+                }
 
               ?>
                   <a href="<?= $href ?>" class="btn <?= $func[1] ?>" onclick="<?= $jsfunc ?? ''  ?>"><?= $name ?></a>

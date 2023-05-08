@@ -1,5 +1,5 @@
 <?php
-$admin = $_SESSION['role'] ?? 'Guest' == 'Admin';
+$admin = ($_SESSION['role'] ?? 'Guest') == 'Admin';
 $categories = [];
 foreach($data['categories']['result'] ?? [] as $category) {
     $categories[$category['category_id']] = $category['category_name'];
