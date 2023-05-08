@@ -7,6 +7,7 @@ class ContactUs extends Controller
     {
         $model = $this->model('ContactModel');
         $data = [];
+        // Handle Adding Cards
         if(isset($_POST['Add']) && (($_SESSION['role'] ?? 'Guest') == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'name|l[:1000]|u[contact_card]',
@@ -20,6 +21,8 @@ class ContactUs extends Controller
                 $data['errors'] = $err;
             }
         }
+
+        // Handle Deleting Cards
         if(isset($_POST['Delete']) && (($_SESSION['role'] ?? 'Guest') == 'Admin')) {
             $card_id = $_POST['card_id'] ?? false;
             if($card_id) {
@@ -32,6 +35,7 @@ class ContactUs extends Controller
 
     public function cardsApi($method = null,$id = null){
         $reqJSON = file_get_contents('php://input');
+        // A macro to check if user is admin
         $authenticate = function(){
             if(($_SESSION['role']??'Guest') == 'Admin') {
                 return true;
@@ -88,6 +92,7 @@ class ContactUs extends Controller
                         );
                         break;
                     default:
+                        // if no method is specified, return all cards
                         $this->returnJSON($model->getCards());
                 }
             }

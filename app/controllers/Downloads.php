@@ -23,6 +23,7 @@
     public function index(){
         $model = $this->model('DownloadsModel');
         $data = [];
+        // Handle Adding Categories
         if(isset($_POST['AddCategory']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'category|l[1:255]|u[download_categories]'
@@ -34,6 +35,7 @@
             }
         }
 
+        // Handle Adding Files to Categories
         if(isset($_POST['AddFiles']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'cat_id|i[:]'
@@ -46,6 +48,7 @@
 
         }
 
+        // Handle Deleting Files
         if(isset($_POST['DeleteFile']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs( $_POST,[
                 'cat_id|i[:]',
@@ -60,6 +63,7 @@
             }
         }
 
+        // Retrieve Data after handling any requests
         $data['categories'] = $model->getCategories();
         $data['cat_files'] = $model->getFilesByCategory();
         $this->view('Home/downloads','Downloads',$data,styles:['Home/downloads','Components/form','Components/table']);

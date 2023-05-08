@@ -3,6 +3,7 @@ class Posts extends Controller{
     public function index()
     {
     }
+
     public function Announcements()
     {
         $model = $this->model('AnnouncementModel');
@@ -10,6 +11,7 @@ class Posts extends Controller{
             'ann' => $model->getAnnouncements(), 'types' => $model->getTypes()
         ],['posts','Posts/index']);
     }
+
     public function Announcement($id)
     {
         $model = $this->model('AnnouncementModel');
@@ -18,6 +20,7 @@ class Posts extends Controller{
             'ann' => $announcement, 'types' => $model->getTypes()
         ],['posts','Posts/index','Components/slideshow']);
     }
+
     public function Services()
     {
         $model = $this->model('ServiceModel');
@@ -25,6 +28,7 @@ class Posts extends Controller{
             'services' => $model->getServices(), 'categories' => $model->getCategories(true)
         ],['posts', 'Posts/index']);
     }
+
     public function Service($id)
     {
         $model = $this->model('ServiceModel');
@@ -33,6 +37,7 @@ class Posts extends Controller{
             'service' => $service, 'categories' => $model->getCategories()
         ],['posts','Posts/index','Components/slideshow']);
     }
+
     public function Projects()
     {
         $model = $this->model('ProjectModel');
@@ -40,6 +45,7 @@ class Posts extends Controller{
             'projects' => $model->getProjects(),'status' => $model->getStatus()
         ],['posts','Posts/index']);
     }
+
     public function Project($id)
     {
         $model = $this->model('ProjectModel');
@@ -48,6 +54,7 @@ class Posts extends Controller{
             'project' => $project, 'status' => $model->getStatus()
         ],['posts','Posts/index','Components/slideshow']);
     }
+
     public function Events()
     {
         $model = $this->model('EventModel');
@@ -55,6 +62,7 @@ class Posts extends Controller{
             'events' => $model->getEvents()
         ],['posts','Posts/index']);
     }
+
     public function Event($id)
     {
         $model = $this->model('EventModel');
@@ -63,12 +71,14 @@ class Posts extends Controller{
             'event' => $event
         ],['posts','Posts/index','Components/slideshow']);
     }
+
     public function Viewed($id) {
         $model = $this->model('PostModel');
         $this->returnJSON($model->incrementViews($id));
     }
 
     public function ViewedPage() {
+        // Handling View Incrementing for non-posts
         $reqJSON = file_get_contents('php://input');
         if($reqJSON) {
             $body = json_decode($reqJSON,associative:true);

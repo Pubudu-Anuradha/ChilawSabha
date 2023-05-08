@@ -23,6 +23,12 @@ Pagination::top('/Posts/Projects', select_filters:[
             1 => 'pinned',
         ],
     ],
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
 ]);
 ?>
     <style>

@@ -202,8 +202,8 @@ class EventModel extends PostModel{
              p.posted_time as posted_time,
              a.start_time as start_time,
              a.end_time as end_time';
-        $pinned = $this->select($table,$columns,"p.pinned=1 ORDER BY p.posted_time DESC")['result'] ?? [];
-        $unpinned = $this->select($table,$columns,"p.pinned=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
+        $pinned = $this->select($table,$columns,"p.pinned=1 and p.hidden=0 ORDER BY p.posted_time DESC")['result'] ?? [];
+        $unpinned = $this->select($table,$columns,"p.pinned=0 and p.hidden=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
         return array_merge($pinned,$unpinned);
     }
 }

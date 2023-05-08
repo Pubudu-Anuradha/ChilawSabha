@@ -82,7 +82,8 @@
         $selected_start_date = $_GET['dist_date_st'] ?? date('Y-m-d');
         $selected_end_date   = $_GET['dist_date_ed'] ?? date('Y-m-d');
         $views_per_type = $model->getTotalViewsPerType($selected_start_date,$selected_end_date);
-        ?>
+        $no_views = empty($views_per_type['result'] ?? []);
+        if(!$no_views): ?>
         <canvas id="pie"></canvas>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -116,6 +117,9 @@
     config
   );
 </script>
+      <?php else: ?>
+      <p>No views found in time frame</p>
+      <?php endif; ?>
       </div>
       <?php $post_counts = $model->getPostCounts()['result'] ?? [];
       foreach($post_counts as [

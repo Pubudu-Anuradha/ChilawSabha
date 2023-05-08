@@ -28,6 +28,15 @@
     if(isset($errors['end_no_start'])) {
         Errors::generic($errors['end_no_start']);
     }
+    if(isset($errors['ongoing_no_start'])) {
+        Errors::generic($errors['ongoing_no_start']);
+    }
+    if(isset($errors['completed_no_date'])) {
+        Errors::generic($errors['completed_no_date']);
+    }
+    if(isset($errors['no_budget'])) {
+        Errors::generic($errors['no_budget']);
+    }
     Text::text($alias[0][1], $alias[0][0], $alias[0][0], $alias[0][2], spellcheck:true,
         value:$old[$alias[0][0]] ?? null);
     $statuses_assoc = [];

@@ -298,8 +298,8 @@ class ServiceModel extends PostModel{
              c.service_category as service_category,
              a.contact_no as contact_no,
              u.name as posted_by';
-        $pinned = $this->select($table,$columns,"p.pinned=1 ORDER BY p.posted_time DESC")['result'] ?? [];
-        $unpinned = $this->select($table,$columns,"p.pinned=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
+        $pinned = $this->select($table,$columns,"p.pinned=1 and p.hidden=0 ORDER BY p.posted_time DESC")['result'] ?? [];
+        $unpinned = $this->select($table,$columns,"p.pinned=0 and p.hidden=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
         return array_merge($pinned,$unpinned);
     }
 }
