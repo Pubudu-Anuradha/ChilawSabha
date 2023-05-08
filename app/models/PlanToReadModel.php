@@ -2,11 +2,12 @@
 
 class PlanToReadModel extends Model
 {
-  public function getPlanToReadBooks()
+  public function getPlanToReadBooks($member_id)
   {
+    $id = mysqli_real_escape_string($this->conn, $member_id);
     return $this->selectPaginated(
-      'plan_to_read_books p JOIN books b ON p.accession_no=b.book_id JOIN book_status s ON b.state=s.status_id ORDER BY p.priority',
-      'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,s.status as status'
+      'plan_to_read_books p JOIN books b ON p.accession_no=b.book_id JOIN book_status s ON b.state=s.status_id',
+      'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,s.status as status', "p.membership_id='.$id.' ORDER BY p.priority"
     );
   }
 
