@@ -1,10 +1,20 @@
 <div class="content">
     <h2 class="topic">Complaint Details</h2>
-
     <?php
-    [$complaint, $images] = $data['viewComplaint'] ?? [false, false];
-    $notes = $data['notes']['result'] ?? [];
-    $id = $notes[0]['complaint_id'];
+
+    // Accessing the error passed from the controller
+    if (isset($data['error'])) {
+        echo $data['error'];
+    }
+
+    // Accessing the viewComplaint and notes passed from the controller
+    if (isset($data['viewComplaint']) && isset($data['notes'])) {
+        [$complaint, $images] = $data['viewComplaint'] ?? [false, false];
+        $notes = $data['notes']['result'] ?? [];
+        foreach ($complaint as $c) {
+            $complaint_id = $c['complaint_id'];
+        }
+    }
     ?>
     <?php
     if (is_array($complaint) && count($complaint) > 0) {
@@ -14,7 +24,10 @@
             <div class="complaint-state">
                 <?php echo "<p class='complaint_label'>Status: <span class='complaint-status " . strtolower($complaintData['complaint_status']) . "'>" . $complaintData['complaint_status'] . "</p>"; ?>
                 <?php if ($complaintData['complaint_state'] == 1) : ?>
-                    <a href="#" class="btn btn accept bg-red white">Accept</a>
+                    <button onclick="openForm('acceptForm')" class="btn btn accept bg-red white">Accept</button>
+                <?php endif; ?>
+                <?php if ($complaintData['complaint_state'] == 2 && $complaintData['handle_by'] == $_SESSION['user_id']) : ?>
+                    <button onclick="openForm('finishForm')" class="btn btn accept bg-green white">Finish</button>
                 <?php endif; ?>
             </div>
             <div class="complaint-group"><?php echo "<p class='complaint_label'>Complainer Name:</p><span class='complaint-data'>" . $complaintData['complainer_name'] . ""; ?></div>
@@ -45,7 +58,6 @@
         <?php endif; ?>
     </div>
 
-
     <div class="notes">
         <?php if (is_array($complaint) && count($complaint) > 0) {
             $complaintData = $complaint[0]; ?>
@@ -53,16 +65,13 @@
             <div class="topic-note">
                 <h2 class="topic">Notes</h2>
                 <?php if ($complaintData['handle_by'] == $_SESSION['user_id'] && $complaintData['complaint_state'] !== 3 || $complaintData['complaint_state'] == 1) : ?>
-                    <!-- <a href="#" class="btn btn accept bg-green white">Add Note</a> -->
-                    <button onclick="openModal(<?= $id ?>,'add_note')" class="btn btn-accept bg-green white">Add Note</button>
-                    <?php Modal::Modal(textarea: true, title: "Add Note", name: 'add_note', id: 'add_note', rows: 10, cols: 50, required: true); ?>
-
+                    <button onclick="openForm('noteForm')" class="btn btn-accept bg-green white">Add Note</button>
                 <?php endif; ?>
             </div>
             <?php if (is_array($notes) && count($notes) > 0) { ?>
                 <div>
                     <?php foreach ($notes as $key => $note) { ?>
-                        <div class="complaint-group"><?php echo "<span class='complaint-data'>" . $note['note_time'] . "  " . $note['note'] . "  Added By  " . $note['user_name'] . "\n" . ""; ?></div>
+                        <div class="complaint-group"><?php echo "<span class='complaint-data'> " . $note['note_time'] . " " . $note['user_name'] . "  Added<b>" . $note['note'] . "</b>\n" . ""; ?></div>
                     <?php } ?>
                 </div>
         <?php
@@ -71,8 +80,71 @@
         ?>
     </div>
 </div>
+
+<!-- For Accept Button -->
+<div class="form-popup-accept" id="acceptForm">
+    <div class="form-container-accept">
+        <div class="accept-input">
+            <label class="label-text"><b>Please Confirm ?</b></label>
+        </div>
+
+        <div class="button-group-accept">
+            <a href="<?php echo URLROOT . '/Complaint/acceptComplaint/' . $complaint_id; ?>" class="btn btn-accept bg-green white">Confirm</a>
+            <button type="button" class="btn btn-accept bg-red white" onclick="closeForm('acceptForm')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- For Finish Button -->
+<div class="form-popup-accept" id="finishForm">
+    <div class="form-container-accept">
+        <div class="accept-input">
+            <label class="label-text"><b>Please Confirm ?</b></label>
+        </div>
+
+        <div class="button-group-accept">
+            <a href="<?php echo URLROOT . '/Complaint/finishComplaint/' . $complaint_id; ?>" class="btn btn-accept bg-green white">Confirm</a>
+            <button type="button" class="btn btn-accept bg-red white" onclick="closeForm('finishForm')">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- For note -->
+<div class="form-popup" id="noteForm">
+    <form id=noteForm method="post">
+        <div class=" form-container">
+            <div class="close-section"><span class="close" onclick="closeForm('noteForm')">&times;</span></div>
+
+            <div class="note-input">
+                <label class="label-text"><b>Enter Notes</b></label>
+                <textarea placeholder="Enter notes" name="note" id="textarea-note" rows="20" cols=10 class="textarea"></textarea>
+            </div>
+
+            <div class="button-group">
+                <!-- <?php Other::submit('Add', 'Add', value: 'Add'); ?> -->
+                <button class="btn btn-accept bg-green white">Add</button>
+                <button class="btn btn-accept bg-red white" onclick="closeForm('noteForm')">Close</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</body>
+
+</html>
+
 <script>
-    expandSideBar("sub-items-serv", "see-more-bk");
+    function openForm(formId) {
+        document.getElementById(formId).style.display = "block";
+    }
+
+    function closeForm(formId) {
+        document.getElementById(formId).style.display = "none";
+    }
+</script>
+
+<!-- <script>
     var openedModal;
 
     function closeModal() {
@@ -91,4 +163,4 @@
             }
         }
     }
-</script>
+</script> -->

@@ -82,25 +82,63 @@ class Complaint extends Controller
         ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
     }
 
+    public function acceptComplaint($id)
+    {
+        $model = $this->model('ComplaintModel');
+        $result = $model->acceptComplaint($id);
+        if (!$result['success']) {
+            $this->view('Complaint/viewComplaint', 'Complaint', [
+                'error' => 'Error accepting complaint'
+            ], ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main', 'Components/form']);
+        }
+    }
+
+    public function finishComplaint($id)
+    {
+        $model = $this->model('ComplaintModel');
+        $result = $model->finishComplaint($id);
+        if (!$result['success']) {
+            $this->view('Complaint/viewComplaint', 'Complaint', [
+                'error' => 'Error accepting complaint'
+            ], ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main', 'Components/form']);
+        }
+    }
+
+
+    public function addNote()
+    {
+        $model = $this->model('ComplaintModel');
+        if (isset($_POST['Add'])) {
+
+            [$valid, $err] = $this->validateInputs(
+                $_POST,
+                [
+                    'note'
+                ],
+                'Add'
+            );
+            $data['errors'] = $err;
+
+            $data['old'] = $_POST;
+            $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->add_notes($valid)], $data);
+            $this->view('Complaint/viewComplaint', 'Add New Complaint', $data,  ['Components/form']);
+        } else {
+            $this->view('Complaint/viewComplaint', 'Add New Complaint',  styles: ['Components/form']);
+        }
+    }
+
     // public function addNote()
     // {
     //     $model = $this->model('ComplaintModel');
-    //     if (isset($_POST['Add'])) {
-
-    //         [$valid, $err] = $this->validateInputs(
-    //             $_POST,
-    //             [
-    //                 'note|l[:255]'
-    //             ],
-    //             'Add'
-    //         );
-    //         $data['errors'] = $err;
-
-    //         $data['old'] = $_POST;
-    //         $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->add_notes($valid)], $data);
-    //         $this->view('Complaint/addComplaint', 'Add New Complaint',  ['Components/form']);
-    //     } else {
-    //         $this->view('Complaint/addComplaint', 'Add New Complaint',  styles: ['Components/form']);
+    //     $complaint_id = isset($_GET['complaint_id']) ? $_GET['complaint_id'] : null;
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $note = $_POST['note'];
+    //         $model->addNotes($note, $complaint_id);
+    //         $message = 'Note added successfully.';
+    //         $this->view('Complaint/viewComplaint', [
+    //             'message' => $message,
+    //             'complaint_id' => $complaint_id
+    //         ]);
     //     }
     // }
 }

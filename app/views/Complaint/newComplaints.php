@@ -23,7 +23,7 @@
         $table['result'],
         'newComplaint',
         actions: [
-            'Accept' => [['#'], 'btn accept bg-red white', ["openModal(%s,'lost_description')", 'complaint_id']], //TODO 
+            'Accept' => [['#'], 'btn accept bg-red white', ["openForm('acceptForm',%s)", 'complaint_id']],
             'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
         ],
         empty: $table['nodata']
@@ -31,4 +31,30 @@
     ); ?>
     <?php Pagination::bottom('filter-form', $data['newComplaints']['page'], $data['newComplaints']['count']); ?>
 
+
+    <!-- For Accept Button -->
+    <div class="form-popup-accept" id="acceptForm">
+        <div class="form-container-accept">
+            <div class="accept-input">
+                <label class="label-text"><b>Please Confirm ?</b></label>
+            </div>
+
+            <div class="button-group-accept">
+                <a href="#" class="btn btn-accept bg-green white">Confirm</a>
+                <button type="button" class="btn btn-accept bg-red white" onclick="closeForm('acceptForm')">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+<script>
+    function openForm(formId,complaint_id) {
+        document.getElementById(formId).querySelector('a.btn-accept').href = "<?= URLROOT . '/Complaint/acceptComplaint/' ?>" + complaint_id;
+        document.getElementById(formId).style.display = "block";
+    }
+
+    function closeForm(formId) {
+        document.getElementById(formId).style.display = "none";
+    }
+</script>

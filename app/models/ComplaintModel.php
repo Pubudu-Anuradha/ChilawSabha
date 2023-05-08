@@ -174,7 +174,7 @@ class ComplaintModel extends Model
     public function acceptComplaint($id)
     {
         $user_id = $_SESSION['user_id'];
-        $stmt = "UPDATE complaint SET complaint_state=2, handle_by= $user_id, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=$id";
+        $stmt = "UPDATE complaint SET complaint_state=2, handle_by= ?, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=?";
         $stmt = $this->conn->prepare($stmt);
         $stmt->bind_param('ii', $user_id, $id);
         $res = $stmt->execute();
@@ -186,12 +186,67 @@ class ComplaintModel extends Model
         ];
         if ($accept['success']) {
             header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
+        } else {
+            return $accept;
         }
     }
 
-    // public function add_notes($note)
+    public function finishComplaint($id)
+    {
+        $user_id = $_SESSION['user_id'];
+        $stmt = "UPDATE complaint SET complaint_state=3, handle_by= ?, accept_time=CURRENT_TIMESTAMP() WHERE complaint_id=?";
+        $stmt = $this->conn->prepare($stmt);
+        $stmt->bind_param('ii', $user_id, $id);
+        $res = $stmt->execute();
+        $accept = [
+            'success' => $res == true && $stmt->affected_rows != 0,
+            'error' => $res == false,
+            'rows' => $res ? $stmt->affected_rows : false,
+            'errmsg' => $res == false ? $stmt->error : false,
+        ];
+        if ($accept['success']) {
+            header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $id);
+        } else {
+            return $accept;
+        }
+    }
+    // public function get_complaint_counts()
     // {
-    //     $note['handler_id'] = $_SESSION['user_id'];
+    //     $result = $this->select(
+    //         'complaint b join complaint_status c on b.complaint_state=c.status_id',
+    //         'c.complaint_status as state, COUNT(*) as count',
+    //         null,
+    //         'c.complaint_status='
+    //     );
+
+    //     $counts = array();
+    //     foreach ($result['result'] ?? [] as $row) {
+    //         $counts[] = array(
+    //             'state' => $row['state'],
+    //             'count' => $row['count']
+    //         );
+    //     }
+
+    //     return $counts;
+    // }
+
+    public function get_complaint_counts()
+    {
+        $result = $this->select(
+            'COUNT(complaint_state) AS working_count FROM Complaint where complaint_state=2'
+        );
+
+        return $result;
+    }
+
+    public function addNotes($note, $complaint_id)
+    {
+        $note['handler_id'] = $_SESSION['user_id'];
+        $note['complaint_id'] = $complaint_id;
+        return $this->insert('complaint_notes', $note);
+    }
+    // public function addNote($note)
+    // {
     //     return $this->insert('complaint_notes', $note);
     // }
 }

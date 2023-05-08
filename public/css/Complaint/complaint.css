@@ -297,3 +297,72 @@ markasresolved: green
   display: flex;
   margin-bottom: 20px;
 }
+
+.form-popup {
+  display: none;
+  border: 3px solid #f1f1f1;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.form-container {
+  height: 30rem;
+  width: 40rem;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container textarea {
+  padding: 1rem;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container textarea:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+.note-input{
+  display: grid;
+}
+.label-text{
+  text-align: center;
+  padding: 1rem;
+}
+.button-group{
+  display: flex;
+  margin: 2rem 13rem;
+  gap: 50px;
+}
+.button-group-accept{
+  display: inline-flex;
+  gap: 50px;
+  
+}
+#textarea-note{
+  resize: none;
+}
+
+.form-popup-accept {
+  display: none;
+  border: 3px solid #f1f1f1;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-container-accept {
+  padding: 1rem;
+  background-color: white;
+}
+
+.accept-input{
+  display: grid;
+}
