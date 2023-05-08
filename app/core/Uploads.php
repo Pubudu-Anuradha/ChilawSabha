@@ -21,7 +21,7 @@ class file_names extends Model{
 
 class Upload
 {
-    public static function storeUploadedImages($destination, $input_name = 'img')
+    public static function storeUploadedImages($destination, $input_name = 'img', $omit_ext = false)
     {
         // It is always assumed that the images are being uploaded as "multiple"
         if (isset($_FILES[$input_name])) {
@@ -44,8 +44,9 @@ class Upload
                         } else {
                             $img_id = uniqid('img_');
                             $img_ext = strtolower(pathinfo($images['name'][$i], PATHINFO_EXTENSION));
-                            $target_file = rtrim($destination, '/\\') . "/$img_id.$img_ext";
-                            $new_file_name = "$img_id.$img_ext";
+                            $new_file_name = "$img_id";
+                            if(!$omit_ext) $new_file_name .= ".$img_ext";
+                            $target_file = rtrim($destination, '/\\') . "/$new_file_name";
                             if (move_uploaded_file($images['tmp_name'][$i], $target_file)) {
                                 array_push($to_return, [
                                     'error' => false,

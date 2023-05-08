@@ -1,4 +1,4 @@
-/* complaint dashboard styles */
+complaint dashboard styles
 .complaint-dashboard {
   display: flex;
   flex-direction: column;
@@ -53,3 +53,4 @@
   padding: 1rem 1rem 8rem 1rem;
   height: 250px;
 }
+

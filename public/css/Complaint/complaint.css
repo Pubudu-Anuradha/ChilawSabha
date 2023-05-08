@@ -1,0 +1,372 @@
+Colors
+:root {
+  --blue: #7387EF;
+  --lightblue: #93B4F2;
+  --fadedblue: #F0F5FE;
+  --red: #FF4040;
+  --green: #25A704;
+  --yellow: #F3BC2F;
+  --orange: #E2631B;
+  --grey: #9A9A9A;
+  --bgcolor: #ffffff;
+  --black: #000000;
+}
+
+/*
+background for all pages: bgcolor
+view: blue
+edit: yellow
+remove: red
+enable: green
+extenduedate: green
+completed: green
+favourite: lightblue
+plantoreadd: blue
+addbook: lightblue
+reject: red
+lost: red
+delist: red
+disable: red
+found: red
+accept: green
+addnote: blue
+markasresolved: green
+*/
+
+.black {
+  color: var(--black);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.lightblue {
+  color: var(--lightblue);
+}
+
+.green {
+  color: var(--green);
+}
+
+.red {
+  color: var(--red);
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.yellow {
+  color: var(--yellow);
+}
+
+.grey {
+  color: var(--grey);
+}
+
+.fd-blue {
+  color: var(--fadedblue);
+}
+
+.white {
+  color: var(--bgcolor);
+}
+
+.bg-black {
+  background-color: var(--black);
+}
+
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.bg-lightblue {
+  background-color: var(--lightblue);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-yellow {
+  background-color: var(--yellow);
+}
+
+.bg-grey {
+  background-color: var(--grey);
+}
+
+.bg-fd-blue {
+  background-color: var(--fadedblue);
+}
+
+.bg-white {
+  background-color: var(--bgcolor);
+}
+
+.hover-black:hover {
+  color: var(--black);
+}
+
+.hover-blue:hover {
+  color: var(--blue);
+}
+
+.hover-lightblue:hover {
+  color: var(--lightblue);
+}
+
+.hover-green:hover {
+  color: var(--green);
+}
+
+.hover-red:hover {
+  color: var(--red);
+}
+
+.hover-orange:hover {
+  color: var(--orange);
+}
+
+.hover-yellow:hover {
+  color: var(--yellow);
+}
+
+.hover-grey:hover {
+  color: var(--grey);
+}
+
+.hover-fd-blue:hover {
+  color: var(--fadedblue);
+}
+
+.hover-white:hover {
+  color: var(--bgcolor);
+}
+
+.hover-black:hover {
+  color: var(--black);
+}
+
+.hover-bg-blue:hover {
+  background-color: var(--blue);
+}
+
+.hover-bg-lightblue:hover {
+  background-color: var(--lightblue);
+}
+
+.hover-bg-green:hover {
+  background-color: var(--green);
+}
+
+.hover-bg-red:hover {
+  background-color: var(--red);
+}
+
+.hover-bg-orange:hover {
+  background-color: var(--orange);
+}
+
+.hover-bg-yellow:hover {
+  background-color: var(--yellow);
+}
+
+.hover-bg-grey:hover {
+  background-color: var(--grey);
+}
+
+.hover-bg-fd-blue:hover {
+  background-color: var(--fadedblue);
+}
+
+.hover-bg-white:hover {
+  background-color: var(--bgcolor);
+}
+
+.complaint-status {
+  margin-left: 2rem;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 100px;
+  display: inline-block;
+  text-align: center;
+  align-items: center;
+}
+.complaint-status.new {
+  background-color: var(--red);
+}
+
+.complaint-status.working {
+  background-color: var(--yellow);
+}
+
+.complaint-status.finished {
+  background-color: var(--green);
+}
+
+.complaint-data {
+  display: flex;
+  width: 50%;
+  margin: 0;
+  background-color: var(--fadedblue);
+  color: rgb(0, 0, 0);
+  padding: 5px;
+  border-radius: 5px;
+  align-items: center;
+} 
+
+.complaint_label{
+  flex: 0 0 15rem;
+}
+
+.complaint-photos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.complaint-photos img {
+  display: block;
+  margin: 0 3rem;
+  width: 200px;
+  height: 200px;
+  background-color: var(--fadedblue);
+  padding: 10px;
+}
+
+.complaint-state{
+  display: flex;
+  align-items: center;
+}
+
+.topic-note{
+  display: flex;
+  align-items: center;
+}
+
+.topic{
+  margin-right: 10px;
+}
+
+.tabs{
+  font-size: 0;
+}
+
+.tab-btn{
+  background-color: var(--lightblue);
+  border: none;
+  outline: none;
+  padding: 1rem 4rem;
+  font-size: medium;
+  text-align: center;
+  transition: 200ms ease-in-out;
+  cursor: pointer;
+  color: white;
+}
+
+.tab-btn:hover{
+  background-color: var(--blue);
+}
+
+.tab-btn.active {
+  background-color: var(--blue);
+}
+
+.tab-content{
+  display: none;
+  animation: fadeEffect 1s;
+  background-color: var(--fadedblue);
+  padding: 1rem 4rem;
+}
+.resolved{
+  background-color: var(--bgcolor);
+}
+.complaint-group{
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.form-popup {
+  display: none;
+  border: 3px solid #f1f1f1;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.form-container {
+  height: 30rem;
+  width: 40rem;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container textarea {
+  padding: 1rem;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container textarea:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+.note-input{
+  display: grid;
+}
+.label-text{
+  text-align: center;
+  padding: 1rem;
+}
+.button-group{
+  display: flex;
+  margin: 2rem 13rem;
+  gap: 50px;
+}
+.button-group-accept{
+  display: inline-flex;
+  gap: 50px;
+  
+}
+#textarea-note{
+  resize: none;
+}
+
+.form-popup-accept {
+  display: none;
+  border: 3px solid #f1f1f1;
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-container-accept {
+  padding: 1rem;
+  background-color: white;
+}
+
+.accept-input{
+  display: grid;
+}
+
+.filters{
+  display: none;
+}
