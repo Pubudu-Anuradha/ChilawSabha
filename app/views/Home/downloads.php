@@ -1,6 +1,7 @@
 <div class="download-page">
     <div class="download-page-content">
         <h2 class="download-topic">Downloads</h2>
+
 <?php
 $categories = $data['categories'] ?? [];
 $admin = ($_SESSION['role']??'Guest') == 'Admin';
@@ -15,6 +16,7 @@ $cat_files = array_filter($data['cat_files'],function($a) use($cat_id){
 });
 if(!empty($cat_files) || $admin):
 ?>
+
         <div>
             <div class="download-accordin"><?= $category ?></div>
             <div class="panel">

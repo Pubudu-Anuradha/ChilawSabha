@@ -7,78 +7,22 @@
             Complaint Form <hr class="hr1">
         </h2>
         <div class="formContainer">
-            <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
-            <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
-            <div class="inputfield">
-                <label for="textInput">Complainer Name: </label>
-                <div class="inputDiv">
-                    <input type="text" name="name" id="textInput" placeholder="Enter Name">
-                </div>
-            </div>
+            <!-- redesigned with components. To do back-end integration -->
+            <form id="complaint" name="complaint form" class="fullForm" method="post">
 
-            <div class="inputfield">
-                <label for="emailInput">Enter your email: </label>
-                <div class="inputDiv">
-                    <input type="email" id="emailInput" name="emailInputField" placeholder="Enter Email">
-                </div>
-            </div>
+              <?php Text::text('Complainer Name','complainerName','complainerName',placeholder:'Enter Name',maxlength:255);?>
+              <?php Text::email('Enter Your Email','email','email',placeholder:'Enter Email');?>
+              <?php Text::text('Enter Your Phone Number','contactno','contactno',placeholder:'+94XXXXXXXXX or 0XXXXXXXXX', type:'tel',maxlength:12,pattern:"(\+94\d{9})|0\d{9}");?>
+              <?php Text::text('Address', 'address', 'address',placeholder:'Enter Address', maxlength:255); ?>
+              <!-- for now simply hardcoded types (to do - get categories from DB) -->
+              <?php $complaintCategory = ['Garbage disposal','Land issues','Unauthorized construction','Street lamp','Roads require repair','Damaged public infrastructure','Other'] ?>
+              <?php Group::select('Complaint Category', 'complaintCateory', $complaintCategory); ?>
+              <?php Text::textarea('Briefly Describe Your Incident', 'message', 'message',placeholder:'Enter Description',required:true); ?>
+              <?php Files::images('Photos', 'photos', 'photos', required:false); ?>
+              <?php Files::any('Attachments', 'attachments', 'attachments', required:false);?>
+              <?php Other::submit('Add','add',value:'Add');?>
 
-            <div class="inputfield">
-                <label for="phoneInput">Enter your phone number:</label>
-                <div class="inputDiv">
-                    <input type="tel" id="phoneInput" name="phoneInputField" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="textInput">Address: </label>
-                <div class="inputDiv">
-                    <input type="text" name="address" id="textInput" placeholder="Enter Address">
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="selectOption">Choose a name:</label>
-                <div class="inputDiv">
-                    <select id="selectOption" name="selectOptionField">
-                        <option value="Garbage disposal">Garbage disposal</option>
-                        <option value="Land issues">Land issues</option>
-                        <option value="Unauthorized construction">Unauthorized construction</option>
-                        <option value="Street lamp">Street lamp</option>
-                        <option value="Roads require repair">Roads require repair</option>
-                        <option value="Damaged public infrastructure">Damaged public infrastructure</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="noteInput">Briefly Describe your incident:</label>
-                <div class="inputDiv">
-                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="fileInput">Select a file:</label>
-                <input type="file" id="fileInput" name="fileInputField">
-            </div>
-
-
-            <div class="submitButtonContainer">
-                <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
-                </div>
-            </div>
             </form>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-

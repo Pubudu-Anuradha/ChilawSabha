@@ -7,17 +7,17 @@ class Time
     ) { ?>
     <div class="input-field">
         <label for="<?= $id ?>">
-            <?= $title ?>    
+            <?= $title ?>
         </label>
         <div class="input-wrapper">
-            <input type="<?= $type ? $type : 'time' ?>" 
-                name="<?= $name ?>"
-                id="<?= $id ?>"
-                <?= $class ? "class=\"$class\"" : '' ?>
-                <?= $max ? "max=\"$max\"" : '' ?>
-                <?= $min ? "min=\"$min\"" : '' ?>
-                <?= $required ? "required" : '' ?>
-                <?= $value ? "value=\"$value\"" : '' ?>
+            <input type="<?= $type ? $type : 'date'?>"
+                name="<?=$name?>"
+                id="<?=$id?>"
+                <?=$class ? "class=\"$class\" " : ''?>
+                <?=$max ? "max=\"$max\" " : ''?>
+                <?=$min ? "min=\"$min\" " : ''?>
+                <?=$value ? "value=\"$value\" " : ''?>
+                <?=$required ? "required " : ''?>
             />
             <span></span>
         </div>

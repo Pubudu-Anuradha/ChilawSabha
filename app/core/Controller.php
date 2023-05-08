@@ -36,7 +36,7 @@ class Controller
             header('location:' . URLROOT . $redirect);
             die();
         } else if ($_SESSION['role'] != $role) {
-            header('location:' . URLROOT . '/Other/Forbidden');
+            header('location:' . URLROOT . '/Others/Forbidden');
             die();
         } else {
             $this->logged_in_user = true;
@@ -277,7 +277,7 @@ class Controller
         if ($data) {
             // Rules not defined for these fields
             foreach ($data as $key => $value) {
-                $set_error('extra?', [$key => $value]);
+                $set_error('extras?', [$key => $value]);
             }
         }
 

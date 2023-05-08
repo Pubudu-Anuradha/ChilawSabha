@@ -18,12 +18,14 @@
                 </div>
             </div>
             <div class="sabha-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.724123000269!2d79.84854031523255!3d7.495680313176087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2cfe0ff0a56d1%3A0xdde6e655ec5fd5!2sChilaw%20Pradeshiya%20Sabha%20-%20Madampe!5e0!3m2!1sen!2slk!4v1676963417808!5m2!1sen!2slk" 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.724123000269!2d79.84854031523255!3d7.495680313176087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2cfe0ff0a56d1%3A0xdde6e655ec5fd5!2sChilaw%20Pradeshiya%20Sabha%20-%20Madampe!5e0!3m2!1sen!2slk!4v1676963417808!5m2!1sen!2slk"
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
+        
         <div class="lib-contact">
             <h2>Yagampaththu Public Library</h2>
+            
             <div class="lib-contact-details">
                 <div class="lib-data">
                     <span class="icon">&#9993;</span> Email
@@ -39,7 +41,7 @@
                 </div>
             </div>
             <div class="lib-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.7222389430026!2d79.84855101523259!3d7.495887713173423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2cf5fc9cee399%3A0x6203dbeb1203d4f9!2sYagampattu%20Public%20Library!5e0!3m2!1sen!2slk!4v1676963712985!5m2!1sen!2slk" 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.7222389430026!2d79.84855101523259!3d7.495887713173423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2cf5fc9cee399%3A0x6203dbeb1203d4f9!2sYagampattu%20Public%20Library!5e0!3m2!1sen!2slk!4v1676963712985!5m2!1sen!2slk"
                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
