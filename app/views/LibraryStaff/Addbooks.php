@@ -11,7 +11,7 @@ $reqInfo = $data['reqInfo'] ?? false;
                 if (!$data['Add']['success']) {
                     echo "Failed To Add Book " . $data['Add']['errmsg'];
                 } else {
-                    echo "Book Added Successfully";
+                    echo "<span class='green'>Book Added Successfully</span>";
                 }
             }?>
 

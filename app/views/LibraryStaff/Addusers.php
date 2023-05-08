@@ -10,7 +10,7 @@ $errors = $data['errors'] ?? false;
                 if (!$data['Add']['success']) {
                     echo "Failed To Add User " . $data['Add']['errmsg'];
                 } else {
-                    echo "User Added Successfully";
+                    echo "<span class='green'>User Added Successfully</span>";
                 }
             }?>
 
@@ -30,8 +30,6 @@ $errors = $data['errors'] ?? false;
                                 placeholder:'Enter new user\'s name', maxlength:255);
                     Text::email('User Email', 'email', 'email',required:true,
                                 placeholder:'Enter new user\'s email');
-                    Text::password('Password', 'password', 'password',autocomplete:'new-password',
-                                placeholder:'Enter a password');
                     Text::text('Address', 'address', 'address',
                                 placeholder:'Enter new user\'s address', maxlength:255);
                     Text::text('Contact number', 'contact_no', 'contact_no',

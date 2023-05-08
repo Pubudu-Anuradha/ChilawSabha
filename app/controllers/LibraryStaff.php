@@ -581,7 +581,6 @@ class LibraryStaff extends Controller
                     'membership_id|i[0:]',
                     'email|l[:255]|e|u[users]',
                     'name|l[:255]',
-                    'password|l[8:15]',
                     'address|l[:255]',
                     'contact_no|l[10:12]'
                     ], 'Add');
@@ -589,6 +588,21 @@ class LibraryStaff extends Controller
             $data['errors'] = $err;
 
             $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addLibraryUser($valid)], $data);
+
+            if(isset($data['Add']['success'])){
+              $title = "Please Set a Password for Your Library Member Account";
+              $emailContent = "<div class=\"main-container\" style=\"margin: 0; padding: 0; box-sizing: border-box; font-family: poppins; background-color: #ffffff;\">";
+              $emailContent .= "<div class='reset-content-div' style=\"margin: 5rem auto; padding: 2rem 2rem; width: 40rem; display:block; justify-content: center; align-items: center; border: 1px solid #93B4F2; background-color: #F0F5FE; border-radius: 1rem;\">";
+              $emailContent .= "<h1 style=\"font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 2rem;\">Password Set Up</h1><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
+               Use following link to set your password:</p><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\"><br/>
+               <a href=\"http://localhost/ChilawSabha/Login/passwordReset\"></p> Click Here!</a></br>
+               <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">Thank You,<br/>
+               Chilaw Pradeshiya Sabha </p>";
+              $emailContent .= "</div></div>";
+
+              Email::send($_POST['email'],$title,$emailContent);
+            }
+
             $this->view('LibraryStaff/Addusers', 'Add New Library User', $data, ['LibraryStaff/index', 'Components/form']);
         }
         else {
@@ -610,7 +624,7 @@ class LibraryStaff extends Controller
         }
 
         if (isset($_POST['Add'])) {
-var_dump($_POST);
+
             $_POST['sub_category_code'] = $model->getCategoryCode($_POST['subcategory'])['result'][0]["sub_category_code"];
             unset($_POST['subcategory']);
             unset($_POST['category']);
@@ -643,7 +657,7 @@ var_dump($_POST);
                 $emailContent .= "<h1 style=\"font-size: 2rem; font-weight: 700; color: #000000; margin-bottom: 2rem;\">Book Request Status</h1><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
                  Your request for the book titled $reqTitle has been successfully added to the library’s collection.</p><p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">
                  You are welcome to visit the library and read the book at your convenience.</p>
-                 <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">Thanks You,<br/>
+                 <p style=\"font-size: 1.2rem; font-weight: 500; color: #000000;\">Thank You,<br/>
                  Chilaw Pradeshiya Sabha </p>";
                 $emailContent .= "</div></div>";
 

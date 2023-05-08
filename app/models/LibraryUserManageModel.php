@@ -84,7 +84,14 @@ class LibraryUserManageModel extends Model
 
     public function addLibraryUser($user)
     {
-        $pass_hash = password_hash($user['password'], PASSWORD_DEFAULT);
+        $pw = strlen((string)$user['membership_id']);
+        $password = $user['membership_id'];
+
+        while($pw < 8){
+          $password .= '0';
+          $pw++;
+        }
+        $pass_hash = password_hash($password, PASSWORD_DEFAULT);
         date_default_timezone_set('Asia/Colombo');
 
         $res = $this->insert('users',[
