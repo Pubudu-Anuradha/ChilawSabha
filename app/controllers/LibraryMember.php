@@ -176,7 +176,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
@@ -204,7 +204,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
@@ -232,7 +232,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
@@ -260,7 +260,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
@@ -288,7 +288,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
@@ -314,7 +314,7 @@ class LibraryMember extends Controller
           $this->view('LibraryMember/planToRead', 'Plan to Read List', [
             'categories'=>$book->get_categories(),
             'sub_categories'=>$book->get_sub_categories(),
-            'PlantoRead' => $model->getPlanToReadBooks(),
+            'PlantoRead' => $model->getPlanToReadBooks($member_id),
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
