@@ -39,17 +39,21 @@
         <div class="new-and-suggest">
             <h2>Suggested Books</h2>
             <?php
-                $empty_new = !(count($data['sugBooks']['result']) > 0);
-                if(!$empty_new){
-                    $rows = $data['sugBooks']['result'] ?? [];
-                    foreach($rows as $row){
+                $empty_new = !(count($data['sugBooks']) > 0);
+                if(!$empty_new):
+                    $rows = $data['sugBooks'] ?? [];
+                    foreach($rows as $row):
             ?>
                         <ul>
                             <li><?= $row['title'] . ' ( ' . $row['author'] . ' )' ?></li>
                         </ul>
             <?php
-                    }
-                }
+                    endforeach;
+                else:
+            ?>
+                    <p style="text-align:center; font size: 1.2rem">No suggested books</p>  
+            <?php
+                endif;
             ?>
         </div>
     </div>
@@ -125,6 +129,8 @@
                 else{
                     fineAmount = (30 * delay_month_fine) + ((diffInDays-30)*delay_after_fine);
                 }
+            }else{
+                fineAmount = 0;
             }
             return fineAmount;
         }else{
