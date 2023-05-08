@@ -19,7 +19,7 @@ class LibraryMember extends Controller
       'newBooks' => $this->model('BookModel')->getNewBooks(),
       'sugBooks' => $this->model('BookModel')->getSuggestedBooks($fav_comp_precedence,$member_id),
     ], [
-      'main', 
+      'main',
       'posts',
       'LibraryMember/libraryMember',
       'LibraryMember/dashboard',
@@ -39,7 +39,7 @@ class LibraryMember extends Controller
   public function bookRequest()
   {
     $this->view('LibraryMember/bookRequest', 'Book Request', [], [
-      'main', 
+      'main',
       'LibraryMember/libraryMember',
       'Components/form',
     ]);
@@ -63,7 +63,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -81,7 +81,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -105,7 +105,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -129,7 +129,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -145,7 +145,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -180,7 +180,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -208,7 +208,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -236,7 +236,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -264,7 +264,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -292,7 +292,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -301,7 +301,7 @@ class LibraryMember extends Controller
         }
         break;
       default:
-        //adding to db
+        //adding to db 
         $book = $this->model('BookModel');
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
           unset($_SERVER['HTTP_X_REQUESTED_WITH']);
@@ -318,7 +318,7 @@ class LibraryMember extends Controller
             'fav'=>$book->getFavoriteBooks($member_id),
             'comp'=>$book->getCompletedBooks($member_id),
           ], [
-            'main', 
+            'main',
             'posts',
             'LibraryMember/libraryMember',
             'Components/form',
@@ -345,7 +345,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -363,7 +363,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -393,7 +393,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -409,7 +409,7 @@ class LibraryMember extends Controller
           'comp'=>$model->getCompletedBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -435,7 +435,7 @@ class LibraryMember extends Controller
           'fav'=>$model->getFavoriteBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
@@ -451,7 +451,7 @@ class LibraryMember extends Controller
           'fav'=>$model->getFavoriteBooks($member_id),
           'ptr'=>$ptr->getPlanToReadBooks($member_id)
         ], [
-          'main', 
+          'main',
           'posts',
           'LibraryMember/libraryMember',
           'Components/form',
