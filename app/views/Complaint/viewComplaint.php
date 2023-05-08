@@ -1,6 +1,8 @@
 <div class="content">
     <h2 class="topic">Complaint Details</h2>
     <?php
+    var_dump($_POST);
+    // var_dump($_GET);
 
     // Accessing the error passed from the controller
     if (isset($data['error'])) {
@@ -71,7 +73,7 @@
             <?php if (is_array($notes) && count($notes) > 0) { ?>
                 <div>
                     <?php foreach ($notes as $key => $note) { ?>
-                        <div class="complaint-group"><?php echo "<span class='complaint-data'> " . $note['note_time'] . " " . $note['user_name'] . "  Added<b>" . $note['note'] . "</b>\n" . ""; ?></div>
+                        <div class="complaint-group"><?php echo "<span class='complaint-data'> " . $note['note_time'] . " " . $note['user_name'] . "  Added<b>"." " . $note['note'] . "</b>\n" . ""; ?></div>
                     <?php } ?>
                 </div>
         <?php
@@ -114,6 +116,9 @@
     <form id=noteForm method="post">
         <div class=" form-container">
             <div class="close-section"><span class="close" onclick="closeForm('noteForm')">&times;</span></div>
+            <input type="hidden" name="complaint_id" value="<?php echo $complaint_id; ?>">
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+
 
             <div class="note-input">
                 <label class="label-text"><b>Enter Notes</b></label>
@@ -122,7 +127,7 @@
 
             <div class="button-group">
                 <!-- <?php Other::submit('Add', 'Add', value: 'Add'); ?> -->
-                <button class="btn btn-accept bg-green white">Add</button>
+                <button class="btn btn-accept bg-green white" name="Submit" id="Submit">Submit</button>
                 <button class="btn btn-accept bg-red white" onclick="closeForm('noteForm')">Close</button>
             </div>
         </div>

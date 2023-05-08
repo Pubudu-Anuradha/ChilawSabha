@@ -106,17 +106,6 @@ class ComplaintModel extends Model
         );
     }
 
-    // public function get_all_accepted_complaints()
-    // {
-    //     return $this->selectPaginated(
-    //         'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
-    //         'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
-    //         b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
-    //         c.category_name as category_name, d.name as handler_name',
-    //         "complaint_state =2 || complaint_state =3"
-    //     );
-    // }
-
     public function get_accepted_resolved_complaints()
     {
         $condtions = ['complaint_state =3'];
@@ -230,23 +219,23 @@ class ComplaintModel extends Model
     //     return $counts;
     // }
 
-    public function get_complaint_counts()
-    {
-        $result = $this->select(
-            'COUNT(complaint_state) AS working_count FROM Complaint where complaint_state=2'
-        );
-
-        return $result;
-    }
-
-    public function addNotes($note, $complaint_id)
-    {
-        $note['handler_id'] = $_SESSION['user_id'];
-        $note['complaint_id'] = $complaint_id;
-        return $this->insert('complaint_notes', $note);
-    }
-    // public function addNote($note)
+    // public function get_complaint_counts()
     // {
-    //     return $this->insert('complaint_notes', $note);
+    //     $result = $this->select(
+    //         'COUNT(complaint_state) AS working_count FROM Complaint where complaint_state=2'
+    //     );
+
+    //     return $result;
     // }
+
+    public function addNotes($note)
+    {
+        $insert_note = $this->insert('complaint_notes', [
+            'handler_id' => $note['user_id'],
+            'note' => $note['note'],
+            'complaint_id' => $note['complaint_id'],
+        ]);
+        return $insert_note;
+    }
+    
 }

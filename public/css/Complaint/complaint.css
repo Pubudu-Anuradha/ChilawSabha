@@ -366,3 +366,7 @@ markasresolved: green
 .accept-input{
   display: grid;
 }
+
+.filters{
+  display: none;
+}
