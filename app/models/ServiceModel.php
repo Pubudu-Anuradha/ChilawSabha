@@ -19,9 +19,13 @@ class ServiceModel extends PostModel{
             'contact_no','contact_name','service_category'
         ];
 
+        // Separate Steps from the data
         $service = [];
         $steps = $data['steps'] ?? [];
         if(isset($data['steps'])) unset($data['steps']);
+        $steps = array_filter($steps, function($step) {
+            return !empty($step);
+        });
 
         foreach($service_fields as $field) {
             if(isset($data[$field]) || is_null($data[$field])) {
