@@ -24,6 +24,6 @@ class LibraryMemberModel extends Model{
             }
         }
         arsort($sums);
-        return $sums;
+        return $sums??[];
     }
 }
