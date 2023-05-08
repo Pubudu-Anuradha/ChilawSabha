@@ -384,8 +384,8 @@ class Admin extends Controller
                         unset($post_data[$field]);
                     }
 
-                    $service_data['service_category'] =
-                            $categories[$service_data['service_category'] ?? ''] ?? null;
+                    // $service_data['service_category'] =
+                    //         $categories[$service_data['service_category'] ?? ''] ?? null;
 
                     foreach ($current_post[0] as $field => $value) {
                         if(isset($post_data[$field])) {
