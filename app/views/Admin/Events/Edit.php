@@ -7,7 +7,9 @@
     <div class="btn-column">
         <a href="<?=URLROOT . '/Admin/Events'?>" class="btn view bg-blue">Go to Events</a>
         <a href="<?=URLROOT . '/Posts/Event/' . $event['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <?php if(!($event['hidden'] ?? 0)): ?>
         <a href="<?= URLROOT. '/Admin/Events/View/' . $event['post_id'] ?>" class="btn view bg-blue">Go to View Mode</a>
+        <?php endif; ?>
     </div>
     <hr>
     <div class="formContainer">

@@ -16,7 +16,7 @@
 <div class="page-content">
     <div class="left-content">
         <div class="contacts">
-            <a href="<?=URLROOT . "/Home/emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
+            <a href="<?=URLROOT . "/Emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
             <div class="contact">
                 <a href="#" class="name tel">
                     Hospital/Ambulance hotline
@@ -191,7 +191,35 @@ $end_time = $event['end_time'] ? $formatter->format(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
-            <!-- TODO: GET FROM MODEL -->
+            <?php foreach($services as $service):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a href="<?= URLROOT . '/Posts/Service/' . ($service['post_id'] ?? '0')?>" class="title"><?php if ($service['pinned'] == 1): ?>
+                                <span class="pinned">&#128204;</span>
+                            <?php endif;?>
+                            <?=$service['title'] ?? 'Not Found'?> </a>
+                            <a class="category"
+                            href="<?=URLROOT . '/Posts/Services?category=' . ($service['category_id'] ?? '0')?>"
+                            > <?=$service['service_category'] ?? 'Not Found'?>
+                        </a>
+                        </div>
+                        <div class="summary">
+                            <?=$service['short_description'] ?? 'Not Found'?>
+                        </div>
+                        <div class="row">
+                            <?php if($service['contact_no'] ?? false):?>
+                            <div class="contact">
+                                For more Information, call : <?= $service['contact_no'] ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="date">
+                            <?=$formatter->format(IntlCalendar::fromDateTime($service['posted_time'] ?? '2022-01-01', null))?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div class="posts bg-fd-blue">
@@ -260,7 +288,7 @@ $expected_end_date = $project['expected_end_date'] ? $date_formatter->format(
                 excursion through the Muthurajawela Wetlands. Chilaw offers many things to do and places
                 to visit if you’re spending your holiday here.
             </p>
-            <button class="more btn" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
+            <button class="more btn bg-blue" onclick='window.location.href="<?=URLROOT . "/AboutCity"?>"'>See More</button>
         </div>
         <div class="ward-map">
             <h3 class="ward-map-txt">WARD MAP</h3>
@@ -271,3 +299,4 @@ $expected_end_date = $project['expected_end_date'] ? $date_formatter->format(
     <div class="right-content">
     </div>
 </div>
+<?php ViewCounter::count('Home Page'); ?>

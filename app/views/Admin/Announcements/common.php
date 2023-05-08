@@ -4,4 +4,7 @@ $alias = [
     ['short_description', 'Short description',
     'Please enter a short summary of the announcement here.'],
     ['content','Text content of announcement','Announcement content goes here'],
-];
+]; ?>
+<script>
+    expandSideBar('sub-items-anno');
+</script>

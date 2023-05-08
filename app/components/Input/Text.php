@@ -36,6 +36,7 @@ class Text
                 <?= $required ? "required" : '' ?>
                 <?= $disabled ? "disabled" : '' ?>
             >
+            <span></span>
         </div>
     </div>
     <?php
@@ -61,6 +62,7 @@ class Text
             <?=$title?>
         </label>
         <div class="input-wrapper">
+            <!-- textarea closing tag should be right after value.if not there will be whitespaces -->
             <textarea
                 name="<?=$name?>"
                 <?=$id ? "id= \"$id\"" : ''?>

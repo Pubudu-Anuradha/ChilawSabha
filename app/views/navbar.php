@@ -37,15 +37,19 @@
             </li>
             <li class="dropdown"><a href="<?= URLROOT . '/Posts/Events' ?>" class="dropbtn">Events</a>
             </li>
-            <li class="dropdown"><a href="#" class="dropbtn">Services</a>
+            <li class="dropdown"><a href="<?= URLROOT . '/Posts/Services' ?>" class="dropbtn">Services</a>
+                <?php require_once 'app/models/ServiceModel.php';
+                $categories = (new ServiceModel)->getCategories(true);
+                ?>
                 <ul class="dropdown-content">
-                    <li>Health</li>
-                    <li>Playgrounds</li>
-                    <li>Kindergardens</li>
+                <?php foreach($categories as $cat_id => $cat): ?>
+                    <li onclick='window.location.href="<?=URLROOT . "/Posts/Services?category=$cat_id"?>"'><?= $cat ?></li>
+                <?php endforeach; ?>
                 </ul>
             </li>
             <li class="dropdown"><a href="<?=URLROOT . "/Home/downloads"?>" class="dropbtn">Downloads</a></li>
             <li class="dropdown"><a href="<?= URLROOT . '/ContactUs/'?>" class="dropbtn">Contact Us</a></li>
+            <li class="dropdown"><a href="<?=URLROOT . "/Emergency"?>" class="dropbtn">Emergency</a></li>
         </ul>
         <ul class="login-list">
             <li>

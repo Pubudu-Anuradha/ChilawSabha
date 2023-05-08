@@ -1,6 +1,8 @@
+<?php if(!(($_SESSION['role']??'Guest')=='Admin')):?>
 <script>
     setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['project'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
 </script>
+<?php endif;?>
 <div class="content">
 <?php
 [$project, $images, $attachments, $edits] = $data['project'] !== false ? $data['project'] : [false, false, false, false];

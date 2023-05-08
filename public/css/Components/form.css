@@ -171,7 +171,7 @@ input+span {
 
 .input-wrapper {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 10fr 1fr;
   box-sizing: border-box;
 }
 
@@ -190,7 +190,7 @@ input:valid {
 }
 
 input:invalid+span::after {
-  content: "✖";
+  content: "⛔";
   color: var(--red);
 }
 

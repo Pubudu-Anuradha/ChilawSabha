@@ -9,7 +9,8 @@ $components = [
   'Table/Table',
   'Slideshow/Slideshow',
   'Modal/Modal',
-  'Errors/Errors'
+  'Errors/Errors',
+  'viewCounter',
 ];
 foreach($components as $component){
   require_once "app/components/$component.php";

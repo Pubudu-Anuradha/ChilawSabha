@@ -16,7 +16,9 @@ if (empty($event)): ?>
     <div class="btn-column">
         <a href="<?=URLROOT . '/Admin/Events'?>" class="btn view bg-blue">Go to events</a>
         <a href="<?=URLROOT . '/Admin/Events/Edit/' . $event['post_id']?>" class="btn edit bg-yellow">Edit</a>
+        <?php if(!($event['hidden'] ?? 0)): ?>
         <a href="<?=URLROOT . '/Posts/Event/' . $event['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <?php endif; ?>
     </div>
     <hr>
     <div class="post-details">

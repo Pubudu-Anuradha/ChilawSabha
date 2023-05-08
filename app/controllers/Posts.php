@@ -3,7 +3,6 @@ class Posts extends Controller{
     public function index()
     {
     }
-    // TODO: Announcements
     public function Announcements()
     {
         $model = $this->model('AnnouncementModel');
@@ -19,14 +18,21 @@ class Posts extends Controller{
             'ann' => $announcement, 'types' => $model->getTypes()
         ],['posts','Posts/index','Components/slideshow']);
     }
-    // TODO: Services
     public function Services()
     {
+        $model = $this->model('ServiceModel');
+        $this->view('Posts/services', 'Services' , [
+            'services' => $model->getServices(), 'categories' => $model->getCategories(true)
+        ],['posts', 'Posts/index']);
     }
     public function Service($id)
     {
+        $model = $this->model('ServiceModel');
+        $service = $model->getService($id);
+        $this->view('Posts/service',$service[0]['title'] ?? 'Not found',[
+            'service' => $service, 'categories' => $model->getCategories()
+        ],['posts','Posts/index','Components/slideshow']);
     }
-    // TODO: Projects
     public function Projects()
     {
         $model = $this->model('ProjectModel');
@@ -42,7 +48,6 @@ class Posts extends Controller{
             'project' => $project, 'status' => $model->getStatus()
         ],['posts','Posts/index','Components/slideshow']);
     }
-    // TODO: Events
     public function Events()
     {
         $model = $this->model('EventModel');
@@ -61,5 +66,21 @@ class Posts extends Controller{
     public function Viewed($id) {
         $model = $this->model('PostModel');
         $this->returnJSON($model->incrementViews($id));
+    }
+
+    public function ViewedPage() {
+        $reqJSON = file_get_contents('php://input');
+        if($reqJSON) {
+            $body = json_decode($reqJSON,associative:true);
+            if(!$body) {
+                $this->returnJSON(['error' => 'JsonParse']);
+            } else {
+                $model = $this->model('PostModel');
+                $this->returnJSON($model->incrementPageViews($body['page']));
+            }
+        } else {
+            $this->returnJSON(['error' => 'Request']);
+        }
+        $model = $this->model('PostModel');
     }
 }

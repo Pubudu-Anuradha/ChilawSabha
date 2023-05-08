@@ -8,7 +8,9 @@
     <div class="btn-column">
         <a href="<?=URLROOT . '/Admin/Projects'?>" class="btn view bg-blue">Go to Projects</a>
         <a href="<?=URLROOT . '/Posts/Project/' . $project['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <?php if(!($project['hidden'] ?? 0)==1):?>
         <a href="<?= URLROOT. '/Admin/Projects/View/' . $project['post_id'] ?>" class="btn view bg-blue">Go to View Mode</a>
+        <?php endif;?>
     </div>
     <hr>
     <div class="formContainer">
@@ -193,3 +195,6 @@ Other::submit('AddAttach', value:'Add more attachments');
 </div>
 </div>
 <script src="<?=URLROOT . '/public/js/upload_previews.js'?>"></script>
+<script>
+    expandSideBar('sub-items-proj');
+</script>

@@ -1,6 +1,8 @@
+<?php if(!(($_SESSION['role']??'Guest')=='Admin')):?>
 <script>
     setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['event'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
 </script>
+<?php endif;?>
 <div class="content">
 <?php
 [$event,$images,$attachments,$edits] = $data['event'] !== false ? $data['event'] : [false,false,false,false];
@@ -145,9 +147,6 @@ endforeach;?>
 
     <?php endforeach;?>
 <?php endif;?>
-<?php endif; ?>
-</div>
-</div>
 <script>
     const edits = document.querySelectorAll('.edit-container')
     const check = {
@@ -193,3 +192,6 @@ endforeach;?>
         transform: scaleY(0);
     }
 </style>
+<?php endif; ?>
+</div>
+</div>

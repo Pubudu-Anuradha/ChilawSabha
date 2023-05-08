@@ -45,7 +45,12 @@ class EventModel extends PostModel{
             $conditions[] = "p.pinned='$pinned'";
         }
 
-        if(isset($_GET['status']) && $_GET['status'] != 0) {
+        if(isset($_GET['time']) && $_GET['time'] != 0) {
+            $time = "a.start_time".(($_GET['time'] == 2) ? ">='" : "<'") . date('Y-m-d'). "'";
+            if(($_GET['time'] ?? false) == 2) {
+                $time = "(" . $time . " || isnull(a.start_time))";
+            }
+            $conditions[] = $time;
         }
 
         if(isset($_GET['search']) && !empty($_GET['search'])) {
@@ -156,7 +161,7 @@ class EventModel extends PostModel{
                 IntlCalendar::fromDateTime($a['edited_time'], null)
                     ->before(IntlCalendar::fromDateTime($b['edited_time'], null));
             });
-            return [$event['result'][0], $images, $attachments,$edits];
+            return [$event['result'][0] ?? [], $images, $attachments,$edits];
         }
         return false;
     }

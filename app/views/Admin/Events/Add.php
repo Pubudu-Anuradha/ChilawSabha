@@ -55,7 +55,7 @@
         endforeach;
     endif;
     Files::images('Upload Photos', 'photos', 'photos',  multiple:true,required:false);
-    Other::submit('Add','Add',value:'Add Project');
+    Other::submit('Add','Add',value:'Add Event');
 ?>
         </form>
     </div>

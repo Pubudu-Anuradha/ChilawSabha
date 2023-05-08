@@ -1,0 +1,105 @@
+Running tests
+
+=========================
+Running Tests on ./core/testCoreModel.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.......                                                             7 / 7 (100%)
+
+Time: 00:00.932, Memory: 4.00 MB
+
+OK (7 tests, 3423 assertions)
+
+=========================
+Running Tests on ./core/testDateTimeRanges.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.009, Memory: 4.00 MB
+
+OK (1 test, 16 assertions)
+
+=========================
+Running Tests on ./core/testEmails.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.010, Memory: 4.00 MB
+
+OK (1 test, 25 assertions)
+
+=========================
+Running Tests on ./core/testEmpty.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.008, Memory: 4.00 MB
+
+OK (1 test, 9 assertions)
+
+=========================
+Running Tests on ./core/testNumberDoubleRules.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.007, Memory: 4.00 MB
+
+OK (1 test, 1 assertion)
+
+=========================
+Running Tests on ./core/testNumberRanges.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.017, Memory: 4.00 MB
+
+OK (1 test, 852 assertions)
+
+=========================
+Running Tests on ./core/testStringLengthRules.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.010, Memory: 4.00 MB
+
+OK (1 test, 12 assertions)
+
+=========================
+Running Tests on ./core/testUnique.php
+=========================
+PHPUnit 10.1.2 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.1.18
+
+.                                                                   1 / 1 (100%)
+
+Time: 00:00.026, Memory: 4.00 MB
+
+OK (1 test, 4 assertions)

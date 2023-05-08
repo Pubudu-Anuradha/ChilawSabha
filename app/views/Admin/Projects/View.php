@@ -23,7 +23,9 @@ $dates = new IntlDateFormatter(
     <div class="btn-column">
         <a href="<?=URLROOT . '/Admin/Projects'?>" class="btn view bg-blue">Go to Projects</a>
         <a href="<?=URLROOT . '/Admin/Projects/Edit/' . $project['post_id']?>" class="btn edit bg-yellow">Edit</a>
+        <?php if(!($project['hidden'] ?? 0)==1):?>
         <a href="<?=URLROOT . '/Posts/Project/' . $project['post_id']?>" class="btn view bg-green">Go to Public View Mode</a>
+        <?php endif; ?>
     </div>
     <hr>
     <div class="post-details">
@@ -233,3 +235,6 @@ endforeach;?>
 <?php endif;?>
 <?php endif;?>
 </div>
+<script>
+    expandSideBar('sub-items-proj');
+</script>

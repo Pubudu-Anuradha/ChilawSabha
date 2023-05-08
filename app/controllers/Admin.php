@@ -9,10 +9,9 @@ class Admin extends Controller
 
     public function index()
     {
-        // TODO: overhaul the statistics
         $model = $this->model('AdminStatModel');
 
-        $this->view('Admin/index', 'Admin DashBoard', ['EventStat' => $model->getEventStat()], ['main', 'chart']);
+        $this->view('Admin/index', 'Admin DashBoard', ['model' => $model], [ 'Components/table','Components/chart','Components/form', 'Admin/index','Admin/dash']);
     }
 
     public function Users($page = 'index', $id = null)
@@ -120,6 +119,10 @@ class Admin extends Controller
                     ['Components/form','Admin/index']);
                 break;
             case 'Disable':
+                if($id == $_SESSION['user_id']) {
+                    header('Location: ' . URLROOT . '/Admin/Users');
+                    die();
+                }
                 if(isset($_POST['confirm'])){
                     $error = false;
                     if($id != null && $id!=$_SESSION['user_id']) {
@@ -300,12 +303,146 @@ class Admin extends Controller
                 $this->view('Admin/Announcements/index', 'Manage Announcements', ['announcements' => $model->getAnnouncements(true),'types'=>$model->getTypes()], ['Components/table', 'posts']);
         }
     }
-    public function Services($page = 'index')
+    public function Services($page = 'index',$id = null)
     {
         $model = $this->model('ServiceModel');
         switch ($page) {
+            case 'Add':
+                $categories = $model->getCategories(true);
+                if(isset($_POST['Add'])) {
+                    [$valid,$err] = $this->validateInputs($_POST,[
+                        'title|u[post]|l[:255]',
+                        'short_description|l[:1000]',
+                        'content',
+                        'pinned|?',
+                        'attachments|?',
+                        'photos|?',
+                        'contact_no|?',
+                        'contact_name|?',
+                        'steps|?',
+                        'service_category|i[:]'
+                    ],'Add');
+
+                    if(!empty($valid['contact_name'] ?? '') && empty($valid['contact_no'] ?? '')){
+                        $err['name_no_number'] = 'You need to provide a number to go with this name.';
+                    }
+
+                    if(count($err) == 0) {
+                        $putService = $model->putService($valid);
+                        if($putService !== false) {
+                            header('Location: ' . URLROOT . '/Admin/Services/View/' . $putService[0]);
+                            die();
+                        }
+                        $this->view('Admin/Services/Add','Add a new Service',
+                                    ['old'=>$_POST,'errors' => $err,'categories' => $categories],
+                                    ['Components/form','Components/table']);
+                    } else {
+                        $this->view('Admin/Services/Add','Add a new Service',
+                                    ['old'=>$_POST,'categories' => $categories,'errors' => $err],['Components/form', 'Components/table']);
+                    }
+                } else {
+                    $this->view('Admin/Services/Add','Add a new Service',
+                                ['categories' => $categories],['Components/form', 'Components/table']);
+                }
+                break;
+            case 'Edit':
+                $data = [];
+                $post_changes = [];
+                $service_changes = [];
+                $current_post = $model->getService($id,true);
+                $categories = $model->getCategories(true);
+                if(isset($_POST['Edit'])) {
+                    $post_validator = [
+                        'title' => 'title|u[post]|l[:255]',
+                        'short_description' => 'short_description|l[:1000]',
+                        'content' => 'content',
+                        'pinned'=>'pinned|?|i[0:1]',
+                        'hidden'=>'hidden|?|i[0:1]',
+                    ];
+                    $service_validator = [
+                        'contact_no' => 'contact_no|?',
+                        'contact_name' => 'contact_name|?',
+                        'service_category' => 'service_category'
+                    ];
+
+                    $steps = $_POST['steps'] ?? [];
+                    if(isset($_POST['steps'])) {
+                        unset($_POST['steps']);
+                    }
+
+                    $post_data = $_POST;
+                    $service_data = $_POST;
+
+                    $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
+                    $post_data['hidden'] = boolval($post_data['hidden'] ?? false) ? 1 : 0;
+
+                    foreach($post_validator as $field => $_) {
+                        unset($service_data[$field]);
+                    }
+
+                    foreach($service_validator as $field => $_) {
+                        unset($post_data[$field]);
+                    }
+
+                    $service_data['service_category'] =
+                            $categories[$service_data['service_category'] ?? ''] ?? null;
+
+                    foreach ($current_post[0] as $field => $value) {
+                        if(isset($post_data[$field])) {
+                            if($post_data[$field] != $value) {
+                                $post_changes[] = $post_validator[$field];
+                            } else {
+                                unset($post_data[$field]);
+                            }
+                        }
+                        if(isset($service_data[$field])) {
+                            if($service_data[$field] != $value) {
+                                $service_changes[] = $service_validator[$field];
+                            } else {
+                                unset($service_data[$field]);
+                            }
+                        }
+                    }
+
+                    [$valid_post,$err_post] = $this->validateInputs($post_data,$post_changes,'Edit');
+                    [$valid_service,$err_service] = $this->validateInputs($service_data,$service_changes,'Edit');
+
+                    if(!empty($valid_service['contact_name'] ?? '') && empty($valid_service['contact_no'] ?? '')){
+                        $err_service['name_no_number'] = 'You need to provide a number to go with this name.';
+                    }
+
+                    $err = array_merge($err_post,$err_service);
+
+                    if(count($err) == 0) {
+                        if($model->editService($id,$valid_post,$valid_service,$steps)) {
+                            $data['edited'] = true;
+                        } else {
+                            $data['edited'] = false;
+                        }
+                    } else {
+                        $data['errors'] = $err;
+                        $data['edited'] = false;
+                    }
+                } else if(isset($_POST['AddPhotos'])) {
+                    $data['AddPhotos'] = $model->addPhotos($id,'photos');
+                } else if(isset($_POST['AddAttach'])) {
+                    $data['AddAttach'] = $model->addAttachments($id,'attachments');
+                }
+                $this->view('Admin/Services/Edit','Edit Service',array_merge($data,[
+                    'service' => $model->getService($id,true),
+                    'categories' => $model->getCategories(true)
+                ]),['Components/form','Admin/post','Components/table','Admin/index']);
+                break;
+            case 'View':
+                $service = $model->getService($id,true);
+                $this->view('Admin/Services/View',
+                'Service' . (($service['title'] ?? false) ? (' : ' . $service['title']): ''),[
+                    'service' => $service,
+                    'categories' => $model->getCategories(true),
+                ],['Admin/post','Admin/index', 'Components/table']);
+                break;
             default:
-                $this->view('Admin/Services/index', 'Manage Announcements', ['services' => []], ['Components/table', 'posts']);
+                $this->view('Admin/Services/index', 'Manage Announcements', ['services' => $model->getServices(true),'categories' => $model->getCategories(true)], ['Components/table', 'posts']);
         }
     }
     public function Projects($page = 'index',$id = null)

@@ -16,6 +16,13 @@ Pagination::top('/Posts/Events', select_filters:[
             1 => 'pinned',
         ],
     ],
+    'time' => [
+        'Event Time', [
+            0 => 'All',
+            1 => 'Past',
+            2 => 'Future'
+        ]
+    ]
 ]);
 $events = $data['events'][0]['result'] ?? [];
 $formatter = new IntlDateFormatter(

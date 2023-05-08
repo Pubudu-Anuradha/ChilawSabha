@@ -46,11 +46,9 @@ $old = $data['old'] ?? false;
             Text::text('Contact number', 'contact_no', 'contact_no',
                         '+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
                         pattern:"(\+94\d{9})|0\d{9}", value:$old['contact_no'] ?? null);
-            // TODO: Redo regex for nic
             Text::text('NIC', 'nic', 'nic', 'XXXXXXXXXXXX or XXXXXXXXXV',
                         maxlength:12,pattern:"(\d{12})|(\d{10}(V|v))",
                         value:$old['nic'] ?? null);
-            // ? Maybe do this in controller
             $roles = [];
             foreach (array_reverse($data['roles']) as $role) {
                 if($role['staff_type_id'] != 0){ // All isn't a valid role.
