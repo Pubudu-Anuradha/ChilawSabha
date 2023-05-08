@@ -59,7 +59,6 @@ class BookModel extends Model
         return $this->selectPaginated('books b join sub_category_codes sb on b.category_code=sb.sub_category_id join category_codes c on sb.category_id=c.category_id',
             'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name',
             $conditions . ' ORDER BY b.title');
-
     }
 
     public function get_categories()
@@ -78,10 +77,15 @@ class BookModel extends Model
         $book['recieved_by'] = $_SESSION['user_id'];
         return $this->insert('books', $book);
     }
-
-    public function getCategoryCode($Category)
+  
+    public function getCategoryCode($Category,$type)
     {
-        return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_name='".$Category."'");
+        if($type == 'Sub'){
+            return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_id=$Category");
+        }
+        else if($type == 'Main'){
+            return $this->select('category_codes', 'category_id', "category_name='$Category'");
+        }
     }
 
     public function editBook($id, $data)
@@ -228,7 +232,6 @@ class BookModel extends Model
     public function getUserDetails($user)
     {
         $search_term = mysqli_real_escape_string($this->conn, $user);
-
         if(is_numeric($user)){
             return $this->select(
                 'users u LEFT join library_member l on u.user_id=l.user_id LEFT join lend_recieve_books r on l.member_id=r.membership_id LEFT join books b on r.accession_no=b.book_id LEFT join sub_category_codes sb on b.category_code=sb.sub_category_id LEFT join category_codes c on sb.category_id=c.category_id',
@@ -833,3 +836,82 @@ class BookModel extends Model
     }
 
 }
+
+public function getCompletedBooks($member_id){
+        $id = mysqli_real_escape_string($this->conn, $member_id);
+        return $this->selectPaginated('completed_books c join books b on b.book_id=c.accession_no JOIN book_status s ON b.state=s.status_id',
+        'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, s.status as status',
+        "c.membership_id='.$id.'");
+    }
+
+    public function getFavoriteBooks($member_id){
+        $id = mysqli_real_escape_string($this->conn, $member_id);
+        return $this->selectPaginated('favourite_books f join books b on b.book_id=f.accession_no JOIN book_status s ON b.state=s.status_id',
+            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, s.status as status',
+            "f.membership_id='.$id.'");
+    }
+
+    public function getBorrowedBooks($user_id){
+        $id = mysqli_real_escape_string($this->conn, $user_id);
+        return $this->select('lend_recieve_books l join books b on b.book_id=l.accession_no join library_member m on m.member_id=l.membership_id AND m.user_id='.$id,
+        'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, l.due_date as due_date',
+        'l.recieved_date IS NULL'
+        );
+    }
+
+    public function getNewBooks(){
+        return $this->select('books', 
+        'title, author', 
+        'state=1 OR state=2 ORDER BY recieved_date DESC LIMIT 5'
+        );
+    }
+
+    public function getSuggestedBooks($precedence, $membership_id){
+        if(empty($precedence)):
+            return [];
+        else:
+            $case = '';
+            $i = 1;
+            foreach($precedence as $key=>$value):
+                $case .= 'WHEN b.category_code = '. $key.' THEN '.$i.' ';
+                $i++;
+            endforeach;
+            $case .= 'ELSE '.$i.' END';
+            return $this->select('books b' , 'b.title as title, b.author as author, b.category_code as category_code', 'NOT EXISTS (SELECT * FROM completed_books c JOIN library_member l ON c.membership_id=l.member_id WHERE c.accession_no = b.book_id AND c.membership_id = '.$membership_id.' ) ORDER BY CASE '.$case.' ASC LIMIT 5')['result']??[];
+        endif;
+    }
+
+    public function addFavoriteBook($id, $membership_id){
+        $id = mysqli_real_escape_string($this->conn, $id);
+        $member_id = mysqli_real_escape_string($this->conn, $membership_id);
+        return $this->insert('favourite_books',['accession_no'=>$id, 
+        'membership_id'=>$membership_id
+        ]);
+    }
+
+    public function removeFavBook($id, $membership_id){
+        $id = mysqli_real_escape_string($this->conn, $id);
+        $member_id = mysqli_real_escape_string($this->conn, $membership_id);
+        return $this->delete('favourite_books', 'accession_no='.$id.' AND membership_id='.$membership_id);
+    }
+
+    public function addCompletedBook($id, $membership_id){
+        $id = mysqli_real_escape_string($this->conn, $id);
+        $member_id = mysqli_real_escape_string($this->conn, $membership_id);
+        return $this->insert('completed_books', [            'accession_no'=>$id, 
+        'membership_id'=>$membership_id
+        ]);
+    }
+
+    public function removeCompBook($id, $membership_id){
+        $id = mysqli_real_escape_string($this->conn, $id);
+        $member_id = mysqli_real_escape_string($this->conn, $membership_id);
+        return $this->delete('completed_books', 'accession_no='.$id.' AND membership_id='.$membership_id);
+    }
+
+    public function getBookDetails($accession_no){
+        $id = mysqli_real_escape_string($this->conn, $accession_no);
+        return $this->select('books b join category_codes c on b.category_code=c.category_id', 
+        'b.book_id as book_id,b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name', 
+        'b.accession_no='.$id
+        );

@@ -1,86 +1,100 @@
 <div class="content">
-    <div class="bookcatalog">
-        <div class="head-area">
-            <div class="sub-head-area">
-                <h1>COMPLETED BOOK LIST</h1>
-                <div class="catalog-sub-title">
-                    <div class="content-title-category">
-                    <select name="categoryFill">
-                        <option value="Null">Choose Category</option>
-                        <option value="Philosophy">Philosophy</option>
-                        <option value="Languages">Languages</option>
-                        <option value="Natural Sciences">Natural Sciences</option>
-                        <option value="Literature">Literature</option>
-                    </select>
-                    </div>
-                    <div class="content-title-search">
-                        <input type="text" name="search" placeholder=" Search" id="search">
-                        <button>
-                            <img src="<?=URLROOT . '/public/assets/search.png'?>" alt="search btn">
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <hr>
-        </div>
-        <div class="book-catalog-table">
-            <table>
-                <tr>
-                    <th>Accession No</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publisher</th>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3rem">P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus Kiado</td>
-                </tr>
-            </table>
-        </div>
-        <div class="pagination-bar">
-            <div class="pagination-item">1</div>
-            <div class="pagination-item"> 2</div>
-            <div class="pagination-item">3</div>
-            <div class="pagination-item">4</div>
-            <div class="pagination-item"> &#62; </div>
-        </div>
+  <div class="head-area">
+    <div class="sub-head-area">
+      <h1>COMPLETED BOOKS</h1>
     </div>
+    <hr>
+    <div class="head-actions-area">
+      <?php
+        $categories_assoc = []; 
+        foreach ($data['categories']['result'] ?? [] as $category){
+          if($category['category_code'] !== 'All'){
+            $categories_assoc[$category['category_id']] = $category['category_code'] . " - " . $category['category_name'];
+          }
+        }
+
+        $sub_categories_assoc = [];
+        foreach ($data['sub_categories']['result'] ?? [] as $sub_category){
+          if($sub_category['sub_category_code'] !== 'All'){
+            $sub_categories_assoc[$sub_category['sub_category_id']] = $sub_category['sub_category_code'] . " - " . $sub_category['sub_category_name'];
+          }
+        }
+
+        Pagination::top('/LibraryMember/completed', 'member_complete_filter', select_filters:[
+          'category' => [
+            'Filter by category',
+            array_merge(['0' => 'All'], $categories_assoc)
+          ],
+          'sub_category' => [
+            'Filter by sub category',
+            array_merge(['0' => 'All'], $sub_categories_assoc)
+          ],
+        ]);
+        $table = $data['books'];
+      ?>
+    </div>
+  </div>
+  <div class='content-table'>
+    <table>
+      <thead>
+        <tr>
+          <th>Accession No</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Publisher</th>
+          <th style="text-align:center">Status</th>
+          <th style="text-align:center">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <?php 
+          if (!$table['nodata'] && !$table['error']):
+            foreach ($table['result'] as $compbooks):
+        ?>
+              <tr>
+                <td>
+                  <?=$compbooks['accession_no']?>
+                </td>
+                <td>
+                  <?=$compbooks['title']?>
+                </td>
+                <td>
+                  <?=$compbooks['author']?>
+                </td>
+                <td>
+                  <?=$compbooks['publisher']?>
+                </td>
+                <td style="text-align:center">
+                  <?php
+                    echo '<p class="status-'.$compbooks['status'].'">'.$compbooks['status'].'</p>';
+                  ?>
+                </td>
+                <td>
+                  <div class='btn-column'>
+                    <a href="<?=URLROOT . '/LibraryMember/completeds/remove/' . $compbooks['accession_no']?>" class='btn bg-blue remove'><span>Remove</span></a>
+                  </div>
+                </td>
+              </tr>
+        <?php
+            endforeach;else:
+        ?>
+            <tr>
+              <td colspan="6" style="text-align:center">
+                No Completed Books Available
+              </td>
+            </tr>
+        <?php
+          endif;
+        ?>
+      </tbody>
+    </table>
+  </div>
+  <?php
+    // Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => 'Publisher'], $data['books']['result'] ?? [], 'book-catalogue-id', actions:[
+    //   'Remove' => [[URLROOT . '/LibraryMember/completeds/remove/%s','accession_no'], 'bg-blue remove', ['#']],
+    // ], empty:!(count($data['books']['result']) > 0), empty_msg:'No books available');
+  ?>
+  
+  <?php Pagination::bottom('book-cat-pag', $data['books']['page'],$data['books']['count']);  ?>
 </div>

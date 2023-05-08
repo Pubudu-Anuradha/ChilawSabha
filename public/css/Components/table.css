@@ -69,7 +69,7 @@ tbody>tr:last-child {
 }
 
 .btn {
-  border: none;
+  border: 1px solid var(--lightblue);
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
@@ -110,6 +110,34 @@ tbody>tr:last-child {
   content: "✓";
 }
 
+.unfav::before {
+  content: "❤️";
+}
+
+.fav::before {
+  content: "🤍";
+}
+
+.ptr::before{
+  content: "👍";
+}
+
+.nptr::before{
+  content: "👎";
+}
+
+.complete::before {
+  content: "✅";
+}
+
+.incomplete::before {
+  content: "❌";
+}
+
+.remove::before {
+  content: "🗑";
+}
+  
 .damage::before {
   content: "🛠️";
 }
@@ -124,6 +152,12 @@ tbody>tr:last-child {
 
 .waiting::before {
   content: "⌛";
+}
+
+@media screen and (max-width:1220px) {
+  .btn-column a span{
+    display: none;
+  }
 }
 
 @media screen and (max-width:767px) {
