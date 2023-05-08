@@ -3,7 +3,7 @@
 class LibraryMemberModel extends Model{
     public function getMemberDetails($userId){
         $id = mysqli_real_escape_string($this->conn, $userId);
-        return $this->select('library_member', 'user_id,member_id,membership_id,nic,no_of_books_lost, no_of_books_damaged', "user_id='$id'")['result'][0] ?? [];
+        return $this->select('library_member', 'member_id,membership_id,no_of_books_lost, no_of_books_damaged', "user_id='$id'")['result'][0] ?? [];
     }
 
     public function getFavCompPrecedence($memberId){
