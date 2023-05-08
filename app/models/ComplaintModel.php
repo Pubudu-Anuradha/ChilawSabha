@@ -199,26 +199,7 @@ class ComplaintModel extends Model
             return $accept;
         }
     }
-    // public function get_complaint_counts()
-    // {
-    //     $result = $this->select(
-    //         'complaint b join complaint_status c on b.complaint_state=c.status_id',
-    //         'c.complaint_status as state, COUNT(*) as count',
-    //         null,
-    //         'c.complaint_status='
-    //     );
-
-    //     $counts = array();
-    //     foreach ($result['result'] ?? [] as $row) {
-    //         $counts[] = array(
-    //             'state' => $row['state'],
-    //             'count' => $row['count']
-    //         );
-    //     }
-
-    //     return $counts;
-    // }
-
+   
     // public function get_complaint_counts()
     // {
     //     $result = $this->select(

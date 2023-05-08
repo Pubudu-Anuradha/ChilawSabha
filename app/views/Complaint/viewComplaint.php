@@ -149,23 +149,3 @@
     }
 </script>
 
-<!-- <script>
-    var openedModal;
-
-    function closeModal() {
-        openedModal.style.display = "none";
-    }
-
-    function openModal(id, modal) {
-        event.preventDefault();
-        openedModal = document.getElementById(modal);
-        openedModal.querySelector('input[type="number"]').value = id;
-        openedModal.style.display = "block";
-
-        window.onclick = function(event) {
-            if (event.target == openedModal) {
-                openedModal.style.display = "none";
-            }
-        }
-    }
-</script> -->
