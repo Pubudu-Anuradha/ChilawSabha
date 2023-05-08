@@ -41,7 +41,7 @@ $old = $data['old'] ?? false;
             <?php Time::date('Date', 'date', 'date', type: 'date', max: Date("Y-m-d"), value: $old['date'] ?? date('Y-m-d')); ?>
             <?php $categories = [];
             foreach ($data['complaint_categories'] as $category) {
-                $categories[$category['category_id']] = $category['category_name'];
+                $categories[$category['category_id']] = $category['complaint_category'];
             }
             Group::select(
                 'Complaint Category',

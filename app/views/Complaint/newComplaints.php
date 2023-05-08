@@ -6,7 +6,7 @@
     $categories = $data['Category']['result'] ?? [];
     $category_arr = ['0' => "All"];
     foreach ($categories as $category) {
-        $category_arr[$category['category_id']] = $category['category_name'];
+        $category_arr[$category['category_id']] = $category['complaint_category'];
     }
     ?>
 

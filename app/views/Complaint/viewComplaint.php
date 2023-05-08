@@ -1,8 +1,6 @@
 <div class="content">
     <h2 class="topic">Complaint Details</h2>
     <?php
-    var_dump($_POST);
-    // var_dump($_GET);
 
     // Accessing the error passed from the controller
     if (isset($data['error'])) {
@@ -29,7 +27,7 @@
                     <button onclick="openForm('acceptForm')" class="btn btn accept bg-red white">Accept</button>
                 <?php endif; ?>
                 <?php if ($complaintData['complaint_state'] == 2 && $complaintData['handle_by'] == $_SESSION['user_id']) : ?>
-                    <button onclick="openForm('finishForm')" class="btn btn accept bg-green white">Finish</button>
+                    <button onclick="openForm('finishForm')" class="btn btn accept bg-green white">Resolve</button>
                 <?php endif; ?>
             </div>
             <div class="complaint-group"><?php echo "<p class='complaint_label'>Complainer Name:</p><span class='complaint-data'>" . $complaintData['complainer_name'] . ""; ?></div>
@@ -113,7 +111,7 @@
 
 <!-- For note -->
 <div class="form-popup" id="noteForm">
-    <form id=noteForm method="post">
+    <form id=noteForm method="post" action="<?php echo URLROOT . '/Complaint/addNote/' ; ?>">
         <div class=" form-container">
             <div class="close-section"><span class="close" onclick="closeForm('noteForm')">&times;</span></div>
             <input type="hidden" name="complaint_id" value="<?php echo $complaint_id; ?>">
@@ -126,7 +124,6 @@
             </div>
 
             <div class="button-group">
-                <!-- <?php Other::submit('Add', 'Add', value: 'Add'); ?> -->
                 <button class="btn btn-accept bg-green white" name="Submit" id="Submit">Submit</button>
                 <button class="btn btn-accept bg-red white" onclick="closeForm('noteForm')">Close</button>
             </div>

@@ -66,6 +66,45 @@ class Home extends Controller
     
     public function addComplaint()
     {
-        $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','Components/form']);
+        $model = $this->model('ComplaintModel');
+
+        // Retrieve data from the complaint_categories table and store it in an array
+        $data = ['complaint_categories' => $model->get_categories()['result']];
+
+        // Check if the 'Add' button has been clicked
+        if (isset($_POST['Add'])) {
+        
+            // Validate user inputs using the validateInputs() function and store the results in variables
+            [$valid, $err] = $this->validateInputs(
+                $_POST,
+                [
+                    'name|l[:255]',
+                    'email|l[:255]|e',
+                    'contact_no|l[10:12]',
+                    'address|l[:255]',
+                    'category',
+                    'description|l[:255]',
+                    'date',
+                ],
+                'Add'
+            );
+
+            // Store the validation errors in the $data array
+            $data['errors'] = $err;
+
+            // Store the user inputs in the $data array
+            $data['old'] = $_POST;
+
+            // If there are validation errors, merge them into the $data array
+            // Otherwise, add the new complaint to the database using the addComplaintuser() method and merge the result into the $data array
+            $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addComplaintuser($valid)], $data);
+
+            // Render the 'Home/AddComplaint' view with the title 'Chilaw Pradeshiya Sabha', the $data array, and the 'Components/form' stylesheet
+            $this->view('Home/AddComplaint', 'Chilaw Pradeshiya Sabha', $data, ['Components/form']);
+        } else {
+
+            // If the 'Add' button has not been clicked, simply render the 'Home/AddComplaint' view with the title 'Chilaw Pradeshiya Sabha', the $data array, and the 'Components/form' stylesheet
+            $this->view('Complaint/AddComplaint', 'Chilaw Pradeshiya Sabha',  $data, styles: ['Components/form']);
+        }
     }
 }
