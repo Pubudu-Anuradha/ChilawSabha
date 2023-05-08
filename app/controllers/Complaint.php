@@ -8,7 +8,26 @@ class Complaint extends Controller
     }
     public function index()
     {
-        $this->view('Complaint/index', 'Complaint', styles: ['Complaint/dashboard', 'main']);
+        $model = $this->model('ComplaintStatModel');
+        $reqJSON = file_get_contents('php://input');
+        if($reqJSON){
+          $reqJSON = json_decode($reqJSON, associative:true);
+          if($reqJSON && ($reqJSON['type'] == 'load')){
+                    $response['complaint_categories'] = $model->getComplaintCategories();
+                    $response['complaint_categories_month'] = $model->complaintInEachMonth();
+                    if(isset($response['complaint_categories']['result']) && isset($response['complaint_categories_month']['result'])){
+                        $this->returnJSON([
+                            $response
+                        ]);
+                    }else{
+                        $this->returnJSON([
+                            'error' => 'No Data Found',
+                        ]);
+                    }
+                    die();
+            }
+        }
+        $this->view('Complaint/index', 'Complaint', styles: ['Complaint/dashboard','Complaint/complaint', 'main']);
     }
 
     public function addComplaint()

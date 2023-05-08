@@ -27,19 +27,74 @@
     </div>
     <div class="lower-content complaint-lower">
       <h3>Complaints In Each Month</h3>
-      <canvas id="complaint-in-month"></canvas>
+      <div class="bar-chart-area">
+        <canvas id="complaint-in-month"></canvas>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  var catValues = ["Land Issues", "Vehicle Issues", "Service Issues", "Online System Issues", "Staff Issues"];
-  var monValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
-  var complaintcount = [23, 44, 76, 12, 45, 45, 17, 85, 36, 77, 18];
-  var yValues = [80, 49, 44, 60, 65];
 
-  window.onload = pieChart(yValues, catValues, 'most-complaint-categories');
-  window.onload = vBarChart(complaintcount, monValues, 'complaint-in-month');
+  var monValues = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
+
+  document.addEventListener('DOMContentLoaded',function(){
+
+    fetch("<?=URLROOT . '/Complaint/index'?>",{
+                    method:"POST",
+                    headers: {
+                        "Content-type":"application/json"
+                    } ,
+                    body: JSON.stringify({
+                      'type':'load'
+                    })
+                })
+    .then(response => response.json())
+    .then(response => {
+
+      if(response[0]['complaint_categories']['result'].length > 0){
+          const categoryNames = response[0]['complaint_categories']['result']['complaint_category'].map(item => item.category_name);
+          const compaintCounts = response[0]['complaint_categories']['result']['complaint_count'].map(item => item.complaint_count);
+          pieChart(compaintCounts, categoryNames, 'most-complaint-categories');
+      }
+      else{
+        var pieArea = document.querySelector('.most-complaint-category');
+        pieArea.innerHTML = "NO DATA FOUND";
+        pieArea.style.display = "flex";
+        pieArea.style.justifyContent = "center";
+        pieArea.style.alignItems = "center";
+      }
+      if(response[0]['complaint_categories_month']['result'].length > 0){
+          const categoryCount = response[0]['complaint_categories_month']['result']['complaint_month_count'].map(item => item.complaint_month_count);
+          const compaintMonth = response[0]['complaint_categories_month']['result']['complaint_month'].map(item => item.complaint_month);
+
+          // const MonthNames = compaintMonth.map(monthNum => monValues[monthNum]);
+          const categoryCountByMonth = new Array(12).fill(0);
+
+          for (let i = 0; i < compaintMonth.length; i++) {
+              categoryCountByMonth[compaintMonth[i]] = categoryCount[i];
+          }
+
+          vBarChart(categoryCountByMonth, monValues, 'complaint-in-month');
+
+      }
+      else{
+        var barArea = document.querySelector('.bar-chart-area');
+        barArea.innerHTML = "NO DATA FOUND";
+        barArea.style.display = "flex";
+        barArea.style.justifyContent = "center";
+        barArea.style.alignItems = "center";
+        barArea.style.height = "100%";
+      }
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  });
+
+
 
   function pieChart(yval, xval, id) {
     var barColors = ["#6D79E7", "#C7B6EC", "#E5DAFB", "lightblue"];

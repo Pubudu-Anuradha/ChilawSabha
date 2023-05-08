@@ -1,10 +1,4 @@
 complaint dashboard styles
-.complaint-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 80%;
-}
 
 .complaint-count {
   display: flex;
@@ -54,3 +48,17 @@ complaint dashboard styles
   height: 250px;
 }
 
+.upper-content{
+    gap: 4rem;
+    display: flex;
+}
+
+.lower-content{
+  width: 71%;
+}
+
+.complaint-dashboard{
+    flex-direction: column;
+    display: flex;
+    gap: 2rem;
+}
