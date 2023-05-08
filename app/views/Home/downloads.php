@@ -85,3 +85,4 @@ Other::submit('AddCategory',value:'Add a new Category');
         });
     }
 </script>
+<?php ViewCounter::count('Downloads Page'); ?>

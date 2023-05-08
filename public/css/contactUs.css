@@ -49,10 +49,26 @@
 .card-container {
   display: flex;
   justify-content: space-evenly;
-  gap: 4rem;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
 .card {
-  min-width: 15rem;
+  width: 300px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  word-break: break-all;
+}
+
+.card .name {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card .position,
+.card .email,
+.card .phone {
+  font-size: 18px;
+  margin-bottom: 5px;
 }

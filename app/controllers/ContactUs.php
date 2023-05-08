@@ -7,10 +7,9 @@ class ContactUs extends Controller
     {
         $model = $this->model('ContactModel');
         $data = [];
-        if(isset($_POST['Add'])) {
-            $this->authenticateRole('Admin');
+        if(isset($_POST['Add']) && (($_SESSION['role'] ?? 'Guest') == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
-                'name|l[:1000]',
+                'name|l[:1000]|u[contact_card]',
                 'position|l[:255]',
                 'email|e|l[:255]',
                 'contact_no|l[:12]',
@@ -21,8 +20,7 @@ class ContactUs extends Controller
                 $data['errors'] = $err;
             }
         }
-        if(isset($_POST['Delete'])) {
-            $this->authenticateRole('Admin');
+        if(isset($_POST['Delete']) && (($_SESSION['role'] ?? 'Guest') == 'Admin')) {
             $card_id = $_POST['card_id'] ?? false;
             if($card_id) {
                 $data['delete'] = $model->deleteCard($card_id);

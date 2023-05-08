@@ -218,3 +218,6 @@ endif; ?>
 <?php endif;?>
 </div>
 </div>
+<script>
+    expandSideBar('sub-items-serv');
+</script>

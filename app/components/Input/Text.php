@@ -36,6 +36,7 @@ class Text
                 <?= $required ? "required" : '' ?>
                 <?= $disabled ? "disabled" : '' ?>
             >
+            <span></span>
         </div>
     </div>
     <?php

@@ -161,7 +161,7 @@ class EventModel extends PostModel{
                 IntlCalendar::fromDateTime($a['edited_time'], null)
                     ->before(IntlCalendar::fromDateTime($b['edited_time'], null));
             });
-            return [$event['result'][0], $images, $attachments,$edits];
+            return [$event['result'][0] ?? [], $images, $attachments,$edits];
         }
         return false;
     }

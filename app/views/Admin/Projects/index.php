@@ -133,3 +133,6 @@ Pagination::bottom(
         });
     }
 </script>
+<script>
+    expandSideBar('sub-items-proj');
+</script>

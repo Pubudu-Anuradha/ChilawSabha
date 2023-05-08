@@ -243,3 +243,6 @@ addMore.addEventListener('click', () => {
     cursor: pointer;
 }
 </style>
+<script>
+    expandSideBar('sub-items-serv');
+</script>

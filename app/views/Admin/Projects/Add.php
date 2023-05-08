@@ -75,3 +75,6 @@
 </div>
 
 <script src="<?= URLROOT . '/public/js/upload_previews.js' ?>"></script>
+<script>
+    expandSideBar('sub-items-proj');
+</script>

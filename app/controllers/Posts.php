@@ -67,4 +67,20 @@ class Posts extends Controller{
         $model = $this->model('PostModel');
         $this->returnJSON($model->incrementViews($id));
     }
+
+    public function ViewedPage() {
+        $reqJSON = file_get_contents('php://input');
+        if($reqJSON) {
+            $body = json_decode($reqJSON,associative:true);
+            if(!$body) {
+                $this->returnJSON(['error' => 'JsonParse']);
+            } else {
+                $model = $this->model('PostModel');
+                $this->returnJSON($model->incrementPageViews($body['page']));
+            }
+        } else {
+            $this->returnJSON(['error' => 'Request']);
+        }
+        $model = $this->model('PostModel');
+    }
 }

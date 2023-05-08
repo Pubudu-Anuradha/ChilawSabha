@@ -108,7 +108,7 @@ class ProjectModel extends PostModel{
                 IntlCalendar::fromDateTime($a['edited_time'], null)
                     ->before(IntlCalendar::fromDateTime($b['edited_time'], null));
             });
-            return [$project['result'][0], $images, $attachments,$edits];
+            return [$project['result'][0] ?? [], $images, $attachments,$edits];
         }
         return false;
     }

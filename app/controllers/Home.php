@@ -31,7 +31,6 @@ class Home extends Controller
 
     public function portal()
     {
-        // TODO: Add Pictures of Library
         $this->view('Home/portal', 'Library Portal',styles:['Home/portal','Components/slideshow']);
     }
 
@@ -67,7 +66,6 @@ class Home extends Controller
     
     public function addComplaint()
     {
-        // TODO: Use Form Input components
         $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','Components/form']);
     }
 }

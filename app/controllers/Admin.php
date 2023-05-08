@@ -9,10 +9,9 @@ class Admin extends Controller
 
     public function index()
     {
-        // TODO: overhaul the statistics
         $model = $this->model('AdminStatModel');
 
-        $this->view('Admin/index', 'Admin DashBoard', ['EventStat' => $model->getEventStat()], ['main', 'chart']);
+        $this->view('Admin/index', 'Admin DashBoard', ['model' => $model], [ 'Components/table','Components/chart','Components/form', 'Admin/index','Admin/dash']);
     }
 
     public function Users($page = 'index', $id = null)
@@ -120,6 +119,10 @@ class Admin extends Controller
                     ['Components/form','Admin/index']);
                 break;
             case 'Disable':
+                if($id == $_SESSION['user_id']) {
+                    header('Location: ' . URLROOT . '/Admin/Users');
+                    die();
+                }
                 if(isset($_POST['confirm'])){
                     $error = false;
                     if($id != null && $id!=$_SESSION['user_id']) {

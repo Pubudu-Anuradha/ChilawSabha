@@ -132,3 +132,6 @@ if(services.length != 0) {
     });
 }
 </script>
+<script>
+    expandSideBar('sub-items-serv');
+</script>

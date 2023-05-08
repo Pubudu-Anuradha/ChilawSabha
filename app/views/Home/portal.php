@@ -48,3 +48,5 @@
   </div>
 
 </div>
+
+<?php ViewCounter::count('Library Portal'); ?>

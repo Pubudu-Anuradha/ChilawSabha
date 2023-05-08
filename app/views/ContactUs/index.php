@@ -6,11 +6,15 @@
             <div class="sabha-contact-details">
                 <div class="sabha-data">
                     <span class="icon">&#9993;</span> Email
-                    <div>chlawpsproject@gmail.com</div>
+                    <div>
+                        <a href="mailto:chlawpsproject@gmail.com">
+                            chlawpsproject@gmail.com
+                        </a>
+                    </div>
                 </div>
                 <div class="sabha-data">
                     <span class="icon">&#9750;</span> Address
-                    <div>Dansela, Suduwella, Madampe</div>
+                    <div>Chilaw Pradeshiya Sabha, Kuliyapitya Road, Madampe</div>
                 </div>
                 <div class="sabha-data">
                     <span class="icon">&#9743;</span> Telephone
@@ -29,11 +33,15 @@
             <div class="lib-contact-details">
                 <div class="lib-data">
                     <span class="icon">&#9993;</span> Email
-                    <div>chilawlibrary@gov.lk</div>
+                    <div>
+                        <a href="mailto:chilawpubliclibrary@gmail.com">
+                            chilawpubliclibrary@gmail.com
+                        </a>
+                    </div>
                 </div>
                 <div class="lib-data">
                     <span class="icon">&#9750;</span> Address
-                    <div>Kurunegala-Narammala-Madampe Rd, Madampe</div>
+                    <div>Chilaw Pradeshiya Sabha, Kuliyapitya Road, Madampe</div>
                 </div>
                 <div class="lib-data">
                     <span class="icon">&#9743;</span> Telephone
@@ -51,7 +59,7 @@
         </div>
 <?php if(($_SESSION['role'] ?? 'Guest') == 'Admin'): 
     $cards = $data['cards']['result'] ?? [];?>
-    <h3>Edit Contacts</h3>
+    <h3>Edit People</h3>
     <table>
         <thead>
             <tr>
@@ -68,7 +76,7 @@
             <tr>
                 <td colspan="5">No Cards Available</td>
             </tr>
-<?php       endif;            
+<?php       endif;
             foreach($cards as $card): ?>
             <form id="<?= $card['card_id'] ?>" method="POST">
             <tr>
@@ -133,6 +141,9 @@ const refresh_cards = () =>{
             response.result.forEach((card)=>{
                 inner = ``
                 inner += `
+                    <div class="img-row" style="display:flex; justify-content:center">
+                    <img width=64 height=64 src="<?= URLROOT . '/public/assets/user.png'?>" alt="${card.name}">
+                    </div>
                     <div class="name">
                         ${card.name}
                     </div>
@@ -148,7 +159,9 @@ const refresh_cards = () =>{
                 if(card.email) {
                     inner += `
                     <div class="email">
+                        <a href="mailto:${card.email}">
                         ${card.email}
+                        </a>
                     </div>`
                 }
                 card_container.innerHTML += `<div class="card"> ${inner}</div>`;
@@ -235,4 +248,6 @@ edit_btns.forEach(btn=>{
     })
 })
 </script>
-<?php endif; ?>
+<?php endif; 
+ViewCounter::count('Contact Us')
+?>

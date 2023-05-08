@@ -199,7 +199,7 @@ class ServiceModel extends PostModel{
                 IntlCalendar::fromDateTime($a['edited_time'], null)
                     ->before(IntlCalendar::fromDateTime($b['edited_time'], null));
             });
-            return [$service['result'][0], $images, $attachments,$edits,$steps];
+            return [$service['result'][0] ?? [], $images, $attachments,$edits,$steps];
         }
         return false;
     }

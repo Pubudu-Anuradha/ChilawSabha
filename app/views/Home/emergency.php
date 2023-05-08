@@ -68,7 +68,7 @@ foreach($data['categories']['result'] ?? [] as $category) {
   <div class="formContainer">
   <form class="fullForm" method="POST" id="add-new">
       <?php
-          if($data['AddCategory'] ?? false) echo "<div>Added Successfully</div>";
+          if($data['AddCategory']['success'] ?? false) echo "<div>Added Successfully</div>";
           $old = $data['oldCat'] ?? [];
           $errors = $data['errorsCat'] ?? [];
           Errors::validation_errors($errors);
@@ -83,7 +83,7 @@ foreach($data['categories']['result'] ?? [] as $category) {
   <div class="formContainer">
   <form class="fullForm" method="POST" id="add-new">
       <?php
-          if($data['AddPlace'] ?? false) echo "<div>Added Successfully</div>";
+          if($data['AddPlace']['success'] ?? false) echo "<div>Added Successfully</div>";
           $errors = $data['errorsPlace'] ?? [];
           Errors::validation_errors($errors);
           $old = $data['oldPlace'] ?? [];
@@ -202,3 +202,4 @@ caption {
   caption-side: bottom;
 }
 </style>
+<?php ViewCounter::count('Emergency Information'); ?>

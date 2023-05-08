@@ -299,3 +299,4 @@ $expected_end_date = $project['expected_end_date'] ? $date_formatter->format(
     <div class="right-content">
     </div>
 </div>
+<?php ViewCounter::count('Home Page'); ?>

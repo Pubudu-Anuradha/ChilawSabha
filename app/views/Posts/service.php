@@ -1,6 +1,8 @@
+<?php if(!(($_SESSION['role']??'Guest')=='Admin')):?>
 <script>
-    setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['event'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
+    setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['service'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
 </script>
+<?php endif;?>
 <div class="content">
 <?php
 [$service, $images, $attachments, $edits, $steps] = $data['service'] !== false ? $data['service'] : [false, false, false, false, false];
@@ -62,8 +64,7 @@ if (empty($service)): ?>
         </div>
         <?php endif; ?>
     </div>
-<?php endif;
-if (!empty($attachments)): ?>
+<?php if (!empty($attachments)): ?>
     <div class="attachments-container shadow">
         <h4>Attached Files</h4>
         <div class="attachments">
@@ -159,7 +160,8 @@ endif; ?>
         </ul>
     </div>
     <?php endforeach;?>
-<?php endif;?>
+<?php endif; ?>
+<?php endif; ?>
 </div>
 <script>
     const edits = document.querySelectorAll('.edit-container')
