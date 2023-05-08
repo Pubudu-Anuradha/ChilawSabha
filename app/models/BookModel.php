@@ -801,14 +801,18 @@ class BookModel extends Model
     }
 
     public function getSuggestedBooks($precedence, $membership_id){
-        $case = '';
-        $i = 1;
-        foreach($precedence as $key=>$value):
-            $case .= 'WHEN b.category_code = '. $key.' THEN '.$i.' ';
-            $i++;
-        endforeach;
-        $case .= 'ELSE '.$i.' END';
-        return $this->select('books b' , 'b.title as title, b.author as author, b.category_code as category_code', 'NOT EXISTS (SELECT * FROM completed_books c JOIN library_member l ON c.membership_id=l.member_id WHERE c.accession_no = b.book_id AND c.membership_id = '.$membership_id.' ) ORDER BY CASE '.$case.' ASC LIMIT 5');
+        if(empty($precedence)):
+            return [];
+        else:
+            $case = '';
+            $i = 1;
+            foreach($precedence as $key=>$value):
+                $case .= 'WHEN b.category_code = '. $key.' THEN '.$i.' ';
+                $i++;
+            endforeach;
+            $case .= 'ELSE '.$i.' END';
+            return $this->select('books b' , 'b.title as title, b.author as author, b.category_code as category_code', 'NOT EXISTS (SELECT * FROM completed_books c JOIN library_member l ON c.membership_id=l.member_id WHERE c.accession_no = b.book_id AND c.membership_id = '.$membership_id.' ) ORDER BY CASE '.$case.' ASC LIMIT 5')['result']??[];
+        endif;
     }
 
     public function addFavoriteBook($id, $membership_id){
