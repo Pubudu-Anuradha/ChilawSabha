@@ -106,17 +106,6 @@ class ComplaintModel extends Model
         );
     }
 
-    // public function get_all_accepted_complaints()
-    // {
-    //     return $this->selectPaginated(
-    //         'complaint b join complaint_categories c on b.complaint_category=c.category_id join users d on d.user_id=b.handle_by',
-    //         'b.complaint_id as complaint_id,b.complainer_name as complainer_name,b.handle_by as handle_by,
-    //         b.complaint_time as complaint_time, b.complaint_state as complaint_state, 
-    //         c.category_name as category_name, d.name as handler_name',
-    //         "complaint_state =2 || complaint_state =3"
-    //     );
-    // }
-
     public function get_accepted_resolved_complaints()
     {
         $condtions = ['complaint_state =3'];
