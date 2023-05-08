@@ -66,9 +66,15 @@ class BookModel extends Model
         return $this->select('category_codes' );
     }
 
-    public function get_sub_categories()
+    public function get_sub_categories($category=null)
     {
-        return $this->select('sub_category_codes');
+        if($category == null || $category == 'All'){
+            return $this->select('sub_category_codes');
+        }
+        else{
+            return $this->select('sub_category_codes',conditions:"category_id=$category");
+        }
+        
     }
 
     public function addBook($book)

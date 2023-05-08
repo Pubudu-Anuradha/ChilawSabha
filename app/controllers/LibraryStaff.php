@@ -344,10 +344,10 @@ class LibraryStaff extends Controller
                 $model->getBookbyID($_GET['damage_accession_no']) : false,
                 'damage_error' => $error,
 
-                'Books' => $model->getBooks(), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
+                'Books' => $model->getBooks(), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         } else {
-            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Bookcatalog', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
 
         }
     }
@@ -421,11 +421,11 @@ class LibraryStaff extends Controller
                 'Found' => ($_GET['found_description'] != null && $_GET['found_accession_no'] != null) ?
                 $model->getBookbyID($_GET['found_accession_no']) : false,
                 'found_error' => $error,
-                'Books' => $model->getBooks([4]), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
+                'Books' => $model->getBooks([4]), 'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
         else{
-            $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
+            $this->view('LibraryStaff/Lostbooks', 'Lost Books', ['Books' => $model->getBooks([4]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)], styles:['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
     }
 
@@ -433,7 +433,7 @@ class LibraryStaff extends Controller
     {
         $model = $this->model('BookModel');
 
-        $this->view('LibraryStaff/Delistedbooks','De-Listed Books', ['Books' => $model->getBooks([3]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table','posts']);
+        $this->view('LibraryStaff/Delistedbooks','De-Listed Books', ['Books' => $model->getBooks([3]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)], styles:['LibraryStaff/index', 'Components/table','posts']);
     }
 
     public function damagedbooks()
@@ -471,11 +471,11 @@ class LibraryStaff extends Controller
                 'Reconditioned' => ($_GET['recondition_description'] != null && $_GET['recondition_accession_no'] != null) ?
                 $model->getBookbyID($_GET['recondition_accession_no']) : false,
                 'recondition_error' => $error,
-                'Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()
+                'Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)
             ], ['LibraryStaff/index', 'Components/table', 'posts', 'Components/modal']);
         }
         else{
-          $this->view('LibraryStaff/Damagedbooks','Damaged Books', ['Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Components/table','posts', 'Components/modal']);
+          $this->view('LibraryStaff/Damagedbooks','Damaged Books', ['Books' => $model->getBooks([5]),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories($_GET['category_name'] ?? null)], styles:['LibraryStaff/index', 'Components/table','posts', 'Components/modal']);
         }
     }
 
