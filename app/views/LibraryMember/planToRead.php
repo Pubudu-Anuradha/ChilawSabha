@@ -119,7 +119,7 @@
       </tbody>
     </table>
   </div>
-  <?php Pagination::bottom('filter-form', $data['PlantoRead']['page'],$data['PlantoRead']['count']);  ?>
+
 </div>
 
 <script>
@@ -181,7 +181,7 @@
     }
     //creating a xml request
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '<?= URLROOT . "/LibraryMember/planToRead" ?>');
+    xhr.open('POST', '<?= URLROOT . "/LibraryMember/planToReads" ?>');
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     //set header to idenfy in backend
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');

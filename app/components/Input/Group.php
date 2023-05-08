@@ -8,6 +8,7 @@ class Group {
     $id = $id ? $id : $name; ?>
   <div class="input-field">
     <label for="<?= $id ?>"><?= $title ?></label>
+    <div class="input-wrapper">
     <select name="<?= $name ?>"
             <?= $id ? "id= \"$id\"" : '' ?>
             <?= $class ?"class= \"$class\"" : '' ?>
@@ -19,6 +20,8 @@ class Group {
       </option>
     <?php endforeach; ?>
     </select>
+    <span></span>
+    </div>
   </div>
   <?php
   }

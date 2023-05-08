@@ -10,6 +10,7 @@ class Other{
         <label for="<?= $id ?>">
             <?= $title ?>    
         </label>
+        <div class="input-wrapper">
         <input type="number" 
         
             name="<?=$name?>"
@@ -25,6 +26,7 @@ class Other{
 
         />
         <span></span>
+        </div>
     </div>
     <?php
     }

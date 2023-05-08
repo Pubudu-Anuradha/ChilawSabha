@@ -30,3 +30,7 @@ a{
     text-decoration: none;
     color: black;
 }
+
+.content{
+    width: 95% !important;
+}

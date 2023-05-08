@@ -8,6 +8,7 @@ class Files{
     <label for="<?= $id ?>">
       <?= $title ?>
     </label>
+    <div class="input-wrapper">
     <div class="file_upload">
       <input type="file" 
             name="<?= $name . ($multiple ? '[]':'') ?>"
@@ -17,6 +18,7 @@ class Files{
             <?= $multiple?'multiple':'' ?>
       >
       <div class="previews"></div>
+    </div>
     </div>
   </div>
   <?php }

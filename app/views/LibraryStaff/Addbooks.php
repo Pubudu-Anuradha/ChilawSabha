@@ -51,14 +51,18 @@ $reqInfo = $data['reqInfo'] ?? false;
 
                 <div class="input-field">
                     <label for="book_category">Book Category</label>
+                    <div class="input-wrapper">
                     <select name="category" id="category" required>
                         <option value="0">Choose a book category</option>
-                    </select>               
+                    </select>           
+                    </div>    
                 </div>
                 <div class="input-field">
                     <label for="book_category"  id="subCategorylabel" style="display:none">Book Sub Category</label>
+                    <div class="input-wrapper">
                     <select name="subcategory" id="subcategory" style="display:none">
                     </select>
+                    </div>
                 </div>
 
                 <?php Other::number('Accession No', 'accession_no', 'accession_no', placeholder:'Insert Accession No', min:0);?>
