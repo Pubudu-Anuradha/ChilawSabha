@@ -56,8 +56,8 @@ class BookModel extends Model
                 $conditions);
         }
 
-        return $this->selectPaginated('books b join sub_category_codes sb on b.category_code=sb.sub_category_id join category_codes c on sb.category_id=c.category_id',
-            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name',
+        return $this->selectPaginated('books b join sub_category_codes sb on b.category_code=sb.sub_category_id join category_codes c on sb.category_id=c.category_id join book_status s on b.state=s.status_id',
+            'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name,sb.sub_category_name as sub_category_name, s.status as status',
             $conditions . ' ORDER BY b.title');
     }
 
@@ -835,9 +835,7 @@ class BookModel extends Model
 
     }
 
-}
-
-public function getCompletedBooks($member_id){
+    public function getCompletedBooks($member_id){
         $id = mysqli_real_escape_string($this->conn, $member_id);
         return $this->selectPaginated('completed_books c join books b on b.book_id=c.accession_no JOIN book_status s ON b.state=s.status_id',
         'b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher, s.status as status',
@@ -915,3 +913,5 @@ public function getCompletedBooks($member_id){
         'b.book_id as book_id,b.accession_no as accession_no,b.title as title,b.author as author,b.publisher as publisher,b.state as state, c.category_name as category_name', 
         'b.accession_no='.$id
         );
+    }
+}
