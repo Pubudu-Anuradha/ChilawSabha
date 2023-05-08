@@ -1,9 +1,5 @@
+<div class="content">
 <?php Slideshow::Slideshow([URLROOT . "/public/assets/sabha1.jpg",URLROOT . "/public/assets/sabha2.jpg"]);?>
-
-<div class="container-body">
-    <div class="side-menu">
-        <h1></h1>
-    </div>
     <div class="city">
         <h2>About City</h2>
         <div class="details">

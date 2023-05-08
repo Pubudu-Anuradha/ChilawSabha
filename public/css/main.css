@@ -200,7 +200,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: poppins;
+  font-family: poppins, 'Noto Emoji';
   background-color: var(--bgcolor);
 }
 
@@ -279,6 +279,11 @@ body {
   text-decoration: none;
   padding: 16px .5rem;
   color: var(--black);
+}
+
+.city{
+  text-align: justify;
+  line-height: 2;
 }
 
 .user-login-image {

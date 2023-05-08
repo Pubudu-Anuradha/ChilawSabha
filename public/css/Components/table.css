@@ -25,6 +25,8 @@ td {
 table {
   border-collapse: collapse;
   min-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table,
@@ -61,8 +63,7 @@ tbody>tr:last-child {
 
 .content-table {
   width: 100%;
-  display: inline-flex;
-  justify-content: center;
+  display: inline-block;
   box-sizing: border-box;
   overflow-x: auto;
 }
@@ -135,6 +136,14 @@ tbody>tr:last-child {
 
 .remove::before {
   content: "🗑";
+}
+  
+.damage::before {
+  content: "🛠️";
+}
+
+.found::before {
+  content: "🔍";
 }
 
 .waiting {

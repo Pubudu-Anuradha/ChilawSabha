@@ -1,114 +1,102 @@
 <div class="content">
+
+    <?php
+        $table = $data['BookRequest'];
+    ?>
     <div class="page">
         <div class="title">
-            <h2>BOOK REQUESTS</h2>
-            <div class="content-title-search">
-                <input type="text" name="search" placeholder=" Search" id="search">
-                <button>
-                    <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
-                </button>
-            </div>
-        </div>
-
-        <div class="content-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ISBN</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Reason</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tr>
-                    <td>456712345673</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>For education purpose</td>
-                    <td>12/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>162344373234</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Popular Release</td>
-                    <td>13/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>456712345673</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>For education purpose</td>
-                    <td>12/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>162344373234</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Popular Release</td>
-                    <td>13/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>456712345673</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>For education purpose</td>
-                    <td>12/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>162344373234</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Popular Release</td>
-                    <td>13/12/2022</td>
-                    <td>
-                        <div class="btn-column">
-                            <button class="btn add-book bg-lightblue" onclick="window.location.href = '<?=URLROOT . '/LibraryStaff/Addbooks'?>'">Add Book</button>
-                            <button class="btn reject bg-red">Reject</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="pagination-bar">
-            <div class="pagination-item">1</div>
-            <div class="pagination-item"> 2</div>
-            <div class="pagination-item">3</div>
-            <div class="pagination-item">4</div>
-            <div class="pagination-item"> &#62; </div>
+            <?php $page_title = "BOOK REQUESTS";
+            echo '<h2>' . $page_title . '</h2>';
+            ?>
         </div>
     </div>
+
+    <?php Pagination::Top('/LibraryStaff/bookrequest', select_filters:[
+            'type'=>[
+                'Filter By Type',[
+                    'new'=>'New',
+                    'added'=> 'Added',
+                    'rejected'=>'Rejected',
+                ]
+            ]
+    ]);?>
+
+    <?php Table::Table(['email' => 'Email', 'title' => 'Title', 'author' => 'Author', 'isbn' => "ISBN", 'reason' => 'Reason','time' => 'Requested On'],
+        $table['result'], 'bookRequests',
+        actions:[
+            'Add Book' => [[URLROOT . '/LibraryStaff/Addbooks/%s','request_id'], 'btn add bg-lightblue white',['#']],
+            'Reject' => [['#'], 'btn delist bg-red white',["openModal('%s','reject_request')",'request_id']]
+        ],empty:$table['nodata'],empty_msg:'No Book Requests Recieved'
+    );?>
+
+    <?php Modal::Modal(content:'Are You Sure to reject Request ID : ', id:'reject_request',confirmBtn:true);?>
+
+
+    <?php Pagination::bottom('filter-form', $data['BookRequest']['page'], $data['BookRequest']['count']);?>
 </div>
+
+<script>
+
+        var openedModal;
+        var type = document.getElementById('type');
+        var table = document.getElementById('bookRequests');
+
+        if(type.value == 'added'){
+            table.rows[0].cells[5].innerHTML = 'Added On';
+            table.rows[0].deleteCell(4);
+            table.rows[0].deleteCell(5);
+            for(let i=1;i<table.rows.length;i++){
+                if(table.rows[1].cells.length != 1){
+                    table.rows[i].deleteCell(4);
+                    table.rows[i].deleteCell(5);
+                }  
+                else{
+                    break;
+                }     
+            }
+        }
+        else if(type.value == 'rejected'){
+            table.rows[0].cells[5].innerHTML = 'Rejected On';
+            table.rows[0].deleteCell(4);
+            table.rows[0].deleteCell(5);
+            for(let i=1;i<table.rows.length;i++){
+                if(table.rows[1].cells.length != 1){
+                    table.rows[i].deleteCell(4);
+                    table.rows[i].deleteCell(5);
+                } 
+                else{
+                    break;
+                }  
+            }
+        }
+    
+        function closeModal(){
+            openedModal.style.display = "none";
+        }
+        function openModal(id,modal){
+            event.preventDefault();
+            openedModal = document.getElementById(modal);
+            if(id){
+              if(openedModal.querySelector('input[type="number"]')){
+                  openedModal.querySelector('input[type="number"]').value = id;
+              }
+              else{
+                  openedModal.querySelector('p').innerText = "Are You Sure To Reject The Book Request" ;
+              }
+            }
+            openedModal.style.display = "block";
+
+            rejectConfirmBtn = openedModal.querySelector('input[type="submit"]');
+            rejectConfirmBtn.addEventListener('click',function(){
+              rejectConfirmBtn.value = id;
+            });
+            window.onclick = function(event) {
+                if (event.target == openedModal) {
+                    openedModal.style.display = "none";
+                }
+            }
+        }
+
+
+
+</script>

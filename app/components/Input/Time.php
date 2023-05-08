@@ -7,10 +7,10 @@ class Time
     ) { ?>
     <div class="input-field">
         <label for="<?= $id ?>">
-            <?= $title ?>    
+            <?= $title ?>
         </label>
         <div class="input-wrapper">
-            <input type="<?= $type ? $type : 'date'?>" 
+            <input type="<?= $type ? $type : 'date'?>"
                 name="<?=$name?>"
                 id="<?=$id?>"
                 <?=$class ? "class=\"$class\" " : ''?>

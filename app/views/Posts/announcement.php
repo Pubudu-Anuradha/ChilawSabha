@@ -1,6 +1,8 @@
+<?php if(!(($_SESSION['role'] ?? 'Guest') == 'Admin')): ?>
 <script>
     setTimeout(()=>fetch('<?=URLROOT . '/Posts/Viewed/' . $data['ann'][0]['post_id'] ?? '0'?>').then(res=>res.json()).then(console.log).catch(console.log),2000);
 </script>
+<?php endif;?>
 <div class="content">
 <?php
 [$announcement, $images, $attachments, $edits] = $data['ann'] !== false ? $data['ann'] : [false, false, false, false];
@@ -48,8 +50,7 @@ if (empty($announcement)): ?>
         </p>
         </div>
     </div>
-<?php endif;
-if (!empty($attachments)): ?>
+<?php if (!empty($attachments)): ?>
     <div class="attachments-container shadow">
         <h4>Attached Files</h4>
         <div class="attachments">
@@ -68,7 +69,7 @@ if (!empty($images)):
         $orig = $image['orig'] ?? '';
         $photos[] = URLROOT . '/public/upload/' . $name;
     endforeach;
-    Slideshow::Slideshow($photos, 'grow shadow');
+    Slideshow::Slideshow($photos, 'shadow');
 endif;
 if (!empty($edits)): ?>
 <hr>
@@ -136,6 +137,7 @@ endforeach;?>
         </ul>
     </div>
     <?php endforeach;?>
+<?php endif;?>
 <?php endif;?>
 </div>
 <script>

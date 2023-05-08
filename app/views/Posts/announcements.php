@@ -1,6 +1,12 @@
 <div class="content">
     <h1>Announcements</h1>
     <hr>
+    <?php if ($_SESSION['role'] ?? false === 'Admin'): ?>
+    <div class="btn-column">
+        <a href="<?=URLROOT . '/Admin/Announcements/Add'?>" class="btn add bg-green">Add An announcement</a>
+        <a href="<?=URLROOT . '/Admin/Announcements'?>" class="btn view bg-blue">Manage announcements</a>
+    </div>
+    <?php endif;?>
 <?php
 $types_assoc = [];
 foreach ($data['types'] ?? [] as $type) {

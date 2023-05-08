@@ -1,84 +1,65 @@
-<div class="form">
-    <div class="side-menu">
-        <h1></h1>
-    </div>
-    <div class="complaint-form">
-        <h2>
-            Complaint Form <hr class="hr1">
-        </h2>
-        <div class="formContainer">
-            <form id="complaint" name="complaint form" class="fullForm" action="<?=URLROOT . "/Complaint/addComplaint"?>" method="post">
-            <?php if (isset($data['message'])) {echo $data['message'] . '<br>';}?>
-            <div class="inputfield">
-                <label for="textInput">Complainer Name: </label>
-                <div class="inputDiv">
-                    <input type="text" name="name" id="textInput" placeholder="Enter Name">
-                </div>
-            </div>
+<?php
+$errors = $data['errors'] ?? false;
+$old = $data['old'] ?? false;
+?>
+<div class="content">
+    <h1>Add Complaints</h1>
+    <hr>
+    <div class="formContainer">
+        <?php if ($data['Add'] ?? false) {
+            if (!$data['Add']['success']) {
+                echo "Failed to add Complaint " . $data['Add']['errmsg'];
+            } else {
+                echo "Added Successfully";
+            }
+        } ?>
 
-            <div class="inputfield">
-                <label for="emailInput">Enter your email: </label>
-                <div class="inputDiv">
-                    <input type="email" id="emailInput" name="emailInputField" placeholder="Enter Email">
-                </div>
-            </div>
+        <form class="fullForm" method="post" enctype="multipart/form-data">
+            <?php Errors::validation_errors($errors, [
+                "name" => "Name",
+                'email' => 'Email',
+                'contact_no' => 'Contact No',
+                'address' => "Address",
+                'description' => 'Description',
+                'category' => 'Category',
+                'date' => 'Date',
+            ]); ?>
 
-            <div class="inputfield">
-                <label for="phoneInput">Enter your phone number:</label>
-                <div class="inputDiv">
-                    <input type="tel" id="phoneInput" name="phoneInputField" maxlength="12" pattern="(\+94\d{9})|\d{10}" placeholder="Enter Phone Number">
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="textInput">Address: </label>
-                <div class="inputDiv">
-                    <input type="text" name="address" id="textInput" placeholder="Enter Address">
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="selectOption">Choose a name:</label>
-                <div class="inputDiv">
-                    <select id="selectOption" name="selectOptionField">
-                        <option value="Garbage disposal">Garbage disposal</option>
-                        <option value="Land issues">Land issues</option>
-                        <option value="Unauthorized construction">Unauthorized construction</option>
-                        <option value="Street lamp">Street lamp</option>
-                        <option value="Roads require repair">Roads require repair</option>
-                        <option value="Damaged public infrastructure">Damaged public infrastructure</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="noteInput">Briefly Describe your incident:</label>
-                <div class="inputDiv">
-                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
-                </div>
-            </div>
-
-            <div class="inputfield">
-                <label for="fileInput">Select a file:</label>
-                <input type="file" id="fileInput" name="fileInputField">
-            </div>
-
-
-            <div class="submitButtonContainer">
-                <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
-                </div>
-            </div>
-            </form>
-        </div>
+            <?php Text::text('Complainer Name', 'name', 'name', placeholder: 'Insert Name', maxlength: 255); ?>
+            <?php Text::email('Email Address', 'email', 'email', placeholder: 'Insert Email'); ?>
+            <?php Text::text(
+                'Mobile No',
+                'contact_no',
+                'contact_no',
+                '+94XXXXXXXXX or 0XXXXXXXXX',
+                type: 'tel',
+                maxlength: 12,
+                pattern: "(\+94\d{9})|0\d{9}",
+                value: $old['contact_no'] ?? null
+            ); ?>
+            <?php Text::text('Address', 'address', 'address', placeholder: 'Enter address', maxlength: 255); ?>
+            <?php Time::date('Date', 'date', 'date', type: 'date', max: Date("Y-m-d"), value: $old['date'] ?? date('Y-m-d')); ?>
+            <?php $categories = [];
+            foreach ($data['complaint_categories'] as $category) {
+                $categories[$category['category_id']] = $category['category_name'];
+            }
+            Group::select(
+                'Complaint Category',
+                'category',
+                $categories,
+                'category',
+                selected: $old['complaint_categories'] ?? null
+            ); ?>
+            <?php Text::textarea('Complaint Description', 'description', 'description', placeholder: 'Enter Description', required: true); ?>
+            <?php if ($data['Add']['image_errors'] ?? false) :
+                foreach ($data['Add']['image_errors'] as [$_, $photo]) :
+                    $message = "There was an error while uploading $photo. Please try again.";
+                    Errors::generic($message);
+                endforeach;
+            endif; ?>
+            <?php Files::images('Complaint Images', 'photos', 'photos', required: false); ?>
+            <?php Other::submit('Add', 'add', value: 'Add'); ?>
+        </form>
     </div>
 </div>
-
-
-
-
-
-
-
-
+<script src="<?= URLROOT . '/public/js/upload_previews.js' ?>"></script>

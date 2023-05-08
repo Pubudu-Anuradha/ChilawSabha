@@ -1,81 +1,86 @@
 <div class="content">
+
+    <?php
+        $table = $data['Books'];
+        $categories = $data['Category']['result'] ?? [];
+        $subcategories = $data['SubCategory']['result'] ?? [];
+        $category_arr = ['All' => "All"];
+        foreach ($categories as $category){
+            $category_arr[$category['category_id']] = $category['category_name'];
+        }
+        $sub_category_arr = ['All' => "All"];
+        foreach ($subcategories as $subcategory){
+            $sub_category_arr[$subcategory['sub_category_id']] = $subcategory['sub_category_name'];
+        }
+    ?>
     <div class="page">
         <div class="title">
-            <h2>De-Listed Books</h2>
-            <div class="sub-title">
-                <div class="content-title-category">
-                <select name="categoryFill">
-                    <option value="Null">Choose Category</option>
-                    <option value="Philosophy">Philosophy</option>
-                    <option value="Languages">Languages</option>
-                    <option value="Natural Sciences">Natural Sciences</option>
-                    <option value="Literature">Literature</option>
-                </select>
-                </div>
-                <div class="content-title-search">
-                    <input type="text" name="search" placeholder=" Search" id="search">
-                    <button>
-                        <img src="<?= URLROOT . '/public/assets/search.png' ?>" alt="search btn">
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Accession No</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-                <tr>
-                    <td>P305</td>
-                    <td>Harry Poter</td>
-                    <td>J.K. Rowling</td>
-                    <td>Animus kiado</td>
-                </tr>
-                <tr>
-                    <td>A45</td>
-                    <td>Atomic Habits</td>
-                    <td>James Clear</td>
-                    <td>Penguin Random</td>
-                </tr>
-               
-            </table>
-        </div>
-        <div class="pagination-bar">
-            <div class="pagination-item">1</div>
-            <div class="pagination-item"> 2</div>
-            <div class="pagination-item">3</div>
-            <div class="pagination-item">4</div>
-            <div class="pagination-item"> &#62; </div>
+            <?php $page_title = "DE-LISTED BOOKS";
+            echo '<h2>' . $page_title . '</h2>';
+            ?>
+            <input type="button" onclick="generate('#delistedBooks','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-lightblue white"/>
         </div>
     </div>
+
+    <?php Pagination::Top('/LibraryStaff/delistedbooks', select_filters:[
+        'category_name' => [
+            'Choose by Category', $category_arr,
+        ],
+        'sub_category_name' =>[
+            'Choose by Sub Category' ,$sub_category_arr
+        ]
+    ]);?>
+
+    <?php Table::Table(['accession_no' => 'Accession No', 'title' => 'Title', 'author' => 'Author', 'publisher' => "Publisher", 'category_name' => 'Book Category','sub_category_name' => 'Book Sub Category'],
+        $table['result'], 'delistedBooks',
+        actions:[
+            'View'=>[[URLROOT.'/LibraryStaff/Viewbooks/%s','accession_no'],'btn edit bg-lightblue white',['#']]
+        ],empty:$table['nodata']
+    );?>
+
+    <?php Pagination::bottom('filter-form', $data['Books']['page'], $data['Books']['count']);?>
 </div>
+
+<script>
+
+        expandSideBar("sub-items-serv","see-more-bk");
+
+        function generate(id,title,num_of_cloumns) {
+
+            var doc = new jsPDF('p', 'pt', 'a4');
+
+            var text = title;
+            var txtwidth = doc.getTextWidth(text);
+
+            var x = (doc . internal . pageSize . width - txtwidth) / 2;
+
+            doc.text(x, 50, text);
+            //to define the number of columns to be converted
+            var columns = [];
+            for(let i=0; i<num_of_cloumns; i++){
+                columns.push(i);
+            }
+
+            doc.autoTable({
+                html: id,
+                startY: 70,
+                theme: 'striped',
+                columns: columns,
+                columnStyles: {
+                    halign: 'left'
+                },
+                styles: {
+                    minCellHeight: 30,
+                    halign: 'center',
+                    valign: 'middle'
+                },
+                margin: {
+                    top: 150,
+                    bottom: 60,
+                    left: 10,
+                    right: 10
+                }
+            })
+            doc.save(title.concat('.pdf'));
+        }
+</script>

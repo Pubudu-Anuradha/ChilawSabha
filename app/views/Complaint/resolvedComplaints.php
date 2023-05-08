@@ -1,57 +1,24 @@
 <div class="content">
-    <h2>
-        Resolved Complaints <hr class="hr1">
-    </h2>
-    <div class="content-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Complaint ID</th>
-                    <th>Complainer Name</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>11</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.15</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <h2 class="topic">My Resolved Complaints</h2>
 
-                <tr>
-                    <td>12</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.30</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php
+    $table = $data['resolvedComplaints'];
+    ?>
 
-                <tr>
-                    <td>13</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.31</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php Pagination::Top('/Complaint/resolvedComplaints', select_filters: []); ?>
+    <?php Table::Table(
+        [
+            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+            'category_name' => "Category", 'complaint_time' => "Date"
+        ],
+        $table['result'],
+        'resolvedComplaint',
+        actions: [
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+        ],
+        empty: $table['nodata']
 
-            </tbody>
-        </table>
-    </div>
+    ); ?>
+    <?php Pagination::bottom('filter-form', $data['resolvedComplaints']['page'], $data['resolvedComplaints']['count']); ?>
 
 </div>

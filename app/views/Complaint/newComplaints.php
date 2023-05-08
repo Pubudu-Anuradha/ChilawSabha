@@ -1,60 +1,60 @@
 <div class="content">
-    <h2>
-        New Complaints <hr class="hr1">
-    </h2>
-    <div class="content-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Complaint ID</th>
-                    <th>Complainer Name</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>11</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.15</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <h2 class="topic">New Complaints</h2>
 
-                <tr>
-                    <td>12</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.30</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php
+    $table = $data['newComplaints'];
+    $categories = $data['Category']['result'] ?? [];
+    $category_arr = ['0' => "All"];
+    foreach ($categories as $category) {
+        $category_arr[$category['category_id']] = $category['category_name'];
+    }
+    ?>
 
-                <tr>
-                    <td>13</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>2022.12.31</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn accept">Accept</button>
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php Pagination::Top('/Complaint/newComplaints', select_filters: [
+        'category' => [
+            'Choose by Category', $category_arr
+        ]
+    ]); ?>
+    <?php Table::Table(
+        [
+            'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+            'category_name' => "Category", 'complaint_time' => "Date"
+        ],
+        $table['result'],
+        'newComplaint',
+        actions: [
+            'Accept' => [['#'], 'btn accept bg-red white', ["openForm('acceptForm',%s)", 'complaint_id']],
+            'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+        ],
+        empty: $table['nodata']
 
-            </tbody>
-        </table>
+    ); ?>
+    <?php Pagination::bottom('filter-form', $data['newComplaints']['page'], $data['newComplaints']['count']); ?>
+
+
+    <!-- For Accept Button -->
+    <div class="form-popup-accept" id="acceptForm">
+        <div class="form-container-accept">
+            <div class="accept-input">
+                <label class="label-text"><b>Please Confirm ?</b></label>
+            </div>
+
+            <div class="button-group-accept">
+                <a href="#" class="btn btn-accept bg-green white">Confirm</a>
+                <button type="button" class="btn btn-accept bg-red white" onclick="closeForm('acceptForm')">Close</button>
+            </div>
+        </div>
     </div>
-
 </div>
+
+
+<script>
+    function openForm(formId,complaint_id) {
+        document.getElementById(formId).querySelector('a.btn-accept').href = "<?= URLROOT . '/Complaint/acceptComplaint/' ?>" + complaint_id;
+        document.getElementById(formId).style.display = "block";
+    }
+
+    function closeForm(formId) {
+        document.getElementById(formId).style.display = "none";
+    }
+</script>

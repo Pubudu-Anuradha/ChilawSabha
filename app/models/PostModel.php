@@ -15,6 +15,7 @@
         // Put common post data in post_table
         unset($post_data['attachments']);
         unset($post_data['photos']);
+        $post_data['pinned'] = boolval($post_data['pinned'] ?? false) ? 1 : 0;
         $post_data['post_type'] = $post_type;
         $post_data['posted_by'] = $_SESSION['user_id'];
         $post_data['views'] = 0;
@@ -89,11 +90,11 @@
             "post_id='$id'")['result'][0]['count'];
     }
 
-    // public function getAttachCount($id) {
-    //     $id = mysqli_real_escape_string($this->conn,$id);
-    //     return $this->select('post_attachments','count(*) as count',
-    //         "post_id='$id'")['result'][0]['count'];
-    // }
+    public function getAttachCount($id) {
+        $id = mysqli_real_escape_string($this->conn,$id);
+        return $this->select('post_attachments','count(*) as count',
+            "post_id='$id'")['result'][0]['count'];
+    }
 
     public function addPhotos($id,$name = 'photos') {
         $id = mysqli_real_escape_string($this->conn,$id);
@@ -148,6 +149,7 @@
     }
 
     public function removePhoto($id,$file_name) {
+        // Remove a photo from a post
         $id = mysqli_real_escape_string($this->conn,$id);
         $file_name = mysqli_real_escape_string($this->conn,$file_name);
         $delete = $this->delete('post_images',
@@ -159,6 +161,7 @@
     }
 
     public function removeAttach($id,$file_name) {
+        // Remove an attachment from a post
         $id = mysqli_real_escape_string($this->conn,$id);
         $file_name = mysqli_real_escape_string($this->conn,$file_name);
         $delete = $this->delete('post_attachments',
@@ -170,7 +173,35 @@
     }
 
     public function incrementViews($id) {
+        // Increment views of a post per day
         $id = mysqli_real_escape_string($this->conn,$id);
-        return $this->callProcedure('increment_views',[$id]);
+        $views = $this->select('post','views',"post_id='$id'")['result'][0]['views'] ?? false;
+        if($views !== false) {
+            $views = intval($views) + 1;
+            $this->update('post',['views' => $views],"post_id='$id'")['success'] ?? false;
+        }
+        $today_views = $this->select('post_views','views',
+            "post_id='$id' && date='".date('Y-m-d')."'")['result'][0]['views'] ?? false;
+        if($today_views !== false) {
+            $today_views = intval($today_views) + 1;
+            return $this->update('post_views',['views' => $today_views],
+                "post_id='$id' && date='".date('Y-m-d')."'");
+        } else {
+            return $this->insert('post_views',['post_id' => $id,'views' => 1,'date' => date('Y-m-d')]);
+        }
+    }
+
+    public function incrementPageViews($page_name) {
+        // Increment views of a page per day
+        $page_name = mysqli_real_escape_string($this->conn,$page_name);
+        $today_views = $this->select('page_views','views',
+            "name='$page_name' && date='".date('Y-m-d')."'")['result'][0]['views'] ?? false;
+        if($today_views !== false) {
+            $today_views = intval($today_views) + 1;
+            return [$this->update('page_views',['views' => $today_views],
+                "name='$page_name' && date='".date('Y-m-d')."'"),$today_views,$page_name];
+        } else {
+            return [$this->insert('page_views',['name' => $page_name,'views' => 1,'date' => date('Y-m-d')]),$page_name];
+        }
     }
 }
