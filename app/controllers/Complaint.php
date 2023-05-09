@@ -30,7 +30,7 @@ class Complaint extends Controller
                     'contact_no|l[10:12]',
                     'address|l[:255]',
                     'category',
-                    'description|l[:255]',
+                    'description|l[:1000]',
                     'date',
                 ],
                 'Add'
