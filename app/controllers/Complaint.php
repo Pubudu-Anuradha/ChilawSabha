@@ -185,22 +185,4 @@ class Complaint extends Controller
             header('Location: ' . URLROOT . '/Complaint/viewComplaint/' . $_POST['complaint_id']);
         }
     }
-    
-
-    public function count()
-    {
-        $model = $this->model('ComplaintModel');
-        $complaintCount = $model->get_complaint_counts();
-        var_dump($complaintCount);
-        
-
-        $this->view('Complaint/index', 'Dashboard', [
-
-            // Retrieve the complaint and its notes from the database
-            'complaintCount' => $complaintCount
-        // specify the styles to be included in the view
-        ], styles: ['Complaint/complaint', 'Components/table', 'posts', 'Components/modal', 'main']);
-    }
-
-    
 }

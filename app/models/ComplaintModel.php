@@ -42,7 +42,7 @@ class ComplaintModel extends Model
                                 // Insert image details into the 'complaint_images' table
                                 $this->insert('complaint_images', [
                                     'complaint_id' => $id,
-                                    'image_file_name' => $images[$i]['name']
+                                    'url' => $images[$i]['name']
                                 ]);
                             }
                         }
@@ -95,7 +95,7 @@ class ComplaintModel extends Model
                             if ($images[$i]['error'] === false) {
                                 $this->insert('complaint_images', [
                                     'complaint_id' => $id,
-                                    'image_file_name' => $images[$i]['name']
+                                    'url' => $images[$i]['name']
                                 ]);
                             }
                         }
@@ -158,7 +158,7 @@ class ComplaintModel extends Model
             $condtions
         )['result'] ?? [], 
         // Retrieve the complaint's images.
-        $this->select('complaint_images ci join file_original_names orn on orn.name=ci.image_file_name', 'orn.name as name,orn.orig as orig', "ci.complaint_id=$id")['result'] ?? []];
+        $this->select('complaint_images ci join file_original_names orn on orn.name=ci.url', 'orn.name as name,orn.orig as orig', "ci.complaint_id=$id")['result'] ?? []];
     }
 
     public function get_notes($id)
@@ -278,15 +278,6 @@ class ComplaintModel extends Model
             'complaint_id' => $note['complaint_id'],
         ]);
         return $insert_note;
-    }
-
-    public function get_complaint_counts()
-    {
-         $result = $this->select('complaint',
-                'COUNT(complaint_id) AS working_count',
-                'complaint_state=2'
-            );
-        return $result;
     }
     
 }
