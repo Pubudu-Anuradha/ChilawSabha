@@ -84,14 +84,10 @@ class BookModel extends Model
         return $this->insert('books', $book);
     }
   
-    public function getCategoryCode($Category,$type)
+    public function getCategoryCode($Category)
     {
-        if($type == 'Sub'){
-            return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_id=$Category");
-        }
-        else if($type == 'Main'){
-            return $this->select('category_codes', 'category_id', "category_name='$Category'");
-        }
+        return $this->select('sub_category_codes', 'category_id,sub_category_id', "sub_category_name='" . $Category . "'");
+
     }
 
     public function editBook($id, $data)

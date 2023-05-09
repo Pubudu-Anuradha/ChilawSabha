@@ -51,7 +51,7 @@
                 })
     .then(response => response.json())
     .then(response => {
-
+console.log(response);
       if(response[0]['complaint_categories']['result'].length > 0){
           const categoryNames = response[0]['complaint_categories']['result']['complaint_category'].map(item => item.category_name);
           const compaintCounts = response[0]['complaint_categories']['result']['complaint_count'].map(item => item.complaint_count);

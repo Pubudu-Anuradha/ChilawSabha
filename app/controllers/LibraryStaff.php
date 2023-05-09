@@ -625,7 +625,8 @@ class LibraryStaff extends Controller
 
         if (isset($_POST['Add'])) {
 
-            $_POST['sub_category_code'] = $model->getCategoryCode($_POST['subcategory'])['result'][0]["sub_category_code"];
+            $_POST['category_code'] = $model->getCategoryCode($_POST['subcategory'])['result'][0]["sub_category_id"];
+            // var_dump($model->getCategoryCode($_POST['subcategory']));
             unset($_POST['subcategory']);
             unset($_POST['category']);
 
@@ -635,7 +636,7 @@ class LibraryStaff extends Controller
                     'publisher|l[:255]',
                     'place_of_publication|l[:255]',
                     'date_of_publication',
-                    'sub_category_code|i[0:]',
+                    'category_code|i[0:]',
                     'accession_no|i[0:]',
                     'price|d[0:]',
                     'pages|i[1:]',
@@ -650,7 +651,7 @@ class LibraryStaff extends Controller
             $data = array_merge(count($err) > 0 ? ['errors' => $err] : ['Add' => $model->addbook($valid)], $data);
 
             //to send a mail if this is a book requested by an user
-            if($data['Add']['success'] == true && $reqEmail && $reqTitle){
+            if(isset($data['Add']['success']) && isset($reqEmail) && isset($reqTitle)){
                 $Requestmodel->changeBookRequestState($requestID, 2);
                 $emailContent = "<div class=\"main-container\" style=\"margin: 0; padding: 0; box-sizing: border-box; font-family: poppins; background-color: #ffffff;\">";
                 $emailContent .= "<div class='reset-content-div' style=\"margin: 5rem auto; padding: 2rem 2rem; width: 40rem; display:block; justify-content: center; align-items: center; border: 1px solid #93B4F2; background-color: #F0F5FE; border-radius: 1rem;\">";

@@ -325,19 +325,19 @@
           table.rows[i].cells[6].style.cursor = 'pointer';
 
           if (table.rows[i].cells[6].innerHTML. trim() == 'Recieved') {
-              table.rows[i].cells[6].innerHTML = '🟢';
+              table.rows[i].cells[6].innerHTML = 'Recieved';
               table.rows[i].cells[6].title = 'Recieved';
           }
           if (table.rows[i].cells[6].innerHTML. trim() == 'Lost') {
-              table.rows[i].cells[6].innerHTML = '🔴';
+              table.rows[i].cells[6].innerHTML = 'Lost';
               table.rows[i].cells[6].title = 'Lost';
           }
           if (table.rows[i].cells[6].innerHTML. trim() == 'Damaged') {
-              table.rows[i].cells[6].innerHTML = '🟠';
+              table.rows[i].cells[6].innerHTML = 'Damaged';
               table.rows[i].cells[6].title = 'Damaged';
           }
           if (table.rows[i].cells[6].innerHTML. trim() == 'Not Recieved') {
-              table.rows[i].cells[6].innerHTML = '⚪️';
+              table.rows[i].cells[6].innerHTML = 'Not Recieved';
               table.rows[i].cells[6].title = 'Not Recieved';
           }
       }
