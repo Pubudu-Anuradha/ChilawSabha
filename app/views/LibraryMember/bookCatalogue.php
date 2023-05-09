@@ -6,29 +6,24 @@
     <hr>
     <div class="head-actions-area">
       <?php
-        $categories_assoc = []; 
-        foreach ($data['categories']['result'] ?? [] as $category){
-          if($category['category_code'] !== 'All'){
-            $categories_assoc[$category['category_id']] = $category['category_code'] . " - " . $category['category_name'];
-          }
+        $categories = $data['categories']['result'] ?? [];
+        $subcategories = $data['sub_categories']['result'] ?? [];
+        $category_arr = ['All' => "All"];
+        foreach ($categories as $category){
+            $category_arr[$category['category_id']] = $category['category_name'];
+        }
+        $sub_category_arr = ['All' => "All"];
+        foreach ($subcategories as $subcategory){
+            $sub_category_arr[$subcategory['sub_category_id']] = $subcategory['sub_category_name'];
         }
 
-        $sub_categories_assoc = [];
-        foreach ($data['sub_categories']['result'] ?? [] as $sub_category){
-          if($sub_category['sub_category_code'] !== 'All'){
-            $sub_categories_assoc[$sub_category['sub_category_id']] = $sub_category['sub_category_code'] . " - " . $sub_category['sub_category_name'];
-          }
-        }
-
-        Pagination::top('/LibraryMember/bookCatalogue', 'member_catalogue_filter', select_filters:[
-          'category' => [
-            'Filter by category',
-            array_merge(['0' => 'All'], $categories_assoc)
-          ],
-          'sub_category' => [
-            'Filter by sub category',
-            array_merge(['0' => 'All'], $sub_categories_assoc)
-          ],
+        Pagination::top('/LibraryMember/bookCatalog', 'member_catalogue_filter', select_filters:[
+          'category_name' =>[
+                'Choose by Category' ,$category_arr
+            ],
+            'sub_category_name' =>[
+                'Choose by Sub Category' ,$sub_category_arr
+            ]
         ]);
         $table = $data['books'];
       ?>
