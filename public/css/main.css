@@ -358,9 +358,9 @@ body {
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1050px) {
 
-  /* WHEN SCREEN IS NARROWER THAN 768px */
+  /* WHEN SCREEN IS NARROWER THAN 1050px */
   /* Responsive navbar styles */
   .navbar{
     padding: 0;

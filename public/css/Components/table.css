@@ -116,26 +116,32 @@ tbody>tr:last-child {
 
 .fav::before {
   content: "🤍";
+  color: var(--bgcolor);
 }
 
 .ptr::before{
   content: "👍";
+  color: var(--green);
 }
 
 .nptr::before{
   content: "👎";
+  color: var(--red);
 }
 
 .complete::before {
   content: "✅";
+  color: var(--green);
 }
 
 .incomplete::before {
   content: "❌";
+  color: var(--red);
 }
 
 .remove::before {
   content: "🗑";
+  color: var(--grey);
 }
   
 .damage::before {

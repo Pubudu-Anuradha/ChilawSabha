@@ -1,44 +1,48 @@
+<?php
+$errors = $data['errors'] ?? false;
+?>
 <div class="content">
     <div class="head-area">
-    <h1>NEW BOOK REQUEST</h1>
-    <hr>
+        <div class="sub-head-area">
+            <h1>REQUEST A BOOK</h1>
+        </div>
+        <hr>
     </div>
-
     <div class="formContainer">
-        <form class="form" action="<?=URLROOT . "/LibraryMember/bookRequest"?>" method="post">
-            <div class="inputfield">
-                <label for="textInput">Title of the Book: </label>
-                <div class="inputDiv">
-                    <input type="text" name="textInputField" id="textInput" placeholder="Enter Book name">
-                </div> 
-            </div>
+        <?php if ($data['Add'] ?? false) {
+            if (!$data['Add']['success']) {
+        ?>
+            <p style='color: red; text-align: center'> 
+            <?= "Failed To Add Request" . $data['Add']['errmsg'] ?>
+            </p>
+        <?php
+            } else {
+        ?>
+            <p style='color: green; text-align: center'>
+            <?= "Book Request Added Successfully" ?>
+            </p>
+        <?php
+            }
+        }?>
 
-            <div class="inputfield">
-                <label for="textInput">Author of the Book: </label>
-                <div class="inputDiv">
-                    <input type="text" name="textInputField" id="textInput" placeholder="Enter Author name">
-                </div> 
-            </div>
+        <form class="fullForm" method="post">
 
-            <div class="inputfield">
-                <label for="textInput">ISBN of the Book: </label>
-                <div class="inputDiv">
-                    <input type="text" name="textInputField" id="textInput" placeholder="Enter ISBN">
-                </div> 
-            </div>
-            
-            <div class="inputfield">
-                <label for="noteInput">Reason for requesting:</label>
-                <div class="inputDiv">
-                    <textarea id="noteInput" name="message" rows="10" cols="30"></textarea>
-                </div> 
-            </div>
+            <?php Errors::validation_errors($errors, [
+                'email' => 'User Email',
+                'title' => "Book Title",
+                'author' => 'Author',
+                'isbn' => 'ISBN No',
+                'reason' => 'Request Reason'
+            ]);?>
 
-            <div class="submitButtonContainer">
-                <div class="submitButton">
-                    <input type="submit" id="submit" value="Submit">
-                </div>
-            </div>
+
+            <?php Text::email('Enter Your Email','email','email',placeholder:'Enter Email',value:$_SESSION['email'] ?? '',required:true);?>
+            <?php Text::text('ISBN No','isbn','isbn',placeholder:'Enter ISBN No',minlength:10,maxlength:13,pattern:"(\d{10}|\d{13})");?>
+            <?php Text::text('Book Title','title','title',placeholder:'Enter Book Title',maxlength:255);?>
+            <?php Text::text('Book Author','author','author',placeholder:'Enter Book Author',maxlength:100);?>
+            <?php Text::textarea('Reason for requesting', 'reason', 'reason',placeholder:'Enter Reason', required:true); ?>
+            <?php Other::submit('Add','add',value:'Add Request');?>
+
         </form>
     </div>
 </div>
