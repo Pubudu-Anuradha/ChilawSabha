@@ -44,6 +44,9 @@
     if(isset($errors['no_budget'])) {
         Errors::generic($errors['no_budget']);
     }
+    if(isset($errors['start_in_past'])) {
+        Errors::generic($errors['start_in_past']);
+    }
     if($data['edited'] ?? false ) {
         echo '<div class="success">Project edited successfully</div>';
     } else if(($data['edited'] ?? true) === false && isset($_POST['Edit'])) {
