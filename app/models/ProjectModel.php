@@ -231,8 +231,8 @@ class ProjectModel extends PostModel{
              a.expected_end_date as expected_end_date,
              a.budget as budget,
              a.other_parties as other_parties';
-        $pinned = $this->select($table,$columns,"p.pinned=1 ORDER BY p.posted_time DESC")['result'] ?? [];
-        $unpinned = $this->select($table,$columns,"p.pinned=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
+        $pinned = $this->select($table,$columns,"p.pinned=1 and p.hidden=0 ORDER BY p.posted_time DESC")['result'] ?? [];
+        $unpinned = $this->select($table,$columns,"p.pinned=0 and p.hidden=0 ORDER BY p.posted_time DESC LIMIT " .$this->UNPINNED_DEFAULT_COUNT . ' OFFSET 0')['result'] ?? [];
         return array_merge($pinned,$unpinned);
     }
 

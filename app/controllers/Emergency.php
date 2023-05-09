@@ -4,6 +4,7 @@
         $data = [
         ];
 
+        // Handle Adding Categories
         if(isset($_POST['AddCategory']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'category_name|l[1:255]|u[emergency_categories]'
@@ -17,6 +18,7 @@
             }
         }
 
+        // Handle Adding Places to Categories
         if(isset($_POST['AddPlace']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'place_name|l[1:255]',
@@ -33,6 +35,7 @@
             }
         }
 
+        // Handle Deleting Places
         if(isset($_POST['DelPlace']) && ($_SESSION['role'] ?? 'Guest' == 'Admin')) {
             [$valid,$err] = $this->validateInputs($_POST,[
                 'place_id|i[:]'
@@ -46,12 +49,14 @@
             }
         }
 
+        // retrieve data after handling requests
         $data['categories'] = $model->getCategories();
         $data['places'] = $model->getPlaces();
         $this->view('Home/emergency', 'Emergency Details', $data, ['main','Components/table','Components/form']);
     }
 
     public function Api() {
+        // Check if user is admin
         if(($_SESSION['role'] ?? 'Guest') != 'Admin') {
             $this->returnJSON([
                 'error' => 'Unauthorized'
@@ -63,6 +68,7 @@
             if($reqJSON){
             $reqJSON = json_decode($reqJSON,associative:true);
             if($reqJSON){
+                // If the body data are valid, then proceed to save the edited data
                 if($reqJSON['EditPlace'] ?? false) {
                     [$valid,$err] = $this->validateInputs($reqJSON,[
                         'place_name|l[1:255]|?',

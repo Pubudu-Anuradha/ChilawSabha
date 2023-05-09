@@ -1,65 +1,92 @@
 <div class="content">
-    <h2>
-        All Accepted Complaints <hr class="hr1">
-    </h2>
-    <div class="content-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>Complaint ID</th>
-                    <th>Complainer Name</th>
-                    <th>Category</th>
-                    <th>Handler Name</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>11</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>C.V. Perera</td>
-                    <td>2022.12.15</td>
-                    <td>Processing</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <h2 class="topic">All Accepted Complaints</h2>
 
-                <tr>
-                    <td>12</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>C.V. Perera</td>
-                    <td>2022.12.30</td>
-                    <td>Resolved</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <?php
+    $table1 = $data['allWorking'] ?? false;
+    $table2 = $data['allResolved'] ?? null;
+    ?>
 
-                <tr>
-                    <td>13</td>
-                    <td>W.P Alwis</td>
-                    <td>Garbage Disposal</td>
-                    <td>C.V. Perera</td>
-                    <td>2022.12.31</td>
-                    <td>Processing</td>
-                    <td>
-                        <div  class="btn-column">
-                            <button class="btn view">View</button>
-                        </div>
-                    </td>
-                </tr>
+    <div class="complaint-tabs">
+        <div class="tabs">
+            <button class="tab-btn" id="working" onclick="openTab(event,'working-complaint')">Working Complaints</button>
+            <button class="tab-btn" id="resolved" onclick="openTab(event,'resolved-complaint')">Resolved Complaints</button>
+        </div>
 
-            </tbody>
-        </table>
+        <div class="tab-content" id="working-complaint">
+            <?php Pagination::Top('/Complaint/allAcceptedComplaints', select_filters: []); ?>
+            <?php Table::Table(
+                [
+                    'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+                    'category_name' => "Category", 'complaint_time' => "Date",
+                    'handler_name' => "Handler Name"
+                ],
+                $table1['result'],
+                'allComplaint',
+                actions: [
+                    'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+                ],
+                empty: $table1['nodata']
+            ); ?>
+            <?php Pagination::bottom('filter-form', $data['allWorking']['page'], $data['allWorking']['count']); ?>
+        </div>
+
+        <div class="tab-content resolved" id="resolved-complaint">
+            <?php Pagination::Top('/Complaint/allAcceptedComplaints', select_filters: []); ?>
+            <?php Table::Table(
+                [
+                    'complaint_id' => 'Complaint ID', 'complainer_name' => 'Complainer Name',
+                    'category_name' => "Category", 'complaint_time' => "Date",
+                    'handler_name' => "Handler Name"
+                ],
+                $table2['result'],
+                'allComplaint',
+                actions: [
+                    'View' => [[URLROOT . '/Complaint/viewComplaint/%s', 'complaint_id'], 'btn view bg-yellow white', ['#']],
+                ],
+                empty: $table2['nodata']
+            ); ?>
+            <?php Pagination::bottom('filter-form', $data['allResolved']['page'], $data['allResolved']['count']); ?>
+        </div>
     </div>
 
+
 </div>
+
+<script>
+    var openedModal;
+    document.getElementById("working").click();
+
+
+    function openTab(event, tab) {
+        var i, tabs, tabBtn;
+
+        tabs = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabs.length; i++) {
+            tabs[i].style.display = "none";
+        }
+
+        tabBtn = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tabBtn.length; i++) {
+            tabBtn[i].className = tabBtn[i].className.replace(" active", "");
+        }
+
+        document.getElementById(tab).style.display = "block";
+        event.currentTarget.className += " active";
+    }
+
+    function closeModal() {
+        openedModal.style.display = "none";
+    }
+
+    function openModal(modal) {
+        event.preventDefault();
+        openedModal = document.getElementById(modal);
+        openedModal.style.display = "block";
+
+        window.onclick = function(event) {
+            if (event.target == openedModal) {
+                openedModal.style.display = "none";
+            }
+        }
+    }
+</script>

@@ -8,6 +8,7 @@ class Home extends Controller
 {
     public function index()
     {
+        // Get all posts that should appear on the front page
         $posts = [
             (new AnnouncementModel)->getFrontPage(),
             (new ServiceModel)->getFrontPage(),
@@ -20,6 +21,7 @@ class Home extends Controller
 
     public function downloads()
     {
+        // Redirect to Downloads page
         header('Location: ' . URLROOT .'/Downloads');
     }
 
@@ -63,7 +65,7 @@ class Home extends Controller
         $model = $this->model('BookModel');
         $this->view('Home/bookCatalogue', 'Book Catalogue', ['Books' => $model->getBooks(),'Category' => $model->get_categories(), 'SubCategory' => $model->get_sub_categories()], styles:['LibraryStaff/index', 'Home/portal', 'Components/table', 'posts']);
     }
-    
+
     public function addComplaint()
     {
         $this->view('Home/AddComplaint', 'Complaint Form',$data=[],['main','Components/form']);

@@ -19,6 +19,12 @@ Pagination::top('/Posts/Services', select_filters:[
             1 => 'pinned',
         ],
     ],
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
+    ]
 ]);
 ?>
     <style>

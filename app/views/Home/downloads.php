@@ -85,4 +85,7 @@ Other::submit('AddCategory',value:'Add a new Category');
         });
     }
 </script>
+<?php if($admin): ?>
+<script src="<?= URLROOT . '/public/js/upload_previews.js' ?>"></script>
+<?php endif; ?>
 <?php ViewCounter::count('Downloads Page'); ?>

@@ -13,21 +13,23 @@ mydb = mysql.connector.connect(
 now = datetime.now()
 
 mycursor = mydb.cursor()
-for i in range(int(input("How many announcements? "))):
-    sql = "INSERT INTO `post` (`post_type`, `title`, `short_description`, `content`, `views`, `posted_by`, `posted_time`, `pinned`, `hidden`) VALUES (1,%s,%s,%s,%s,%s,%s, '0', '0')"
+for i in range(int(input("How many events? "))):
+    sql = "INSERT INTO `post` (`post_type`, `title`, `short_description`, `content`, `views`, `posted_by`, `posted_time`, `pinned`, `hidden`) VALUES (4,%s,%s,%s,%s,%s,%s, '0', '0')"
     post_type = str(randint(1,4))
     val = tuple([
       ' '.join([choice(lorem) for i in range(randint(4,10))]),
       ' '.join([choice(lorem) for i in range(randint(10,20))]),
       ' '.join([choice(lorem) for i in range(randint(60,100))]),
       '0',
-      '1',
+      '4',
       now+timedelta(days=randint(-100,0))
     ])
     mycursor.execute(sql, val)
     mycursor.execute("select LAST_INSERT_ID() as id")
     res = mycursor.fetchall()
     id = str(res[0][0])
-    mycursor.execute("INSERT INTO `announcements` (`post_id`, `ann_type_id`) VALUES (%s, %s)",(id,post_type))
+    start_time = now+timedelta(days=randint(-100,100))
+    end_time = start_time+timedelta(hours=randint(0,48))
+    mycursor.execute("INSERT INTO `events` (`post_id`, `start_time`,`end_time`) VALUES (%s, %s, %s)",(id,start_time,end_time))
     print(mycursor.rowcount, "records inserted.")
 mydb.commit()

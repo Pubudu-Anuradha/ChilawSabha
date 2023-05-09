@@ -22,6 +22,12 @@ Pagination::top('/Posts/Events', select_filters:[
             1 => 'Past',
             2 => 'Future'
         ]
+    ],
+    'sort' => [
+        'Posted time' , [
+            'DESC' => 'Newest to Oldest',
+            'ASC' => 'Oldest to Newest'
+        ]
     ]
 ]);
 $events = $data['events'][0]['result'] ?? [];

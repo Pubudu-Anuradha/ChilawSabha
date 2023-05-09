@@ -384,8 +384,8 @@ class Admin extends Controller
                         unset($post_data[$field]);
                     }
 
-                    $service_data['service_category'] =
-                            $categories[$service_data['service_category'] ?? ''] ?? null;
+                    // $service_data['service_category'] =
+                    //         $categories[$service_data['service_category'] ?? ''] ?? null;
 
                     foreach ($current_post[0] as $field => $value) {
                         if(isset($post_data[$field])) {
@@ -479,6 +479,31 @@ class Admin extends Controller
                         $err['end_no_start'] = 'You cannot set an expected end date without a start date';
                     }
 
+                    // status 3 is planned
+                    // if planned start date must be either not set or in the future
+                    if($valid['status'] == 3 && isset($valid['start_date'])) {
+                        $start_date = IntlCalendar::fromDateTime($valid['start_date'],null);
+                        $now = IntlCalendar::fromDateTime('now',null);
+                        if($start_date->before($now)) {
+                            $err['planned_in_past'] = 'You cannot set a project to planned with a start date in the past';
+                        }
+                    }
+
+                    // status 2 is ongoing
+                    if($valid['status'] == 2 && !isset($valid['start_date'])) {
+                        $err['ongoing_no_start'] = 'You cannot set a project to ongoing without an start date';
+                    }
+
+                    // status 1 is completed
+                    if($valid['status'] == 1 && (!isset($valid['expected_end_date']) || !isset($valid['start_date']))) {
+                        $err['completed_no_date'] = 'You cannot set a project to completed without an end date and a start date';
+                    }
+
+                    // if ongoing or completed, budget must be set
+                    if(($valid['status'] == 1 || $valid['status'] == 2) && !isset($valid['budget'])) {
+                        $err['no_budget'] = 'You cannot set a project to ongoing or completed without a budget';
+                    }
+
                     if(count($err) == 0) {
                         $putProject = $model->putProject($valid);
                         if($putProject !== false) {
@@ -567,6 +592,54 @@ class Admin extends Controller
                             $err_proj['end_no_start'] = 'You cannot set an expected end date without a start date';
                         }
                     }
+                    
+                    // planned state is 3
+                    // if current state is planned or the state is being changed to planned
+                    // the start date(changed one or the on in the current post) must either be unset or the start date must be in the future
+                    if((isset($valid_proj['status']) && $valid_proj['status'] == 3) || (isset($current_post[0]['status']) && $current_post[0]['status'] == 3)) {
+                        if(isset($valid_proj['start_date'])) {
+                            $start_date = IntlCalendar::fromDateTime($valid_proj['start_date'],null);
+                            $now = IntlCalendar::fromDateTime('now',null);
+                            if($start_date->before($now)) {
+                                $err_proj['start_in_past'] = 'You cannot set a project to planned with a start date in the past';
+                            }
+                        } else if(isset($current_post[0]['start_date'])) {
+                            $start_date = IntlCalendar::fromDateTime($current_post[0]['start_date'],null);
+                            $now = IntlCalendar::fromDateTime('now',null);
+                            if($start_date->before($now)) {
+                                $err_proj['start_in_past'] = 'You cannot set a project to planned with a start date in the past';
+                            }
+                        }
+                    }
+
+
+                    // status 2 is ongoing
+                    if(isset($valid_proj['status']) &&
+                    $valid_proj['status'] == 2 && 
+                    (!isset($valid_proj['start_date'])
+                    && !isset($current_post[0]['start_date']))
+                    ) {
+                        $err_proj['ongoing_no_start'] = 'You cannot set a project to ongoing without an start date';
+                    }
+
+                    // status 1 is completed
+                    if(isset($valid_proj['status']) &&
+                        $valid_proj['status'] == 1 && (
+                        (!isset($valid_proj['expected_end_date'])
+                        && !isset($current_post[0]['expected_end_date']))
+                        || 
+                        (!isset($valid_proj['start_date'])
+                        && !isset($current_post[0]['start_date']) )
+                        )
+                    ) {
+                        $err_proj['completed_no_date'] = 'You cannot set a project to completed without an end date and a start date';
+                    }
+
+                    // if ongoing or completed, budget must be set
+                    if(isset($valid_proj['status']) && ($valid_proj['status'] == 1 || $valid_proj['status'] == 2) && !isset($valid_proj['budget']) && !isset($current_post[0]['budget'])) {
+                        $err_proj['no_budget'] = 'You cannot set a project to ongoing or completed without a budget';
+                    }
+
 
                     $err = array_merge($err_post,$err_proj);
 
