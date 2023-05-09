@@ -142,6 +142,7 @@
             <input
               type="number"
               style="width: 3rem;"
+              min="1"
               name="<?= $post_type ?>_limit"
               id="<?= $post_type ?>_limit"
               value="<?= $selected_limit ?>"

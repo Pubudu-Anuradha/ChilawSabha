@@ -9,6 +9,7 @@ class AdminStatModel extends Model
 
     public function getTop10($post_type_id,$start_date,$end_date,$limit=10) {
         $limit = mysqli_real_escape_string($this->conn,$limit);
+        if($limit == null  || $limit < 1) $limit = 10;
         $post_type_id = mysqli_real_escape_string($this->conn,$post_type_id);
         return $this->select('post p join post_type pt on p.post_type=pt.post_type_id join post_views pv on p.post_id=pv.post_id',
             'RANK() OVER (ORDER BY sum(pv.views) DESC) as rank,p.post_id as post_id,p.title as title, sum(pv.views) as views',
@@ -25,6 +26,7 @@ class AdminStatModel extends Model
     }
 
     public function getPageViews($start_date,$end_date,$limit=10) {
+        if($limit == null  || $limit < 1) $limit = 10;
         return $this->select(
             'page_views',
             'RANK() OVER (ORDER BY sum(views) DESC) as rank,
