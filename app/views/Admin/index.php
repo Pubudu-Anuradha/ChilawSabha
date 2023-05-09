@@ -34,7 +34,8 @@
         $selected_start_date = $_GET['page_date_st'] ?? date('Y-m-d');
         $selected_end_date   = $_GET['page_date_ed'] ?? date('Y-m-d');
          ?>
-        <?php $page_views = $model->getPageViews($selected_start_date,$selected_end_date); ?>
+        <?php $page_views = $model->getPageViews($selected_start_date,
+                                    $selected_end_date,$selected_limit); ?>
         <div class="table">
           <table>
             <tr>
@@ -154,8 +155,9 @@
         <?php
         $selected_start_date = $_GET[$post_type.'_date_st'] ?? date('Y-m-d');
         $selected_end_date   = $_GET[$post_type.'_date_ed'] ?? date('Y-m-d');
+        $selected_limit      = $_GET[$post_type.'_limit'] ?? 10;
         $top10 = $model->getTop10(
-          $post_type_id,$selected_start_date,$selected_end_date
+          $post_type_id,$selected_start_date,$selected_end_date,$selected_limit
         );
         $top10 = array_filter($top10['result']??[],fn($row) => $row['post_id'] != null);
         if(count($top10) > 0):?>
@@ -187,7 +189,7 @@
       <?php endforeach; ?>
   <script>
   const starts_and_ends = [
-    'post',
+    'page',
     'dist',
     'Announcements',
     'Events',
@@ -196,20 +198,19 @@
   ];
 
   starts_and_ends.forEach((post_type) => {
-    console.log(post_type)
     const start_date_input = document.getElementById(`${post_type}_date_st`);
     const end_date_input = document.getElementById(`${post_type}_date_ed`);
-    end_date_input.max = start_date_input.value;
+    end_date_input.min = start_date_input.value;
     start_date_input.addEventListener('change', (e) => {
-      end_date_input.max = start_date_input.value;
-      if (end_date_input.value > start_date_input.value) {
+      end_date_input.min = start_date_input.value;
+      if (start_date_input.value > end_date_input.value) {
         end_date_input.value = start_date_input.value;
       }
     });
   });
 
   const form = document.querySelector('form.time-frame');
-  form.querySelectorAll('input').forEach(input => {
+  document.querySelectorAll('input').forEach(input => {
     input.addEventListener('change', (e) => {
       form.submit();
     });

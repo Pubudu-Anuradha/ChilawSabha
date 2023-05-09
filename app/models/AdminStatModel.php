@@ -24,13 +24,13 @@ class AdminStatModel extends Model
              group by p.post_type");
     }
 
-    public function getPageViews($start_date,$end_date) {
+    public function getPageViews($start_date,$end_date,$limit=10) {
         return $this->select(
             'page_views',
             'RANK() OVER (ORDER BY sum(views) DESC) as rank,
             name,
             sum(views) as views',
             "date between '".$start_date."' and '$end_date'
-             group by name order by sum(views) desc");
+             group by name order by sum(views) desc limit $limit");
     }
 }
