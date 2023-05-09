@@ -163,7 +163,7 @@
                 const timeDiffer = today.getTime() - due_date.getTime();
                 const differInDays = Math.ceil(timeDiffer / mili_sec_per_day);
                                 
-                if(differInDays == 0){
+                if(differInDays > -7 && differInDays <= 0){
                     var accessions = {
                         'value1':data[0]['accession_no'],
                         'value2':data[1]['accession_no'],
@@ -199,10 +199,10 @@
                         newModal.querySelector('p').innerText = "Data Retrieving Error";
                         newModal.style.display = "block";
                     });
-                }else if(differInDays <= -1){
+                }else if(differInDays <= -7){
                     modal = 'errorModal';
                     newModal = document.getElementById(modal);
-                    newModal.querySelector('p').innerText = "Please Extend On Due Date";
+                    newModal.querySelector('p').innerText = "Please Extend On or Before 7 Days of Due Date";
                     newModal.style.display = "block";
                 }else if(timeDiffer > 0){
                     modal = 'errorModal';
