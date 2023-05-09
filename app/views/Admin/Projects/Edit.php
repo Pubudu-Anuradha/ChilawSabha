@@ -35,6 +35,15 @@
     if(isset($errors['end_no_start'])) {
         Errors::generic($errors['end_no_start']);
     }
+    if(isset($errors['ongoing_no_start'])) {
+        Errors::generic($errors['ongoing_no_start']);
+    }
+    if(isset($errors['completed_no_date'])) {
+        Errors::generic($errors['completed_no_date']);
+    }
+    if(isset($errors['no_budget'])) {
+        Errors::generic($errors['no_budget']);
+    }
     if($data['edited'] ?? false ) {
         echo '<div class="success">Project edited successfully</div>';
     } else if(($data['edited'] ?? true) === false && isset($_POST['Edit'])) {
@@ -48,7 +57,7 @@
         $statuses_assoc[$status['status_id']] = $status['project_status'];
     }
     Group::select($alias[1][1], $alias[1][0], $statuses_assoc,
-        selected:$old[$alias[1][0]] ?? null);
+        selected:$old['status_id'] ?? null);
     Text::text($alias[2][1], $alias[2][0], $alias[2][0], $alias[2][2], spellcheck:true,
         value:$old[$alias[2][0]] ?? null);
     Text::textarea($alias[3][1], $alias[3][0], $alias[3][0], $alias[3][2], spellcheck:true,

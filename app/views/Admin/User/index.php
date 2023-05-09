@@ -48,7 +48,7 @@ Table::Table($aliases,$table['result'],id:"pdf",actions:[
 
 Pagination::bottom('filter-form', $data['Users']['page'], $data['Users']['count']); ?>
 
-    <input type="button" onclick="generate('#pdf','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/>
+    <!-- <input type="button" onclick="generate('#pdf','<?php echo $page_title ?>',6)" value="Export To PDF" class="btn bg-green"/> -->
 
 </div>
 <script>

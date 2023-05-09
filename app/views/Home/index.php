@@ -16,36 +16,7 @@
 <div class="page-content">
     <div class="left-content">
         <div class="contacts">
-            <a href="<?=URLROOT . "/Emergency"?>" class="title"><h3>Emergency Contacts</h3></a>
-            <div class="contact">
-                <a href="#" class="name tel">
-                    Hospital/Ambulance hotline
-                </a>
-                <span class="contact-info">
-                    0717777777
-                </span>
-            </div>
-            <div class="contact">
-                <a href="#" class="name tel">
-                    Fire Department
-                </a>
-                <span class="contact-info">
-                    0717777777
-                </span>
-            </div>
-            <div class="contact">
-                <a href="#" class="name tel">
-                    Madampe Police station
-                </a>
-                <span class="contact-info">
-                    0717777777
-                </span>
-            </div>
-            <div class="contact">
-                <a href="#" class="name">
-                   Other Emergency Contacts
-                </a>
-            </div>
+            <a href="<?=URLROOT . "/Emergency"?>" class="title"><h3>Having An Emergency in the area? Click here for Important contacts that may be useful</h3></a>
         </div>
         <div class="section">
             <div class="library-portal">
@@ -56,15 +27,16 @@
                 </a>
             </div>
             <div class="contacts">
-                <a href="#">
+                <a class="row" href="<?= URLROOT . '/ContactUs' ?>">
                     <h3>Contact us</h3>
+                    <button class="btn bg-blue" type="button">See More</button>
                 </a>
                 <div class="contact">
                     <a href="#" class="name tel">
                         Telephone
                     </a>
                     <span class="contact-info">
-                        032 - 5656565
+                        032 - 2247675
                     </span>
                 </div>
                 <div class="contact">
@@ -95,12 +67,14 @@
             background: url("<?=URLROOT . '/public/assets/logo.jpg'?>");
         }
         .library-img{
+            border-radius: 2rem;
+            padding: 1rem;
             background: url("<?=URLROOT . '/public/assets/Library.jpeg'?>");
         }
         .library-img,.sabha-img{
             background-position: center;
             background-repeat: no-repeat;
-            background-size: contain;
+            background-size: cover;
         }
     </style>
     <div class="main-content">
@@ -118,6 +92,18 @@ $formatter = new IntlDateFormatter(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Announcements"?>"'>More</button>
             </div>
             <hr>
+            <?php if(empty($announcements)):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a class="title" href="#">No Announcements</a>
+                        </div>
+                        <div class="summary">
+                            There are no announcements at the moment.
+                        </div>
+                    </div>
+                </div>
+            <?php endif;?>
             <?php foreach ($announcements as $ann): ?>
                 <div class="post shadow">
                     <div class="details">
@@ -150,6 +136,18 @@ $formatter = new IntlDateFormatter(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
+            <?php if(empty($events)):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a class="title" href="#">No Events</a>
+                        </div>
+                        <div class="summary">
+                            There are no events at the moment.
+                        </div>
+                    </div>
+                </div>
+            <?php endif;?>
             <?php foreach($events as $event):?>
                 <div class="post shadow">
                     <div class="details">
@@ -191,6 +189,18 @@ $end_time = $event['end_time'] ? $formatter->format(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Events"?>"'>More</button>
             </div>
             <hr>
+            <?php if(empty($services)):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a class="title" href="#">No Services</a>
+                        </div>
+                        <div class="summary">
+                            There are no services at the moment.
+                        </div>
+                    </div>
+                </div>
+            <?php endif;?>
             <?php foreach($services as $service):?>
                 <div class="post shadow">
                     <div class="details">
@@ -228,6 +238,18 @@ $end_time = $event['end_time'] ? $formatter->format(
                 <button class="more btn bg-lightblue hover-bg-blue" onclick='window.location.href="<?=URLROOT . "/Posts/Projects"?>"'>More</button>
             </div>
             <hr>
+            <?php if(empty($projects)):?>
+                <div class="post shadow">
+                    <div class="details">
+                        <div class="title-row">
+                            <a class="title" href="#">No Projects</a>
+                        </div>
+                        <div class="summary">
+                            There are no projects at the moment.
+                        </div>
+                    </div>
+                </div>
+            <?php endif;?>
             <?php foreach ($projects as $project): ?>
                 <div class="post shadow">
                     <div class="details">

@@ -102,18 +102,19 @@
             $errors = $data['errors'] ?? [];
             Errors::validation_errors($errors);
             Text::text('Name', 'name', 'name',
-                        placeholder:'Enter new contact\'s name', maxlength:255,
+                        placeholder:'Enter new person\'s name', maxlength:255,
                         value:$old['name'] ?? null);
             Text::text('Position', 'position', 'position',
-                        placeholder:'Enter new contact\'s name', maxlength:255,
+                        placeholder:'Enter new person\'s position', maxlength:255,
                         value:$old['name'] ?? null);
             Text::email('New contact\'s email', 'email', 'email',
-                        placeholder:'Enter new contact\'s email',
-                        value:$old['email'] ?? null);
+                        placeholder:'Enter new person\'s email',
+                        value:$old['email'] ?? null, required:true);
             Text::text('Contact number', 'contact_no', 'contact_no',
                         '+94XXXXXXXXX or 0XXXXXXXXX', type:'tel', maxlength:12,
+                        placeholder:'Enter new person\'s contact number',
                         pattern:"(\+94\d{9})|0\d{9}", value:$old['contact_no'] ?? null);
-            Other::submit('Add',value:'Add a new contact');
+            Other::submit('Add',value:'Add a new person');
         ?>
     </form>
     </div>
