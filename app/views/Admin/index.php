@@ -19,6 +19,7 @@
               style="width: 3rem;"
               name="page_limit"
               id="page_limit"
+              min="1"
               value="<?= $selected_limit ?>"
             >
           <label for="page_date_st">From</label>
