@@ -1,2 +1,2 @@
 # ChilawSabha
-A website with Library, Storage, Complaints and Content Management systems for The Chilaw Pradeshiya Sabha. Made for the second year Group Project at UCSC.
+A Protoype system for the chilaw pradeshiya sabha developed for the Second year group project at UCSC
